@@ -10,12 +10,6 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 export default defineConfig({
 	plugins: [react()],
-	build: {
-		outDir: 'out',
-	},
-	preview: {
-		port: 6006,
-	},
 	test: {
 		projects: [
 			{

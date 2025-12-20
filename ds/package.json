@@ -4,10 +4,10 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "storybook dev -p 6006 --no-open",
-		"build": "storybook build -o out",
-		"preview": "vite preview",
-		"lint": "eslint ."
+		"ds--dev": "storybook dev -p 6006 --no-open",
+		"ds--build": "storybook build -o out",
+		"ds--serve": "serve -l 6006 out",
+		"ds--lint": "eslint ."
 	},
 	"dependencies": {
 		"react": "^19.2.0",
@@ -35,6 +35,7 @@
 		"prettier-plugin-css-order": "^2.1.2",
 		"prettier-plugin-organize-imports": "^4.3.0",
 		"prettier-plugin-tailwindcss": "^0.7.2",
+		"serve": "^14.2.5",
 		"storybook": "^10.1.10",
 		"typescript": "~5.9.3",
 		"typescript-eslint": "^8.46.4",
