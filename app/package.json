@@ -28,5 +28,6 @@
 		"serve": "^14.2.5",
 		"tailwindcss": "^4",
 		"typescript": "^5"
-	}
+	},
+	"prettier": "../prettier.config.js"
 }
