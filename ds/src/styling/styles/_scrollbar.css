@@ -1,0 +1,43 @@
+:host,
+:root {
+	--scrollbar-color-default: var(--ds-color-black-alpha-4);
+	--scrollbar-color-hover: var(--ds-color-black-alpha-5);
+}
+[data-color-theme='dark'] {
+	--scrollbar-color-default: var(--ds-color-white-alpha-4);
+	--scrollbar-color-hover: var(--ds-color-white-alpha-5);
+}
+
+/* Chromium */
+::-webkit-scrollbar {
+	width: var(--ds-spacing-scrollbar-w);
+	height: var(--ds-spacing-scrollbar-h);
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: var(--ds-radius-sm);
+	background: var(--scrollbar-color-default);
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--scrollbar-color-hover);
+}
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+/* Firefox */
+/**
+ * Not needed
+ * Firefox automatically adjusts scrollbar based on element's background color
+ */
+
+/**
+ * Utilities
+ */
+.ds-scrollable {
+	padding: var(--ds-spacing-a11y-padding);
+	padding-left: var(--ds-spacing-a11y-scrollbar);
+	overflow-y: scroll;
+}

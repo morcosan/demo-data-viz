@@ -1,0 +1,111 @@
+import { CSS_PREFIX, getTokenValue_SPACING, TOKENS__SPACING } from '@ds/core.ts'
+import { DocsTokenCoding } from '@ds/docs/core.ts'
+import { Fragment } from 'react'
+import { Meta } from '@storybook/addon-docs/blocks'
+
+export const primitiveTokens = Object.entries(TOKENS__SPACING).filter(([, token]) => !token.$ref)
+export const semanticTokens = Object.entries(TOKENS__SPACING).filter(([, token]) => token.$ref)
+
+export const SemanticTokens = () => (
+	<table className="docs">
+		<thead>
+			<tr>
+				<th>Token</th>
+				<th>Reference</th>
+				<th className="w-full">Value</th>
+				<th>Coding</th>
+			</tr>
+		</thead>
+		<tbody>
+			{semanticTokens.map(([name, token]) => (
+				<Fragment key={name}>
+					<tr key={name} className="border-b-0!">
+						<td>
+							<pre>{name}</pre>
+						</td>
+						<td>
+							<pre>{token.$ref}</pre>
+						</td>
+						<td>
+							<code>{getTokenValue_SPACING(token.$ref)}</code>
+						</td>
+						<td>
+							<DocsTokenCoding
+								tsVar={`$spacing['${name}']`}
+								tsSize="w-lg-2"
+								twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}
+								twSize="w-md-4"
+								cssVar={`${CSS_PREFIX.SPACING}${name}`}
+								cssSize="w-lg-6"
+							/>
+						</td>
+					</tr>
+					<tr className="border-t-0!">
+						<td colSpan={4} className="relative py-0!">
+							<div
+								className="h-xs-1 bg-color-text-subtle absolute bottom-0 left-0"
+								style={{ width: `var(${CSS_PREFIX.SPACING}${name})` }}
+							/>
+						</td>
+					</tr>
+				</Fragment>
+			))}
+		</tbody>
+	</table>
+)
+
+export const PrimitiveTokens = () => (
+	<table className="docs">
+		<thead>
+			<tr>
+				<th>Token</th>
+				<th className="w-full">Value</th>
+				<th>Coding</th>
+			</tr>
+		</thead>
+		<tbody>
+			{primitiveTokens.map(([name, token]) => (
+				<Fragment key={name}>
+					<tr key={name} className="border-b-0!">
+						<td>
+							<pre>{name}</pre>
+						</td>
+						<td>
+							<code>{token.$value}</code>
+						</td>
+						<td>
+							<DocsTokenCoding
+								tsVar={`$spacing['${name}']`}
+								tsSize="w-lg-2"
+								twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}
+								twSize="w-md-4"
+								cssVar={`${CSS_PREFIX.SPACING}${name}`}
+								cssSize="w-lg-6"
+							/>
+						</td>
+					</tr>
+					<tr className="border-t-0!">
+						<td colSpan={4} className="relative py-0!">
+							<div
+								className="h-xs-1 bg-color-text-subtle absolute bottom-0 left-0"
+								style={{ width: `var(${CSS_PREFIX.SPACING}${name})` }}
+							/>
+						</td>
+					</tr>
+				</Fragment>
+			))}
+		</tbody>
+	</table>
+)
+
+<Meta title="Design tokens / Spacing" />
+
+# Spacing tokens
+
+## Semantic tokens
+
+<SemanticTokens />
+
+## Primitive tokens
+
+<PrimitiveTokens />

@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+
+@layer utilities {
+	.flex-center {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.absolute-center {
+		--tw-translate-x: -50%;
+		--tw-translate-y: -50%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(var(--tw-translate-x), var(--tw-translate-y));
+	}
+
+	.absolute-center-x {
+		--tw-translate-x: -50%;
+		position: absolute;
+		left: 50%;
+		transform: translate(var(--tw-translate-x), var(--tw-translate-y));
+	}
+
+	.absolute-center-y {
+		--tw-translate-y: -50%;
+		position: absolute;
+		top: 50%;
+		transform: translate(var(--tw-translate-x), var(--tw-translate-y));
+	}
+
+	.absolute-overlay {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+
+	.fixed-overlay {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+}

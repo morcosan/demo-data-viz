@@ -1,0 +1,191 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { DocsColumns, DocsCodeBlock } from '@ds/docs/core.ts'
+
+<Meta title="Services / Core Services" />
+
+# Core Services
+
+Core services provide essential functionality for application-wide concerns such as configuration, internationalization, routing, and theming. <br/>
+Each service follows a provider/consumer pattern using React Context API.
+
+| Service                             | Description                                                                |
+| ----------------------------------- | -------------------------------------------------------------------------- |
+| [Config Service](#config-service)   | Manages application configuration and library initialization               |
+| [I18n Service](#i18n-service)       | Provides internationalization support with translations and loading states |
+| [Routing Service](#routing-service) | Enables programmatic navigation within the application                     |
+| [Theme Service](#theme-service)     | Manages color themes and provides access to design tokens across the app   |
+
+<br />
+
+## Config Service
+
+Manages application configuration and library initialization. <br/>
+This service handles setup tasks that need to occur before the application renders, such as initializing third-party libraries or applying global configurations.
+
+<DocsColumns>
+	<div>
+		<h3>Provider</h3>
+		<DocsCodeBlock
+			code={`
+				import { ConfigService } from '@ds/core.ts'
+				//
+				const App = ({ children }) => <ConfigService>{children}</ConfigService>
+    		`}
+		/>
+	</div>
+</DocsColumns>
+
+## I18n Service
+
+Provides internationalization (i18n) support for your application. <br/>
+This service manages translations and loading states, allowing you to build multilingual applications with ease.
+
+<DocsColumns>
+	<div>
+		<h3>Consumer</h3>
+		<DocsCodeBlock
+			code={`
+				import { useI18nService } from '@ds/core.ts'
+				//
+				const App = () => {
+					const { translate, loading } = useI18nService()
+					return <div data-loading={loading}>{translate('key')}</div>
+				}
+			`}
+		/>
+	</div>
+	<div>
+		<h3>Provider</h3>
+		<DocsCodeBlock
+			code={`
+				import { I18nService } from '@ds/core.ts'
+				//
+				const App = ({ children }) => (
+					<I18nService translate={() => ''} loading={false}>
+						{children}
+					</I18nService>
+				)
+			`}
+		/>
+	</div>
+</DocsColumns>
+
+| Property  | Type       | Params        | Return   | Description                                                              |
+| --------- | ---------- | ------------- | -------- | ------------------------------------------------------------------------ |
+| translate | `function` | `key: string` | `string` | Translates a given key to the corresponding text in the current language |
+| loading   | `boolean`  | -             | -        | Indicates whether translations are currently being loaded                |
+
+| Translation Key   | Type          | Translation (English) |
+| ----------------- | ------------- | --------------------- |
+| `ds.action.close` | Verb / Action | 'Close'               |
+
+**Usage notes:**
+
+- Pass your translation function to the provider's `translate` prop
+- Use the `loading` state to show loading indicators while translations load
+- Implement the required translation keys used inside components
+
+## Routing Service
+
+Enables programmatic navigation within your application. <br/>
+This service abstracts routing logic, making it easier to integrate with different routing libraries (React Router, Next.js router, etc.).
+
+<DocsColumns>
+	<div>
+		<h3>Consumer</h3>
+		<DocsCodeBlock
+			code={`
+				import { useRoutingService } from '@ds/core.ts'
+				//
+				const App = () => {
+					const { navigate } = useRoutingService()
+					return <button onClick={() => navigate('/home')}>Home</button>
+				}
+			`}
+		/>
+	</div>
+	<div>
+		<h3>Provider</h3>
+		<DocsCodeBlock
+			code={`
+				import { RoutingService } from '@ds/core.ts'
+				//
+				const App = ({ children }) => (
+					<RoutingService navigate={() => {}}>
+						{children}
+					</RoutingService>
+				)
+			`}
+		/>
+	</div>
+</DocsColumns>
+
+| Property | Type       | Params         | Return | Description                                    |
+| -------- | ---------- | -------------- | ------ | ---------------------------------------------- |
+| navigate | `function` | `path: string` | -      | Navigates to the specified internal route path |
+
+**Usage notes:**
+
+- The `navigate` prop should be connected to your routing library's navigation method
+- Works with React Router's `useNavigate`, Next.js's `router.push`, or any custom routing solution
+
+## Theme Service
+
+Manages color themes and provides comprehensive access to design tokens. <br/>
+This service enables dark/light theme switching and exposes all design system tokens through CSS variables.
+
+<DocsColumns>
+	<div>
+		<h3>Consumer</h3>
+		<DocsCodeBlock
+			code={`
+				import { useThemeService } from '@ds/core.ts'
+				//
+				const App = () => {
+					const { colorTheme, isUiDark, isUiLight, changeColorTheme, $color } = useThemeService()
+					return (
+						<button data-theme={colorTheme} style={{ color: $color['black'] }} onClick={changeColorTheme}>
+							{isUiDark ? 'Dark' : isUiLight ? 'Light' : '??'}
+						</button>
+					)
+				}
+			`}
+		/>
+	</div>
+	<div>
+		<h3>Provider</h3>
+		<DocsCodeBlock
+			code={`
+				import { ThemeService } from '@ds/core.ts'
+				//
+				const App = ({ children }) => (
+					<ThemeService cookieKey="color-theme">{children}</ThemeService>
+				)
+			`}
+		/>
+	</div>
+</DocsColumns>
+
+| Property         | Type                     | Params              | Return | Description                                               |
+| ---------------- | ------------------------ | ------------------- | ------ | --------------------------------------------------------- |
+| colorTheme       | `ColorTheme`             | -                   | -      | Current color theme value (`'light'` or `'dark'`)         |
+| isUiDark         | `boolean`                | -                   | -      | Indicates whether the current theme is dark               |
+| isUiLight        | `boolean`                | -                   | -      | Indicates whether the current theme is light              |
+| changeColorTheme | `function`               | `theme: ColorTheme` | -      | Changes the color theme to the specified value            |
+| $blur            | `Record<string, string>` | -                   | -      | Blur design tokens mapped to CSS variable values          |
+| $breakpoint      | `Record<string, string>` | -                   | -      | Breakpoint design tokens mapped to CSS variable values    |
+| $color           | `Record<string, string>` | -                   | -      | Color design tokens mapped to CSS variable values         |
+| $fontSize        | `Record<string, string>` | -                   | -      | Font size design tokens mapped to CSS variable values     |
+| $fontWeight      | `Record<string, string>` | -                   | -      | Font weight design tokens mapped to CSS variable values   |
+| $lineHeight      | `Record<string, string>` | -                   | -      | Line height design tokens mapped to CSS variable values   |
+| $radius          | `Record<string, string>` | -                   | -      | Border radius design tokens mapped to CSS variable values |
+| $shadow          | `Record<string, string>` | -                   | -      | Shadow design tokens mapped to CSS variable values        |
+| $spacing         | `Record<string, string>` | -                   | -      | Spacing design tokens mapped to CSS variable values       |
+| $zIndex          | `Record<string, string>` | -                   | -      | Z-index design tokens mapped to CSS variable values       |
+
+**Usage notes:**
+
+- The `cookieKey` prop enables theme persistence across sessions
+- Design token objects (`$color`, `$spacing`, etc.) provide type-safe access to CSS variables
+- Use `isUiDark` and `isUiLight` for conditional rendering based on current theme
+- All design tokens are automatically updated when the theme changes

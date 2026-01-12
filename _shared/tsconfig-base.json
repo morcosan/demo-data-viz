@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		/* Build Metadata */
+		"incremental": true,
+		"noEmit": true,
+
+		/* Language & Environment */
+		"target": "ES2022",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@emotion/react",
+
+		/* Modules & Resolution */
+		"module": "ESNext",
+		"moduleDetection": "force",
+		"moduleResolution": "bundler",
+		"verbatimModuleSyntax": true,
+		"allowImportingTsExtensions": true,
+		"esModuleInterop": true,
+
+		/* Linting */
+		"strict": true,
+		"skipLibCheck": true,
+		"isolatedModules": true,
+		"erasableSyntaxOnly": true,
+		"noFallthroughCasesInSwitch": true
+	}
+}

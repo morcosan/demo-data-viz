@@ -1,0 +1,21 @@
+import type { DesignTokenGroup } from './__types.ts'
+
+export const TOKENS__Z_INDEX = {
+	lv1: { $value: 1000 },
+	lv2: { $value: 2000 },
+	lv3: { $value: 3000 },
+	lv4: { $value: 4000 },
+	lv5: { $value: 5000 },
+	lv6: { $value: 6000 },
+	lv7: { $value: 7000 },
+	lv8: { $value: 8000 },
+	lv9: { $value: 9000 },
+
+	sticky: { $ref: 'lv1' },
+	navbar: { $ref: 'lv2' },
+	modal: { $ref: 'lv3' },
+	popup: { $ref: 'lv4' },
+	dropdown: { $ref: 'lv5' },
+	toast: { $ref: 'lv6' },
+	tooltip: { $ref: 'lv9' },
+} as const satisfies DesignTokenGroup<number>
