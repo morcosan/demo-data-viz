@@ -1,0 +1,95 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { DocsCodeBlock } from '@ds/docs/core.ts'
+
+<Meta title="Utilities / React Utilities" />
+
+# React Utilities
+
+React utilities provide reusable hooks and components for common React patterns. <br/>
+
+| Utility                     | Description                                                            |
+| --------------------------- | ---------------------------------------------------------------------- |
+| [HocComposer](#hoccomposer) | Component for composing multiple Higher-Order Components declaratively |
+| [useDefaults](#usedefaults) | Hook for merging component props with default values                   |
+
+<br />
+
+## HocComposer
+
+Component for composing multiple Higher-Order Components (HOCs) in a declarative way. <br/>
+This utility simplifies nesting multiple providers or HOCs by allowing you to define them as an array, avoiding deeply nested JSX.
+
+```
+import { HocComposer } from '@ds/core.ts'
+//
+const App = ({ children }) => (
+	<HocComposer
+		hocs={[
+			HocComposer.hoc(ThemeProvider, { theme: 'dark' }),
+			HocComposer.hoc(I18nProvider, { locale: 'en' }),
+			HocComposer.hoc(RouterProvider, { router })
+		]}
+	>
+		{children}
+	</HocComposer>
+)
+```
+
+| Property | Type        | Description                                               |
+| -------- | ----------- | --------------------------------------------------------- |
+| hocs     | `HOC[]`     | Array of HOC definitions created with `HocComposer.hoc()` |
+| children | `ReactNode` | Child elements to be wrapped by the composed HOCs         |
+
+| Method          | Params                           | Return | Description                                       |
+| --------------- | -------------------------------- | ------ | ------------------------------------------------- |
+| HocComposer.hoc | `comp: Component, props: object` | `HOC`  | Creates a HOC definition with component and props |
+
+**Usage notes:**
+
+- HOCs are applied from right to left (last HOC in array wraps innermost)
+- Useful for organizing multiple context providers in a clean, maintainable way
+- Props are spread onto each HOC component
+
+## useDefaults
+
+Hook for merging component props with default values. <br/>
+This utility provides a clean way to handle optional props by merging them with defaults, with optional truthy validation.
+
+```
+import { useDefaults } from '@ds/core.ts'
+//
+const Button = (rawProps) => {
+	const props = useDefaults(
+		rawProps,
+		{ variant: 'primary', size: 'medium', disabled: false },
+		false // truthy validation off
+	)
+	return <button {...props} />
+}
+//
+// With truthy validation enabled
+const Card = (rawProps) => {
+	const props = useDefaults(
+		rawProps,
+		{ title: 'Default Title', showBorder: true },
+		true // only merge props with truthy values
+	)
+	return <div {...props} />
+}
+```
+
+| Parameter | Type                       | Description                                                       |
+| --------- | -------------------------- | ----------------------------------------------------------------- |
+| rawProps  | `Record<string, any>`      | Raw props object passed to component                              |
+| defaults  | `Partial<typeof rawProps>` | Default values for props                                          |
+| truthy    | `boolean`                  | If `true`, only merge props with truthy values (default: `false`) |
+
+**Returns:** `Record<string, any>` - Merged props object with defaults applied
+
+<br />
+**Usage notes:**
+
+- When `truthy` is `false`, props with `undefined` values are ignored (uses default)
+- When `truthy` is `true`, props with any falsy value (`false`, `0`, `''`, etc.) are ignored
+- Uses `useMemo` internally for performance optimization
+- Useful for components with many optional props

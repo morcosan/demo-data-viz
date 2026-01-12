@@ -1,0 +1,94 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { DocsCodeBlock } from '@ds/docs/core.ts'
+
+<Meta title="Utilities / Various Utilities" />
+
+# Various Utilities
+
+General-purpose utilities for common development tasks. <br/>
+These utilities provide helper functions and constants for async operations, keyboard event handling, and more.
+
+| Utility               | Description                                             |
+| --------------------- | ------------------------------------------------------- |
+| [wait](#wait)         | Promise-based delay utility for async operations        |
+| [Keyboard](#keyboard) | Comprehensive keyboard key constants for event handling |
+
+<br />
+
+## wait
+
+Promise-based delay utility for async operations. <br/>
+This function creates a promise that resolves after a specified time, useful for implementing delays, debouncing, or testing async behavior.
+
+```
+import { wait } from '@ds/core.ts'
+//
+// Simple delay
+wait(1000).then(() => console.log('Executed after 1 second'))
+//
+// In async functions
+const fetchData = async () => {
+	await wait(500)
+	const response = await fetch('/api/data')
+	return response.json()
+}
+```
+
+| Parameter | Type     | Description                |
+| --------- | -------- | -------------------------- |
+| time      | `number` | Delay time in milliseconds |
+
+**Returns:** `Promise<void>` - Promise that resolves after the specified time
+
+<br />
+**Usage notes:**
+
+- Returns a standard Promise that can be used with `async/await` or `.then()`
+- Useful for creating delays in animation sequences
+- Can be combined with other promises using `Promise.all()` or `Promise.race()`
+- Does not block the main thread (uses `setTimeout` internally)
+
+## Keyboard
+
+Comprehensive keyboard key constants for event handling. <br/>
+This object provides type-safe constants for keyboard keys, making event handling more readable and less error-prone.
+
+```
+import { Keyboard } from '@ds/core.ts'
+//
+// Keyboard event handling
+const handleKeyDown = (event: KeyboardEvent) => {
+	if (event.key === Keyboard.ENTER) {
+		submitForm()
+	}
+	if (event.key === Keyboard.ESCAPE) {
+		closeModal()
+	}
+	if (event.key === Keyboard.ARROW_UP) {
+		navigateUp()
+	}
+}
+```
+
+| Key Category  | Examples                                                            |
+| ------------- | ------------------------------------------------------------------- |
+| Digits        | `DIGIT_0` through `DIGIT_9`                                         |
+| Letters       | `A` through `Z` (lowercase), `A_CAPS` through `Z_CAPS` (uppercase)  |
+| Function Keys | `F1` through `F12`                                                  |
+| Arrow Keys    | `ARROW_UP`, `ARROW_DOWN`, `ARROW_LEFT`, `ARROW_RIGHT`               |
+| Modifiers     | `ALT`, `CONTROL`, `SHIFT`, `CAPSLOCK`                               |
+| Navigation    | `HOME`, `END`, `PAGEUP`, `PAGEDOWN`, `TAB`                          |
+| Editing       | `BACKSPACE`, `DELETE`, `ENTER`, `SPACE`, `INSERT`                   |
+| Special       | `ESCAPE`, `PRINT_SCREEN`, `SCROLL_LOCK`, `NUM_LOCK`, `PAUSE`        |
+| Symbols       | `COMMA`, `PERIOD`, `SLASH`, `BACKSLASH`, `SEMICOLON`, `QUOTE`, etc. |
+| Brackets      | `BRACKET_LEFT`, `BRACKET_RIGHT`, `OPEN_BRACE`, `CLOSE_BRACE`        |
+| Math/Logic    | `PLUS`, `MINUS`, `ASTERISK`, `EQUAL`, `PERCENT`, `AMPERSAND`        |
+
+**Usage notes:**
+
+- All constants match standard DOM `KeyboardEvent.key` values
+- Use these instead of string literals to avoid typos and improve maintainability
+- Works with both `keydown` and `keyup` events
+- Compatible with React's `onKeyDown`, `onKeyUp`, and `onKeyPress` handlers
+- Includes both uppercase (`A_CAPS`) and lowercase (`A`) letter variants
+- Comprehensive coverage of symbols, punctuation, and special characters

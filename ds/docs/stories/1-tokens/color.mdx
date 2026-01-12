@@ -1,0 +1,140 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { CSS_PREFIX, getTokenValue_COLOR, TOKENS__COLOR } from '@ds/core.ts'
+import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsTokenThemeGrid } from '@ds/docs/core.ts'
+
+export const DELAY = 1200
+
+export const primitiveTokens = Object.entries(TOKENS__COLOR).filter(([, token]) => !token.$ref)
+export const semanticTokens = Object.entries(TOKENS__COLOR).filter(([, token]) => token.$ref)
+
+export const purples = Object.keys(TOKENS__COLOR).filter((name) => /^purple-\d+$/.test(name))
+export const yellows = Object.keys(TOKENS__COLOR).filter((name) => /^yellow-\d+$/.test(name))
+export const reds = Object.keys(TOKENS__COLOR).filter((name) => /^red-\d+$/.test(name))
+export const greens = Object.keys(TOKENS__COLOR).filter((name) => /^green-\d+$/.test(name))
+export const greys = Object.keys(TOKENS__COLOR).filter((name) => /^grey-\d+$/.test(name))
+export const blackAlphas = Object.keys(TOKENS__COLOR).filter((name) => /^black-alpha-\d+$/.test(name))
+export const whiteAlphas = Object.keys(TOKENS__COLOR).filter((name) => /^white-alpha-\d+$/.test(name))
+
+export const renderColors = (colors) => (
+	<div className="flex flex-wrap gap-px">
+		{colors.map((color) => (
+			<div
+				key={color}
+				className="h-md-0 flex min-w-fit flex-1 items-start justify-start whitespace-nowrap"
+				style={{ background: `var(${CSS_PREFIX.COLOR}${color})` }}
+			>
+				<div className="bg-color-white-alpha-7 px-xs-1 pb-xs-0 text-color-black text-size-xs rounded-xs">
+					{color}
+				</div>
+			</div>
+		))}
+	</div>
+)
+
+export const ColorPalette = () => (
+	<DocsCanvas className="gap-xs-6 p-xs-9 flex flex-col">
+		{renderColors(purples)}
+		{renderColors(yellows)}
+		{renderColors(reds)}
+		{renderColors(greens)}
+		{renderColors(greys)}
+		{renderColors(blackAlphas)}
+		{renderColors(whiteAlphas)}
+	</DocsCanvas>
+)
+
+export const SemanticTokens = () => (
+	<table className="docs">
+		<thead>
+			<tr>
+				<th>Token</th>
+				<th>Reference</th>
+				<th className="w-full">Value</th>
+				<th>Coding</th>
+			</tr>
+		</thead>
+		<tbody>
+			{semanticTokens.map(([name, token]) => (
+				<tr key={name}>
+					<td>
+						<pre>{name}</pre>
+					</td>
+					<td>
+						<DocsTokenThemeGrid
+							lightSlot={<pre>{token.$ref.light}</pre>}
+							darkSlot={<pre>{token.$ref.dark}</pre>}
+						/>
+					</td>
+					<td>
+						<DocsTokenThemeGrid
+							lightSlot={<DocsColorToken value={getTokenValue_COLOR(name, 'light')} />}
+							darkSlot={<DocsColorToken value={getTokenValue_COLOR(name, 'dark')} />}
+						/>
+					</td>
+					<td>
+						<DocsTokenCoding
+							tsVar={`$color['${name}']`}
+							twVars={[`bg-color-${name}`, `text-color-${name}`, `border-color-${name}`]}
+							cssVar={`${CSS_PREFIX.COLOR}${name}`}
+							tsSize="w-md-7"
+							twSize="w-md-7"
+							cssSize="w-md-7"
+							delay={DELAY}
+						/>
+					</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+)
+
+export const PrimitiveTokens = () => (
+	<table className="docs">
+		<thead>
+			<tr>
+				<th>Token</th>
+				<th className="w-full">Value</th>
+				<th>Coding</th>
+			</tr>
+		</thead>
+		<tbody>
+			{primitiveTokens.map(([name]) => (
+				<tr key={name}>
+					<td>
+						<pre>{name}</pre>
+					</td>
+					<td>
+						<DocsColorToken value={getTokenValue_COLOR(name)} />
+					</td>
+					<td>
+						<DocsTokenCoding
+							tsVar={`$color['${name}']`}
+							twVars={[`bg-color-${name}`, `text-color-${name}`, `border-color-${name}`]}
+							cssVar={`${CSS_PREFIX.COLOR}${name}`}
+							tsSize="w-md-7"
+							twSize="w-md-7"
+							cssSize="w-md-7"
+							delay={DELAY}
+						/>
+					</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+)
+
+<Meta title="Design tokens / Color" />
+
+# Color tokens
+
+## Color palette
+
+<ColorPalette />
+
+## Semantic tokens
+
+<SemanticTokens />
+
+## Primitive tokens
+
+<PrimitiveTokens />

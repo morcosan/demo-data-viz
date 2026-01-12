@@ -1,0 +1,15 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { DocsAssetItem, getAssetsFromFiles } from '@ds/docs/core.ts'
+
+export const files = import.meta.glob('/dist/assets/brand/*.svg', { eager: true, import: 'default' })
+export const assets = getAssetsFromFiles(files)
+
+<Meta title="Assets / Brand" />
+
+# Brand <span className="text-size-md text-color-text-subtle align-middle">({assets.length})</span>
+
+<div className="gap-xs-9 flex flex-wrap">
+	{assets.map((asset) => (
+		<DocsAssetItem key={asset.name} asset={asset} />
+	))}
+</div>

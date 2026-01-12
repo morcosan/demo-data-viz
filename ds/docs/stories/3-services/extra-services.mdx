@@ -1,0 +1,138 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { DocsColumns, DocsCodeBlock } from '@ds/docs/core.ts'
+
+<Meta title="Services / Extra Services" />
+
+# Extra Services
+
+Extra services provide specialized functionality for accessibility and responsive design. <br/>
+Each service follows a provider/consumer pattern using React Context API.
+
+| Service                               | Description addon-links                                                    |
+| ------------------------------------- | -------------------------------------------------------------------------- |
+| [A11y Service](#a11y-service)         | Manages accessibility mode detection for keyboard and pointer interactions |
+| [Viewport Service](#viewport-service) | Provides viewport size detection and breakpoint-based responsive utilities |
+
+<br />
+
+## A11y Service
+
+Manages accessibility mode detection for keyboard and pointer interactions. <br/>
+This service automatically detects user input methods and adjusts the UI accordingly, supporting better keyboard navigation experiences.
+
+<DocsColumns>
+	<div>
+		<h3>Consumer</h3>
+		<DocsCodeBlock
+			code={`
+				import { useA11yService } from '@ds/core.ts'
+				//
+				const App = () => {
+					const { a11yMode, isPointer, forceA11yMode } = useA11yService()
+					return (
+						<button onClick={() => forceA11yMode('default')}>
+							{a11yMode} {isPointer ? 'pointer' : 'default'}
+						</button>
+					)
+				}
+			`}
+		/>
+	</div>
+	<div>
+		<h3>Provider</h3>
+		<DocsCodeBlock
+			code={`
+				import { A11yService } from '@ds/core.ts'
+				//
+				const App = ({ children }) => <A11yService>{children}</A11yService>
+    	`}
+		/>
+		<h3>Utilities</h3>
+		<DocsCodeBlock
+			code={`
+				import { isA11yModeDefault, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core.ts'
+				//
+				console.log(isA11yModeDefault(), isA11yModePointer(), ATTR_KEY__A11Y_MODE)
+    	`}
+		/>
+	</div>
+</DocsColumns>
+
+| Property      | Type       | Params           | Return | Description                                                                  |
+| ------------- | ---------- | ---------------- | ------ | ---------------------------------------------------------------------------- |
+| a11yMode      | `A11yMode` | -                | -      | Current accessibility mode (`'default'` for keyboard, `'pointer'` for mouse) |
+| isPointer     | `boolean`  | -                | -      | Indicates whether the current interaction mode is pointer-based              |
+| forceA11yMode | `function` | `mode: A11yMode` | -      | Manually sets the accessibility mode to the specified value                  |
+
+**Usage notes:**
+
+- The service automatically switches to `'default'` mode when Tab key is pressed
+- Switches to `'pointer'` mode on mouse clicks (excluding NVDA keyboard triggers)
+- The mode is applied via `ATTR_KEY__A11Y_MODE` attribute on the document element
+- Use utility functions `isA11yModeDefault()` and `isA11yModePointer()` for mode checking outside React components
+
+## Viewport Service
+
+Provides viewport size detection and breakpoint-based responsive utilities. <br/>
+This service tracks window resize events and provides comprehensive breakpoint helpers for building responsive layouts that adapt to different screen sizes.
+
+<DocsColumns>
+	<div>
+		<h3>Consumer</h3>
+		<DocsCodeBlock
+			code={`
+				import { useViewportService } from '@ds/core.ts'
+				//
+				const App = () => {
+					const { viewportWidth, isViewportLG, isViewportMinMD, isViewportMaxSM } = useViewportService()
+					return (
+						<div>
+							<p>Width: {viewportWidth}px</p>
+							<p>{isViewportLG ? 'Large desktop' : 'Mobile/Tablet'}</p>
+							<p>{isViewportMinMD && 'Medium and above'}</p>
+							<p>{isViewportMaxSM && 'Small and below'}</p>
+						</div>
+					)
+				}
+			`}
+		/>
+	</div>
+	<div>
+		<h3>Provider</h3>
+		<DocsCodeBlock
+			code={`
+				import { ViewportService } from '@ds/core.ts'
+				//
+				const App = ({ children }) => <ViewportService>{children}</ViewportService>
+			`}
+		/>
+	</div>
+</DocsColumns>
+
+| Property         | Type      | Description                                                           |
+| ---------------- | --------- | --------------------------------------------------------------------- |
+| viewportWidth    | `number`  | Current viewport width in pixels                                      |
+| isViewportMinXS  | `boolean` | `true` when viewport width is greater than or equal to XS breakpoint  |
+| isViewportMinSM  | `boolean` | `true` when viewport width is greater than or equal to SM breakpoint  |
+| isViewportMinMD  | `boolean` | `true` when viewport width is greater than or equal to MD breakpoint  |
+| isViewportMinLG  | `boolean` | `true` when viewport width is greater than or equal to LG breakpoint  |
+| isViewportMinXL  | `boolean` | `true` when viewport width is greater than or equal to XL breakpoint  |
+| isViewportMinXXL | `boolean` | `true` when viewport width is greater than or equal to XXL breakpoint |
+| isViewportMaxXS  | `boolean` | `true` when viewport width is less than XS breakpoint                 |
+| isViewportMaxSM  | `boolean` | `true` when viewport width is less than SM breakpoint                 |
+| isViewportMaxMD  | `boolean` | `true` when viewport width is less than MD breakpoint                 |
+| isViewportMaxLG  | `boolean` | `true` when viewport width is less than LG breakpoint                 |
+| isViewportMaxXL  | `boolean` | `true` when viewport width is less than XL breakpoint                 |
+| isViewportMaxXXL | `boolean` | `true` when viewport width is less than XXL breakpoint                |
+| isViewportXS     | `boolean` | `true` when viewport is exactly XS size (between XS and SM)           |
+| isViewportSM     | `boolean` | `true` when viewport is exactly SM size (between SM and MD)           |
+| isViewportMD     | `boolean` | `true` when viewport is exactly MD size (between MD and LG)           |
+| isViewportLG     | `boolean` | `true` when viewport is exactly LG size (between LG and XL)           |
+| isViewportXL     | `boolean` | `true` when viewport is exactly XL size (between XL and XXL)          |
+| isViewportXXL    | `boolean` | `true` when viewport is XXL or larger                                 |
+
+**Usage notes:**
+
+- Resize events are debounced for performance optimization
+- Use `isViewport*` helpers to target specific breakpoint ranges
+- Breakpoint values are derived from [viewport tokens](?path=/docs/design-tokens-viewport--docs)

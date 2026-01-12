@@ -1,0 +1,20 @@
+export {}
+declare global {
+	interface ChangelogItem {
+		version: string
+		date: string | null
+		changes: {
+			breakages?: string[]
+			deprecations?: string[]
+			tokens?: string[]
+			components?: string[]
+			services?: string[]
+			utilities?: string[]
+			assets?: string[]
+			docs?: string[]
+		}
+	}
+
+	const ENV__BUILD_NUMBER: number
+	const ENV__DS_VERSION: string
+}

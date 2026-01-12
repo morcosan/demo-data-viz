@@ -1,0 +1,45 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { renderHtml } from '@ds/docs/core.ts'
+import { changelog } from './changelog.ts'
+
+export const BulletList = (title, items) => (
+	<>
+		<p className="font-weight-md m-0!">{title}</p>
+		<ul className="mt-0!">
+			{items.map((item) => (
+				<li key={item} dangerouslySetInnerHTML={{ __html: renderHtml(item) }} />
+			))}
+		</ul>
+	</>
+)
+
+export const ChangelogContent = () => (
+	<>
+		{changelog.map((entry) => (
+			<div
+				key={entry.version}
+				className="bg-color-bg-card px-sm-0 py-xs-9 mt-sm-2 border-color-border-subtle rounded-lg border"
+			>
+				<h2 className="mt-0!">
+					{entry.version} <span className="ml-xs-2 text-size-xs font-weight-sm">- {entry.date || 'Latest'}</span>
+				</h2>
+				<div className="gap-y-xs-2 gap-x-sm-0 grid grid-cols-1 md:grid-cols-[max-content_1fr]">
+					{entry.changes.breakages?.length ? BulletList('💥 Breaking changes:', entry.changes.breakages) : ''}
+					{entry.changes.deprecations?.length ? BulletList('💀 Deprecations:', entry.changes.deprecations) : ''}
+					{entry.changes.tokens?.length ? BulletList('🎨 Design tokens:', entry.changes.tokens) : ''}
+					{entry.changes.components?.length ? BulletList('🧩 Components:', entry.changes.components) : ''}
+					{entry.changes.services?.length ? BulletList('🧱 Services:', entry.changes.services) : ''}
+					{entry.changes.utilities?.length ? BulletList('🛠️ Utilities:', entry.changes.utilities) : ''}
+					{entry.changes.assets?.length ? BulletList('🖼️ Assets:', entry.changes.assets) : ''}
+					{entry.changes.docs?.length ? BulletList('📚 Documentation:', entry.changes.docs) : ''}
+				</div>
+			</div>
+		))}
+	</>
+)
+
+<Meta title="Changelog" />
+
+# Changelog
+
+<ChangelogContent />
