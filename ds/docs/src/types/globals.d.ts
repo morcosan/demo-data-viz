@@ -15,6 +15,6 @@ declare global {
 		}
 	}
 
-	const ENV__BUILD_NUMBER: number
+	const ENV__BUILD_NUMBER: string
 	const ENV__DS_VERSION: string
 }

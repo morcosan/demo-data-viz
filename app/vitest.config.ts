@@ -11,12 +11,7 @@ export default defineConfig({
 		projects: [
 			{
 				extends: true,
-				plugins: [
-					storybookTest({
-						configDir: path.join(dirname, '.storybook'),
-						storybookScript: 'npm run storybook -- --no-open',
-					}),
-				],
+				plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
 				test: {
 					name: 'storybook',
 					browser: {

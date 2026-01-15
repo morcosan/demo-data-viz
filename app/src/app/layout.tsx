@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import '../env.ts'
 import { DEFAULT_LOCALE } from '../i18n/i18n-config.ts'
 import '../styling/index.ts'
 import { Providers } from './providers.tsx'

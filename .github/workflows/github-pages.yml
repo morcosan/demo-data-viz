@@ -1,0 +1,111 @@
+name: GitHub Pages
+
+on:
+  # GitHub Pages require environment permissions per branch
+  # On merge, GitHub Actions can only run from source branches
+  # The only option is to run the workflow manually
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Lint DS project
+        run: cd ds && pnpm run ds--lint
+
+      - name: Lint app project
+        run: cd app && pnpm run app--lint
+
+  test:
+    name: Testing
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Install DS Playwright browsers
+        run: cd ds && pnpm exec playwright install chromium
+
+      - name: Test DS Storybook
+        run: | # First attempt fails due to Vitest/Storybook issues
+          cd ds
+          pnpm run ds--test || pnpm run ds--test || exit 1
+
+      - name: Install app Playwright browsers
+        run: cd app && pnpm exec playwright install chromium
+
+      - name: Test app Storybook
+        run: | # First attempt fails due to Vitest/Storybook issues
+          cd app
+          pnpm run app--sb-test || pnpm run app--sb-test || exit 1
+
+  build:
+    name: Building
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Build DS Storybook
+        run: cd ds && pnpm run ds--build
+
+      - name: Build Next.js app
+        run: cd app && pnpm run app--build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /demo-data-viz
+
+      - name: Build app Storybook
+        run: cd app && pnpm run app--sb-build
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p _deploy
+          cp -r app/out/* _deploy/
+          mkdir -p _deploy/storybook
+          cp -r app/out-sb/* _deploy/storybook/
+          mkdir -p _deploy/design-system
+          cp -r ds/out/* _deploy/design-system/
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_deploy"
+
+  deploy:
+    name: Deploying
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
