@@ -38,6 +38,17 @@ const config: StorybookConfig = {
 			ENV__BUILD_NUMBER: JSON.stringify(createBuildNumber()),
 			ENV__DS_VERSION: JSON.stringify(getDsVersion()),
 		}
+		config.build = {
+			...(config.build || {}),
+			rollupOptions: {
+				...(config.build?.rollupOptions || {}),
+				onwarn(warning, warn) {
+					if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return
+					if (warning.message?.includes('Error when using sourcemap')) return
+					warn(warning)
+				},
+			},
+		}
 
 		return config
 	},

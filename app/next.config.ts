@@ -1,12 +1,19 @@
 import { type NextConfig } from 'next'
 import path from 'node:path'
+import { createBuildNumber } from '../ds/dist/tooling/utilities.ts'
+
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ''
+const BUILD_NUMBER = createBuildNumber()
 
 const nextConfig: NextConfig = {
 	output: 'export',
-
-	compiler: {
-		emotion: true,
+	basePath: BASE_PATH,
+	assetPrefix: BASE_PATH,
+	env: {
+		ENV__BASE_PATH: BASE_PATH,
+		ENV__BUILD_NUMBER: BUILD_NUMBER,
 	},
+	compiler: { emotion: true },
 
 	turbopack: {
 		root: path.resolve(__dirname, '..'), // Monorepo root
@@ -21,17 +28,23 @@ const nextConfig: NextConfig = {
 		},
 	},
 
-	webpack: (config) => {
-		config.resolve.alias = {
-			...config.resolve.alias,
-			'@ds': path.resolve(__dirname, '../ds/dist'),
-		}
-		config.module.rules.push({
-			test: /\.svg$/,
-			use: ['@svgr/webpack'],
-		})
-		return config
-	},
+	// webpack: (config) => {
+	// 	config.resolve.alias = {
+	// 		...config.resolve.alias,
+	// 		'@ds': path.resolve(__dirname, '../ds/dist'),
+	// 	}
+	// 	config.module.rules.push({
+	// 		test: /\.svg$/,
+	// 		use: ['@svgr/webpack'],
+	// 	})
+	// 	config.plugins?.push(
+	// 		new webpack.DefinePlugin({
+	// 			ENV__BASE_PATH: JSON.stringify(BASE_PATH),
+	// 			ENV__BUILD_NUMBER: BUILD_NUMBER,
+	// 		})
+	// 	)
+	// 	return config
+	// },
 }
 
 export default nextConfig
