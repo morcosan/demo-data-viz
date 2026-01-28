@@ -17,7 +17,7 @@ export const DesktopSidebar = (props: Props) => {
 	const [isFocused, setIsFocused] = useState(false)
 	const [isPinned, setIsPinned] = useState(false)
 	const contentRef = useRef<HTMLDivElement>(null)
-	const isCollapsed = !isHovered && !isPinned && !props.hasActivePopup
+	const isCollapsed = !isHovered && !isPinned && !isFocused && !props.hasActivePopup
 
 	const expandedClass = 'w-lg-7 min-w-lg-7'
 	const collapsedClass = 'w-md-6 min-w-md-6'
@@ -52,15 +52,27 @@ export const DesktopSidebar = (props: Props) => {
 		}
 	}
 
-	const onMouseDownNavOverlay = (event: ReactMouseEvent) => {
+	const onMouseDownOverlay = (event: ReactMouseEvent) => {
 		event.stopPropagation()
 		setIsHovered(true)
 		setIsFocused(true)
 	}
 
-	const onMouseLeaveSidebar = () => {
+	const onMouseLeaveContent = () => {
 		!isFocused && setIsHovered(Boolean(props.hasActivePopup))
 		setIsFocused(false)
+	}
+
+	const onFocusCapture = () => {
+		setIsFocused(true)
+	}
+
+	const onBlurCapture = (event: ReactFocusEvent) => {
+		const target = event.relatedTarget as HTMLElement
+
+		if (contentRef.current && !contentRef.current.contains(target)) {
+			setIsFocused(false)
+		}
 	}
 
 	useEffect(() => {
@@ -80,7 +92,7 @@ export const DesktopSidebar = (props: Props) => {
 			{/* FUNCTIONAL OVERLAY */}
 			<div
 				className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}
-				onMouseDown={onMouseDownNavOverlay}
+				onMouseDown={onMouseDownOverlay}
 				onMouseEnter={() => setIsHovered(true)}
 			/>
 
@@ -92,7 +104,9 @@ export const DesktopSidebar = (props: Props) => {
 				ref={contentRef}
 				aria-label={t('core.label.navigationMenu')}
 				className={sidebarClass}
-				onMouseLeave={onMouseLeaveSidebar}
+				onMouseLeave={onMouseLeaveContent}
+				onFocusCapture={onFocusCapture}
+				onBlurCapture={onBlurCapture}
 			>
 				{/* LOGO */}
 				<AppLogo collapsed={isCollapsed} className="mb-xs-4" />
