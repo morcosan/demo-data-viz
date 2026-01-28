@@ -5,13 +5,19 @@ import { type ReactNode } from 'react'
 import { DesktopNav } from './_partials/desktop-nav.tsx'
 import { MobileNav } from './_partials/mobile-nav.tsx'
 
-interface Props extends ReactProps {
-	navContent: ReactNode
+export interface SideNavProps extends ReactProps {
+	/** Content to be rendered inside the sidenav */
+	/**
+	 * ontent to be rendered inside the sidenav
+	 * @param closeMenu 	- Callback to close the menu on mobile (no effect on desktop)
+	 */
+	navContentFn: (closeMenu: () => void) => ReactNode
+	/** Flag that forces the sidebar to stay expanded on desktop (no effect on mobile) */
 	hasActivePopup?: boolean
 }
 
 /** Sidebar with a navigation menu */
-export const SideNav = (props: Props) => {
+export const SideNav = (props: SideNavProps) => {
 	const { isViewportMaxLG } = useViewportService()
 
 	return (
@@ -23,9 +29,9 @@ export const SideNav = (props: Props) => {
 			}}
 		>
 			{isViewportMaxLG ? (
-				<MobileNav navContent={props.navContent} />
+				<MobileNav navContentFn={props.navContentFn} />
 			) : (
-				<DesktopNav navContent={props.navContent} hasActivePopup={props.hasActivePopup} />
+				<DesktopNav navContentFn={props.navContentFn} hasActivePopup={props.hasActivePopup} />
 			)}
 
 			{/* PAGE CONTENT */}

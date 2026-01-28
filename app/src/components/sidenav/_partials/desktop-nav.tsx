@@ -1,12 +1,12 @@
 import { IconButton, PinSvg, useViewportService } from '@ds/core.ts'
-import { type ReactNode, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppLogo } from './_app-logo.tsx'
 
 const COOKIE_KEY = 'app-pinned-navbar'
 
 interface Props {
-	navContent: ReactNode
+	navContentFn: (closeMenu: () => void) => ReactNode
 	hasActivePopup?: boolean
 }
 
@@ -19,6 +19,8 @@ export const DesktopNav = (props: Props) => {
 	const sidebarRef = useRef<HTMLDivElement>(null)
 	const isCollapsed = !isHovered && !isPinned && !isFocused && !props.hasActivePopup
 
+	const navContent = useMemo(() => props.navContentFn(() => {}), [props.navContentFn])
+
 	const expandedClass = 'w-lg-7 min-w-lg-7'
 	const collapsedClass = 'w-md-6 min-w-md-6'
 	const sidebarClass = cx(
@@ -28,7 +30,6 @@ export const DesktopNav = (props: Props) => {
 		'px-a11y-scrollbar py-xs-3 flex flex-col',
 		'border-color-border-shadow bg-color-bg-card border-r shadow-lg'
 	)
-
 	const pinColorClass = cx(isPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
 
 	const loadPinConfig = () => {
@@ -117,7 +118,7 @@ export const DesktopNav = (props: Props) => {
 					</IconButton>
 
 					{/* CONTENT */}
-					{props.navContent}
+					{navContent}
 				</nav>
 			</div>
 		</>
