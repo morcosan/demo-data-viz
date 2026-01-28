@@ -3,5 +3,10 @@
 		"action": {
 			"close": "Close"
 		}
+	},
+	"core": {
+		"label": {
+			"navigationBar": "Navigation bar"
+		}
 	}
 }

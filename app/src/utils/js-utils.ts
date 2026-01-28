@@ -1,5 +1,3 @@
-const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
-
 const LOG = (...args: unknown[]) => {
 	const format: unknown[] = ['%c', 'color: lightgreen']
 
@@ -16,4 +14,4 @@ const LOG = (...args: unknown[]) => {
 	console.log(...format.concat(args))
 }
 
-export { LOG, wait }
+export { LOG }

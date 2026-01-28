@@ -1,3 +1,6 @@
+import clsx from 'clsx'
+
+globalThis.cx = clsx
 globalThis.ENV__BASE_PATH = process.env.ENV__BASE_PATH || ''
 globalThis.ENV__BUILD_NUMBER = process.env.ENV__BUILD_NUMBER || '0'
 
