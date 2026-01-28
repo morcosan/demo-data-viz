@@ -9,7 +9,7 @@ export interface SideNavProps extends ReactProps {
 	/** Content to be rendered inside the sidenav */
 	/**
 	 * ontent to be rendered inside the sidenav
-	 * @param closeMenu 	- Callback to close the menu on mobile (no effect on desktop)
+	 * @param closeMenu - Callback to close the menu on mobile (no effect on desktop)
 	 */
 	navContentFn: (closeMenu: () => void) => ReactNode
 	/** Flag that forces the sidebar to stay expanded on desktop (no effect on mobile) */
