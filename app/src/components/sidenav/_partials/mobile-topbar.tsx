@@ -14,7 +14,7 @@ export const MobileTopbar = ({ hasMenu, onToggleNavMenu }: Props) => {
 		<nav
 			aria-label={t('core.label.navigationBar')}
 			className="z-navbar border-color-border-shadow fixed top-0 left-0 w-full border-t shadow-sm"
-			style={{ minHeight: 'var(--app-spacing-navbar-h)', height: 'var(--app-spacing-navbar-h)' }}
+			style={{ minHeight: 'var(--topbar-h)', height: 'var(--topbar-h)' }}
 		>
 			<div className="bg-color-bg-card px-xs-2 flex h-full items-center">
 				{/* MENU */}

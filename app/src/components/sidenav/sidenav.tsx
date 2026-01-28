@@ -27,8 +27,11 @@ export const Sidenav = (props: Props) => {
 
 	return (
 		<div
-			className={cx('flex h-full w-full', isViewportMaxLG && 'flex-col')}
-			style={{ paddingTop: isViewportMaxLG ? 'var(--app-spacing-navbar-h)' : 0 }}
+			className={cx('flex h-full w-full flex-1', isViewportMaxLG && 'flex-col')}
+			style={{
+				'--topbar-h': 'var(--ds-spacing-sm-6)',
+				paddingTop: isViewportMaxLG ? 'var(--topbar-h)' : 0,
+			}}
 		>
 			{isViewportMaxLG ? (
 				<>
@@ -38,7 +41,7 @@ export const Sidenav = (props: Props) => {
 					{/* MENU OVERLAY */}
 					<div
 						className={cx('absolute-overlay backdrop-blur-subtle', !showsNavMenu && 'hidden')}
-						style={{ top: 'var(--app-spacing-navbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
+						style={{ top: 'var(--topbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
 						onClick={() => setShowsNavMenu(false)}
 					/>
 					{/* MENU CONTENT */}
@@ -51,7 +54,7 @@ export const Sidenav = (props: Props) => {
 							showsNavMenu ? 'translate-x-0' : '-translate-x-full',
 							!isMenuVisible && 'invisible'
 						)}
-						style={{ top: 'var(--app-spacing-navbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
+						style={{ top: 'var(--topbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
 					>
 						{/*{showsSettingsMenu ? (*/}
 						{/*	<SettingsMenu onClickBack={onToggleSettings} onClickLanguage={() => setShowsI18nModal(true)} />*/}

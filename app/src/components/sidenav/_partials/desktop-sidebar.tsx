@@ -3,11 +3,11 @@ import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppLogo } from './_app-logo.tsx'
 
+const COOKIE_KEY = 'app-pinned-navbar'
+
 interface Props {
 	menu?: ReactNode
 }
-
-const COOKIE_KEY = 'app-pinned-navbar'
 
 export const DesktopSidebar = (props: Props) => {
 	const { t } = useTranslation()
@@ -36,7 +36,7 @@ export const DesktopSidebar = (props: Props) => {
 
 	const expandedClass = 'w-lg-7 min-w-lg-7'
 	const collapsedClass = 'w-md-6 min-w-md-6'
-	const navbarClass = cx(
+	const sidebarClass = cx(
 		'z-navbar absolute top-0 left-0 h-full',
 		'transition-all duration-100 ease-in-out',
 		isNavCollapsed ? collapsedClass : expandedClass,
@@ -90,7 +90,7 @@ export const DesktopSidebar = (props: Props) => {
 			<nav
 				ref={navbarRef}
 				aria-label={t('core.label.navigationMenu')}
-				className={navbarClass}
+				className={sidebarClass}
 				onMouseLeave={onMouseLeaveNavbar}
 			>
 				{/* LOGO */}
