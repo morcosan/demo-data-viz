@@ -21,7 +21,7 @@ export const MobileTopbar = (props: Props) => {
 			{/* TOPBAR */}
 			<nav
 				aria-label={t('core.label.navigationBar')}
-				className="z-navbar border-color-border-shadow fixed top-0 left-0 w-full border-t shadow-sm"
+				className="z-navbar border-color-border-shadow absolute top-0 left-0 w-full border-t shadow-sm"
 				style={{ minHeight: 'var(--topbar-h)', height: 'var(--topbar-h)' }}
 			>
 				<div className="bg-color-bg-card px-xs-2 flex h-full items-center">
@@ -49,7 +49,7 @@ export const MobileTopbar = (props: Props) => {
 			<nav
 				aria-label={t('core.label.navigationMenu')}
 				className={cx(
-					'mr-button-h-md fixed right-0 bottom-0 left-0',
+					'mr-button-h-md absolute right-0 bottom-0 left-0',
 					'border-color-border-shadow bg-color-bg-card border-t border-r shadow-lg',
 					'transition-transform duration-300 ease-in-out',
 					showsNavMenu ? 'translate-x-0' : '-translate-x-full',

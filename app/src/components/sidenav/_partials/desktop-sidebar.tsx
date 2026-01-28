@@ -80,42 +80,46 @@ export const DesktopSidebar = (props: Props) => {
 	}, [])
 
 	return (
-		<div className={cx('relative', isPinned ? expandedClass : collapsedClass)}>
-			{/* FUNCTIONAL OVERLAY */}
+		<>
+			{/* PAGE OVERLAY */}
 			<div
-				className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}
-				onMouseDown={onMouseDownOverlay}
-				onMouseEnter={() => setIsHovered(true)}
+				className={isCollapsed || isPinned || false ? 'hidden' : 'absolute-overlay z-navbar backdrop-blur-subtle'}
 			/>
 
-			{/* PAGE OVERLAY */}
-			<div className={isCollapsed || isPinned ? 'hidden' : 'fixed-overlay z-navbar backdrop-blur-subtle'} />
+			<div className={cx('relative', isPinned ? expandedClass : collapsedClass)}>
+				{/* FUNCTIONAL OVERLAY */}
+				<div
+					className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}
+					onMouseDown={onMouseDownOverlay}
+					onMouseEnter={() => setIsHovered(true)}
+				/>
 
-			{/* SIDEBAR */}
-			<nav
-				ref={sidebarRef}
-				aria-label={t('core.label.navigationMenu')}
-				className={sidebarClass}
-				onMouseLeave={onMouseLeave}
-				onFocusCapture={onFocusInside}
-				onBlurCapture={onBlurInside}
-			>
-				{/* LOGO */}
-				<AppLogo collapsed={isCollapsed} className="mb-xs-4" />
-
-				{/* PIN */}
-				<IconButton
-					tooltip={isPinned ? 'Unpin nav menu' : 'Pin nav menu'}
-					size="sm"
-					className={cx('right-xs-2 top-xs-2 absolute!', isCollapsed && 'hidden!')}
-					onClick={() => onClickPinned(!isPinned)}
+				{/* SIDEBAR */}
+				<nav
+					ref={sidebarRef}
+					aria-label={t('core.label.navigationMenu')}
+					className={sidebarClass}
+					onMouseLeave={onMouseLeave}
+					onFocusCapture={onFocusInside}
+					onBlurCapture={onBlurInside}
 				>
-					<PinSvg className={cx('h-xs-5', pinColorClass)} />
-				</IconButton>
+					{/* LOGO */}
+					<AppLogo collapsed={isCollapsed} className="mb-xs-4" />
 
-				{/* CONTENT */}
-				{props.navContent}
-			</nav>
-		</div>
+					{/* PIN */}
+					<IconButton
+						tooltip={isPinned ? 'Unpin nav menu' : 'Pin nav menu'}
+						size="sm"
+						className={cx('right-xs-2 top-xs-2 absolute!', isCollapsed && 'hidden!')}
+						onClick={() => onClickPinned(!isPinned)}
+					>
+						<PinSvg className={cx('h-xs-5', pinColorClass)} />
+					</IconButton>
+
+					{/* CONTENT */}
+					{props.navContent}
+				</nav>
+			</div>
+		</>
 	)
 }
