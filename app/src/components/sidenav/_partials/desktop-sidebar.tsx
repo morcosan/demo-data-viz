@@ -6,65 +6,61 @@ import { AppLogo } from './_app-logo.tsx'
 const COOKIE_KEY = 'app-pinned-navbar'
 
 interface Props {
-	menu?: ReactNode
+	navContent: ReactNode
+	hasActivePopup?: boolean
 }
 
 export const DesktopSidebar = (props: Props) => {
 	const { t } = useTranslation()
-	const [isSettingsOpened, setIsSettingsOpened] = useState(false)
-	const [hasNavHover, setHasNavHover] = useState(false)
-	const [hasNavFocus, setHasNavFocus] = useState(false)
 	const { isViewportMinXL } = useViewportService()
-	const [isNavPinned, setIsNavPinned] = useState(false)
-
-	const navbarRef = useRef<HTMLDivElement>(null)
-	const settingsRef = useRef<HTMLDivElement>(null)
-
-	const isNavCollapsed = !hasNavHover && !isNavPinned
+	const [isHovered, setIsHovered] = useState(false)
+	const [isFocused, setIsFocused] = useState(false)
+	const [isPinned, setIsPinned] = useState(false)
+	const contentRef = useRef<HTMLDivElement>(null)
+	const isCollapsed = !isHovered && !isPinned && !props.hasActivePopup
 
 	const expandedClass = 'w-lg-7 min-w-lg-7'
 	const collapsedClass = 'w-md-6 min-w-md-6'
 	const sidebarClass = cx(
 		'z-navbar absolute top-0 left-0 h-full',
 		'transition-all duration-100 ease-in-out',
-		isNavCollapsed ? collapsedClass : expandedClass,
+		isCollapsed ? collapsedClass : expandedClass,
 		'px-a11y-scrollbar py-xs-3 flex flex-col',
 		'border-color-border-shadow bg-color-bg-card border-r shadow-lg'
 	)
 
-	const pinColorClass = cx(isNavPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
+	const pinColorClass = cx(isPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
 
 	const loadPinConfig = () => {
 		const cookie = localStorage.getItem(COOKIE_KEY)
 		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinXL)
 
 		localStorage.setItem(COOKIE_KEY, isPinned ? 'true' : 'false')
-		setIsNavPinned(isPinned)
+		setIsPinned(isPinned)
 	}
 
 	const onClickPinned = (value: boolean) => {
-		setIsNavPinned(value)
+		setIsPinned(value)
 		localStorage.setItem(COOKIE_KEY, value ? 'true' : 'false')
 	}
 
 	const onClickWindow = (event: MouseEvent) => {
 		const target = event.target as HTMLElement
-		const settings = settingsRef.current
-		const navbar = navbarRef.current
 
-		!settings?.contains(target) && setIsSettingsOpened(false)
-		!navbar?.contains(target) && setHasNavHover(false)
+		if (contentRef.current) {
+			!contentRef.current.contains(target) && setIsHovered(false)
+		}
 	}
 
 	const onMouseDownNavOverlay = (event: ReactMouseEvent) => {
 		event.stopPropagation()
-		setHasNavHover(true)
-		setHasNavFocus(true)
+		setIsHovered(true)
+		setIsFocused(true)
 	}
 
-	const onMouseLeaveNavbar = () => {
-		!hasNavFocus && setHasNavHover(isSettingsOpened)
-		setHasNavFocus(false)
+	const onMouseLeaveSidebar = () => {
+		!isFocused && setIsHovered(Boolean(props.hasActivePopup))
+		setIsFocused(false)
 	}
 
 	useEffect(() => {
@@ -80,39 +76,39 @@ export const DesktopSidebar = (props: Props) => {
 	}, [])
 
 	return (
-		<div className={cx('relative', isNavPinned ? expandedClass : collapsedClass)}>
-			{/* NAV OVERLAY */}
+		<div className={cx('relative', isPinned ? expandedClass : collapsedClass)}>
+			{/* FUNCTIONAL OVERLAY */}
 			<div
-				className={cx('absolute-overlay z-tooltip', !isNavCollapsed && 'hidden')}
+				className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}
 				onMouseDown={onMouseDownNavOverlay}
-				onMouseEnter={() => setHasNavHover(true)}
+				onMouseEnter={() => setIsHovered(true)}
 			/>
 
 			{/* PAGE OVERLAY */}
-			<div className={isNavCollapsed || isNavPinned ? 'hidden' : 'fixed-overlay z-navbar backdrop-blur-subtle'} />
+			<div className={isCollapsed || isPinned ? 'hidden' : 'fixed-overlay z-navbar backdrop-blur-subtle'} />
 
-			{/* SIDEBAR */}
+			{/* CONTENT */}
 			<nav
-				ref={navbarRef}
+				ref={contentRef}
 				aria-label={t('core.label.navigationMenu')}
 				className={sidebarClass}
-				onMouseLeave={onMouseLeaveNavbar}
+				onMouseLeave={onMouseLeaveSidebar}
 			>
 				{/* LOGO */}
-				<AppLogo collapsed={isNavCollapsed} className="mb-xs-4" />
+				<AppLogo collapsed={isCollapsed} className="mb-xs-4" />
 
 				{/* PIN */}
 				<IconButton
-					tooltip={isNavPinned ? 'Unpin nav menu' : 'Pin nav menu'}
+					tooltip={isPinned ? 'Unpin nav menu' : 'Pin nav menu'}
 					size="sm"
-					className="right-xs-2 top-xs-2 absolute!"
-					onClick={() => onClickPinned(!isNavPinned)}
+					className={cx('right-xs-2 top-xs-2 absolute!', isCollapsed && 'hidden!')}
+					onClick={() => onClickPinned(!isPinned)}
 				>
 					<PinSvg className={cx('h-xs-5', pinColorClass)} />
 				</IconButton>
 
 				{/* MENU */}
-				{props.menu}
+				{props.navContent}
 			</nav>
 		</div>
 	)

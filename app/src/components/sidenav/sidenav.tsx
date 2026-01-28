@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { DesktopSidebar } from './_partials/desktop-sidebar.tsx'
 
 interface Props extends ReactProps {
-	modals: ReactNode
+	navContent: ReactNode
+	hasActivePopup?: boolean
 }
 
 /** Sidebar with a navigation menu */
@@ -15,11 +16,6 @@ export const Sidenav = (props: Props) => {
 	const { isViewportMaxLG } = useViewportService()
 	const [showsNavMenu, setShowsNavMenu] = useState(false)
 	const [isMenuVisible, setIsMenuVisible] = useState(false)
-
-	const contentClass = cx(
-		'relative',
-		'px-xs-8 pb-sm-5 pt-xs-7 md:px-sm-5 lg:max-w-xxl-2 lg:pb-sm-9 lg:pt-sm-3 flex flex-col lg:mx-auto'
-	)
 
 	useEffect(() => {
 		showsNavMenu ? setIsMenuVisible(true) : wait(300).then(() => setIsMenuVisible(false))
@@ -68,16 +64,11 @@ export const Sidenav = (props: Props) => {
 					</nav>
 				</>
 			) : (
-				<DesktopSidebar />
+				<DesktopSidebar navContent={props.navContent} hasActivePopup={props.hasActivePopup} />
 			)}
 
-			{/* PAGE CONTENT */}
-			<main className="h-full w-full flex-1 overflow-x-hidden">
-				<div className={contentClass}>{props.children}</div>
-
-				{/* MODALS */}
-				{props.modals}
-			</main>
+			{/* CONTENT */}
+			<main className="h-full w-full flex-1 overflow-x-hidden">{props.children}</main>
 		</div>
 	)
 }

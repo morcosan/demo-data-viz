@@ -1,4 +1,4 @@
-import { createArgsConfig } from '@ds/docs/core.ts'
+import { createArgsConfig, loremLongText } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { Sidenav } from './sidenav.tsx'
 
@@ -6,7 +6,15 @@ const meta: Meta<typeof Sidenav> = {
 	component: Sidenav,
 	title: 'Components / Sidenav',
 	...createArgsConfig<typeof Sidenav>({
-		args: {},
+		args: {
+			slots: {
+				navContent: 'Nav Content',
+				children: loremLongText(),
+			},
+			props: {
+				hasActivePopup: false,
+			},
+		},
 	}),
 }
 
