@@ -16,7 +16,7 @@ export const DesktopSidebar = (props: Props) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const [isFocused, setIsFocused] = useState(false)
 	const [isPinned, setIsPinned] = useState(false)
-	const contentRef = useRef<HTMLDivElement>(null)
+	const sidebarRef = useRef<HTMLDivElement>(null)
 	const isCollapsed = !isHovered && !isPinned && !isFocused && !props.hasActivePopup
 
 	const expandedClass = 'w-lg-7 min-w-lg-7'
@@ -45,8 +45,8 @@ export const DesktopSidebar = (props: Props) => {
 
 	const onClickWindow = (event: MouseEvent) => {
 		const target = event.target as HTMLElement
-		const content = contentRef.current
-		content && !content.contains(target) && setIsHovered(false)
+		const sidebar = sidebarRef.current
+		sidebar && !sidebar.contains(target) && setIsHovered(false)
 	}
 
 	const onMouseDownOverlay = (event: ReactMouseEvent) => {
@@ -55,19 +55,19 @@ export const DesktopSidebar = (props: Props) => {
 		setIsFocused(true)
 	}
 
-	const onMouseLeaveContent = () => {
+	const onMouseLeave = () => {
 		!isFocused && setIsHovered(Boolean(props.hasActivePopup))
 		setIsFocused(false)
 	}
 
-	const onFocusCapture = () => {
+	const onFocusInside = () => {
 		setIsFocused(true)
 	}
 
-	const onBlurCapture = (event: ReactFocusEvent) => {
+	const onBlurInside = (event: ReactFocusEvent) => {
 		const target = event.relatedTarget as HTMLElement
-		const content = contentRef.current
-		content && !content.contains(target) && setIsFocused(false)
+		const sidebar = sidebarRef.current
+		sidebar && !sidebar.contains(target) && setIsFocused(false)
 	}
 
 	useEffect(() => {
@@ -91,14 +91,14 @@ export const DesktopSidebar = (props: Props) => {
 			{/* PAGE OVERLAY */}
 			<div className={isCollapsed || isPinned ? 'hidden' : 'fixed-overlay z-navbar backdrop-blur-subtle'} />
 
-			{/* CONTENT */}
+			{/* SIDEBAR */}
 			<nav
-				ref={contentRef}
+				ref={sidebarRef}
 				aria-label={t('core.label.navigationMenu')}
 				className={sidebarClass}
-				onMouseLeave={onMouseLeaveContent}
-				onFocusCapture={onFocusCapture}
-				onBlurCapture={onBlurCapture}
+				onMouseLeave={onMouseLeave}
+				onFocusCapture={onFocusInside}
+				onBlurCapture={onBlurInside}
 			>
 				{/* LOGO */}
 				<AppLogo collapsed={isCollapsed} className="mb-xs-4" />
@@ -113,7 +113,7 @@ export const DesktopSidebar = (props: Props) => {
 					<PinSvg className={cx('h-xs-5', pinColorClass)} />
 				</IconButton>
 
-				{/* MENU */}
+				{/* CONTENT */}
 				{props.navContent}
 			</nav>
 		</div>
