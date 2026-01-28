@@ -79,10 +79,10 @@ const toolbarConfig = {
 			description: 'Change color theme',
 			toolbar: {
 				title: 'Light',
-				icon: 'sun',
+				icon: 'sun' as any,
 				items: [
-					{ value: 'light', title: 'Light', icon: 'sun' },
-					{ value: 'dark', title: 'Dark', icon: 'moon' },
+					{ value: 'light', title: 'Light', icon: 'sun' as any },
+					{ value: 'dark', title: 'Dark', icon: 'moon' as any },
 				],
 			},
 		},
@@ -90,11 +90,11 @@ const toolbarConfig = {
 			description: 'Change canvas background',
 			toolbar: {
 				title: 'Grid',
-				icon: 'photo',
+				icon: 'photo' as any,
 				items: [
-					{ value: 'grid', title: 'Grid', icon: 'photo' },
-					{ value: 'tiles', title: 'Tiles', icon: 'photo' },
-					{ value: 'blank', title: 'Blank', icon: 'photo' },
+					{ value: 'grid', title: 'Grid', icon: 'photo' as any },
+					{ value: 'tiles', title: 'Tiles', icon: 'photo' as any },
+					{ value: 'blank', title: 'Blank', icon: 'photo' as any },
 				],
 			},
 		},
