@@ -27,7 +27,7 @@ export const Sidenav = (props: Props) => {
 
 	return (
 		<div
-			className={cx('flex h-full w-full flex-1', isViewportMaxLG && 'flex-col')}
+			className={cx('flex h-full w-full flex-1 items-stretch', isViewportMaxLG && 'flex-col')}
 			style={{
 				'--topbar-h': 'var(--ds-spacing-sm-6)',
 				paddingTop: isViewportMaxLG ? 'var(--topbar-h)' : 0,

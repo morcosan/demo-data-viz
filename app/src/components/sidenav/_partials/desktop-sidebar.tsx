@@ -17,18 +17,6 @@ export const DesktopSidebar = (props: Props) => {
 	const { isViewportMinXL } = useViewportService()
 	const [isNavPinned, setIsNavPinned] = useState(false)
 
-	const loadPinConfig = () => {
-		const cookie = localStorage.getItem(COOKIE_KEY)
-		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinXL)
-
-		localStorage.setItem(COOKIE_KEY, isPinned ? 'true' : 'false')
-		setIsNavPinned(isPinned)
-	}
-
-	useEffect(() => {
-		loadPinConfig()
-	}, [])
-
 	const navbarRef = useRef<HTMLDivElement>(null)
 	const settingsRef = useRef<HTMLDivElement>(null)
 
@@ -45,6 +33,19 @@ export const DesktopSidebar = (props: Props) => {
 	)
 
 	const pinColorClass = cx(isNavPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
+
+	const loadPinConfig = () => {
+		const cookie = localStorage.getItem(COOKIE_KEY)
+		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinXL)
+
+		localStorage.setItem(COOKIE_KEY, isPinned ? 'true' : 'false')
+		setIsNavPinned(isPinned)
+	}
+
+	const onClickPinned = (value: boolean) => {
+		setIsNavPinned(value)
+		localStorage.setItem(COOKIE_KEY, value ? 'true' : 'false')
+	}
 
 	const onClickWindow = (event: MouseEvent) => {
 		const target = event.target as HTMLElement
@@ -67,6 +68,10 @@ export const DesktopSidebar = (props: Props) => {
 	}
 
 	useEffect(() => {
+		loadPinConfig()
+	}, [])
+
+	useEffect(() => {
 		window.addEventListener('mousedown', onClickWindow)
 
 		return () => {
@@ -75,7 +80,7 @@ export const DesktopSidebar = (props: Props) => {
 	}, [])
 
 	return (
-		<div className={cx('relative h-full', isNavPinned ? expandedClass : collapsedClass)}>
+		<div className={cx('relative', isNavPinned ? expandedClass : collapsedClass)}>
 			{/* NAV OVERLAY */}
 			<div
 				className={cx('absolute-overlay z-tooltip', !isNavCollapsed && 'hidden')}
@@ -100,8 +105,8 @@ export const DesktopSidebar = (props: Props) => {
 				<IconButton
 					tooltip={isNavPinned ? 'Unpin nav menu' : 'Pin nav menu'}
 					size="sm"
-					className="right-xs-2 top-xs-2 absolute"
-					onClick={() => setIsNavPinned(!isNavPinned)}
+					className="right-xs-2 top-xs-2 absolute!"
+					onClick={() => onClickPinned(!isNavPinned)}
 				>
 					<PinSvg className={cx('h-xs-5', pinColorClass)} />
 				</IconButton>
