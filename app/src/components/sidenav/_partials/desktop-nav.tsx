@@ -10,7 +10,7 @@ interface Props {
 	hasActivePopup?: boolean
 }
 
-export const DesktopSidebar = (props: Props) => {
+export const DesktopNav = (props: Props) => {
 	const { t } = useTranslation()
 	const { isViewportMinXL } = useViewportService()
 	const [isHovered, setIsHovered] = useState(false)

@@ -2,8 +2,8 @@
 
 import { useViewportService } from '@ds/core.ts'
 import { type ReactNode } from 'react'
-import { DesktopSidebar } from './_partials/desktop-sidebar.tsx'
-import { MobileTopbar } from './_partials/mobile-topbar.tsx'
+import { DesktopNav } from './_partials/desktop-nav.tsx'
+import { MobileNav } from './_partials/mobile-nav.tsx'
 
 interface Props extends ReactProps {
 	navContent: ReactNode
@@ -11,7 +11,7 @@ interface Props extends ReactProps {
 }
 
 /** Sidebar with a navigation menu */
-export const Sidenav = (props: Props) => {
+export const SideNav = (props: Props) => {
 	const { isViewportMaxLG } = useViewportService()
 
 	return (
@@ -23,9 +23,9 @@ export const Sidenav = (props: Props) => {
 			}}
 		>
 			{isViewportMaxLG ? (
-				<MobileTopbar navContent={props.navContent} />
+				<MobileNav navContent={props.navContent} />
 			) : (
-				<DesktopSidebar navContent={props.navContent} hasActivePopup={props.hasActivePopup} />
+				<DesktopNav navContent={props.navContent} hasActivePopup={props.hasActivePopup} />
 			)}
 
 			{/* PAGE CONTENT */}

@@ -7,17 +7,25 @@ interface Props {
 	navContent: ReactNode
 }
 
-export const MobileTopbar = (props: Props) => {
+export const MobileNav = (props: Props) => {
 	const { t } = useTranslation()
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const [isMenuVisible, setIsMenuVisible] = useState(false)
-	const [showsNavMenu, setShowsNavMenu] = useState(false)
 
 	useEffect(() => {
-		showsNavMenu ? setIsMenuVisible(true) : wait(300).then(() => setIsMenuVisible(false))
-	}, [showsNavMenu])
+		// Hide menu after animation ends
+		isMenuOpen ? setIsMenuVisible(true) : wait(300).then(() => setIsMenuVisible(false))
+	}, [isMenuOpen])
 
 	return (
 		<>
+			{/* PAGE OVERLAY */}
+			<div
+				className={cx('absolute-overlay backdrop-blur-subtle', !isMenuOpen && 'hidden')}
+				style={{ top: 'var(--topbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
+				onClick={() => setIsMenuOpen(false)}
+			/>
+
 			{/* TOPBAR */}
 			<nav
 				aria-label={t('core.label.navigationBar')}
@@ -28,8 +36,8 @@ export const MobileTopbar = (props: Props) => {
 					{/* MENU BUTTON */}
 					<IconButton
 						tooltip={t('core.action.openMenu')}
-						pressed={showsNavMenu}
-						onClick={() => setShowsNavMenu(!showsNavMenu)}
+						pressed={isMenuOpen}
+						onClick={() => setIsMenuOpen(!isMenuOpen)}
 					>
 						<MenuSvg className="h-xs-9" />
 					</IconButton>
@@ -39,20 +47,14 @@ export const MobileTopbar = (props: Props) => {
 				</div>
 			</nav>
 
-			{/* PAGE OVERLAY */}
-			<div
-				className={cx('absolute-overlay backdrop-blur-subtle', !showsNavMenu && 'hidden')}
-				style={{ top: 'var(--topbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
-				onClick={() => setShowsNavMenu(false)}
-			/>
-			{/* CONTENT */}
+			{/* MENU */}
 			<nav
 				aria-label={t('core.label.navigationMenu')}
 				className={cx(
 					'mr-button-h-md absolute right-0 bottom-0 left-0',
 					'border-color-border-shadow bg-color-bg-card border-t border-r shadow-lg',
 					'transition-transform duration-300 ease-in-out',
-					showsNavMenu ? 'translate-x-0' : '-translate-x-full',
+					isMenuOpen ? 'translate-x-0' : '-translate-x-full',
 					!isMenuVisible && 'invisible'
 				)}
 				style={{ top: 'var(--topbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
