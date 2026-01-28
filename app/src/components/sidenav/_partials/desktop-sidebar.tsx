@@ -34,9 +34,8 @@ export const DesktopSidebar = (props: Props) => {
 	const loadPinConfig = () => {
 		const cookie = localStorage.getItem(COOKIE_KEY)
 		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinXL)
-
-		localStorage.setItem(COOKIE_KEY, isPinned ? 'true' : 'false')
 		setIsPinned(isPinned)
+		localStorage.setItem(COOKIE_KEY, isPinned ? 'true' : 'false')
 	}
 
 	const onClickPinned = (value: boolean) => {
@@ -46,10 +45,8 @@ export const DesktopSidebar = (props: Props) => {
 
 	const onClickWindow = (event: MouseEvent) => {
 		const target = event.target as HTMLElement
-
-		if (contentRef.current) {
-			!contentRef.current.contains(target) && setIsHovered(false)
-		}
+		const content = contentRef.current
+		content && !content.contains(target) && setIsHovered(false)
 	}
 
 	const onMouseDownOverlay = (event: ReactMouseEvent) => {
@@ -69,17 +66,12 @@ export const DesktopSidebar = (props: Props) => {
 
 	const onBlurCapture = (event: ReactFocusEvent) => {
 		const target = event.relatedTarget as HTMLElement
-
-		if (contentRef.current && !contentRef.current.contains(target)) {
-			setIsFocused(false)
-		}
+		const content = contentRef.current
+		content && !content.contains(target) && setIsFocused(false)
 	}
 
 	useEffect(() => {
 		loadPinConfig()
-	}, [])
-
-	useEffect(() => {
 		window.addEventListener('mousedown', onClickWindow)
 
 		return () => {

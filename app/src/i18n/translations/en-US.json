@@ -7,7 +7,8 @@
 	"core": {
 		"label": {
 			"navigationBar": "Navigation bar",
-			"navigationMenu": "Navigation menu"
+			"navigationMenu": "Navigation menu",
+			"openMenu": "Open menu"
 		}
 	}
 }
