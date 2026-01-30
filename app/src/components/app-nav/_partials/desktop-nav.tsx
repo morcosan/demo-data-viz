@@ -13,7 +13,7 @@ interface Props {
 
 export const DesktopNav = (props: Props) => {
 	const { t } = useTranslation()
-	const { isViewportMinXL } = useViewportService()
+	const { isViewportMinLG } = useViewportService()
 	const [isHovered, setIsHovered] = useState(false)
 	const [isFocused, setIsFocused] = useState(false)
 	const [isPinned, setIsPinned] = useState(false)
@@ -35,7 +35,7 @@ export const DesktopNav = (props: Props) => {
 
 	const loadPinConfig = () => {
 		const cookie = localStorage.getItem(props.cookieKeyPinned)
-		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinXL)
+		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinLG)
 		setIsPinned(isPinned)
 		localStorage.setItem(props.cookieKeyPinned, isPinned ? 'true' : 'false')
 	}
