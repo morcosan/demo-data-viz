@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { AppNav } from '../components/app-nav/app-nav.tsx'
+import { Providers } from '../components/providers.tsx'
 import '../env.ts'
 import { DEFAULT_LOCALE } from '../i18n/i18n-config.ts'
 import '../styling/index.ts'
-import { Providers } from './providers.tsx'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 	return (
 		<html lang={DEFAULT_LOCALE}>
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<Providers>{children}</Providers>
+				<Providers>
+					<AppNav navContentFn={() => <div></div>}>{children}</AppNav>
+				</Providers>
 			</body>
 		</html>
 	)
