@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang={DEFAULT_LOCALE}>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body className={cx('antialiased', geistSans.variable, geistMono.variable)}>
 				<Providers>
 					<AppNav navContentFn={NavMenu}>{children}</AppNav>
 				</Providers>
