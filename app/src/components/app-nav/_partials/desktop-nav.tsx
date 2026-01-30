@@ -1,5 +1,5 @@
 import { IconButton, PinSvg, useViewportService } from '@ds/core.ts'
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppLogo } from './_app-logo.tsx'
 
@@ -7,6 +7,8 @@ const COOKIE_KEY = 'app-pinned-navbar'
 
 interface Props {
 	navContentFn: (closeMenu: () => void) => ReactNode
+	desktopMinWidth: string
+	desktopMaxWidth: string
 	hasActivePopup?: boolean
 }
 
@@ -21,12 +23,12 @@ export const DesktopNav = (props: Props) => {
 
 	const navContent = useMemo(() => props.navContentFn(() => {}), [props.navContentFn])
 
-	const expandedClass = 'w-lg-7 min-w-lg-7'
-	const collapsedClass = 'w-md-6 min-w-md-6'
+	const collapsedStyle: CSSProperties = { minWidth: props.desktopMinWidth, width: props.desktopMinWidth }
+	const expandedStyle: CSSProperties = { minWidth: props.desktopMaxWidth, width: props.desktopMaxWidth }
+	const sidebarStyle = isCollapsed ? collapsedStyle : expandedStyle
 	const sidebarClass = cx(
 		'z-navbar absolute top-0 left-0 h-full',
 		'transition-all duration-100 ease-in-out',
-		isCollapsed ? collapsedClass : expandedClass,
 		'px-a11y-scrollbar py-xs-3 flex flex-col',
 		'border-color-border-shadow bg-color-bg-card border-r shadow-lg'
 	)
@@ -50,6 +52,7 @@ export const DesktopNav = (props: Props) => {
 		sidebar && !sidebar.contains(target) && setIsHovered(false)
 	}
 
+	// On tablet, expand sidebar on tap
 	const onMouseDownOverlay = (event: ReactMouseEvent) => {
 		event.stopPropagation()
 		setIsHovered(true)
@@ -87,7 +90,7 @@ export const DesktopNav = (props: Props) => {
 				className={isCollapsed || isPinned || false ? 'hidden' : 'absolute-overlay z-navbar backdrop-blur-subtle'}
 			/>
 
-			<div className={cx('relative', isPinned ? expandedClass : collapsedClass)}>
+			<div className="relative" style={isPinned ? expandedStyle : collapsedStyle}>
 				{/* FUNCTIONAL OVERLAY */}
 				<div
 					className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}
@@ -100,6 +103,7 @@ export const DesktopNav = (props: Props) => {
 					ref={sidebarRef}
 					aria-label={t('core.label.navigationMenu')}
 					className={sidebarClass}
+					style={sidebarStyle}
 					onMouseLeave={onMouseLeave}
 					onFocusCapture={onFocusInside}
 					onBlurCapture={onBlurInside}

@@ -5,6 +5,7 @@ import { AppLogo } from './_app-logo.tsx'
 
 interface Props {
 	navContentFn: (closeMenu: () => void) => ReactNode
+	mobileHeight: string
 }
 
 export const MobileNav = (props: Props) => {
@@ -24,7 +25,7 @@ export const MobileNav = (props: Props) => {
 			{/* PAGE OVERLAY */}
 			<div
 				className={cx('absolute-overlay backdrop-blur-subtle', !isMenuOpen && 'hidden')}
-				style={{ top: 'var(--topbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
+				style={{ top: props.mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
 				onClick={() => setIsMenuOpen(false)}
 			/>
 
@@ -32,7 +33,7 @@ export const MobileNav = (props: Props) => {
 			<nav
 				aria-label={t('core.label.navigationBar')}
 				className="z-navbar border-color-border-shadow absolute top-0 left-0 w-full border-t shadow-sm"
-				style={{ minHeight: 'var(--topbar-h)', height: 'var(--topbar-h)' }}
+				style={{ minHeight: props.mobileHeight, height: props.mobileHeight }}
 			>
 				<div className="bg-color-bg-card px-xs-2 flex h-full items-center">
 					{/* MENU BUTTON */}
@@ -59,7 +60,7 @@ export const MobileNav = (props: Props) => {
 					isMenuOpen ? 'translate-x-0' : '-translate-x-full',
 					!isMenuVisible && 'invisible'
 				)}
-				style={{ top: 'var(--topbar-h)', zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
+				style={{ top: props.mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
 			>
 				<div className="px-a11y-scrollbar py-scrollbar-w pt-xs-9 flex h-full w-full flex-col">{navContent}</div>
 			</nav>
