@@ -1,6 +1,6 @@
 'use client'
 
-import { useDefaults, useViewportService } from '@ds/core.ts'
+import { useDefaults } from '@ds/core.ts'
 import { type ReactNode } from 'react'
 import { DesktopNav } from './_partials/desktop-nav.tsx'
 import { MobileNav } from './_partials/mobile-nav.tsx'
@@ -32,24 +32,21 @@ export const AppNav = (rawProps: AppNavProps) => {
 		desktopMaxWidth: 'var(--ds-spacing-lg-7)',
 		cookieKeyPinned: 'app-pinned-navbar',
 	} as const)
-	const { isViewportMaxLG } = useViewportService()
-
 	return (
 		<div
 			className="flex h-full w-full flex-1 flex-col items-stretch lg:flex-row lg:pt-0!"
 			style={{ paddingTop: props.mobileHeight }}
 		>
-			{isViewportMaxLG ? (
-				<MobileNav navContentFn={props.navContentFn} mobileHeight={props.mobileHeight!} />
-			) : (
-				<DesktopNav
-					navContentFn={props.navContentFn}
-					desktopMinWidth={props.desktopMinWidth!}
-					desktopMaxWidth={props.desktopMaxWidth!}
-					cookieKeyPinned={props.cookieKeyPinned!}
-					hasActivePopup={props.hasActivePopup}
-				/>
-			)}
+			{/* NAVIGATION */}
+			<MobileNav className="lg:hidden" navContentFn={props.navContentFn} mobileHeight={props.mobileHeight!} />
+			<DesktopNav
+				className="hidden lg:block"
+				navContentFn={props.navContentFn}
+				desktopMinWidth={props.desktopMinWidth!}
+				desktopMaxWidth={props.desktopMaxWidth!}
+				cookieKeyPinned={props.cookieKeyPinned!}
+				hasActivePopup={props.hasActivePopup}
+			/>
 
 			{/* PAGE CONTENT */}
 			<main className="h-full w-full flex-1 overflow-x-hidden">{props.children}</main>

@@ -1,9 +1,9 @@
-import { IconButton, PinSvg, useViewportService } from '@ds/core.ts'
+import { IconButton, PinSvg } from '@ds/core.ts'
 import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppLogo } from './_app-logo.tsx'
 
-interface Props {
+interface Props extends ReactProps {
 	navContentFn: (closeMenu: () => void) => ReactNode
 	desktopMinWidth: string
 	desktopMaxWidth: string
@@ -13,7 +13,6 @@ interface Props {
 
 export const DesktopNav = (props: Props) => {
 	const { t } = useTranslation()
-	const { isViewportMinLG } = useViewportService()
 	const [isHovered, setIsHovered] = useState(false)
 	const [isFocused, setIsFocused] = useState(false)
 	const [isPinned, setIsPinned] = useState(false)
@@ -35,7 +34,7 @@ export const DesktopNav = (props: Props) => {
 
 	const loadPinConfig = () => {
 		const cookie = localStorage.getItem(props.cookieKeyPinned)
-		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinLG)
+		const isPinned = cookie === 'true' || cookie !== 'false'
 		setIsPinned(isPinned)
 		localStorage.setItem(props.cookieKeyPinned, isPinned ? 'true' : 'false')
 	}
@@ -86,10 +85,14 @@ export const DesktopNav = (props: Props) => {
 		<>
 			{/* PAGE OVERLAY */}
 			<div
-				className={isCollapsed || isPinned || false ? 'hidden' : 'absolute-overlay z-navbar backdrop-blur-subtle'}
+				className={cx(
+					isCollapsed || isPinned || false ? 'hidden' : 'absolute-overlay z-navbar backdrop-blur-subtle',
+					props.className
+				)}
 			/>
 
-			<div className="relative" style={isPinned ? expandedStyle : collapsedStyle}>
+			{/* SIDEBAR WRAPPER */}
+			<div className={cx('relative', props.className)} style={isPinned ? expandedStyle : collapsedStyle}>
 				{/* FUNCTIONAL OVERLAY */}
 				<div
 					className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}

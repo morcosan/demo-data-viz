@@ -3,7 +3,7 @@ import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppLogo } from './_app-logo.tsx'
 
-interface Props {
+interface Props extends ReactProps {
 	navContentFn: (closeMenu: () => void) => ReactNode
 	mobileHeight: string
 }
@@ -24,7 +24,7 @@ export const MobileNav = (props: Props) => {
 		<>
 			{/* PAGE OVERLAY */}
 			<div
-				className={cx('absolute-overlay backdrop-blur-subtle', !isMenuOpen && 'hidden')}
+				className={cx('absolute-overlay backdrop-blur-subtle', !isMenuOpen && 'hidden', props.className)}
 				style={{ top: props.mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
 				onClick={() => setIsMenuOpen(false)}
 			/>
@@ -32,7 +32,10 @@ export const MobileNav = (props: Props) => {
 			{/* TOPBAR */}
 			<nav
 				aria-label={t('core.label.navigationBar')}
-				className="z-navbar border-color-border-shadow absolute top-0 left-0 w-full border-t shadow-sm"
+				className={cx(
+					'z-navbar border-color-border-shadow absolute top-0 left-0 w-full border-t shadow-sm',
+					props.className
+				)}
 				style={{ minHeight: props.mobileHeight, height: props.mobileHeight }}
 			>
 				<div className="bg-color-bg-card px-xs-2 flex h-full items-center">
@@ -58,7 +61,8 @@ export const MobileNav = (props: Props) => {
 					'border-color-border-shadow bg-color-bg-card border-t border-r shadow-lg',
 					'transition-transform duration-300 ease-in-out',
 					isMenuOpen ? 'translate-x-0' : '-translate-x-full',
-					!isMenuVisible && 'invisible'
+					!isMenuVisible && 'invisible',
+					props.className
 				)}
 				style={{ top: props.mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
 			>
