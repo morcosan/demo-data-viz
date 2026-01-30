@@ -36,8 +36,8 @@ export const AppNav = (rawProps: AppNavProps) => {
 
 	return (
 		<div
-			className={cx('flex h-full w-full flex-1 items-stretch', isViewportMaxLG && 'flex-col')}
-			style={{ paddingTop: isViewportMaxLG ? props.mobileHeight : 0 }}
+			className="flex h-full w-full flex-1 flex-col items-stretch lg:flex-row lg:pt-0!"
+			style={{ paddingTop: props.mobileHeight }}
 		>
 			{isViewportMaxLG ? (
 				<MobileNav navContentFn={props.navContentFn} mobileHeight={props.mobileHeight!} />
