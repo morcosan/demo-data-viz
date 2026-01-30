@@ -5,10 +5,10 @@ import { type ReactNode } from 'react'
 import { DesktopNav } from './_partials/desktop-nav.tsx'
 import { MobileNav } from './_partials/mobile-nav.tsx'
 
-export interface SideNavProps extends ReactProps {
+export interface AppNavProps extends ReactProps {
 	/** Content to be rendered inside the sidenav */
 	/**
-	 * ontent to be rendered inside the sidenav
+	 * Content to be rendered inside the sidenav
 	 * @param closeMenu - Callback to close the menu on mobile (no effect on desktop)
 	 */
 	navContentFn: (closeMenu: () => void) => ReactNode
@@ -17,7 +17,7 @@ export interface SideNavProps extends ReactProps {
 }
 
 /** Sidebar with a navigation menu */
-export const SideNav = (props: SideNavProps) => {
+export const AppNav = (props: AppNavProps) => {
 	const { isViewportMaxLG } = useViewportService()
 
 	return (
