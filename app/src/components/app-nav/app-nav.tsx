@@ -20,6 +20,8 @@ export interface AppNavProps extends ReactProps {
 	desktopMaxWidth?: string
 	/** Flag that forces the sidebar to stay expanded on desktop (no effect on mobile) */
 	hasActivePopup?: boolean
+	/** Cookie key for storing the pinned state of the sidebar on desktop */
+	cookieKeyPinned?: string
 }
 
 /** Navigation bar and menu for the entire app */
@@ -28,6 +30,7 @@ export const AppNav = (rawProps: AppNavProps) => {
 		mobileHeight: 'var(--ds-spacing-sm-6)',
 		desktopMinWidth: 'var(--ds-spacing-md-6)',
 		desktopMaxWidth: 'var(--ds-spacing-lg-7)',
+		cookieKeyPinned: 'app-pinned-navbar',
 	} as const)
 	const { isViewportMaxLG } = useViewportService()
 
@@ -43,6 +46,7 @@ export const AppNav = (rawProps: AppNavProps) => {
 					navContentFn={props.navContentFn}
 					desktopMinWidth={props.desktopMinWidth!}
 					desktopMaxWidth={props.desktopMaxWidth!}
+					cookieKeyPinned={props.cookieKeyPinned!}
 					hasActivePopup={props.hasActivePopup}
 				/>
 			)}

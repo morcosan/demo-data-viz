@@ -3,12 +3,11 @@ import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useStat
 import { useTranslation } from 'react-i18next'
 import { AppLogo } from './_app-logo.tsx'
 
-const COOKIE_KEY = 'app-pinned-navbar'
-
 interface Props {
 	navContentFn: (closeMenu: () => void) => ReactNode
 	desktopMinWidth: string
 	desktopMaxWidth: string
+	cookieKeyPinned: string
 	hasActivePopup?: boolean
 }
 
@@ -35,15 +34,15 @@ export const DesktopNav = (props: Props) => {
 	const pinColorClass = cx(isPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
 
 	const loadPinConfig = () => {
-		const cookie = localStorage.getItem(COOKIE_KEY)
+		const cookie = localStorage.getItem(props.cookieKeyPinned)
 		const isPinned = cookie === 'true' || (cookie !== 'false' && isViewportMinXL)
 		setIsPinned(isPinned)
-		localStorage.setItem(COOKIE_KEY, isPinned ? 'true' : 'false')
+		localStorage.setItem(props.cookieKeyPinned, isPinned ? 'true' : 'false')
 	}
 
 	const onClickPinned = (value: boolean) => {
 		setIsPinned(value)
-		localStorage.setItem(COOKIE_KEY, value ? 'true' : 'false')
+		localStorage.setItem(props.cookieKeyPinned, value ? 'true' : 'false')
 	}
 
 	const onClickWindow = (event: MouseEvent) => {

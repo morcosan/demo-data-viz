@@ -15,6 +15,7 @@ const meta: Meta<typeof AppNav> = {
 				mobileHeight: 'var(--ds-spacing-sm-6)',
 				desktopMinWidth: 'var(--ds-spacing-md-6)',
 				desktopMaxWidth: 'var(--ds-spacing-lg-7)',
+				cookieKeyPinned: 'app-nav--pinned-sidebar',
 				hasActivePopup: false,
 			},
 		},
