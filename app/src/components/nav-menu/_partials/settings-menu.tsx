@@ -36,7 +36,7 @@ export const SettingsMenu = ({ onClickBack }: Props) => {
 					<IconButton tooltip={t('core.action.back')} onClick={onClickBack}>
 						<ArrowBackSvg className="h-xs-7" />
 					</IconButton>
-					<span className="pb-xs-0 text-size-lg">{t('core.label.options')}</span>
+					<span className="pb-xs-0 text-size-lg">{t('core.label.preferences')}</span>
 				</div>
 			)}
 
