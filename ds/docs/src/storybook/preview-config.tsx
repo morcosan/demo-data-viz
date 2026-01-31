@@ -10,6 +10,7 @@ import {
 import { DocsCodeBlock } from '@ds/docs/core.ts'
 import { DocsContainer } from '@storybook/addon-docs/blocks'
 import { StrictMode, type ComponentType, type ReactNode } from 'react'
+import { fn } from 'storybook/test'
 import { DocsPage } from '../components/docs-page.tsx'
 import { DocsCanvasService, type DocsCanvasBg } from '../services/docs-canvas-service.tsx'
 import { fixBrokenCSS } from './_css-fix.ts'
@@ -159,5 +160,16 @@ const getDocsConfig = (providers: HOC[]) => {
 	} satisfies PreviewDocs
 }
 
-export { getDocsConfig, getStoryConfig, toolbarConfig }
+const mockNavigateFn = fn().mockName('navigate')
+const mockNavigate = (...args: any[]) => {
+	mockNavigateFn(...args)
+	window.dispatchEvent(new CustomEvent('sb:navigate', { detail: args }))
+}
+
+const TRANSLATIONS: Record<string, string> = {
+	'ds.action.close': 'Close',
+}
+const mockTranslate = (key: string) => TRANSLATIONS[key] || key
+
+export { getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig }
 export type { GlobalConfig, GlobalDefaults, GlobalTypes, StoryContext }

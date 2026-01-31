@@ -15,6 +15,10 @@ declare global {
 		}
 	}
 
+	interface WindowEventMap {
+		'sb:navigate': CustomEvent
+	}
+
 	const ENV__BUILD_NUMBER: string
 	const ENV__DS_VERSION: string
 }

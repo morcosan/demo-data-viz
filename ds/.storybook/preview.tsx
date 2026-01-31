@@ -1,21 +1,15 @@
 import { HocComposer, I18nService, RoutingService } from '@ds/core.ts'
-import { getDocsConfig, getStoryConfig, toolbarConfig } from '@ds/docs/core.ts'
+import { getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig } from '@ds/docs/core.ts'
 import { type Preview } from '@storybook/react-vite'
-import { fn } from 'storybook/test'
 import './styles.css'
 
 LOG('BUILD_NUMBER:', ENV__BUILD_NUMBER)
 LOG('DS_VERSION:', ENV__DS_VERSION)
 
-const TRANSLATIONS: Record<string, string> = {
-	'ds.action.close': 'Close',
-}
 const hoc = HocComposer.hoc
-const translate = (key: string) => TRANSLATIONS[key] || key
-const navigate = fn().mockName('navigate')
 const providers = [
-	hoc(I18nService, { translate }),
-	hoc(RoutingService, { navigate }),
+	hoc(I18nService, { translate: mockTranslate }),
+	hoc(RoutingService, { navigate: mockNavigate }),
 	//
 ]
 

@@ -1,7 +1,6 @@
 import { HocComposer, RoutingService } from '@ds/core.ts'
-import { getDocsConfig, getStoryConfig, toolbarConfig } from '@ds/docs/core.ts'
+import { getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig } from '@ds/docs/core.ts'
 import { type Preview } from '@storybook/nextjs-vite'
-import { fn } from 'storybook/test'
 import { initClientI18n } from '../src/i18n/i18n-client.ts'
 import { I18nProvider } from '../src/i18n/i18n-provider.tsx'
 import './styles.css'
@@ -11,11 +10,10 @@ LOG('DS_VERSION:', ENV__DS_VERSION)
 
 initClientI18n()
 
-const navigate = fn().mockName('navigate')
 const hoc = HocComposer.hoc
 const providers = [
 	hoc(I18nProvider, {}),
-	hoc(RoutingService, { navigate }),
+	hoc(RoutingService, { navigate: mockNavigate }),
 	//
 ]
 

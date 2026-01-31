@@ -1,18 +1,14 @@
 'use client'
 
 import { Button, DatabaseSvg, HomeSvg } from '@ds/core.ts'
-import { t } from 'i18next'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { SettingsButton } from './_partials/settings-button.tsx'
 import { SettingsMenu } from './_partials/settings-menu.tsx'
 
-interface Item {
-	path: string
-	label: string
-	icon: ReactNode
-}
-
 export interface NavMenuProps extends ReactProps {
+	/** Window location object */
+	location: Location
 	/** Callback to close the menu on mobile (no effect on desktop) */
 	closeMenu: () => void
 	/** Flag for rendering the menu as collapsed on desktop (no effect on mobile) */
@@ -23,6 +19,7 @@ export interface NavMenuProps extends ReactProps {
 
 /** Content to be rendered as navigation */
 export const NavMenu = (props: NavMenuProps) => {
+	const { t } = useTranslation()
 	const [isSettingsOpened, setIsSettingsOpened] = useState(false)
 	const settingsRef = useRef<HTMLDivElement>(null)
 
@@ -33,9 +30,14 @@ export const NavMenu = (props: NavMenuProps) => {
 		'w-lg-7 border-color-border-shadow bg-color-bg-popup rounded-md border'
 	)
 
+	interface Item {
+		path: string
+		label: string
+		icon: ReactNode
+	}
 	const items: Item[] = [
 		{
-			path: '/dashboard',
+			path: '/',
 			label: t('core.menuLabel.dashboard'),
 			icon: <HomeSvg className="h-xs-9" style={{ minWidth: iconWidth }} />,
 		},
@@ -71,19 +73,22 @@ export const NavMenu = (props: NavMenuProps) => {
 		<div className={cx('flex flex-1 flex-col', props.className)}>
 			<div className="flex flex-1 flex-col">
 				{/* ITEMS */}
-				{items.map((item: Item) => (
-					<Button
-						key={item.path}
-						linkHref={item.path}
-						variant="item-text-default"
-						size="lg"
-						className="w-full"
-						highlight={location.pathname.includes(item.path) ? 'selected' : 'default'}
-					>
-						{item.icon}
-						{!props.collapsed && <span className="ml-button-px-item">{item.label}</span>}
-					</Button>
-				))}
+				{items.map((item: Item) => {
+					const selected = props.location.pathname === item.path
+					return (
+						<Button
+							key={item.path}
+							linkHref={item.path}
+							variant={selected ? 'item-solid-secondary' : 'item-text-default'}
+							highlight={selected ? 'selected' : 'default'}
+							size="lg"
+							className="w-full"
+						>
+							{item.icon}
+							{!props.collapsed && <span className="ml-button-px-item">{item.label}</span>}
+						</Button>
+					)
+				})}
 			</div>
 
 			{/* SETTINGS */}

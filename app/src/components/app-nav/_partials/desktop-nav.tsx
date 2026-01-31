@@ -123,7 +123,12 @@ export const DesktopNav = (props: Props) => {
 					</IconButton>
 
 					{/* MENU */}
-					<props.navMenu closeMenu={closeMenu} collapsed={isCollapsed} onTogglePopup={onTogglePopup} />
+					<props.navMenu
+						location={window.location}
+						closeMenu={closeMenu}
+						collapsed={isCollapsed}
+						onTogglePopup={onTogglePopup}
+					/>
 				</nav>
 			</div>
 		</>
