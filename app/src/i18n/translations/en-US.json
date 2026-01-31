@@ -18,6 +18,10 @@
 			"theme": "Theme",
 			"themeDark": "Dark",
 			"themeLight": "Light"
+		},
+		"menuLabel": {
+			"dashboard": "Dashboard",
+			"datasets": "Datasets"
 		}
 	}
 }
