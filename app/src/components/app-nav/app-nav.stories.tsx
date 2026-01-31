@@ -8,7 +8,8 @@ const meta: Meta<typeof AppNav> = {
 	...createArgsConfig<typeof AppNav>({
 		args: {
 			slots: {
-				navContentFn: '() => `Nav Content`' as any,
+				navMenu: '() => `Nav Menu`' as any,
+				appLogo: '() => `App Logo`' as any,
 				children: loremLongText(),
 			},
 			props: {
@@ -21,7 +22,13 @@ const meta: Meta<typeof AppNav> = {
 		},
 	}),
 	render: function Story(props: AppNavProps) {
-		return <AppNav {...props} navContentFn={new Function(`return ${props.navContentFn}`)()} />
+		return (
+			<AppNav
+				{...props}
+				navMenu={new Function(`return ${props.navMenu}`)()}
+				appLogo={new Function(`return ${props.appLogo}`)()}
+			/>
+		)
 	},
 }
 

@@ -1,5 +1,7 @@
 'use client'
 
-export const NavMenu = (closeMenu: () => void) => {
+import type { NavMenuProps } from '../../components/app-nav/types.ts'
+
+export const NavMenu = (props: NavMenuProps) => {
 	return <div>menu</div>
 }

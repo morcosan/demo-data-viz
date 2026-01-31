@@ -27,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 		<html lang={DEFAULT_LOCALE}>
 			<body className={cx('antialiased', geistSans.variable, geistMono.variable)}>
 				<Providers>
-					<AppNav navContentFn={NavMenu}>{children}</AppNav>
+					<AppNav navMenu={NavMenu}>{children}</AppNav>
 				</Providers>
 			</body>
 		</html>

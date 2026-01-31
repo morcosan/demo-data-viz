@@ -6,6 +6,7 @@
 	},
 	"core": {
 		"label": {
+			"appTitle": "Demo Data Viz",
 			"navigationBar": "Navigation bar",
 			"navigationMenu": "Navigation menu",
 			"openMenu": "Open menu"

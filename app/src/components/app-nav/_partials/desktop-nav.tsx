@@ -1,10 +1,12 @@
 import { IconButton, PinSvg } from '@ds/core.ts'
-import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { type CSSProperties, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { type NavMenu } from '../types.ts'
 import { AppLogo } from './_app-logo.tsx'
 
 interface Props extends ReactProps {
-	navContentFn: (closeMenu: () => void) => ReactNode
+	navMenu: NavMenu
+	// appLogo: ReactNode
 	desktopMinWidth: string
 	desktopMaxWidth: string
 	cookieKeyPinned: string
@@ -18,8 +20,6 @@ export const DesktopNav = (props: Props) => {
 	const [isPinned, setIsPinned] = useState(false)
 	const sidebarRef = useRef<HTMLDivElement>(null)
 	const isCollapsed = !isHovered && !isPinned && !isFocused && !props.hasActivePopup
-
-	const navContent = useMemo(() => props.navContentFn(() => {}), [props.navContentFn])
 
 	const collapsedStyle: CSSProperties = { minWidth: props.desktopMinWidth, width: props.desktopMinWidth }
 	const expandedStyle: CSSProperties = { minWidth: props.desktopMaxWidth, width: props.desktopMaxWidth }
@@ -124,7 +124,7 @@ export const DesktopNav = (props: Props) => {
 					</IconButton>
 
 					{/* CONTENT */}
-					{navContent}
+					<props.navMenu closeMenu={() => {}} />
 				</nav>
 			</div>
 		</>
