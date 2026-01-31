@@ -9,6 +9,7 @@ const meta: Meta<typeof NavMenu> = {
 		args: {
 			props: {
 				closeMenu: () => {},
+				collapsed: false,
 				className: '',
 			},
 			events: ['onTogglePopup'],

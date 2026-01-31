@@ -24,8 +24,8 @@ export interface AppNavProps extends ReactProps {
 export const AppNav = (rawProps: AppNavProps) => {
 	const props = useDefaults(rawProps, {
 		mobileHeight: 'var(--ds-spacing-sm-6)',
-		desktopMinWidth: 'var(--ds-spacing-md-6)',
-		desktopMaxWidth: 'var(--ds-spacing-lg-7)',
+		desktopMinWidth: 'var(--ds-spacing-md-2)',
+		desktopMaxWidth: 'var(--ds-spacing-lg-5)',
 		cookieKeyPinned: 'app-pinned-navbar',
 	} as const)
 	return (

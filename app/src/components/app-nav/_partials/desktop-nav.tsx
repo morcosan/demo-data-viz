@@ -110,7 +110,7 @@ export const DesktopNav = (props: Props) => {
 					onBlurCapture={onBlurInside}
 				>
 					{/* LOGO */}
-					<props.appLogo collapsed={isCollapsed} className="mb-xs-4" />
+					<props.appLogo collapsed={isCollapsed} className="mb-xs-9" />
 
 					{/* PIN */}
 					<IconButton
@@ -123,7 +123,7 @@ export const DesktopNav = (props: Props) => {
 					</IconButton>
 
 					{/* MENU */}
-					<props.navMenu closeMenu={closeMenu} onTogglePopup={onTogglePopup} />
+					<props.navMenu closeMenu={closeMenu} collapsed={isCollapsed} onTogglePopup={onTogglePopup} />
 				</nav>
 			</div>
 		</>
