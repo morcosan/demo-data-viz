@@ -1,5 +1,5 @@
 import { IconButton, MenuSvg, wait } from '@ds/core.ts'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type AppLogo, type NavMenu } from '../types.ts'
 
@@ -13,6 +13,8 @@ export const MobileNav = (props: Props) => {
 	const { t } = useTranslation()
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const [isMenuVisible, setIsMenuVisible] = useState(false)
+
+	const closeMenu = useCallback(() => setIsMenuOpen(false), [])
 
 	useEffect(() => {
 		// Hide menu after animation ends
@@ -66,7 +68,7 @@ export const MobileNav = (props: Props) => {
 				style={{ top: props.mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
 			>
 				<div className="px-a11y-scrollbar py-scrollbar-w pt-xs-9 flex h-full w-full flex-col">
-					<props.navMenu closeMenu={() => setIsMenuOpen(false)} />
+					<props.navMenu closeMenu={closeMenu} />
 				</div>
 			</nav>
 		</>

@@ -1,5 +1,5 @@
 import { IconButton, PinSvg } from '@ds/core.ts'
-import { type CSSProperties, useEffect, useRef, useState } from 'react'
+import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type AppLogo, type NavMenu } from '../types.ts'
 
@@ -71,13 +71,12 @@ export const DesktopNav = (props: Props) => {
 		sidebar && !sidebar.contains(target) && setIsFocused(false)
 	}
 
+	const closeMenu = useCallback(() => {}, [])
+
 	useEffect(() => {
 		loadPinConfig()
 		window.addEventListener('mousedown', onClickWindow)
-
-		return () => {
-			window.removeEventListener('mousedown', onClickWindow)
-		}
+		return () => window.removeEventListener('mousedown', onClickWindow)
 	}, [])
 
 	return (
@@ -123,7 +122,7 @@ export const DesktopNav = (props: Props) => {
 					</IconButton>
 
 					{/* MENU */}
-					<props.navMenu closeMenu={() => {}} />
+					<props.navMenu closeMenu={closeMenu} />
 				</nav>
 			</div>
 		</>

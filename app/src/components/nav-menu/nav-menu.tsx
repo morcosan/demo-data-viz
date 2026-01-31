@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SettingsButton } from './_partials/settings-button.tsx'
 import { SettingsMenu } from './_partials/settings-menu.tsx'
 
@@ -25,6 +25,17 @@ export const NavMenu = (props: NavMenuProps) => {
 		// !opened && setHasNavHover(false) TODO
 		setIsSettingsOpened(opened)
 	}
+
+	const onClickWindow = (event: MouseEvent) => {
+		const target = event.target as HTMLElement
+		const settings = settingsRef.current
+		settings && !settings.contains(target) && setIsSettingsOpened(false)
+	}
+
+	useEffect(() => {
+		window.addEventListener('mousedown', onClickWindow)
+		return () => window.removeEventListener('mousedown', onClickWindow)
+	}, [])
 
 	return (
 		<div className={cx('flex flex-1 flex-col', props.className)}>
