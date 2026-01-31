@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { AppLogo } from '../components/app-logo/app-logo.tsx'
 import { AppNav } from '../components/app-nav/app-nav.tsx'
 import '../env.ts'
 import { DEFAULT_LOCALE } from '../i18n/i18n-config.ts'
@@ -27,7 +28,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 		<html lang={DEFAULT_LOCALE}>
 			<body className={cx('antialiased', geistSans.variable, geistMono.variable)}>
 				<Providers>
-					<AppNav navMenu={NavMenu}>{children}</AppNav>
+					<AppNav appLogo={AppLogo} navMenu={NavMenu}>
+						{children}
+					</AppNav>
 				</Providers>
 			</body>
 		</html>

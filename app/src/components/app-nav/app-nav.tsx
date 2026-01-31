@@ -3,20 +3,16 @@
 import { useDefaults } from '@ds/core.ts'
 import { DesktopNav } from './_partials/desktop-nav.tsx'
 import { MobileNav } from './_partials/mobile-nav.tsx'
-import type { AppLogo, NavMenu } from './types.ts'
+import { type AppLogo, type NavMenu } from './types.ts'
 
 export interface AppNavProps extends ReactProps {
+	/** App logo to be rendered on top of navigation */
+	appLogo: AppLogo
 	/**
 	 * Content to be rendered as navigation
 	 * @param closeMenu - Callback to close the menu on mobile (no effect on desktop)
 	 */
 	navMenu: NavMenu
-	/**
-	 * App logo to be rendered on top of navigation
-	 * @param mobile - Flag for rendering the logo on mobile
-	 * @param collapsed - Flag for rendering the logo as collapsed on desktop (no effect on mobile)
-	 */
-	appLogo: AppLogo
 	/** Topbar height on mobile */
 	mobileHeight?: string
 	/** Sidebar width on desktop when collapsed */
@@ -43,9 +39,15 @@ export const AppNav = (rawProps: AppNavProps) => {
 			style={{ paddingTop: props.mobileHeight }}
 		>
 			{/* NAVIGATION */}
-			<MobileNav className="lg:hidden" navMenu={props.navMenu} mobileHeight={props.mobileHeight!} />
+			<MobileNav
+				className="lg:hidden"
+				appLogo={props.appLogo}
+				navMenu={props.navMenu}
+				mobileHeight={props.mobileHeight!}
+			/>
 			<DesktopNav
 				className="hidden lg:block"
+				appLogo={props.appLogo}
 				navMenu={props.navMenu}
 				desktopMinWidth={props.desktopMinWidth!}
 				desktopMaxWidth={props.desktopMaxWidth!}

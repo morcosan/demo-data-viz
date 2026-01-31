@@ -1,5 +1,6 @@
 import { createArgsConfig, loremLongText } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
+import { AppLogo } from '../app-logo/app-logo.tsx'
 import { AppNav, type AppNavProps } from './app-nav.tsx'
 
 const meta: Meta<typeof AppNav> = {
@@ -8,8 +9,8 @@ const meta: Meta<typeof AppNav> = {
 	...createArgsConfig<typeof AppNav>({
 		args: {
 			slots: {
+				appLogo: undefined,
 				navMenu: '() => `Nav Menu`' as any,
-				appLogo: '() => `App Logo`' as any,
 				children: loremLongText(),
 			},
 			props: {
@@ -26,7 +27,7 @@ const meta: Meta<typeof AppNav> = {
 			<AppNav
 				{...props}
 				navMenu={new Function(`return ${props.navMenu}`)()}
-				appLogo={new Function(`return ${props.appLogo}`)()}
+				appLogo={new Function(`return ${props.appLogo}`)() || AppLogo}
 			/>
 		)
 	},

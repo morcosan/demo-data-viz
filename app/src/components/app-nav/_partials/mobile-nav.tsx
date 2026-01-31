@@ -1,12 +1,11 @@
 import { IconButton, MenuSvg, wait } from '@ds/core.ts'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type NavMenu } from '../types.ts'
-import { AppLogo } from './_app-logo.tsx'
+import { type AppLogo, type NavMenu } from '../types.ts'
 
 interface Props extends ReactProps {
+	appLogo: AppLogo
 	navMenu: NavMenu
-	// appLogo: ReactNode
 	mobileHeight: string
 }
 
@@ -49,7 +48,7 @@ export const MobileNav = (props: Props) => {
 					</IconButton>
 
 					{/* LOGO */}
-					<AppLogo className="ml-xs-3" mobile />
+					<props.appLogo mobile className="ml-xs-3" />
 				</div>
 			</nav>
 

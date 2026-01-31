@@ -1,12 +1,11 @@
 import { IconButton, PinSvg } from '@ds/core.ts'
 import { type CSSProperties, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type NavMenu } from '../types.ts'
-import { AppLogo } from './_app-logo.tsx'
+import { type AppLogo, type NavMenu } from '../types.ts'
 
 interface Props extends ReactProps {
+	appLogo: AppLogo
 	navMenu: NavMenu
-	// appLogo: ReactNode
 	desktopMinWidth: string
 	desktopMaxWidth: string
 	cookieKeyPinned: string
@@ -111,7 +110,7 @@ export const DesktopNav = (props: Props) => {
 					onBlurCapture={onBlurInside}
 				>
 					{/* LOGO */}
-					<AppLogo collapsed={isCollapsed} className="mb-xs-4" />
+					<props.appLogo collapsed={isCollapsed} className="mb-xs-4" />
 
 					{/* PIN */}
 					<IconButton

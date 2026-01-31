@@ -1,11 +1,7 @@
-import type { FC } from 'react'
+import { AppLogo } from '../app-logo/app-logo.tsx'
 
-export interface AppLogoProps {
-	mobile?: boolean
-	collapsed?: boolean
-}
 export interface NavMenuProps {
 	closeMenu: () => void
 }
-export type AppLogo = FC<AppLogoProps>
-export type NavMenu = FC<NavMenuProps>
+export type AppLogo = typeof AppLogo
+export type NavMenu = React.FC<NavMenuProps>
