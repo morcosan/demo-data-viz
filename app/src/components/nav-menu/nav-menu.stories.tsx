@@ -11,6 +11,7 @@ const meta: Meta<typeof NavMenu> = {
 				closeMenu: () => {},
 				className: '',
 			},
+			events: ['onTogglePopup'],
 		},
 	}),
 }

@@ -16,8 +16,6 @@ export interface AppNavProps extends ReactProps {
 	desktopMinWidth?: string
 	/** Sidebar width on desktop when expanded */
 	desktopMaxWidth?: string
-	/** Flag that forces the sidebar to stay expanded on desktop (no effect on mobile) */
-	hasActivePopup?: boolean
 	/** Cookie key for storing the pinned state of the sidebar on desktop */
 	cookieKeyPinned?: string
 }
@@ -49,7 +47,6 @@ export const AppNav = (rawProps: AppNavProps) => {
 				desktopMinWidth={props.desktopMinWidth!}
 				desktopMaxWidth={props.desktopMaxWidth!}
 				cookieKeyPinned={props.cookieKeyPinned!}
-				hasActivePopup={props.hasActivePopup}
 			/>
 
 			{/* PAGE CONTENT */}

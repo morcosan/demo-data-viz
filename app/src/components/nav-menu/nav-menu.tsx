@@ -7,6 +7,8 @@ import { SettingsMenu } from './_partials/settings-menu.tsx'
 export interface NavMenuProps extends ReactProps {
 	/** Callback to close the menu on mobile (no effect on desktop) */
 	closeMenu: () => void
+	/** Event emitted when a popup is opened or closed */
+	onTogglePopup?: (opened: boolean) => void
 }
 
 /** Content to be rendered as navigation */
@@ -20,16 +22,20 @@ export const NavMenu = (props: NavMenuProps) => {
 		'w-lg-7 border-color-border-shadow bg-color-bg-popup rounded-md border'
 	)
 
+	const toggleSettings = (opened: boolean) => {
+		setIsSettingsOpened(opened)
+		props.onTogglePopup?.(opened)
+	}
+
 	const onToggleSettings = () => {
 		const opened = !isSettingsOpened
-		// !opened && setHasNavHover(false) TODO
-		setIsSettingsOpened(opened)
+		toggleSettings(opened)
 	}
 
 	const onClickWindow = (event: MouseEvent) => {
 		const target = event.target as HTMLElement
 		const settings = settingsRef.current
-		settings && !settings.contains(target) && setIsSettingsOpened(false)
+		settings && !settings.contains(target) && toggleSettings(false)
 	}
 
 	useEffect(() => {

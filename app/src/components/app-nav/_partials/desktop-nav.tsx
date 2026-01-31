@@ -9,7 +9,6 @@ interface Props extends ReactProps {
 	desktopMinWidth: string
 	desktopMaxWidth: string
 	cookieKeyPinned: string
-	hasActivePopup?: boolean
 }
 
 export const DesktopNav = (props: Props) => {
@@ -17,8 +16,9 @@ export const DesktopNav = (props: Props) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const [isFocused, setIsFocused] = useState(false)
 	const [isPinned, setIsPinned] = useState(false)
+	const [hasPopup, setHasPopup] = useState(false)
 	const sidebarRef = useRef<HTMLDivElement>(null)
-	const isCollapsed = !isHovered && !isPinned && !isFocused && !props.hasActivePopup
+	const isCollapsed = !isHovered && !isPinned && !isFocused && !hasPopup
 
 	const collapsedStyle: CSSProperties = { minWidth: props.desktopMinWidth, width: props.desktopMinWidth }
 	const expandedStyle: CSSProperties = { minWidth: props.desktopMaxWidth, width: props.desktopMaxWidth }
@@ -57,7 +57,7 @@ export const DesktopNav = (props: Props) => {
 	}
 
 	const onMouseLeave = () => {
-		!isFocused && setIsHovered(Boolean(props.hasActivePopup))
+		!isFocused && setIsHovered(hasPopup)
 		setIsFocused(false)
 	}
 
@@ -72,6 +72,7 @@ export const DesktopNav = (props: Props) => {
 	}
 
 	const closeMenu = useCallback(() => {}, [])
+	const onTogglePopup = useCallback((opened: boolean) => setHasPopup(opened), [])
 
 	useEffect(() => {
 		loadPinConfig()
@@ -122,7 +123,7 @@ export const DesktopNav = (props: Props) => {
 					</IconButton>
 
 					{/* MENU */}
-					<props.navMenu closeMenu={closeMenu} />
+					<props.navMenu closeMenu={closeMenu} onTogglePopup={onTogglePopup} />
 				</nav>
 			</div>
 		</>
