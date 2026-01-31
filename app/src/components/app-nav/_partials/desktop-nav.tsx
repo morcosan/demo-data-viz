@@ -122,7 +122,7 @@ export const DesktopNav = (props: Props) => {
 						<PinSvg className={cx('h-xs-5', pinColorClass)} />
 					</IconButton>
 
-					{/* CONTENT */}
+					{/* MENU */}
 					<props.navMenu closeMenu={() => {}} />
 				</nav>
 			</div>

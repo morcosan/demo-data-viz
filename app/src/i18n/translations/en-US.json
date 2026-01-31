@@ -6,10 +6,18 @@
 	},
 	"core": {
 		"label": {
+			"andMore": "... and more",
+			"appStorybook": "App Storybook",
 			"appTitle": "Demo Data Viz",
+			"dsStorybook": "DS Storybook",
+			"githubRepo": "GitHub Repo",
 			"navigationBar": "Navigation bar",
 			"navigationMenu": "Navigation menu",
-			"openMenu": "Open menu"
+			"openMenu": "Open menu",
+			"settings": "Settings",
+			"theme": "Theme",
+			"themeDark": "Dark",
+			"themeLight": "Light"
 		}
 	}
 }
