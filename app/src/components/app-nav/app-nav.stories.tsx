@@ -1,7 +1,7 @@
-import { createArgsConfig, loremLongText } from '@ds/docs/core.ts'
+import { createArgsConfig, loremLongText, useLocationMock } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { AppLogo } from '../app-logo/app-logo.tsx'
-import { NavMenu } from '../nav-menu/nav-menu.tsx'
+import { NavMenu, type NavMenuProps } from '../nav-menu/nav-menu.tsx'
 import { AppNav, type AppNavProps } from './app-nav.tsx'
 
 const meta: Meta<typeof AppNav> = {
@@ -23,11 +23,17 @@ const meta: Meta<typeof AppNav> = {
 		},
 	}),
 	render: function Story(props: AppNavProps) {
+		const { location } = useLocationMock()
+
 		return (
 			<AppNav
 				{...props}
 				appLogo={props.appLogo ? () => props.appLogo as any : AppLogo}
-				navMenu={props.navMenu ? () => props.navMenu as any : NavMenu}
+				navMenu={
+					props.navMenu
+						? () => props.navMenu as any
+						: (navMenuProps: NavMenuProps) => <NavMenu {...navMenuProps} location={location} />
+				}
 			/>
 		)
 	},
