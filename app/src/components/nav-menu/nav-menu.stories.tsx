@@ -8,7 +8,7 @@ const meta: Meta<typeof NavMenu> = {
 	...createArgsConfig<typeof NavMenu>({
 		args: {
 			props: {
-				location: window.location,
+				location: null,
 				closeMenu: () => {},
 				collapsed: false,
 				className: 'bg-color-bg-card',
