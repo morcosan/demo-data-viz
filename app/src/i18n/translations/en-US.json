@@ -6,7 +6,9 @@
 	},
 	"core": {
 		"action": {
-			"back": "Back"
+			"back": "Back",
+			"closeMenu": "Close menu",
+			"openMenu": "Open menu"
 		},
 		"label": {
 			"appStorybook": "App Storybook",

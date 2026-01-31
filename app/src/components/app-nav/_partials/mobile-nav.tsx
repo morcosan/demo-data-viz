@@ -42,7 +42,7 @@ export const MobileNav = (props: Props) => {
 				<div className="bg-color-bg-card px-xs-2 flex h-full items-center">
 					{/* MENU BUTTON */}
 					<IconButton
-						tooltip={t('core.action.openMenu')}
+						tooltip={isMenuOpen ? t('core.action.closeMenu') : t('core.action.openMenu')}
 						pressed={isMenuOpen}
 						onClick={() => setIsMenuOpen(!isMenuOpen)}
 					>
