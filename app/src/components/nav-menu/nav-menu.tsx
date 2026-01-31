@@ -11,6 +11,8 @@ export interface NavMenuProps extends ReactProps {
 	location: Location
 	/** Callback to close the menu on mobile (no effect on desktop) */
 	closeMenu: () => void
+	/** Flag for rendering the menu on mobile */
+	mobile?: boolean
 	/** Flag for rendering the menu as collapsed on desktop (no effect on mobile) */
 	collapsed?: boolean
 	/** Event emitted when a popup is opened or closed */
@@ -71,39 +73,45 @@ export const NavMenu = (props: NavMenuProps) => {
 
 	return (
 		<div className={cx('flex flex-1 flex-col', props.className)}>
-			<div className="flex flex-1 flex-col">
-				{/* ITEMS */}
-				{items.map((item: Item) => {
-					const selected = props.location.pathname === item.path
-					return (
-						<Button
-							key={item.path}
-							linkHref={item.path}
-							variant={selected ? 'item-solid-secondary' : 'item-text-default'}
-							highlight={selected ? 'selected' : 'default'}
-							size="lg"
-							className="w-full"
-						>
-							{item.icon}
-							{!props.collapsed && <span className="ml-button-px-item">{item.label}</span>}
-						</Button>
-					)
-				})}
-			</div>
+			{props.mobile && isSettingsOpened ? (
+				<SettingsMenu onClickBack={onToggleSettings} />
+			) : (
+				<>
+					<div className="flex flex-1 flex-col">
+						{/* ITEMS */}
+						{items.map((item: Item) => {
+							const selected = props.location.pathname === item.path
+							return (
+								<Button
+									key={item.path}
+									linkHref={item.path}
+									variant={selected ? 'item-solid-secondary' : 'item-text-default'}
+									highlight={selected ? 'selected' : 'default'}
+									size="lg"
+									className="w-full"
+								>
+									{item.icon}
+									{!props.collapsed && <span className="ml-button-px-item">{item.label}</span>}
+								</Button>
+							)
+						})}
+					</div>
 
-			{/* SETTINGS */}
-			<div ref={settingsRef} className="relative">
-				<SettingsButton
-					iconWidth={iconWidth}
-					collapsed={props.collapsed}
-					highlight={isSettingsOpened ? 'pressed' : 'default'}
-					className="mt-xs-1"
-					onClick={onToggleSettings}
-				/>
-				<div className={settingsMenuClass}>
-					<SettingsMenu />
-				</div>
-			</div>
+					{/* SETTINGS */}
+					<div ref={settingsRef} className="relative">
+						<SettingsButton
+							iconWidth={iconWidth}
+							collapsed={props.collapsed}
+							highlight={isSettingsOpened ? 'pressed' : 'default'}
+							className="mt-xs-1"
+							onClick={onToggleSettings}
+						/>
+						<div className={settingsMenuClass}>
+							<SettingsMenu />
+						</div>
+					</div>
+				</>
+			)}
 		</div>
 	)
 }

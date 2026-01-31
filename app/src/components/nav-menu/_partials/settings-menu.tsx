@@ -20,6 +20,7 @@ interface Props {
 export const SettingsMenu = ({ onClickBack }: Props) => {
 	const { isUiLight, isUiDark, changeColorTheme } = useThemeService()
 
+	const isPopup = !onClickBack
 	const appStorybookUrl = `${ENV__BASE_PATH}/storybook`
 	const dsStorybookUrl = `${ENV__BASE_PATH}/design-system`
 
@@ -28,14 +29,14 @@ export const SettingsMenu = ({ onClickBack }: Props) => {
 	const newTabIconClass = 'ml-auto mr-px min-w-xs-6 w-xs-6 text-color-text-subtle'
 
 	return (
-		<div className="gap-xs-3 p-xs-4 flex h-full w-full flex-col">
+		<div className={cx('gap-xs-3 flex w-full flex-1 flex-col', isPopup && 'p-xs-4')}>
 			{/* BACK BUTTON */}
-			{Boolean(onClickBack) && (
-				<div className="mb-sm-0 mt-xs-3 gap-xs-3 flex items-center">
+			{!isPopup && (
+				<div className="mb-sm-0 gap-xs-3 flex items-center">
 					<IconButton tooltip={t('core.action.back')} onClick={onClickBack}>
 						<ArrowBackSvg className="h-xs-7" />
 					</IconButton>
-					<span className="pb-xs-0 text-size-lg">{t('core.label.quickSettings')}</span>
+					<span className="pb-xs-0 text-size-lg">{t('core.label.options')}</span>
 				</div>
 			)}
 

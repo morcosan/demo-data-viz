@@ -5,8 +5,10 @@
 		}
 	},
 	"core": {
+		"action": {
+			"back": "Back"
+		},
 		"label": {
-			"andMore": "... and more",
 			"appStorybook": "App Storybook",
 			"appTitle": "Demo Data Viz",
 			"dsStorybook": "DS Storybook",
@@ -14,6 +16,7 @@
 			"navigationBar": "Navigation bar",
 			"navigationMenu": "Navigation menu",
 			"openMenu": "Open menu",
+			"options": "Options",
 			"settings": "Settings",
 			"theme": "Theme",
 			"themeDark": "Dark",

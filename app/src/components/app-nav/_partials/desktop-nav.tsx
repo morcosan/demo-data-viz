@@ -26,7 +26,7 @@ export const DesktopNav = (props: Props) => {
 	const sidebarClass = cx(
 		'z-navbar absolute top-0 left-0 h-full',
 		'transition-all duration-100 ease-in-out',
-		'px-a11y-scrollbar py-xs-3 flex flex-col',
+		'p-a11y-scrollbar flex flex-col',
 		'border-color-border-shadow bg-color-bg-card border-r shadow-lg'
 	)
 	const pinColorClass = cx(isPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')

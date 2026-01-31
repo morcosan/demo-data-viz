@@ -10,8 +10,9 @@ const meta: Meta<typeof NavMenu> = {
 			props: {
 				location: null,
 				closeMenu: () => {},
+				mobile: false,
 				collapsed: false,
-				className: 'bg-color-bg-card',
+				className: 'w-lg-7 bg-color-bg-card',
 			},
 			events: ['onTogglePopup'],
 		},

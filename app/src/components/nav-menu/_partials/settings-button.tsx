@@ -21,10 +21,9 @@ export const SettingsButton = (props: Props) => {
 
 			{!props.collapsed && (
 				<span className="ml-button-px-item leading-sm line-clamp-1 flex flex-col">
-					<span className="text-size-sm mb-px line-clamp-1 w-full">{t('core.label.settings')}</span>
-
+					<span className="text-size-sm mb-px line-clamp-1 w-full">{t('core.label.options')}</span>
 					<span className="pb-xs-0 text-size-xs text-color-text-subtle line-clamp-1 w-full break-all">
-						{t('core.label.andMore')}
+						{t('core.label.settings')}
 					</span>
 				</span>
 			)}
