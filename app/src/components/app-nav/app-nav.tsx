@@ -8,10 +8,7 @@ import { type AppLogo, type NavMenu } from './types.ts'
 export interface AppNavProps extends ReactProps {
 	/** App logo to be rendered on top of navigation */
 	appLogo: AppLogo
-	/**
-	 * Content to be rendered as navigation
-	 * @param closeMenu - Callback to close the menu on mobile (no effect on desktop)
-	 */
+	/** Content to be rendered as navigation */
 	navMenu: NavMenu
 	/** Topbar height on mobile */
 	mobileHeight?: string

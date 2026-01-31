@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { AppLogo } from '../components/app-logo/app-logo.tsx'
 import { AppNav } from '../components/app-nav/app-nav.tsx'
+import { NavMenu } from '../components/nav-menu/nav-menu.tsx'
 import '../env.ts'
 import { DEFAULT_LOCALE } from '../i18n/i18n-config.ts'
 import '../styling/index.ts'
-import { NavMenu } from './_layout/nav-menu.tsx'
 import { Providers } from './_layout/providers.tsx'
 
 const geistSans = Geist({

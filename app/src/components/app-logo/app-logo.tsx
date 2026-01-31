@@ -11,6 +11,7 @@ export interface AppLogoProps extends ReactProps {
 	collapsed?: boolean
 }
 
+/** App logo to be rendered on top of navigation */
 export const AppLogo = ({ collapsed, mobile, className }: AppLogoProps) => {
 	const { t } = useTranslation()
 

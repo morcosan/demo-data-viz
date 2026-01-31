@@ -87,7 +87,7 @@ pre.prismjs {
 	}
 
 	/* Fix colors */
-	& tr *:not(button, input, textarea, label > *) {
+	& tr *:not(button, input, textarea, label > *, [title='Required']) {
 		color: var(--ds-color-text-default) !important;
 		font-family: var(--default-font-family) !important;
 	}
