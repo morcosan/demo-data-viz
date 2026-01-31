@@ -30,7 +30,6 @@ lerna-debug.log*
 
 # Environment
 *.local
-.env*
 *.pem
 
 # Testing

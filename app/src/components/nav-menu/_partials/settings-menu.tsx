@@ -20,9 +20,8 @@ interface Props {
 export const SettingsMenu = ({ onClickBack }: Props) => {
 	const { isUiLight, isUiDark, changeColorTheme } = useThemeService()
 
-	const isLocal = location.hostname === 'localhost'
-	const appStorybookUrl = isLocal ? 'http://localhost:6006' : `${ENV__BASE_PATH}/storybook`
-	const dsStorybookUrl = isLocal ? 'http://localhost:9000' : `${ENV__BASE_PATH}/design-system`
+	const appStorybookUrl = `${ENV__BASE_PATH}/storybook`
+	const dsStorybookUrl = `${ENV__BASE_PATH}/design-system`
 
 	const hrClass = 'my-xs-1'
 	const actionIconClass = 'mr-button-px-item h-xs-8 w-xs-8'

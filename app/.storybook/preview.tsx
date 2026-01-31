@@ -7,6 +7,7 @@ import './styles.css'
 
 LOG('BUILD_NUMBER:', ENV__BUILD_NUMBER)
 LOG('DS_VERSION:', ENV__DS_VERSION)
+LOG('BASE_PATH:', ENV__BASE_PATH)
 
 initClientI18n()
 
