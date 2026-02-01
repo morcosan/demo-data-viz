@@ -142,17 +142,17 @@ const getDocsConfig = (providers: HOC[]) => {
 			},
 		},
 
-		container: ({ children, context }: DocsContext) => {
-			const isAutodocs = context.attachedCSFFiles?.size > 0
+		container: (props: DocsContext) => {
+			const isAutodocs = props.context.attachedCSFFiles?.size > 0
 
 			fixBrokenCSS()
 
 			return isAutodocs ? (
-				<DocsContainer context={context as any}>{children}</DocsContainer>
+				<DocsContainer {...(props as any)} />
 			) : (
-				<HocComposer hocs={computeServices(providers, context.store.userGlobals.globals)}>
-					<DocsContainer context={context as any}>
-						<DocsPage type="mdx">{children}</DocsPage>
+				<HocComposer hocs={computeServices(providers, props.context.store.userGlobals.globals)}>
+					<DocsContainer {...(props as any)}>
+						<DocsPage type="mdx">{props.children}</DocsPage>
 					</DocsContainer>
 				</HocComposer>
 			)

@@ -34,6 +34,9 @@ const preview: Preview = {
 		},
 		docs: {
 			...(getDocsConfig(providers) as any),
+			// Storybook bug: `theme` is empty during build when using `@storybook/nextjs-vite`
+			// Disable container overwrite to avoid the bug
+			container: undefined,
 		},
 	},
 	...toolbarConfig,
