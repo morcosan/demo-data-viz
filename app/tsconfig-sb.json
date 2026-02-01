@@ -13,5 +13,10 @@
 			"@ds/*": ["../ds/dist/*"]
 		}
 	},
-	"include": [".storybook/preview.tsx", ".storybook/preview.types.d.ts"]
+	"include": [
+		".storybook/preview.tsx",
+		".storybook/preview.types.d.ts",
+		"src/**/*.stories.ts",
+		"src/**/*.stories.tsx"
+	]
 }

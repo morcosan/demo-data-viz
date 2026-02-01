@@ -3,5 +3,30 @@
 		"action": {
 			"close": "Close"
 		}
+	},
+	"core": {
+		"action": {
+			"back": "Back",
+			"closeMenu": "Close menu",
+			"openMenu": "Open menu"
+		},
+		"label": {
+			"appStorybook": "App Storybook",
+			"appTitle": "Demo Data Viz",
+			"dsStorybook": "DS Storybook",
+			"githubRepo": "GitHub Repo",
+			"navigationBar": "Navigation bar",
+			"navigationMenu": "Navigation menu",
+			"openMenu": "Open menu",
+			"preferences": "Preferences",
+			"settings": "Settings",
+			"theme": "Theme",
+			"themeDark": "Dark",
+			"themeLight": "Light"
+		},
+		"menuLabel": {
+			"dashboard": "Dashboard",
+			"datasets": "Datasets"
+		}
 	}
 }

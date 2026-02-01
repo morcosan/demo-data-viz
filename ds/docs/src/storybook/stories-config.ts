@@ -27,8 +27,8 @@ type ControlType =
 type Defaults<C> = Partial<JsxProps<C>>
 type ArgsParam<C> = {
 	args: {
-		slots: Defaults<C>
-		props: Defaults<C>
+		slots?: Defaults<C>
+		props?: Defaults<C>
 		events?: PropKeys<C>
 	}
 	hasMethods?: boolean
@@ -54,10 +54,10 @@ const createArgType = ({ control, header, value }: ControlParam): InputType => (
 const createArgsConfig = <C>({ args, hasMethods, noDefaults, inlineRadios }: ArgsParam<C>) => {
 	const argTypes: ArgTypes = {}
 
-	Object.keys(args.slots).forEach(
+	Object.keys(args.slots || {}).forEach(
 		(key: string) => (argTypes[key] = createArgType({ header: 'Slots', control: 'text' }))
 	)
-	Object.entries(args.props).forEach(([key, value]: [string, unknown]) => {
+	Object.entries(args.props || {}).forEach(([key, value]: [string, unknown]) => {
 		const cKey = key as keyof JsxProps<C>
 		argTypes[key] = createArgType({
 			header: 'Props',
@@ -71,8 +71,8 @@ const createArgsConfig = <C>({ args, hasMethods, noDefaults, inlineRadios }: Arg
 	return {
 		argTypes,
 		args: {
-			...args.slots,
-			...args.props,
+			...(args.slots || {}),
+			...(args.props || {}),
 			...args.events?.reduce((acc, event) => ({ ...acc, [event]: fn() }), {}),
 		},
 	}

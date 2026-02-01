@@ -183,6 +183,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
 		opacity: props.loading ? 0 : 1,
 		pointerEvents: 'none',
 		userSelect: 'none',
+		textAlign: isVItem ? 'left' : 'center',
 	}
 
 	const baseBindings = {

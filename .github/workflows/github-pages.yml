@@ -57,7 +57,7 @@ jobs:
       - name: Test app Storybook
         run: | # First attempt fails due to Vitest/Storybook issues
           cd app
-          pnpm run app--sb-test || pnpm run app--sb-test || exit 1
+          pnpm run sb--test || pnpm run sb--test || exit 1
 
   build:
     name: Building
@@ -79,7 +79,7 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /demo-data-viz
 
       - name: Build app Storybook
-        run: cd app && pnpm run app--sb-build
+        run: cd app && pnpm run sb--build
 
       - name: Prepare deployment directory
         run: |
