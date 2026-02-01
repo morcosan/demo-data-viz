@@ -11,7 +11,7 @@ import {
 	StorybookSvg,
 	useThemeService,
 } from '@ds/core.ts'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
 	closeMenu: () => void
@@ -19,6 +19,7 @@ interface Props {
 }
 
 export const SettingsMenu = (props: Props) => {
+	const { t } = useTranslation()
 	const { isUiLight, isUiDark, changeColorTheme } = useThemeService()
 
 	const isPopup = !props.onClickBack

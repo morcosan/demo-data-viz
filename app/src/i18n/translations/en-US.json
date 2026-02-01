@@ -8,7 +8,9 @@
 		"action": {
 			"back": "Back",
 			"closeMenu": "Close menu",
-			"openMenu": "Open menu"
+			"openMenu": "Open menu",
+			"pinNavMenu": "Pin nav menu",
+			"unpinNavMenu": "Unpin nav menu"
 		},
 		"label": {
 			"appStorybook": "App Storybook",

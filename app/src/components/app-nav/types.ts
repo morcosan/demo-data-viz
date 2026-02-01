@@ -1,5 +1,5 @@
-import { AppLogo } from '../app-logo/app-logo.tsx'
-import { NavMenu } from '../nav-menu/nav-menu.tsx'
+import { AppLogo as AppLogoComponent } from '../app-logo/app-logo.tsx'
+import { NavMenu as NavMenuComponent } from '../nav-menu/nav-menu.tsx'
 
-export type AppLogo = typeof AppLogo
-export type NavMenu = typeof NavMenu
+export type AppLogo = typeof AppLogoComponent
+export type NavMenu = typeof NavMenuComponent

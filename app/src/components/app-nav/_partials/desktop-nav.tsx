@@ -36,7 +36,7 @@ export const DesktopNav = (props: Props) => {
 
 	const loadPinConfig = () => {
 		const cookie = localStorage.getItem(props.cookieKeyPinned)
-		const isPinned = cookie === 'true' || cookie !== 'false'
+		const isPinned = cookie === 'true' || cookie !== 'false' // Start with sidebar as pinned
 		setIsPinned(isPinned)
 		localStorage.setItem(props.cookieKeyPinned, isPinned ? 'true' : 'false')
 	}
@@ -117,7 +117,7 @@ export const DesktopNav = (props: Props) => {
 
 					{/* PIN */}
 					<IconButton
-						tooltip={isPinned ? 'Unpin nav menu' : 'Pin nav menu'}
+						tooltip={isPinned ? t('core.action.unpinNavMenu') : t('core.action.pinNavMenu')}
 						size="sm"
 						className={cx('right-xs-2 top-xs-2 absolute!', isCollapsed && 'hidden!')}
 						onClick={() => onClickPinned(!isPinned)}
