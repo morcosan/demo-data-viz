@@ -39,7 +39,7 @@ export const DocsAssetItem = ({ asset }: Props) => {
 	return (
 		<button type="button" title={asset.coding} className={buttonClass} onClick={onClick}>
 			<span className={cx('flex-center pointer-events-none w-full flex-1', canvasBgClass)}>
-				<asset.elem className="max-h-[40px] max-w-full" />
+				<asset.elem className="max-h-[32px] max-w-full" />
 			</span>
 
 			<span className="border-color-border-default py-xs-1 text-size-sm pointer-events-none w-full border-t text-center">
