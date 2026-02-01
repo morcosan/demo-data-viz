@@ -1,5 +1,5 @@
 import { camelCase, upperFirst } from 'lodash'
-import { type ComponentType } from 'react'
+import { type ComponentType, useEffect, useMemo, useState } from 'react'
 import { type DocsAsset } from '../components/docs-asset-item.tsx'
 
 const renderHtml = (html: string): string => {
@@ -25,4 +25,21 @@ const getAssetsFromFiles = (files: Record<string, unknown>): DocsAsset[] => {
 		.sort((a, b) => a.name.localeCompare(b.name))
 }
 
-export { getAssetsFromFiles, renderHtml }
+const useLocationMock = () => {
+	const [pathname, setPathname] = useState('/')
+
+	const location = useMemo(() => ({ ...window.location, pathname }), [pathname])
+
+	const onNavigate = (event: CustomEvent) => setPathname(event.detail[0])
+
+	useEffect(() => {
+		window.addEventListener('sb:navigate' as any, onNavigate)
+		return () => window.removeEventListener('sb:navigate' as any, onNavigate)
+	}, [])
+
+	return {
+		location,
+	}
+}
+
+export { getAssetsFromFiles, renderHtml, useLocationMock }
