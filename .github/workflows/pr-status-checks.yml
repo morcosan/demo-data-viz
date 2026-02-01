@@ -1,0 +1,52 @@
+name: PR Status Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Lint DS project
+        run: cd ds && pnpm run ds--lint
+
+      - name: Lint app project
+        run: cd app && pnpm run app--lint
+
+  test:
+    name: Testing
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Install DS Playwright browsers
+        run: cd ds && pnpm exec playwright install chromium
+
+      - name: Test DS Storybook
+        run: | # First attempt fails due to Vitest/Storybook issues
+          cd ds
+          pnpm run ds--test || pnpm run ds--test || exit 1
+
+      - name: Install app Playwright browsers
+        run: cd app && pnpm exec playwright install chromium
+
+      - name: Test app Storybook
+        run: | # First attempt fails due to Vitest/Storybook issues
+          cd app
+          pnpm run sb--test || pnpm run sb--test || exit 1
