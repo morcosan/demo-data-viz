@@ -2,12 +2,12 @@ import { type StorybookConfig } from '@storybook/nextjs-vite'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import remarkGfm from 'remark-gfm'
-import { type InlineConfig, loadEnv } from 'vite'
+import { type InlineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import { createBuildNumber, getDsVersion } from '../../ds/dist/tooling/utilities.ts'
 
+const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
-const env = loadEnv('', `${process.cwd()}/.storybook`, '')
 
 const config: StorybookConfig = {
 	stories: ['../src/**/*.@(mdx|stories.@(js|jsx|mjs|ts|tsx))'], // Must be a single regex
@@ -38,7 +38,7 @@ const config: StorybookConfig = {
 		config.define = {
 			ENV__BUILD_NUMBER: JSON.stringify(createBuildNumber()),
 			ENV__DS_VERSION: JSON.stringify(getDsVersion()),
-			ENV__BASE_PATH: JSON.stringify(env.VITE_BASE_PATH),
+			ENV__BASE_PATH: JSON.stringify(BASE_PATH),
 		}
 		config.build = {
 			...(config.build || {}),

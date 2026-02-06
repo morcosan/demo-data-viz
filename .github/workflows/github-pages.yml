@@ -75,8 +75,6 @@ jobs:
 
       - name: Build Next.js app
         run: cd app && pnpm run app--build
-        env:
-          NEXT_PUBLIC_BASE_PATH: /demo-data-viz
 
       - name: Build app Storybook
         run: cd app && pnpm run sb--build

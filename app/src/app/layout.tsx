@@ -18,7 +18,9 @@ export default function RootLayout({ children }: ReactProps) {
 			<body className="h-screen">
 				<Providers>
 					<AppNav appLogo={AppLogo} navMenu={NavMenu}>
-						<div className="px-xs-8 pt-xs-7 pb-sm-5 relative flex h-full w-full">{children}</div>
+						<div className="px-xs-5 pt-xs-5 lg:pt-xs-7 pb-xs-5 lg:pb-sm-0 lg:px-sm-0 relative flex h-full w-full">
+							{children}
+						</div>
 					</AppNav>
 				</Providers>
 			</body>

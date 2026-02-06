@@ -29,6 +29,19 @@
 		"menuLabel": {
 			"dashboard": "Dashboard",
 			"datasets": "Datasets"
+		},
+		"placeholder": {
+			"search": "Search..."
+		},
+		"status": {
+			"loading": "Loading..."
+		}
+	},
+	"dataViz": {
+		"label": {
+			"datasets": "Datasets",
+			"datasetResults": "{total} datasets",
+			"datasetSearch": "Dataset search"
 		}
 	}
 }
