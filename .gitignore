@@ -8,3 +8,6 @@
 *.njsproj
 *.sln
 *.sw?
+
+# Dependencies
+/node_modules

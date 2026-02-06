@@ -1,6 +1,5 @@
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
-import importPlugin from 'eslint-plugin-import'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import { dsImports } from '../ds/dist/tooling/eslint.ts'
 
@@ -15,7 +14,7 @@ export default defineConfig([
 			//
 		],
 		plugins: {
-			import: importPlugin,
+			// import: importPlugin, // Provided by nextVitals
 			'ds-imports': dsImports,
 		},
 		settings: {
