@@ -8,6 +8,6 @@
 		"lib": ["ES2022"],
 		"types": ["node"]
 	},
-	"include": ["next.config.ts", "eslint.config.ts", "vitest.config.ts", ".storybook/**/*.ts"],
+	"include": ["next.config.ts", "eslint.config.ts", "vitest.config.ts", ".storybook/**/*.ts", "tooling/**/*.ts"],
 	"exclude": [".storybook/preview.types.d.ts"]
 }

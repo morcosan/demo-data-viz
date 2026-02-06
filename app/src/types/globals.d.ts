@@ -8,4 +8,5 @@ declare global {
 
 	var ENV__BASE_PATH: string
 	var ENV__BUILD_NUMBER: string
+	var ENV__EUROSTAT_BASE_URL: string
 }

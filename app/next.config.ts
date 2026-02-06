@@ -2,7 +2,7 @@ import { type NextConfig } from 'next'
 import path from 'node:path'
 import { createBuildNumber } from '../ds/dist/tooling/utilities.ts'
 
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ''
+const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
 const BUILD_NUMBER = createBuildNumber()
 
 const nextConfig: NextConfig = {
@@ -12,12 +12,14 @@ const nextConfig: NextConfig = {
 	env: {
 		ENV__BASE_PATH: BASE_PATH,
 		ENV__BUILD_NUMBER: BUILD_NUMBER,
+		ENV__EUROSTAT_BASE_URL: process.env.NEXT_PUBLIC__EUROSTAT_BASE_URL || '',
 	},
 	compiler: { emotion: true },
 
 	turbopack: {
 		root: path.resolve(__dirname, '..'), // Monorepo root
 		resolveAlias: {
+			'@app/*': './src/*',
 			'@ds/*': '../ds/dist/*',
 		},
 		rules: {

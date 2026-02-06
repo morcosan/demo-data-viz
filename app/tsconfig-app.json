@@ -10,6 +10,7 @@
 
 		/* Modules & Resolution */
 		"paths": {
+			"@app/*": ["./src/*"],
 			"@ds/*": ["../ds/dist/*"]
 		}
 	},
