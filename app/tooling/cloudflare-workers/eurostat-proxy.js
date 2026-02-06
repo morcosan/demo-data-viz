@@ -1,5 +1,11 @@
 const isAllowedOrigin = (origin) => {
-	return origin.includes('morco.ro') || origin.includes('localhost')
+	try {
+		const url = new URL(origin)
+		const hostname = url.hostname
+		return hostname === 'morco.ro' || hostname.endsWith('.morco.ro') // || hostname === 'localhost'
+	} catch {
+		return false
+	}
 }
 
 const getTargetUrl = (req) => {

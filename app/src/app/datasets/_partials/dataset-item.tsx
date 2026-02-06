@@ -13,7 +13,7 @@ export const DatasetItem = (props: Props) => {
 	return (
 		<li className={props.className} style={props.style}>
 			<Link
-				href={`/datasets?code=${props.dataset.code}`}
+				href={`/datasets?code=${encodeURIComponent(props.dataset.code)}`}
 				className={cx(
 					'relative flex items-center overflow-hidden',
 					'px-xs-4 py-xs-2 h-sm-9 rounded-sm shadow-xs',

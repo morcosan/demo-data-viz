@@ -50,7 +50,7 @@ export const DatasetListing = (props: Props) => {
 				/>
 
 				<div className="text-size-xs mt-xs-1 ml-xs-0 -mb-xs-1">
-					{t('dataViz.label.datasetResults', { total: datasets.length.toLocaleString('en-US') })}
+					{t('dataViz.label.datasetResults', { total: datasets.length.toLocaleString() })}
 				</div>
 			</div>
 
