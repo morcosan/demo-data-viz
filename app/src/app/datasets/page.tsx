@@ -2,7 +2,7 @@
 
 import { ArrowBackSvg, IconButton } from '@ds/core.ts'
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type Dataset, EurostatApi } from './_api/eurostat-api.ts'
 import { DatasetListing } from './_partials/dataset-listing.tsx'
@@ -34,16 +34,18 @@ export default function DatasetsPage() {
 			</div>
 
 			<div className="gap-xs-9 flex min-h-0 flex-1">
-				<DatasetListing
-					className={cx('lg:w-xl-0 w-full', mobileView === 'listing' ? 'flex' : 'hidden lg:flex')}
-					datasets={datasets || []}
-					loading={isLoading}
-					onClickDataset={() => setMobileView('preview')}
-				/>
-				<DatasetPreview
-					className={cx('flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}
-					datasets={datasets || []}
-				/>
+				<Suspense fallback={null}>
+					<DatasetListing
+						className={cx('lg:w-xl-0 w-full', mobileView === 'listing' ? 'flex' : 'hidden lg:flex')}
+						datasets={datasets || []}
+						loading={isLoading}
+						onClickDataset={() => setMobileView('preview')}
+					/>
+					<DatasetPreview
+						className={cx('flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}
+						datasets={datasets || []}
+					/>
+				</Suspense>
 			</div>
 		</div>
 	)
