@@ -155,7 +155,7 @@ pre.docs code {
 	background-image:
 		linear-gradient(var(--color) 1px, transparent 1px), linear-gradient(90deg, var(--color) 1px, transparent 1px);
 	background-size: 8px 8px;
-	background-color: var(--ds-color-bg-page);
+	background-color: var(--ds-color-bg-pane);
 }
 .docs-bg.docs-bg-tiles {
 	background-image:
@@ -165,10 +165,10 @@ pre.docs code {
 		0 0,
 		8px 8px;
 	background-size: 16px 16px;
-	background-color: var(--ds-color-bg-page);
+	background-color: var(--ds-color-bg-pane);
 }
 .docs-bg.docs-bg-blank {
-	background-color: var(--ds-color-bg-page);
+	background-color: var(--ds-color-bg-pane);
 }
 .docs-bg {
 	--color: var(--ds-color-black-alpha-2);

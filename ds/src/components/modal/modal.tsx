@@ -76,7 +76,7 @@ export const Modal = (rawProps: ModalProps) => {
 		margin: `0 auto`,
 		border: `1px solid ${$color['border-shadow']}`,
 		borderRadius: $radius['lg'],
-		backgroundColor: $color['bg-page'],
+		backgroundColor: $color['bg-pane'],
 		boxShadow: $shadow['lg'],
 	}
 	const cssModalContent: CSSObject = {
@@ -87,7 +87,7 @@ export const Modal = (rawProps: ModalProps) => {
 		height: tokens.modalHeight,
 		maxHeight: '100%',
 		padding: `${tokens.modalContentPY} ${tokens.modalContentPX}`,
-		backgroundColor: $color['bg-page'],
+		backgroundColor: $color['bg-pane'],
 		color: $color['text-default'],
 	}
 	const cssModalTitle: CSSObject = {

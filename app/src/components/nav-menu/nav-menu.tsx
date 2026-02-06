@@ -29,7 +29,7 @@ export const NavMenu = (props: NavMenuProps) => {
 	const settingsMenuClass = cx(
 		isPopupOpened ? 'block' : 'hidden',
 		'z-popup absolute right-0 bottom-0 translate-x-full shadow-lg',
-		'w-lg-7 border-color-border-shadow bg-color-bg-popup rounded-md border'
+		'w-lg-7 border-color-border-shadow bg-color-bg-menu rounded-md border'
 	)
 
 	interface Item {

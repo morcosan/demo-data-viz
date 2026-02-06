@@ -30,7 +30,7 @@ export const DesktopNav = (props: Props) => {
 		'z-navbar absolute top-0 left-0 h-full',
 		'transition-all duration-100 ease-in-out',
 		'p-a11y-scrollbar flex flex-col',
-		'border-color-border-shadow bg-color-bg-card border-r shadow-lg'
+		'border-color-border-shadow bg-color-bg-pane border-r shadow-lg'
 	)
 	const pinColorClass = cx(isPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
 
