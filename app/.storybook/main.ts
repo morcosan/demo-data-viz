@@ -6,6 +6,7 @@ import { type InlineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import { createBuildNumber, getDsVersion } from '../../ds/dist/tooling/utilities.ts'
 
+const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
 
 const config: StorybookConfig = {
@@ -37,7 +38,7 @@ const config: StorybookConfig = {
 		config.define = {
 			ENV__BUILD_NUMBER: JSON.stringify(createBuildNumber()),
 			ENV__DS_VERSION: JSON.stringify(getDsVersion()),
-			ENV__BASE_PATH: JSON.stringify(process.env.NEXT_PUBLIC__BASE_PATH),
+			ENV__BASE_PATH: JSON.stringify(BASE_PATH),
 		}
 		config.build = {
 			...(config.build || {}),
