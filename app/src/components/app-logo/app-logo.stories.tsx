@@ -1,17 +1,14 @@
-import { createArgsConfig } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { AppLogo } from './app-logo.tsx'
 
-const meta: Meta<typeof AppLogo> = {
-	component: AppLogo,
+const meta: Meta = {
 	title: 'Components / AppLogo',
-	...createArgsConfig<typeof AppLogo>({
-		args: {
-			props: {
-				mobile: false,
-				collapsed: false,
-				className: '',
-			},
+	...defineMeta(AppLogo, {
+		props: {
+			mobile: false,
+			collapsed: false,
+			className: '',
 		},
 	}),
 }

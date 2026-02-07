@@ -1,17 +1,14 @@
-import { createArgsConfig } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { HighlightedText } from './highlighted-text.tsx'
 
-const meta: Meta<typeof HighlightedText> = {
-	component: HighlightedText,
+const meta: Meta = {
 	title: 'Components / HighlightedText',
-	...createArgsConfig<typeof HighlightedText>({
-		args: {
-			props: {
-				text: 'Lorem ipsum dolor sit amet\nConsectetur adipiscing elit\nLorem ipsum dolor sit amet',
-				keyword: 'ipsum dolor',
-				className: '',
-			},
+	...defineMeta(HighlightedText, {
+		props: {
+			text: 'Lorem ipsum dolor sit amet\nConsectetur adipiscing elit\nLorem ipsum dolor sit amet',
+			keyword: 'ipsum dolor',
+			className: '',
 		},
 	}),
 }

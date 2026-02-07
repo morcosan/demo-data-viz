@@ -1,16 +1,13 @@
-import { createArgsConfig } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { LoadingSpinner } from './loading-spinner.tsx'
 
-const meta: Meta<typeof LoadingSpinner> = {
-	component: LoadingSpinner,
+const meta: Meta = {
 	title: 'Components / LoadingSpinner',
-	...createArgsConfig<typeof LoadingSpinner>({
-		args: {
-			props: {
-				size: 'sm',
-				className: '',
-			},
+	...defineMeta(LoadingSpinner, {
+		props: {
+			size: 'sm',
+			className: '',
 		},
 	}),
 }
