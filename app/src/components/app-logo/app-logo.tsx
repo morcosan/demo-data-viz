@@ -16,7 +16,7 @@ export const AppLogo = ({ collapsed, mobile, className }: AppLogoProps) => {
 	const { t } = useTranslation()
 
 	return (
-		<Link href="/public" className={cx('p-xs-3 text-color-primary-page-text flex w-fit', className)}>
+		<Link href="/" className={cx('p-xs-3 text-color-primary-page-text flex w-fit', className)}>
 			{mobile ? (
 				<span className="flex items-center">
 					<LogoSvg className="mr-xs-3 h-sm-0 w-sm-0 animate-pulse" />
