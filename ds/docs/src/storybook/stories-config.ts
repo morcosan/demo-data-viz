@@ -25,15 +25,13 @@ type ControlType =
 	| false
 
 type Defaults<C> = Partial<JsxProps<C>>
-type ArgsParam<C> = {
-	args: {
-		slots?: Defaults<C>
-		props?: Defaults<C>
-		events?: PropKeys<C>
-	}
-	hasMethods?: boolean
-	noDefaults?: PropKeys<C>
+type ArgsConfig<C> = {
+	slots?: Defaults<C>
+	props?: Defaults<C>
+	events?: PropKeys<C>
 	inlineRadios?: PropKeys<C>
+	noDefaults?: PropKeys<C>
+	hasMethods?: boolean
 }
 
 type ControlParam = {
@@ -42,40 +40,42 @@ type ControlParam = {
 	value?: unknown
 }
 
-const createArgDefault = (value: unknown): string => (typeof value === 'string' ? `'${value}'` : String(value))
-const createArgType = ({ control, header, value }: ControlParam): InputType => ({
+const defineArgDefault = (value: unknown): string => (typeof value === 'string' ? `'${value}'` : String(value))
+const defineArgType = ({ control, header, value }: ControlParam): InputType => ({
 	control,
 	table: {
 		category: header,
-		defaultValue: value ? { summary: createArgDefault(value) } : undefined,
+		defaultValue: value ? { summary: defineArgDefault(value) } : undefined,
 	},
 })
 
-const createArgsConfig = <C>({ args, hasMethods, noDefaults, inlineRadios }: ArgsParam<C>) => {
+const defineArgs = <C>({ slots, props, events, hasMethods, noDefaults, inlineRadios }: ArgsConfig<C>) => {
 	const argTypes: ArgTypes = {}
 
-	Object.keys(args.slots || {}).forEach(
-		(key: string) => (argTypes[key] = createArgType({ header: 'Slots', control: 'text' }))
+	Object.keys(slots || {}).forEach(
+		(key: string) => (argTypes[key] = defineArgType({ header: 'Slots', control: 'text' }))
 	)
-	Object.entries(args.props || {}).forEach(([key, value]: [string, unknown]) => {
+	Object.entries(props || {}).forEach(([key, value]: [string, unknown]) => {
 		const cKey = key as keyof JsxProps<C>
-		argTypes[key] = createArgType({
+		argTypes[key] = defineArgType({
 			header: 'Props',
 			control: inlineRadios?.includes(cKey) ? 'inline-radio' : undefined,
 			value: noDefaults?.includes(cKey) ? undefined : value,
 		})
 	})
-	args.events?.forEach((key: keyof JsxProps<C>) => (argTypes[key as string] = createArgType({ header: 'Events' })))
-	hasMethods && (argTypes['ref'] = createArgType({ header: 'Methods', control: false }))
+	events?.forEach((key: keyof JsxProps<C>) => (argTypes[key as string] = defineArgType({ header: 'Events' })))
+	hasMethods && (argTypes['ref'] = defineArgType({ header: 'Methods', control: false }))
 
 	return {
 		argTypes,
 		args: {
-			...(args.slots || {}),
-			...(args.props || {}),
-			...args.events?.reduce((acc, event) => ({ ...acc, [event]: fn() }), {}),
+			...(slots || {}),
+			...(props || {}),
+			...events?.reduce((acc, event) => ({ ...acc, [event]: fn() }), {}),
 		},
 	}
 }
 
-export { createArgsConfig }
+const defineMeta = <C>(component: C, config: ArgsConfig<C>) => ({ component, ...defineArgs(config) })
+
+export { defineMeta }

@@ -6,40 +6,37 @@ import {
 	TextField,
 	type TextFieldSize,
 } from '@ds/core.ts'
-import { createArgsConfig, DocsPage } from '@ds/docs/core.ts'
+import { defineMeta, DocsPage } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 
-const meta: Meta<typeof TextField> = {
-	component: TextField,
+const meta: Meta = {
 	title: 'Components / Text Field',
-	...createArgsConfig<typeof TextField>({
-		args: {
-			slots: {
-				value: '',
-				placeholder: 'Type some text',
-				ariaLabel: 'Example label',
-				ariaDescription: 'Example description',
-				prefix: '',
-				suffix: '',
-			},
-			props: {
-				id: 'example-id',
-				variant: 'default',
-				size: 'md',
-				maxLength: 0,
-				multiline: false,
-				minRows: 0,
-				maxRows: 0,
-				readonly: false,
-				disabled: false,
-				invalid: false,
-				className: '',
-			},
-			events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
+	...defineMeta(TextField, {
+		slots: {
+			value: '',
+			placeholder: 'Type some text',
+			ariaLabel: 'Example label',
+			ariaDescription: 'Example description',
+			prefix: '',
+			suffix: '',
 		},
+		props: {
+			id: 'example-id',
+			variant: 'default',
+			size: 'md',
+			maxLength: 0,
+			multiline: false,
+			minRows: 0,
+			maxRows: 0,
+			readonly: false,
+			disabled: false,
+			invalid: false,
+			className: '',
+		},
+		events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
+		inlineRadios: ['variant', 'size'],
 		noDefaults: ['id'],
 		hasMethods: true,
-		inlineRadios: ['variant', 'size'],
 	}),
 }
 

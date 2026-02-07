@@ -1,29 +1,26 @@
-import { Button, IconButton, type IconButtonVariant, LogoutSvg } from '@ds/core.ts'
-import { createArgsConfig, DocsPage } from '@ds/docs/core.ts'
+import { IconButton, type IconButtonVariant, LogoutSvg } from '@ds/core.ts'
+import { defineMeta, DocsPage } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 
-const meta: Meta<typeof IconButton> = {
-	component: IconButton,
+const meta: Meta = {
 	title: 'Components / Icon Button',
-	...createArgsConfig<typeof IconButton>({
-		args: {
-			slots: {
-				children: '⭐',
-				tooltip: 'Tooltip',
-				ariaDescription: 'Example description',
-			},
-			props: {
-				size: 'md',
-				variant: 'text-default',
-				pressed: false,
-				loading: false,
-				disabled: false,
-				linkHref: '',
-				linkType: 'internal',
-				className: '',
-			},
-			events: ['onClick'],
+	...defineMeta(IconButton, {
+		slots: {
+			children: '⭐',
+			tooltip: 'Tooltip',
+			ariaDescription: 'Example description',
 		},
+		props: {
+			size: 'md',
+			variant: 'text-default',
+			pressed: false,
+			loading: false,
+			disabled: false,
+			linkHref: '',
+			linkType: 'internal',
+			className: '',
+		},
+		events: ['onClick'],
 		inlineRadios: ['size', 'variant', 'linkType'],
 	}),
 }
@@ -32,7 +29,7 @@ const Default: StoryObj<typeof IconButton> = {
 	tags: ['autodocs', 'controls'],
 }
 
-const Variants: StoryObj<typeof Button> = {
+const Variants: StoryObj<typeof IconButton> = {
 	render() {
 		const svg = <LogoutSvg className="h-xs-7 w-xs-7" />
 		const variants: IconButtonVariant[] = [

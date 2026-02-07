@@ -1,29 +1,26 @@
 import { Button, type ButtonVariant, LogoutSvg } from '@ds/core.ts'
-import { createArgsConfig, DocsPage } from '@ds/docs/core.ts'
+import { defineMeta, DocsPage } from '@ds/docs/core.ts'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 
-const meta: Meta<typeof Button> = {
-	component: Button,
+const meta: Meta = {
 	title: 'Components / Button',
-	...createArgsConfig<typeof Button>({
-		args: {
-			slots: {
-				children: 'Test qyp',
-				tooltip: 'Tooltip',
-				ariaDescription: 'Example description',
-			},
-			props: {
-				size: 'md',
-				variant: 'solid-primary',
-				highlight: 'default',
-				loading: false,
-				disabled: false,
-				linkHref: '',
-				linkType: 'internal',
-				className: '',
-			},
-			events: ['onClick'],
+	...defineMeta(Button, {
+		slots: {
+			children: 'Test qyp',
+			tooltip: 'Tooltip',
+			ariaDescription: 'Example description',
 		},
+		props: {
+			size: 'md',
+			variant: 'solid-primary',
+			highlight: 'default',
+			loading: false,
+			disabled: false,
+			linkHref: '',
+			linkType: 'internal',
+			className: '',
+		},
+		events: ['onClick'],
 		inlineRadios: ['size', 'variant', 'highlight', 'linkType'],
 	}),
 }
