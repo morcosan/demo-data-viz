@@ -28,7 +28,7 @@ export const DocsAssetItem = ({ asset }: Props) => {
 		'text-size-sm font-weight-md text-color-success-card-text'
 	)
 
-	const onClick = (event: ReactMouseEvent) => {
+	const handleClick = (event: ReactMouseEvent) => {
 		const button = event.target as HTMLButtonElement
 		button.blur()
 
@@ -37,7 +37,7 @@ export const DocsAssetItem = ({ asset }: Props) => {
 	}
 
 	return (
-		<button type="button" title={asset.coding} className={buttonClass} onClick={onClick}>
+		<button type="button" title={asset.coding} className={buttonClass} onClick={handleClick}>
 			<span className={cx('flex-center pointer-events-none w-full flex-1', canvasBgClass)}>
 				<asset.elem className="max-h-[32px] max-w-full" />
 			</span>

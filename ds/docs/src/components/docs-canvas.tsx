@@ -19,7 +19,7 @@ export const DocsCanvas = ({ children, className, extended }: Props) => {
 		'text-size-xs text-color-text-subtle text-center'
 	)
 
-	const onFocusInput = (event: ReactFocusEvent) => {
+	const handleInputFocus = (event: ReactFocusEvent) => {
 		forceA11yMode('default')
 
 		// Remove selection
@@ -42,7 +42,7 @@ export const DocsCanvas = ({ children, className, extended }: Props) => {
 				id="kf-1"
 				defaultValue="Keyboard focus"
 				className={cx(focusClass, 'top-[-23px]')}
-				onFocus={onFocusInput}
+				onFocus={handleInputFocus}
 			/>
 			{children}
 			<input
@@ -50,7 +50,7 @@ export const DocsCanvas = ({ children, className, extended }: Props) => {
 				id="kf-2"
 				defaultValue="Keyboard focus"
 				className={cx(focusClass, 'bottom-[-23px]')}
-				onFocus={onFocusInput}
+				onFocus={handleInputFocus}
 			/>
 			<div tabIndex={0} className="opacity-0" onFocus={() => input1Ref.current?.focus()} />
 		</div>

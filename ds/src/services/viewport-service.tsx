@@ -64,12 +64,12 @@ const ViewportService = ({ children }: ReactProps) => {
 	const [viewportWidth, setViewportWidth] = useState(0)
 
 	const resizeWindow = () => setViewportWidth(window.innerWidth)
-	const onResizeWindow = debounce(resizeWindow, 100)
+	const handleWindowResize = debounce(resizeWindow, 100)
 
 	useEffect(() => {
 		resizeWindow()
-		window.addEventListener('resize', onResizeWindow, true)
-		return () => window.removeEventListener('resize', onResizeWindow, true)
+		window.addEventListener('resize', handleWindowResize, true)
+		return () => window.removeEventListener('resize', handleWindowResize, true)
 	}, [])
 
 	const breakpoint = Object.fromEntries(

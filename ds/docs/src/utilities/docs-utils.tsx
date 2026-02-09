@@ -30,11 +30,11 @@ const useLocationMock = () => {
 
 	const location = useMemo(() => ({ ...window.location, pathname }), [pathname])
 
-	const onNavigate = (event: CustomEvent) => setPathname(event.detail[0])
+	const handleNavigate = (event: CustomEvent) => setPathname(event.detail[0])
 
 	useEffect(() => {
-		window.addEventListener('sb:navigate' as any, onNavigate)
-		return () => window.removeEventListener('sb:navigate' as any, onNavigate)
+		window.addEventListener('sb:navigate' as any, handleNavigate)
+		return () => window.removeEventListener('sb:navigate' as any, handleNavigate)
 	}, [])
 
 	return {

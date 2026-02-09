@@ -37,7 +37,7 @@ const A11yService = ({ children }: ReactProps) => {
 
 	const setHtmlAttr = (mode: A11yMode) => document.documentElement.setAttribute(ATTR_KEY__A11Y_MODE, mode)
 
-	const onMouseDownWindow = (event: MouseEvent) => {
+	const handleWindowMouseDown = (event: MouseEvent) => {
 		// NVDA keyboard triggers mousedown with event.detail == 0
 		// Standard mousedown has event.detail == 1
 		if (event.detail) {
@@ -46,7 +46,7 @@ const A11yService = ({ children }: ReactProps) => {
 		}
 	}
 
-	const onKeyDownWindow = (event: KeyboardEvent) => {
+	const handleWindowKeyDown = (event: KeyboardEvent) => {
 		if (event.key === Keyboard.TAB) {
 			setA11yMode('default')
 			setHtmlAttr('default')
@@ -54,12 +54,12 @@ const A11yService = ({ children }: ReactProps) => {
 	}
 
 	useEffect(() => {
-		window.addEventListener('mousedown', onMouseDownWindow, true)
-		window.addEventListener('keydown', onKeyDownWindow, true)
+		window.addEventListener('mousedown', handleWindowMouseDown, true)
+		window.addEventListener('keydown', handleWindowKeyDown, true)
 
 		return () => {
-			window.removeEventListener('mousedown', onMouseDownWindow, true)
-			window.removeEventListener('keydown', onKeyDownWindow, true)
+			window.removeEventListener('mousedown', handleWindowMouseDown, true)
+			window.removeEventListener('keydown', handleWindowKeyDown, true)
 		}
 	}, [])
 
