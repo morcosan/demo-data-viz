@@ -18,7 +18,7 @@ export default function DatasetsPage() {
 	})
 	const [mobileView, setMobileView] = useState<MobileView>('listing')
 
-	const onClickBack = () => setMobileView('listing')
+	const handleBackClick = () => setMobileView('listing')
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -26,7 +26,7 @@ export default function DatasetsPage() {
 				<IconButton
 					tooltip={t('core.action.back')}
 					className={cx(mobileView === 'listing' && 'hidden!', 'translate-y-px lg:hidden!')}
-					onClick={onClickBack}
+					onClick={handleBackClick}
 				>
 					<ArrowBackSvg className="h-xs-7" />
 				</IconButton>

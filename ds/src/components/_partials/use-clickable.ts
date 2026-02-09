@@ -20,7 +20,7 @@ export const useClickable = (props: ClickableProps) => {
 	const linkTarget = props.linkType === 'internal' ? '_self' : '_blank'
 	const isNoop = props.disabled || props.loading
 
-	const onClick = useCallback(
+	const handleClick = useCallback(
 		(event: ReactMouseEvent) => {
 			if (isNoop || props.linkType !== 'external') event.preventDefault()
 			if (isNoop) return
@@ -39,11 +39,11 @@ export const useClickable = (props: ClickableProps) => {
 		[isNoop, props.linkType, props.linkHref, onClickProp, navigate]
 	)
 
-	const onMouseDown = () => !isNoop && setIsPressed(true)
-	const onMouseLeave = () => setIsPressed(false)
-	const onMouseUp = () => setIsPressed(false)
+	const handleMouseDown = () => !isNoop && setIsPressed(true)
+	const handleMouseLeave = () => setIsPressed(false)
+	const handleMouseUp = () => setIsPressed(false)
 
-	const onKeyDown = (event: ReactKeyboardEvent) => {
+	const handleKeyDown = (event: ReactKeyboardEvent) => {
 		if (isNoop) return
 		if (event.key === Keyboard.SPACE || event.key === Keyboard.ENTER) {
 			event.preventDefault()
@@ -51,7 +51,7 @@ export const useClickable = (props: ClickableProps) => {
 		}
 	}
 
-	const onKeyUp = (event: ReactKeyboardEvent) => {
+	const handleKeyUp = (event: ReactKeyboardEvent) => {
 		if (isNoop) return
 		if (event.key === Keyboard.SPACE || event.key === Keyboard.ENTER) {
 			const elem = event.target as HTMLButtonElement
@@ -67,12 +67,12 @@ export const useClickable = (props: ClickableProps) => {
 	const bindings = (() => {
 		const bindings: any = {
 			'aria-disabled': isNoop,
-			onClick,
-			onMouseDown,
-			onMouseLeave,
-			onMouseUp,
-			onKeyDown,
-			onKeyUp,
+			onClick: handleClick,
+			onMouseDown: handleMouseDown,
+			onMouseLeave: handleMouseLeave,
+			onMouseUp: handleMouseUp,
+			onKeyDown: handleKeyDown,
+			onKeyUp: handleKeyUp,
 		}
 		if (props.linkHref) {
 			bindings.href = props.linkHref
@@ -87,11 +87,11 @@ export const useClickable = (props: ClickableProps) => {
 		isNoop,
 		isPressed,
 		linkTarget,
-		onClick,
-		onKeyDown,
-		onKeyUp,
-		onMouseDown,
-		onMouseLeave,
-		onMouseUp,
+		handleClick,
+		handleKeyDown,
+		handleKeyUp,
+		handleMouseDown,
+		handleMouseLeave,
+		handleMouseUp,
 	}
 }

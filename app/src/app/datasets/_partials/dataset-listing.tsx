@@ -33,7 +33,7 @@ export const DatasetListing = (props: Props) => {
 		itemSize: parseInt(TOKENS__SPACING['sm-9'].$value) + parseInt(TOKENS__SPACING['xs-1'].$value),
 	})
 
-	const onChangeSearch = (value: string) => setKeyword(value)
+	const handleSearchChange = (value: string) => setKeyword(value)
 
 	return (
 		<LayoutPane className={cx('flex flex-col', props.className)}>
@@ -46,7 +46,7 @@ export const DatasetListing = (props: Props) => {
 					placeholder={t('core.placeholder.search')}
 					ariaLabel={t('dataViz.label.datasetSearch')}
 					prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
-					onChange={onChangeSearch}
+					onChange={handleSearchChange}
 				/>
 
 				<div className="text-size-xs mt-xs-1 ml-xs-0 -mb-xs-1">

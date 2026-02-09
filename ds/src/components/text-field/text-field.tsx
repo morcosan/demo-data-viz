@@ -178,12 +178,12 @@ export const TextField = (rawProps: TextFieldProps) => {
 		'.mantine-Input-section[data-position="right"]': cssSuffix,
 	}
 
-	const onKeyDown = useCallback(
+	const handleKeyDown = useCallback(
 		(event: ReactKeyboardEvent) => event.key === Keyboard.ENTER && onSubmit?.(event),
 		[onSubmit]
 	)
 
-	const onChange = useCallback(
+	const handleChange = useCallback(
 		(event: ReactChangeEvent<InputElement>) => {
 			setValue(event.target.value)
 			onChangeProp?.(event.target.value, event)
@@ -218,8 +218,8 @@ export const TextField = (rawProps: TextFieldProps) => {
 		css: cssMantine,
 		onFocus: props.onFocus,
 		onBlur: props.onBlur,
-		onChange: onChange,
-		onKeyDown: onKeyDown,
+		onChange: handleChange,
+		onKeyDown: handleKeyDown,
 	}
 	const bindingsForTextArea: TextareaProps = {
 		...bindings,

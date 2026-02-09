@@ -60,26 +60,26 @@ export const NavMenu = (props: NavMenuProps) => {
 		props.onTogglePopup?.(opened)
 	}
 
-	const onTogglePopup = () => {
+	const handlePopupToggle = () => {
 		const opened = !isPopupOpened
 		togglePopup(opened)
 	}
 
-	const onClickWindow = (event: MouseEvent) => {
+	const handleWindowClick = (event: MouseEvent) => {
 		const target = event.target as HTMLElement
 		const settings = settingsRef.current
 		settings && !settings.contains(target) && togglePopup(false)
 	}
 
 	useEffect(() => {
-		window.addEventListener('mousedown', onClickWindow)
-		return () => window.removeEventListener('mousedown', onClickWindow)
+		window.addEventListener('mousedown', handleWindowClick)
+		return () => window.removeEventListener('mousedown', handleWindowClick)
 	}, [])
 
 	return (
 		<div className={cx('flex flex-1 flex-col', props.className)}>
 			{props.mobile && isPopupOpened ? (
-				<SettingsMenu closeMenu={closeMenu} onClickBack={onTogglePopup} />
+				<SettingsMenu closeMenu={closeMenu} onClickBack={handlePopupToggle} />
 			) : (
 				<>
 					<div className="flex flex-1 flex-col">
@@ -110,7 +110,7 @@ export const NavMenu = (props: NavMenuProps) => {
 							collapsed={props.collapsed}
 							highlight={isPopupOpened ? 'pressed' : 'default'}
 							className="mt-xs-1"
-							onClick={onTogglePopup}
+							onClick={handlePopupToggle}
 						/>
 						<div className={settingsMenuClass}>
 							<SettingsMenu closeMenu={closeMenu} />

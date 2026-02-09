@@ -30,7 +30,7 @@ export const DocsTokenCode = ({ iconSvg, value, size, loading }: Props) => {
 		'text-size-sm font-weight-md text-color-success-card-text'
 	)
 
-	const onClick = (event: ReactMouseEvent) => {
+	const handleClick = (event: ReactMouseEvent) => {
 		const button = event.target as HTMLButtonElement
 		button.blur()
 
@@ -45,7 +45,7 @@ export const DocsTokenCode = ({ iconSvg, value, size, loading }: Props) => {
 		</div>
 	) : (
 		<div className={cx('h-sm-4 relative', size || 'w-md-8')}>
-			<button type="button" className={buttonClass} onClick={onClick}>
+			<button type="button" className={buttonClass} onClick={handleClick}>
 				<code className="gap-xs-2 bg-color-bg-card! pointer-events-none flex w-full! items-center border-0!">
 					<span className="h-xs-6 mt-px ml-px block">{iconSvg}</span>
 					<span className="line-clamp-1">{value}</span>

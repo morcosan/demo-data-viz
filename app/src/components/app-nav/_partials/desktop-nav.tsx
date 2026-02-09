@@ -41,46 +41,46 @@ export const DesktopNav = (props: Props) => {
 		localStorage.setItem(props.cookieKeyPinned, isPinned ? 'true' : 'false')
 	}
 
-	const onClickPinned = (value: boolean) => {
+	const handlePinClick = (value: boolean) => {
 		setIsPinned(value)
 		localStorage.setItem(props.cookieKeyPinned, value ? 'true' : 'false')
 	}
 
-	const onClickWindow = (event: MouseEvent) => {
+	const handleWindowClick = (event: MouseEvent) => {
 		const target = event.target as HTMLElement
 		const sidebar = sidebarRef.current
 		sidebar && !sidebar.contains(target) && setIsHovered(false)
 	}
 
 	// On tablet, expand sidebar on tap
-	const onMouseDownOverlay = (event: ReactMouseEvent) => {
+	const handleOverlayMouseDown = (event: ReactMouseEvent) => {
 		event.stopPropagation()
 		setIsHovered(true)
 		setIsFocused(true)
 	}
 
-	const onMouseLeave = () => {
+	const handleMouseLeave = () => {
 		!isFocused && setIsHovered(hasPopup)
 		setIsFocused(false)
 	}
 
-	const onFocusInside = () => {
+	const handleFocusInside = () => {
 		setIsFocused(true)
 	}
 
-	const onBlurInside = (event: ReactFocusEvent) => {
+	const handleBlurInside = (event: ReactFocusEvent) => {
 		const target = event.relatedTarget as HTMLElement
 		const sidebar = sidebarRef.current
 		sidebar && !sidebar.contains(target) && setIsFocused(false)
 	}
 
 	const closeMenu = useCallback(() => {}, [])
-	const onTogglePopup = useCallback((opened: boolean) => setHasPopup(opened), [])
+	const handlePopupToggle = useCallback((opened: boolean) => setHasPopup(opened), [])
 
 	useEffect(() => {
 		loadPinConfig()
-		window.addEventListener('mousedown', onClickWindow)
-		return () => window.removeEventListener('mousedown', onClickWindow)
+		window.addEventListener('mousedown', handleWindowClick)
+		return () => window.removeEventListener('mousedown', handleWindowClick)
 	}, [])
 
 	return (
@@ -98,7 +98,7 @@ export const DesktopNav = (props: Props) => {
 				{/* FUNCTIONAL OVERLAY */}
 				<div
 					className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}
-					onMouseDown={onMouseDownOverlay}
+					onMouseDown={handleOverlayMouseDown}
 					onMouseEnter={() => setIsHovered(true)}
 				/>
 
@@ -108,9 +108,9 @@ export const DesktopNav = (props: Props) => {
 					aria-label={t('core.label.navigationMenu')}
 					className={sidebarClass}
 					style={sidebarStyle}
-					onMouseLeave={onMouseLeave}
-					onFocusCapture={onFocusInside}
-					onBlurCapture={onBlurInside}
+					onMouseLeave={handleMouseLeave}
+					onFocusCapture={handleFocusInside}
+					onBlurCapture={handleBlurInside}
 				>
 					{/* LOGO */}
 					<props.appLogo collapsed={isCollapsed} className="mb-xs-9" />
@@ -120,7 +120,7 @@ export const DesktopNav = (props: Props) => {
 						tooltip={isPinned ? t('core.action.unpinNavMenu') : t('core.action.pinNavMenu')}
 						size="sm"
 						className={cx('right-xs-2 top-xs-2 absolute!', isCollapsed && 'hidden!')}
-						onClick={() => onClickPinned(!isPinned)}
+						onClick={() => handlePinClick(!isPinned)}
 					>
 						<PinSvg className={cx('h-xs-5', pinColorClass)} />
 					</IconButton>
@@ -130,7 +130,7 @@ export const DesktopNav = (props: Props) => {
 						pathname={pathname}
 						closeMenu={closeMenu}
 						collapsed={isCollapsed}
-						onTogglePopup={onTogglePopup}
+						onTogglePopup={handlePopupToggle}
 					/>
 				</nav>
 			</div>
