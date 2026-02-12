@@ -1,8 +1,8 @@
 'use client'
 
+import { useTranslation } from '@app-i18n'
 import { LogoSvg } from '@ds/core.ts'
 import Link from 'next/link'
-import { useTranslation } from 'react-i18next'
 
 export interface AppLogoProps extends ReactProps {
 	/** Flag for rendering the logo on mobile  */

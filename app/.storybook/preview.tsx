@@ -1,8 +1,8 @@
 import { HocComposer, RoutingService } from '@ds/core.ts'
 import { getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig } from '@ds/docs/core.ts'
 import { type Preview } from '@storybook/nextjs-vite'
-import { initClientI18n } from '../src/i18n/i18n-client.ts'
-import { I18nProvider } from '../src/i18n/i18n-provider.tsx'
+import { initClientI18n } from '../src/config/i18n/i18n-client.ts'
+import { I18nProvider } from '../src/config/i18n/i18n-provider.tsx'
 import './styles.css'
 
 LOG('BUILD_NUMBER:', ENV__BUILD_NUMBER)

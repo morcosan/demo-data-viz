@@ -32,6 +32,11 @@ const config: StorybookConfig = {
 			...(config.resolve || {}),
 			alias: {
 				...(config.resolve?.alias || {}),
+				'@app-components': path.resolve(dirname, '../src/shared/components/index.ts'),
+				'@app-utils': path.resolve(dirname, '../src/shared/utils/index.ts'),
+				'@app-i18n': path.resolve(dirname, '../src/config/i18n/index.ts'),
+				'@app-api': path.resolve(dirname, '../src/config/api/index.ts'),
+				'@app': path.resolve(dirname, '../src/'),
 				'@ds': path.resolve(dirname, '../../ds/dist/'),
 			},
 		}

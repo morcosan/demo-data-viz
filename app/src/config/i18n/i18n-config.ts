@@ -33,6 +33,9 @@ const i18nConfig: InitOptions = {
 		prefix: '{',
 		suffix: '}',
 	},
+
+	showSupportNotice: false, // Disable annoying promo log
 }
 
-export { DEFAULT_LOCALE, I18N_NAMESPACE, i18nConfig, LOCALE_INFO, type Locale, type LocaleInfo }
+export { DEFAULT_LOCALE, I18N_NAMESPACE, i18nConfig, LOCALE_INFO }
+export type { Locale, LocaleInfo }

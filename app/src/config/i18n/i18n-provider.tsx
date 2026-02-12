@@ -13,7 +13,7 @@ interface I18nWrapperProps extends ReactProps {
 const I18nWrapper = ({ loading, children }: I18nWrapperProps) => {
 	const { t } = useTranslation()
 	return (
-		<I18nService translate={t} loading={loading}>
+		<I18nService translate={t as any} loading={loading}>
 			{children}
 		</I18nService>
 	)
@@ -28,7 +28,8 @@ const I18nProvider = ({ children }: ReactProps) => {
 		if (isLocaleReady(locale)) return
 		try {
 			setLoading(true)
-			const json = await import(`./translations/${locale}.json`)
+
+			const json = (await import(`./translations/${locale}.json`)).default
 			i18n.addResourceBundle(locale, I18N_NAMESPACE, json, true, true)
 		} finally {
 			setLoading(false)

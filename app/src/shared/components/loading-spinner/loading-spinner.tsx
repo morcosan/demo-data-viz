@@ -1,6 +1,8 @@
+'use client'
+
+import { useTranslation } from '@app-i18n'
 import { useDefaults } from '@ds/core.ts'
 import { Loader } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
 
 interface Props extends ReactProps {
 	size?: 'xs' | 'sm'

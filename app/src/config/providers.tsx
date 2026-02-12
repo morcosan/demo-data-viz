@@ -1,12 +1,18 @@
 'use client'
 
+import { QueryProvider } from '@app-api'
+import { I18nProvider, initClientI18n } from '@app-i18n'
+import { LOG } from '@app-utils'
+import { ENV__BUILD_NUMBER } from '@app/env.ts'
+import '@app/globals.ts'
+import '@app/styling/index.ts'
 import { A11yService, ConfigService, HocComposer, ThemeService, ViewportService } from '@ds/core.ts'
 import { StrictMode } from 'react'
-import '../../env.client.ts'
-import { initClientI18n } from '../../i18n/i18n-client.ts'
-import { I18nProvider } from '../../i18n/i18n-provider.tsx'
-import { ApiProvider } from './api-provider.tsx'
-import { RouterProvider } from './router-provider.tsx'
+import { RouterProvider } from './router/router-provider.tsx'
+
+if (typeof window !== 'undefined') {
+	LOG('BUILD_NUMBER:', ENV__BUILD_NUMBER)
+}
 
 initClientI18n()
 
@@ -17,7 +23,7 @@ const providers = [
 	hoc(A11yService, {}),
 	hoc(ViewportService, {}),
 	hoc(I18nProvider, {}),
-	hoc(ApiProvider, {}),
+	hoc(QueryProvider, {}),
 	hoc(RouterProvider, {}),
 	hoc(ThemeService, { cookieKey: 'app-color-theme' }),
 ]

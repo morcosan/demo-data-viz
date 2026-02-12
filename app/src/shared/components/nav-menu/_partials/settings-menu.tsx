@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslation } from '@app-i18n'
+import { ENV__BASE_PATH } from '@app/env.ts'
 import {
 	ArrowBackSvg,
 	Button,
@@ -11,7 +13,6 @@ import {
 	StorybookSvg,
 	useThemeService,
 } from '@ds/core.ts'
-import { useTranslation } from 'react-i18next'
 
 interface Props {
 	closeMenu: () => void
@@ -66,17 +67,17 @@ export const SettingsMenu = (props: Props) => {
 
 			<hr className={hrClass} />
 
-			{/* APP STORYBOOK */}
-			<Button linkHref={appStorybookUrl} linkType="external" variant="item-text-default">
-				<StorybookSvg className={actionIconClass} />
-				{t('core.label.appStorybook')}
-				<NewTabSvg className={newTabIconClass} />
-			</Button>
-
 			{/* DS STORYBOOK */}
 			<Button linkHref={dsStorybookUrl} linkType="external" variant="item-text-default">
 				<StorybookSvg className={actionIconClass} />
 				{t('core.label.dsStorybook')}
+				<NewTabSvg className={newTabIconClass} />
+			</Button>
+
+			{/* APP STORYBOOK */}
+			<Button linkHref={appStorybookUrl} linkType="external" variant="item-text-default">
+				<StorybookSvg className={actionIconClass} />
+				{t('core.label.appStorybook')}
 				<NewTabSvg className={newTabIconClass} />
 			</Button>
 
