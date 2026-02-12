@@ -22,12 +22,12 @@ const config: StorybookConfig = {
 	framework: {
 		name: '@storybook/nextjs-vite',
 		options: {
-			image: { excludeFiles: ['**/*.svg'] }, // Disable default imports for SVG
+			// 	image: { excludeFiles: ['**/*.svg'] }, // Disable default imports for SVG
 		},
 	},
 
 	async viteFinal(config: InlineConfig) {
-		config.plugins = [...(config.plugins || []), svgr({ include: '**/*.svg' })]
+		config.plugins = [...(config.plugins || []), svgr({ include: '**/*.svgr' })]
 		config.resolve = {
 			...(config.resolve || {}),
 			alias: {

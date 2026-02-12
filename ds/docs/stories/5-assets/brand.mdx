@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { DocsAssetItem, getAssetsFromFiles } from '@ds/docs/core.ts'
 
-export const files = import.meta.glob('/src/assets/brand/*.svg', { eager: true, import: 'default' })
+export const files = import.meta.glob('/src/assets/brand/*.svgr', { eager: true, import: 'default' })
 export const assets = getAssetsFromFiles(files)
 
 <Meta title="Assets / Brand" />
