@@ -28,6 +28,7 @@ export const AppNav = (rawProps: AppNavProps) => {
 		desktopMaxWidth: 'var(--ds-spacing-lg-5)',
 		cookieKeyPinned: 'app-pinned-navbar',
 	} as const)
+
 	return (
 		<div
 			className="flex h-full w-full flex-1 flex-col items-stretch lg:flex-row lg:pt-0!"

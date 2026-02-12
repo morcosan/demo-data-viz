@@ -1,11 +1,8 @@
+import { AppLogo, AppNav, NavMenu } from '@app-components'
+import { DEFAULT_LOCALE } from '@app/config/i18n/i18n-config.ts'
+import { Providers } from '@app/config/providers.tsx'
+import '@app/globals.ts'
 import { type Metadata } from 'next'
-import { AppLogo } from '../components/app-logo/app-logo.tsx'
-import { AppNav } from '../components/app-nav/app-nav.tsx'
-import { NavMenu } from '../components/nav-menu/nav-menu.tsx'
-import '../env.server.ts'
-import { DEFAULT_LOCALE } from '../i18n/i18n-config.ts'
-import '../styling/index.ts'
-import { Providers } from './_setup/providers.tsx'
 
 export const metadata: Metadata = {
 	title: 'Demo Data Viz',

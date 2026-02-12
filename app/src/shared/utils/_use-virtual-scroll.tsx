@@ -1,14 +1,14 @@
+'use client'
+
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useRef } from 'react'
-
-export { type VirtualItem } from '@tanstack/virtual-core'
 
 interface Props {
 	count: number
 	itemSize: number
 }
 
-export const useVirtualScroll = (props: Props) => {
+const useVirtualScroll = (props: Props) => {
 	const vScrollerRef = useRef<HTMLDivElement>(null)
 
 	const getScrollElement = () => vScrollerRef.current
@@ -28,3 +28,6 @@ export const useVirtualScroll = (props: Props) => {
 		vItems: getVirtualItems(),
 	}
 }
+
+export { type VirtualItem } from '@tanstack/virtual-core'
+export { useVirtualScroll }

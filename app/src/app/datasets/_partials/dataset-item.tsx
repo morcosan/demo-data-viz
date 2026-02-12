@@ -1,4 +1,4 @@
-import { HighlightedText } from '@app/components/highlighted-text/highlighted-text.tsx'
+import { HighlightedText } from '@app-components'
 import Link from 'next/link'
 import type { Dataset } from '../_api/eurostat-api.ts'
 

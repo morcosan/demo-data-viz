@@ -1,7 +1,7 @@
+import { useTranslation } from '@app-i18n'
 import { IconButton, MenuSvg, wait } from '@ds/core.ts'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { type AppLogo, type NavMenu } from '../types.ts'
 
 interface Props extends ReactProps {

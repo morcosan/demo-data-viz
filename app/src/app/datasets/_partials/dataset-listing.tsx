@@ -1,9 +1,8 @@
 'use client'
 
+import { LayoutPane, LoadingSpinner } from '@app-components'
+import { useVirtualScroll, type VirtualItem } from '@app-utils'
 import { DatasetItem } from '@app/app/datasets/_partials/dataset-item.tsx'
-import { LayoutPane } from '@app/components/layout-pane/layout-pane.tsx'
-import { LoadingSpinner } from '@app/components/loading-spinner/loading-spinner.tsx'
-import { useVirtualScroll, type VirtualItem } from '@app/utils/use-virtual-scroll.tsx'
 import { SearchSvg, TextField, TOKENS__SPACING } from '@ds/core.ts'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'

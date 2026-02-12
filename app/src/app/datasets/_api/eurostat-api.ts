@@ -1,5 +1,7 @@
 // https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nama_10_gdp?format=JSON
 
+import { ENV__EUROSTAT_BASE_URL } from '@app/env.ts'
+
 export interface Dataset {
 	title: string
 	code: string

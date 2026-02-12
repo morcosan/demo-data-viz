@@ -1,8 +1,8 @@
 'use client'
 
+import { useTranslation } from '@app-i18n'
 import { Button, DatabaseSvg, HomeSvg } from '@ds/core.ts'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { SettingsButton } from './_partials/settings-button.tsx'
 import { SettingsMenu } from './_partials/settings-menu.tsx'
 
