@@ -1,2 +1,2 @@
-export { default as LogoLockupSvg } from './brand/logo-lockup-white.svg'
-export { default as LogoSvg } from './brand/logo.svg'
+export { default as LogoLockupSvg } from './brand/logo-lockup-white.svgr'
+export { default as LogoSvg } from './brand/logo.svgr'

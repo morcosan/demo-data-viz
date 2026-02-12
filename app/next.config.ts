@@ -23,13 +23,15 @@ const nextConfig: NextConfig = {
 			'@ds/*': '../ds/dist/*',
 		},
 		rules: {
-			'*.svg': {
+			'*.svgr': {
 				loaders: [
 					{
 						loader: '@svgr/webpack',
 						options: {
 							svgoConfig: {
-								plugins: [{ name: 'preset-default', params: { overrides: { removeViewBox: false } } }],
+								plugins: [
+									{ name: 'preset-default', params: { overrides: { removeViewBox: false, cleanupIds: false } } },
+								],
 							},
 						},
 					},

@@ -10,7 +10,7 @@ import { createBuildNumber, getDsVersion } from './dist/tooling/utilities.ts'
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-	plugins: [react({ jsxImportSource: '@emotion/react' }), svgr({ include: '**/*.svg' })],
+	plugins: [react({ jsxImportSource: '@emotion/react' }), svgr({ include: '**/*.svgr' })],
 
 	resolve: {
 		alias: {
