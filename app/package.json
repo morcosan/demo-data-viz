@@ -19,14 +19,19 @@
 		"@emotion/react": "^11.14.0",
 		"@mantine/core": "^8.3.14",
 		"@tanstack/react-query": "^5.90.20",
+		"@tanstack/react-table": "^8.21.3",
 		"@tanstack/react-virtual": "^3.13.18",
 		"clsx": "^2.1.1",
+		"flag-icons": "^7.5.0",
+		"i18n-iso-countries": "^7.14.0",
 		"i18next": "^25.8.4",
 		"lodash": "^4.17.23",
 		"next": "16.1.6",
 		"react": "19.2.4",
 		"react-dom": "19.2.4",
-		"react-i18next": "^16.5.4"
+		"react-error-boundary": "^6.1.0",
+		"react-i18next": "^16.5.4",
+		"zod": "^4.3.6"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^10.3.0",

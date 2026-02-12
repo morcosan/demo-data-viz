@@ -2,6 +2,7 @@
  * Storybook Preview
  */
 export * from '../../docs/src/storybook/preview-config.tsx'
+export * from '../../docs/src/storybook/preview-mdx-page.tsx'
 export * from '../../docs/src/storybook/stories-config.ts'
 
 /**

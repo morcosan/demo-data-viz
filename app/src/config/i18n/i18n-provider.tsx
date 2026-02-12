@@ -1,6 +1,7 @@
 'use client'
 
 import { I18nService } from '@ds/core.ts'
+import countries from 'i18n-iso-countries'
 import i18n from 'i18next'
 import { useEffect, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
@@ -31,6 +32,9 @@ const I18nProvider = ({ children }: ReactProps) => {
 
 			const json = (await import(`./translations/${locale}.json`)).default
 			i18n.addResourceBundle(locale, I18N_NAMESPACE, json, true, true)
+
+			const json2 = (await import(`./countries/${locale}.ts`)).default
+			countries.registerLocale(json2)
 		} finally {
 			setLoading(false)
 		}
@@ -56,4 +60,14 @@ const I18nProvider = ({ children }: ReactProps) => {
 	)
 }
 
-export { I18nProvider }
+const useCountries = () => {
+	const { i18n } = useTranslation()
+
+	const getCountryCode = (countryName: string) => {
+		return countries.getAlpha2Code(countryName, i18n.language.split('-')[0])?.toLowerCase()
+	}
+
+	return { getCountryCode }
+}
+
+export { I18nProvider, useCountries }

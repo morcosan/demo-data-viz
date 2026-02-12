@@ -1,4 +1,4 @@
-import { AppLogo, AppNav, NavMenu } from '@app-components'
+import { AppLogo, AppNav, ErrorBoundary, NavMenu } from '@app-components'
 import { DEFAULT_LOCALE } from '@app/config/i18n/i18n-config.ts'
 import { Providers } from '@app/config/providers.tsx'
 import '@app/globals.ts'
@@ -15,9 +15,11 @@ export default function RootLayout({ children }: ReactProps) {
 			<body className="h-screen">
 				<Providers>
 					<AppNav appLogo={AppLogo} navMenu={NavMenu}>
-						<div className="px-xs-5 pt-xs-5 lg:pt-xs-7 pb-xs-5 lg:pb-sm-0 lg:px-sm-0 relative flex h-full w-full">
-							{children}
-						</div>
+						<ErrorBoundary>
+							<div className="px-xs-5 pt-xs-5 lg:pt-xs-7 pb-xs-5 lg:pb-sm-0 lg:px-sm-0 relative flex h-full w-full">
+								{children}
+							</div>
+						</ErrorBoundary>
 					</AppNav>
 				</Providers>
 			</body>

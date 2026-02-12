@@ -1,10 +1,9 @@
 'use client'
 
+import { ErrorBoundary } from '@app-components'
+import { useTranslation } from '@app-i18n'
 import { ArrowBackSvg, IconButton } from '@ds/core.ts'
-import { useQuery } from '@tanstack/react-query'
 import { Suspense, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { type Dataset, EurostatApi } from './_api/eurostat-api.ts'
 import { DatasetListing } from './_partials/dataset-listing.tsx'
 import { DatasetPreview } from './_partials/dataset-preview.tsx'
 
@@ -12,10 +11,6 @@ type MobileView = 'listing' | 'preview'
 
 export default function DatasetsPage() {
 	const { t } = useTranslation()
-	const { data: datasets, isLoading } = useQuery<Dataset[]>({
-		queryKey: ['eurostat-datasets'],
-		queryFn: EurostatApi.fetchDatasets,
-	})
 	const [mobileView, setMobileView] = useState<MobileView>('listing')
 
 	const handleBackClick = () => setMobileView('listing')
@@ -37,14 +32,13 @@ export default function DatasetsPage() {
 				<Suspense fallback={null}>
 					<DatasetListing
 						className={cx('lg:w-xl-0 w-full', mobileView === 'listing' ? 'flex' : 'hidden lg:flex')}
-						datasets={datasets || []}
-						loading={isLoading}
 						onClickDataset={() => setMobileView('preview')}
 					/>
-					<DatasetPreview
-						className={cx('flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}
-						datasets={datasets || []}
-					/>
+					<ErrorBoundary>
+						<DatasetPreview
+							className={cx('min-w-0 flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}
+						/>
+					</ErrorBoundary>
 				</Suspense>
 			</div>
 		</div>

@@ -1,34 +1,49 @@
 import { HighlightedText } from '@app-components'
+import { useTranslation } from '@app-i18n'
 import Link from 'next/link'
-import type { Dataset } from '../_api/eurostat-api.ts'
+import { type BaseDataset } from '../_types.ts'
 
 interface Props extends ReactProps {
-	dataset: Dataset
+	dataset: BaseDataset
 	keyword: string
+	height: number
 	selected?: boolean
 	onClick?: () => void
 }
 
 export const DatasetItem = (props: Props) => {
+	const { t } = useTranslation()
+
 	return (
 		<li className={props.className} style={props.style}>
 			<Link
 				href={`/datasets?code=${encodeURIComponent(props.dataset.code)}`}
 				className={cx(
-					'relative flex items-center overflow-hidden',
-					'px-xs-4 py-xs-2 h-sm-9 rounded-sm shadow-xs',
+					'relative flex flex-wrap items-center overflow-hidden',
+					'px-xs-4 py-xs-2 rounded-sm shadow-xs',
 					'active:translate-y-px',
 					props.selected
 						? 'bg-color-secondary-button-bg text-color-secondary-button-text font-weight-md'
 						: 'bg-color-bg-card'
 				)}
+				style={{ height: props.height }}
 				onClick={props.onClick}
 			>
 				<HighlightedText
 					text={props.dataset.title}
 					keyword={props.keyword}
-					className="text-size-sm line-clamp-2"
+					className="text-size-sm font-weight-md line-clamp-2"
 				/>
+				<span className="text-size-xs text-color-text-subtle font-weight-sm w-full">
+					{props.dataset.stats
+						? t('dataViz.label.datasetSize', {
+								cols: props.dataset.stats.colsCount,
+								rows: props.dataset.stats.rowsCount.toLocaleString(),
+							})
+						: t('dataViz.label.datasetSizeUnknown')}
+				</span>
+
+				{/* OVERLAY */}
 				<span className={cx('hover:bg-color-hover-text-default absolute-overlay')} />
 			</Link>
 		</li>
