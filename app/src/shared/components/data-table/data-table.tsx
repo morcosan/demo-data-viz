@@ -1,0 +1,130 @@
+'use client'
+
+import { useTranslation } from '@app-i18n'
+import { type TableData, type TableRow, type TableRowValue, useVirtualScroll, type VirtualItem } from '@app-utils'
+import { IconButton, SortAscSvg, SortDescSvg, SortNoneSvg } from '@ds/core.ts'
+import {
+	type ColumnDef,
+	flexRender,
+	getCoreRowModel,
+	getSortedRowModel,
+	type SortingState,
+	useReactTable,
+} from '@tanstack/react-table'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
+
+interface Props extends ReactProps {
+	data: TableData
+	cellFn?: (value: TableRowValue) => ReactNode
+}
+
+export const DataTable = (props: Props) => {
+	const { t } = useTranslation()
+	const [sorting, setSorting] = useState<SortingState>([])
+
+	const columns = useMemo(() => {
+		return props.data.cols.map(
+			(col): ColumnDef<TableRow> => ({
+				accessorKey: col.key,
+				header: col.label,
+				size: col.size,
+				cell: (info) => (props.cellFn ? props.cellFn(info.getValue() as TableRowValue) : info.getValue()),
+			})
+		)
+	}, [props.data.cols, props.cellFn])
+
+	// eslint-disable-next-line react-hooks/incompatible-library
+	const table = useReactTable({
+		columns,
+		data: props.data.rows,
+		state: { sorting },
+		onSortingChange: setSorting,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+	})
+	const { rows } = table.getRowModel()
+	const headers = table.getHeaderGroups()[0].headers
+
+	const { vItems, vTotalSize, vScrollerRef } = useVirtualScroll({
+		count: rows.length,
+		itemSize: 50,
+	})
+
+	const cellClass = cx('px-xs-6 py-xs-2 text-size-sm border-color-border-subtle truncate')
+	const headerClass = cx('font-weight-lg', cellClass)
+	const rowClass = cx('border-b', cellClass)
+
+	useEffect(() => {
+		if (vScrollerRef.current) {
+			vScrollerRef.current.scrollTop = 0
+		}
+	}, [props.data])
+
+	return (
+		<div ref={vScrollerRef} className={cx('overflow-auto', props.className)} style={props.style}>
+			<table className="bg-color-bg-card min-w-full table-fixed border-collapse">
+				<thead className="z-sticky bg-color-bg-card shadow-below-sm sticky top-0">
+					<tr>
+						{headers.map((header) => {
+							const sort = header.column.getIsSorted()
+							return (
+								<th key={header.id} title={header.column.columnDef.header as string} className={headerClass}>
+									{header.isPlaceholder ? null : (
+										<div className="gap-xs-1 flex items-center">
+											{flexRender(header.column.columnDef.header, header.getContext())}
+											{header.column.getCanSort() && (
+												<IconButton
+													tooltip={t('core.action.sort')}
+													variant={sort ? 'solid-secondary' : 'text-default'}
+													size="sm"
+													className="rounded-full! before:rounded-full! after:rounded-full!"
+													onClick={header.column.getToggleSortingHandler()}
+												>
+													{sort === 'asc' && <SortAscSvg className="h-xs-8" />}
+													{sort === 'desc' && <SortDescSvg className="h-xs-8" />}
+													{sort === false && <SortNoneSvg className="h-xs-6 text-color-text-subtle" />}
+												</IconButton>
+											)}
+										</div>
+									)}
+								</th>
+							)
+						})}
+					</tr>
+				</thead>
+				<tbody>
+					{/* SPACER */}
+					{vItems.length > 0 && (
+						<tr>
+							<td style={{ height: vItems[0]?.start || 0 }} />
+						</tr>
+					)}
+					{vItems.map((vItem: VirtualItem) => (
+						<tr key={rows[vItem.index].id}>
+							{rows[vItem.index].getVisibleCells().map((cell) => (
+								<td
+									key={cell.id}
+									title={cell.getValue() as string}
+									className={rowClass}
+									style={{
+										height: vItem.size,
+										minWidth: cell.column.getSize(),
+										maxWidth: cell.column.getSize(),
+									}}
+								>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+								</td>
+							))}
+						</tr>
+					))}
+					{/* SPACER */}
+					{vItems.length > 0 && (
+						<tr>
+							<td style={{ height: vTotalSize - (vItems[vItems.length - 1]?.end || 0) }} />
+						</tr>
+					)}
+				</tbody>
+			</table>
+		</div>
+	)
+}

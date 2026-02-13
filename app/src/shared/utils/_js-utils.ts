@@ -1,3 +1,5 @@
+import i18n from 'i18next'
+
 const LOG = (...args: unknown[]) => {
 	const format: unknown[] = ['%c', 'color: lightgreen']
 
@@ -14,4 +16,12 @@ const LOG = (...args: unknown[]) => {
 	console.log(...format.concat(args))
 }
 
-export { LOG }
+const formatNumber = (value?: number): string => {
+	return value?.toLocaleString(i18n.language, { maximumFractionDigits: 2 }) || ''
+}
+
+const formatDate = (value?: string | Date): string => {
+	return value ? new Date(value).toLocaleString(i18n.language, { dateStyle: 'long' }) : ''
+}
+
+export { LOG, formatDate, formatNumber }

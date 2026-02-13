@@ -40,12 +40,12 @@ export const NavMenu = (props: NavMenuProps) => {
 	const items: Item[] = [
 		{
 			path: '/',
-			label: t('core.menuLabel.dashboard'),
+			label: t('appNav.label.dashboard'),
 			icon: <HomeSvg className="h-xs-9" style={{ minWidth: iconWidth }} />,
 		},
 		{
 			path: '/datasets',
-			label: t('core.menuLabel.datasets'),
+			label: t('appNav.label.datasets'),
 			icon: <DatabaseSvg className="h-xs-9" style={{ minWidth: iconWidth }} />,
 		},
 	]

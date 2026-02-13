@@ -24,7 +24,7 @@ const useVirtualScroll = (props: Props) => {
 
 	return {
 		vScrollerRef,
-		vListHeight: `${getTotalSize()}px`,
+		vTotalSize: getTotalSize(),
 		vItems: getVirtualItems(),
 	}
 }

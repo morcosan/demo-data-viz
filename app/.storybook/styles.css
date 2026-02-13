@@ -1,4 +1,5 @@
 @import '@ds/docs/styles.css';
+@import 'flag-icons/css/flag-icons.css';
 
 @import 'tailwindcss';
 @config './tailwind.config.ts';
