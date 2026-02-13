@@ -35,6 +35,8 @@ const I18nProvider = ({ children }: ReactProps) => {
 
 			const json2 = (await import(`./countries/${locale}.ts`)).default
 			countries.registerLocale(json2)
+		} catch (error) {
+			console.error(`Failed loading i18n for '${locale}'\n`, error)
 		} finally {
 			setLoading(false)
 		}

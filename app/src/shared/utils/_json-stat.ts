@@ -13,7 +13,7 @@ interface JsonStat {
 			}
 		}
 	>
-	value: number[] | Record<string, number>
+	value: (number | null)[] | Record<string, number>
 }
 
 type TableRowValue = string | number
@@ -42,7 +42,7 @@ const JsonStatSchema = z.object({
 		})
 	),
 	value: z.union([
-		z.array(z.number()),
+		z.array(z.number().nullable()),
 		z.record(z.string(), z.number()),
 		//
 	]),
@@ -66,6 +66,16 @@ const convertJsonStatToTable = (jsonStat: JsonStat): TableData => {
 		{ key: 'value', label: 'Value' },
 	]
 
+	// Pre-build inverted index: dimId -> array of category codes by position
+	const dimCodes = id.map((dimId) => {
+		const cats = dimension[dimId].category.index
+		const codes: string[] = []
+		for (const [code, idx] of Object.entries(cats)) {
+			codes[idx] = code
+		}
+		return codes
+	})
+
 	for (let i = 0; i < totalRows; i++) {
 		const row: TableRow = {}
 		let index = i
@@ -77,18 +87,15 @@ const convertJsonStatToTable = (jsonStat: JsonStat): TableData => {
 			const dimIndex = index % dimSize
 			index = Math.floor(index / dimSize)
 
-			// Get category information
-			const categories = dimension[dimId].category
-
 			// Find the category code at this index
-			const categoryCode = Object.entries(categories.index).find(([, idx]) => idx === dimIndex)?.[0] || ''
+			const categoryCode = dimCodes[j][dimIndex] || ''
 
 			// Use the label as the value
-			row[dimId] = categories.label[categoryCode] || categoryCode
+			row[dimId] = dimension[dimId].category.label[categoryCode] || categoryCode
 		}
 
 		// Add the value
-		row.value = values[i] || 0
+		row.value = values[i] || ''
 
 		rows.push(row)
 	}

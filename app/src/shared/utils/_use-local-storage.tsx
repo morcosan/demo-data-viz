@@ -1,3 +1,5 @@
+'use client'
+
 import { QueryKey, useMutation, useQuery, useQueryClient } from '@app-api'
 
 type ErrorFn = (error: Error) => void

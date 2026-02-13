@@ -3,7 +3,7 @@
 import { QueryKey, useQuery } from '@app-api'
 import { EmptyState, LayoutPane, LoadingSpinner } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { useLocalStorage, useVirtualScroll, type VirtualItem } from '@app-utils'
+import { formatNumber, useLocalStorage, useVirtualScroll, type VirtualItem } from '@app-utils'
 import { SearchSvg, TextField, TOKENS__SPACING } from '@ds/core.ts'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
@@ -19,7 +19,7 @@ export const DatasetListing = (props: Props) => {
 	const { t } = useTranslation()
 	const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
 	const searchParams = useSearchParams()
-	const codeParam = searchParams.get('code')
+	const idParam = searchParams.get('id')
 	const [searchKeyword, setSearchKeyword] = useState('')
 	const { data, isLoading, error } = useQuery<BaseDataset[]>({
 		queryKey: [QueryKey.EUROSTAT_DATASETS],
@@ -27,16 +27,16 @@ export const DatasetListing = (props: Props) => {
 	})
 	const allDatasets = data || []
 
-	const datasets = useMemo(() => {
+	const datasets = useMemo((): BaseDataset[] => {
 		const viewedStats = storage.data || {}
 		const keyword = searchKeyword.trim().toLowerCase()
 		const filtered = keyword
 			? allDatasets.filter((dataset: BaseDataset) => dataset.title?.toLowerCase().includes(keyword))
 			: allDatasets
 
-		return filtered.map((dataset) => ({
+		return filtered.map((dataset: BaseDataset) => ({
 			...dataset,
-			stats: viewedStats[dataset.code] || dataset.stats,
+			stats: viewedStats[dataset.id] || dataset.stats,
 		}))
 	}, [allDatasets, searchKeyword, storage.data])
 
@@ -64,7 +64,7 @@ export const DatasetListing = (props: Props) => {
 				/>
 
 				<div className="text-size-xs mt-xs-1 ml-xs-0 -mb-xs-1">
-					{t('dataViz.label.datasetResults', { total: datasets.length.toLocaleString() })}
+					{t('dataViz.label.datasetResults', { total: formatNumber(datasets.length) })}
 				</div>
 			</div>
 
@@ -81,11 +81,11 @@ export const DatasetListing = (props: Props) => {
 					<ul className="-mb-xs-1 relative" style={{ height: vTotalSize }}>
 						{vItems.map((vItem: VirtualItem) => (
 							<DatasetItem
-								key={datasets[vItem.index].code}
+								key={datasets[vItem.index].id}
 								dataset={datasets[vItem.index]}
 								keyword={searchKeyword}
 								height={itemHeight}
-								selected={codeParam === datasets[vItem.index].code}
+								selected={idParam === datasets[vItem.index].id}
 								className="absolute top-0 left-0 w-full"
 								style={{ transform: `translateY(${vItem.start}px)` }}
 								onClick={props.onClickDataset}

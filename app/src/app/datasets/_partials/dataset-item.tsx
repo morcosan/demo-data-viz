@@ -1,5 +1,6 @@
 import { HighlightedText } from '@app-components'
 import { useTranslation } from '@app-i18n'
+import { formatNumber } from '@app-utils'
 import Link from 'next/link'
 import { type BaseDataset } from '../_types.ts'
 
@@ -17,7 +18,7 @@ export const DatasetItem = (props: Props) => {
 	return (
 		<li className={props.className} style={props.style}>
 			<Link
-				href={`/datasets?code=${encodeURIComponent(props.dataset.code)}`}
+				href={`/datasets?id=${encodeURIComponent(props.dataset.id)}`}
 				className={cx(
 					'relative flex flex-wrap items-center overflow-hidden',
 					'px-xs-4 py-xs-2 rounded-sm shadow-xs',
@@ -37,8 +38,8 @@ export const DatasetItem = (props: Props) => {
 				<span className="text-size-xs text-color-text-subtle font-weight-sm w-full">
 					{props.dataset.stats
 						? t('dataViz.label.datasetSize', {
-								cols: props.dataset.stats.colsCount,
-								rows: props.dataset.stats.rowsCount.toLocaleString(),
+								cols: formatNumber(props.dataset.stats.colsCount),
+								rows: formatNumber(props.dataset.stats.rowsCount),
 							})
 						: t('dataViz.label.datasetSizeUnknown')}
 				</span>

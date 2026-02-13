@@ -3,7 +3,7 @@
 import { QueryKey, useQuery } from '@app-api'
 import { DataTable, EmptyState, LayoutPane, LoadingSpinner } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
-import { convertJsonStatToTable, type TableRowValue, useLocalStorage } from '@app-utils'
+import { convertJsonStatToTable, formatDate, formatNumber, type TableRowValue, useLocalStorage } from '@app-utils'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useMemo } from 'react'
 import { EurostatApi } from '../_api/eurostat-api.ts'
@@ -11,24 +11,23 @@ import { type Dataset, type ViewedDatasets } from '../_types.ts'
 import { StatsCard } from './stats-card.tsx'
 
 export const DatasetPreview = (props: ReactProps) => {
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const { getCountryCode } = useCountries()
 	const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
 	const searchParams = useSearchParams()
-	const codeParam = searchParams.get('code') || ''
+	const idParam = searchParams.get('id') || ''
 	const { data, isLoading, error } = useQuery<Dataset>({
-		queryKey: [QueryKey.EUROSTAT_DATASET, codeParam],
-		queryFn: () => EurostatApi.fetchDataset(codeParam),
-		enabled: Boolean(codeParam),
+		queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
+		queryFn: () => EurostatApi.fetchDataset(idParam),
+		enabled: Boolean(idParam),
 	})
 	const dataset = data
 	const tableData = useMemo(() => (dataset ? convertJsonStatToTable(dataset?.jsonStat) : null), [dataset])
-	const updatedAt = new Date(dataset?.updatedAt || '').toLocaleString(i18n.language, { dateStyle: 'long' })
 
 	const saveViewedDataset = (dataset: Dataset) => {
 		storage.setItem({
 			...(storage.data || {}),
-			[dataset.code]: {
+			[dataset.id]: {
 				colsCount: dataset.stats?.colsCount || 0,
 				rowsCount: dataset.stats?.rowsCount || 0,
 			},
@@ -65,21 +64,21 @@ export const DatasetPreview = (props: ReactProps) => {
 
 	return (
 		<LayoutPane className={cx('py-xs-5 px-xs-8 flex flex-col', props.className)}>
-			<h2 className="mb-xs-5 text-size-lg font-weight-md">{dataset?.title}</h2>
+			<h2 className="mb-xs-5 text-size-lg font-weight-md">{dataset.title}</h2>
 
 			<div className="gap-xs-5 mb-xs-5 flex flex-wrap">
 				<StatsCard label={t('dataViz.label.dataSize')}>
-					{dataset.stats!.colsCount} x {dataset.stats!.rowsCount.toLocaleString()}
+					{formatNumber(dataset.stats?.colsCount)} x {formatNumber(dataset.stats?.rowsCount)}
 				</StatsCard>
 
-				<StatsCard label={t('dataViz.label.lastUpdate')}>{updatedAt}</StatsCard>
+				<StatsCard label={t('dataViz.label.lastUpdate')}>{formatDate(dataset.updatedAt)}</StatsCard>
 
 				<StatsCard label={t('dataViz.label.source')}>
 					{dataset.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
 					<span className="ml-xs-0">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
 				</StatsCard>
 
-				<StatsCard label={t('dataViz.label.datasetId')}>{dataset.code}</StatsCard>
+				<StatsCard label={t('dataViz.label.datasetId')}>{dataset.id}</StatsCard>
 			</div>
 
 			<DataTable

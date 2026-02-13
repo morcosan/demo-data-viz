@@ -11,7 +11,7 @@ import {
 	type SortingState,
 	useReactTable,
 } from '@tanstack/react-table'
-import { type ReactNode, useMemo, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
 
 interface Props extends ReactProps {
 	data: TableData
@@ -53,6 +53,12 @@ export const DataTable = (props: Props) => {
 	const cellClass = cx('px-xs-6 py-xs-2 text-size-sm border-color-border-subtle truncate')
 	const headerClass = cx('font-weight-lg', cellClass)
 	const rowClass = cx('border-b', cellClass)
+
+	useEffect(() => {
+		if (vScrollerRef.current) {
+			vScrollerRef.current.scrollTop = 0
+		}
+	}, [props.data])
 
 	return (
 		<div ref={vScrollerRef} className={cx('overflow-auto', props.className)} style={props.style}>

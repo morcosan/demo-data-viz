@@ -6,8 +6,8 @@ export interface Dataset extends BaseDataset {
 }
 
 export interface BaseDataset {
+	id: string
 	title: string
-	code: string
 	source: 'eurostat'
 	stats?: DatasetStats
 }
