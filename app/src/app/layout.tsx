@@ -1,6 +1,6 @@
 import { AppLogo, AppNav, ErrorBoundary, NavMenu } from '@app-components'
-import { DEFAULT_LOCALE } from '@app/config/i18n/i18n-config.ts'
-import { Providers } from '@app/config/providers.tsx'
+import { DEFAULT_LOCALE } from '@app/core/i18n/i18n-config.ts'
+import { Providers } from '@app/core/providers.tsx'
 import '@app/globals.ts'
 import { type Metadata } from 'next'
 
