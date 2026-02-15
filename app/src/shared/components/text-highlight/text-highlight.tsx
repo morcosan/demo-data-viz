@@ -7,7 +7,7 @@ interface Props extends ReactProps {
 
 export const TextHighlight = ({ text, query, className }: Props) => {
 	const normalizedQuery = query.toLowerCase()
-	const queryForRegex = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+	const queryForRegex = !query.trim() ? '(?!)' : query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 	const regex = new RegExp(`(${queryForRegex}|\n)`, 'gi')
 	const parts = text
 		.split(regex)
