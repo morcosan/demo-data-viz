@@ -97,6 +97,7 @@
 	--ds-color-bg-skeleton: var(--ds-color-black-alpha-3);
 	--ds-color-bg-link: var(--ds-color-black-alpha-2);
 	--ds-color-bg-blockquote: var(--ds-color-black-alpha-1);
+	--ds-color-bg-highlight: var(--ds-color-yellow-4);
 
 	--ds-color-border-active: var(--ds-color-grey-12);
 	--ds-color-border-hover: var(--ds-color-grey-11);
@@ -105,9 +106,9 @@
 	--ds-color-border-shadow: var(--ds-color-grey-3);
 
 	--ds-color-text-default: var(--ds-color-black);
+	--ds-color-text-inverse: var(--ds-color-white);
 	--ds-color-text-subtle: var(--ds-color-grey-13);
 	--ds-color-text-placeholder: var(--ds-color-grey-11);
-	--ds-color-text-inverse: var(--ds-color-white);
 	--ds-color-text-link: var(--ds-color-purple-8);
 
 	--ds-color-hover-text-default: var(--ds-color-black-alpha-2);
@@ -165,6 +166,7 @@
 	--ds-color-bg-skeleton: var(--ds-color-white-alpha-5);
 	--ds-color-bg-link: var(--ds-color-black-alpha-5);
 	--ds-color-bg-blockquote: var(--ds-color-white-alpha-2);
+	--ds-color-bg-highlight: var(--ds-color-yellow-6);
 
 	--ds-color-border-active: var(--ds-color-grey-8);
 	--ds-color-border-hover: var(--ds-color-grey-12);
@@ -173,9 +175,9 @@
 	--ds-color-border-shadow: var(--ds-color-grey-20);
 
 	--ds-color-text-default: var(--ds-color-white);
+	--ds-color-text-inverse: var(--ds-color-black);
 	--ds-color-text-subtle: var(--ds-color-grey-8);
 	--ds-color-text-placeholder: var(--ds-color-grey-11);
-	--ds-color-text-inverse: var(--ds-color-black);
 	--ds-color-text-link: var(--ds-color-purple-1);
 
 	--ds-color-hover-text-default: var(--ds-color-black-alpha-5);

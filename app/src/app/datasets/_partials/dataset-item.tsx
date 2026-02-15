@@ -1,4 +1,4 @@
-import { HighlightedText } from '@app-components'
+import { TextHighlight } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app-utils'
 import Link from 'next/link'
@@ -30,9 +30,9 @@ export const DatasetItem = (props: Props) => {
 				style={{ height: props.height }}
 				onClick={props.onClick}
 			>
-				<HighlightedText
+				<TextHighlight
 					text={props.dataset.title}
-					keyword={props.keyword}
+					query={props.keyword}
 					className="text-size-sm font-weight-md line-clamp-2"
 				/>
 				<span className="text-size-xs text-color-text-subtle font-weight-sm w-full">
