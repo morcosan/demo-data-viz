@@ -92,6 +92,7 @@ export const TOKENS__COLOR = {
 	'bg-skeleton': { $ref: { light: 'black-alpha-3', dark: 'white-alpha-5' } },
 	'bg-link': { $ref: { light: 'black-alpha-2', dark: 'black-alpha-5' } },
 	'bg-blockquote': { $ref: { light: 'black-alpha-1', dark: 'white-alpha-2' } },
+	'bg-highlight': { $ref: { light: 'yellow-4', dark: 'yellow-6' } },
 
 	'border-active': { $ref: { light: 'grey-12', dark: 'grey-8' } },
 	'border-hover': { $ref: { light: 'grey-11', dark: 'grey-12' } },
@@ -100,9 +101,9 @@ export const TOKENS__COLOR = {
 	'border-shadow': { $ref: { light: 'grey-3', dark: 'grey-20' } },
 
 	'text-default': { $ref: { light: 'black', dark: 'white' } },
+	'text-inverse': { $ref: { light: 'white', dark: 'black' } },
 	'text-subtle': { $ref: { light: 'grey-13', dark: 'grey-8' } },
 	'text-placeholder': { $ref: { light: 'grey-11', dark: 'grey-11' } },
-	'text-inverse': { $ref: { light: 'white', dark: 'black' } },
 	'text-link': { $ref: { light: 'purple-8', dark: 'purple-1' } },
 
 	'hover-text-default': { $ref: { light: 'black-alpha-2', dark: 'black-alpha-5' } },
