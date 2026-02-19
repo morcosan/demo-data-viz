@@ -2,10 +2,10 @@ import 'i18next'
 import en_US from './translations/en-US.json'
 
 declare module 'i18next' {
-	interface CustomTypeOptions {
-		defaultNS: 'en_US'
-		resources: {
-			en_US: typeof en_US
-		}
-	}
+  interface CustomTypeOptions {
+    defaultNS: 'en_US'
+    resources: {
+      en_US: typeof en_US
+    }
+  }
 }

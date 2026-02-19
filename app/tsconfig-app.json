@@ -1,23 +1,23 @@
 {
-	"extends": "../.config/tsconfig-base.json",
-	"compilerOptions": {
-		/* Build Metadata */
-		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+  "extends": "../.config/tsconfig-base.json",
+  "compilerOptions": {
+    /* Build Metadata */
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
-		/* Language & Environment */
-		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"plugins": [{ "name": "next" }],
+    /* Language & Environment */
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "plugins": [{ "name": "next" }],
 
-		/* Modules & Resolution */
-		"paths": {
-			"@app-components": ["./src/shared/components/index.ts"],
-			"@app-utils": ["./src/shared/utils/index.ts"],
-			"@app-i18n": ["./src/core/i18n/index.ts"],
-			"@app-api": ["./src/core/api/index.ts"],
-			"@app/*": ["./src/*"],
-			"@ds/*": ["../ds/dist/*"]
-		}
-	},
-	"include": ["next-env.d.ts", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "src/**/*"],
-	"exclude": ["node_modules"]
+    /* Modules & Resolution */
+    "paths": {
+      "@app-components": ["./src/shared/components/index.ts"],
+      "@app-utils": ["./src/shared/utils/index.ts"],
+      "@app-i18n": ["./src/core/i18n/index.ts"],
+      "@app-api": ["./src/core/api/index.ts"],
+      "@app/*": ["./src/*"],
+      "@ds/*": ["../ds/dist/*"]
+    }
+  },
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "src/**/*"],
+  "exclude": ["node_modules"]
 }

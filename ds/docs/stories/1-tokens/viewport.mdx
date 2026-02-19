@@ -1,62 +1,54 @@
-import {
-	CSS_PREFIX,
-	DesktopSvg,
-	LaptopSvg,
-	PhoneSvg,
-	TabletSvg,
-	TOKENS__BREAKPOINT,
-	WidescreenSvg,
-} from '@ds/core.ts'
+import { CSS_PREFIX, DesktopSvg, LaptopSvg, PhoneSvg, TabletSvg, TOKENS__BREAKPOINT, WidescreenSvg } from '@ds/core.ts'
 import { DocsTokenCoding } from '@ds/docs/core.ts'
 import { Meta } from '@storybook/addon-docs/blocks'
 
 export const breakpointMap = {
-	xs: { icon: <PhoneSvg className="w-xs-9" />, title: 'Phone' },
-	sm: { icon: <TabletSvg className="w-sm-0" />, title: 'Tablet' },
-	md: { icon: <TabletSvg className="w-sm-0 -rotate-90" />, title: 'Tablet' },
-	lg: { icon: <LaptopSvg className="w-sm-4" />, title: 'Laptop' },
-	xl: { icon: <DesktopSvg className="w-sm-4" />, title: 'Desktop' },
-	xxl: { icon: <WidescreenSvg className="w-sm-5" />, title: 'Widescreen' },
+  xs: { icon: <PhoneSvg className="w-xs-9" />, title: 'Phone' },
+  sm: { icon: <TabletSvg className="w-sm-0" />, title: 'Tablet' },
+  md: { icon: <TabletSvg className="w-sm-0 -rotate-90" />, title: 'Tablet' },
+  lg: { icon: <LaptopSvg className="w-sm-4" />, title: 'Laptop' },
+  xl: { icon: <DesktopSvg className="w-sm-4" />, title: 'Desktop' },
+  xxl: { icon: <WidescreenSvg className="w-sm-5" />, title: 'Widescreen' },
 }
 
 export const BreakpointTokens = () => (
-	<table className="docs">
-		<thead>
-			<tr>
-				<th>Token</th>
-				<th className="w-full">Value</th>
-				<th>Coding</th>
-			</tr>
-		</thead>
-		<tbody>
-			{Object.entries(TOKENS__BREAKPOINT).map(([name, token]) => (
-				<tr key={name}>
-					<td>
-						<div className="gap-xs-4 text-color-text-subtle flex items-center">
-							<div className="flex-center w-sm-5">{breakpointMap[name].icon}</div>
-							<div className="flex flex-col leading-1 whitespace-nowrap">
-								<pre>{name}</pre>
-								<div className="text-size-xs text-color-text-subtle">{breakpointMap[name].title}</div>
-							</div>
-						</div>
-					</td>
-					<td>
-						<code>{token.$value}</code>
-					</td>
-					<td>
-						<DocsTokenCoding
-							tsVar={`$breakpoint['${name}']`}
-							tsSize="w-lg-2"
-							twVars={[`${name}:___`]}
-							twSize="w-md-4"
-							cssVar={`${CSS_PREFIX.BREAKPOINT}${name}`}
-							cssSize="w-lg-5"
-						/>
-					</td>
-				</tr>
-			))}
-		</tbody>
-	</table>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th className="w-full">Value</th>
+        <th>Coding</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS__BREAKPOINT).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <div className="gap-xs-4 text-color-text-subtle flex items-center">
+              <div className="flex-center w-sm-5">{breakpointMap[name].icon}</div>
+              <div className="flex flex-col leading-1 whitespace-nowrap">
+                <pre>{name}</pre>
+                <div className="text-size-xs text-color-text-subtle">{breakpointMap[name].title}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <code>{token.$value}</code>
+          </td>
+          <td>
+            <DocsTokenCoding
+              tsVar={`$breakpoint['${name}']`}
+              tsSize="w-lg-2"
+              twVars={[`${name}:___`]}
+              twSize="w-md-4"
+              cssVar={`${CSS_PREFIX.BREAKPOINT}${name}`}
+              cssSize="w-lg-5"
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 )
 
 <Meta title="Design tokens / Viewport" />

@@ -4,62 +4,62 @@
  * MDX
  */
 .docs-mdx {
-	/* Headings */
-	& h1 {
-		margin-bottom: var(--ds-spacing-sm-2);
-		font-weight: var(--ds-font-weight-xl);
-		font-size: var(--ds-font-size-xxl);
-	}
-	& h2 {
-		margin-top: var(--ds-spacing-md-2);
-		margin-bottom: var(--ds-spacing-xs-9);
-		font-weight: var(--ds-font-weight-lg);
-		font-size: var(--ds-font-size-xl);
+  /* Headings */
+  & h1 {
+    margin-bottom: var(--ds-spacing-sm-2);
+    font-weight: var(--ds-font-weight-xl);
+    font-size: var(--ds-font-size-xxl);
+  }
+  & h2 {
+    margin-top: var(--ds-spacing-md-2);
+    margin-bottom: var(--ds-spacing-xs-9);
+    font-weight: var(--ds-font-weight-lg);
+    font-size: var(--ds-font-size-xl);
 
-		&:first-of-type {
-			margin-top: var(--ds-spacing-sm-6);
-		}
-	}
-	& h3 {
-		margin-top: var(--ds-spacing-sm-0);
-		margin-bottom: var(--ds-spacing-xs-5);
-		font-size: var(--ds-font-size-lg);
-	}
-	& h2 + h3 {
-		margin-top: 0;
-	}
+    &:first-of-type {
+      margin-top: var(--ds-spacing-sm-6);
+    }
+  }
+  & h3 {
+    margin-top: var(--ds-spacing-sm-0);
+    margin-bottom: var(--ds-spacing-xs-5);
+    font-size: var(--ds-font-size-lg);
+  }
+  & h2 + h3 {
+    margin-top: 0;
+  }
 
-	/* Horizontal Rule */
-	& hr {
-		margin: var(--ds-spacing-sm-6) 0;
+  /* Horizontal Rule */
+  & hr {
+    margin: var(--ds-spacing-sm-6) 0;
 
-		& + h2 {
-			margin-top: var(--ds-spacing-sm-6);
-		}
-	}
+    & + h2 {
+      margin-top: var(--ds-spacing-sm-6);
+    }
+  }
 
-	/* Paragraphs */
-	& p + p {
-		margin-top: var(--ds-spacing-xs-2);
-	}
+  /* Paragraphs */
+  & p + p {
+    margin-top: var(--ds-spacing-xs-2);
+  }
 
-	/* Links */
-	a {
-		color: var(--ds-color-text-link);
+  /* Links */
+  a {
+    color: var(--ds-color-text-link);
 
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
-	/* Code blocks */
-	& .docs-code-block {
-		margin: var(--ds-spacing-xs-5) 0 0;
+  /* Code blocks */
+  & .docs-code-block {
+    margin: var(--ds-spacing-xs-5) 0 0;
 
-		& + p {
-			margin-top: var(--ds-spacing-xs-5);
-		}
-	}
+    & + p {
+      margin-top: var(--ds-spacing-xs-5);
+    }
+  }
 }
 
 /**
@@ -67,37 +67,37 @@
  */
 .docs-mdx table,
 table.docs {
-	margin: var(--ds-spacing-xs-9) 0 var(--ds-spacing-sm-1);
-	width: fit-content;
+  margin: var(--ds-spacing-xs-9) 0 var(--ds-spacing-sm-1);
+  width: fit-content;
 
-	tbody tr {
-		border-top: 1px solid var(--ds-color-border-default);
-	}
+  tbody tr {
+    border-top: 1px solid var(--ds-color-border-default);
+  }
 
-	th,
-	td {
-		vertical-align: middle;
-		border: 0;
-		padding: var(--ds-spacing-xs-4) var(--ds-spacing-xs-9);
-		text-align: left;
+  th,
+  td {
+    vertical-align: middle;
+    border: 0;
+    padding: var(--ds-spacing-xs-4) var(--ds-spacing-xs-9);
+    text-align: left;
 
-		&:first-child {
-			padding-left: var(--ds-spacing-xs-4);
-		}
-		&:last-child {
-			padding-right: var(--ds-spacing-xs-4);
-		}
+    &:first-child {
+      padding-left: var(--ds-spacing-xs-4);
+    }
+    &:last-child {
+      padding-right: var(--ds-spacing-xs-4);
+    }
 
-		pre {
-			margin: 0;
-		}
-	}
+    pre {
+      margin: 0;
+    }
+  }
 
-	th {
-		padding-bottom: var(--ds-spacing-xs-6);
-		font-weight: bold;
-		font-size: var(--ds-font-size-md);
-	}
+  th {
+    padding-bottom: var(--ds-spacing-xs-6);
+    font-weight: bold;
+    font-size: var(--ds-font-size-md);
+  }
 }
 
 /**
@@ -107,19 +107,19 @@ table.docs {
 .docs-mdx ol,
 ul.docs,
 ol.docs {
-	display: flex;
-	flex-direction: column;
-	gap: var(--ds-spacing-xs-0);
-	margin: var(--ds-spacing-xs-3) 0;
-	padding-left: var(--ds-spacing-sm-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-xs-0);
+  margin: var(--ds-spacing-xs-3) 0;
+  padding-left: var(--ds-spacing-sm-1);
 }
 .docs-mdx ul,
 ul.docs {
-	list-style: disc;
+  list-style: disc;
 }
 .docs-mdx ol,
 ol.docs {
-	list-style: unset;
+  list-style: unset;
 }
 
 /**
@@ -128,53 +128,53 @@ ol.docs {
 .docs-mdx code,
 .docs code,
 code.docs {
-	margin: 0 1px;
-	border: 1px solid var(--ds-color-border-subtle);
-	border-radius: var(--ds-radius-xs);
-	background-color: var(--ds-color-bg-coding);
-	padding: var(--ds-spacing-xs-0) var(--ds-spacing-xs-2) var(--ds-spacing-xs-0);
-	width: fit-content;
-	color: unset;
-	font-weight: var(--ds-font-weight-md);
-	font-size: var(--ds-font-size-sm);
-	line-height: unset;
-	font-family: var(--default-mono-font-family);
-	white-space: nowrap;
-	word-break: break-word;
+  margin: 0 1px;
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-xs);
+  background-color: var(--ds-color-bg-coding);
+  padding: var(--ds-spacing-xs-0) var(--ds-spacing-xs-2) var(--ds-spacing-xs-0);
+  width: fit-content;
+  color: unset;
+  font-weight: var(--ds-font-weight-md);
+  font-size: var(--ds-font-size-sm);
+  line-height: unset;
+  font-family: var(--default-mono-font-family);
+  white-space: nowrap;
+  word-break: break-word;
 }
 pre.docs code {
-	display: block;
-	padding: var(--ds-spacing-xs-3) var(--ds-spacing-xs-4);
-	width: 100%;
+  display: block;
+  padding: var(--ds-spacing-xs-3) var(--ds-spacing-xs-4);
+  width: 100%;
 }
 
 /**
  * Canvas Background
  */
 .docs-bg.docs-bg-grid {
-	background-image:
-		linear-gradient(var(--color) 1px, transparent 1px), linear-gradient(90deg, var(--color) 1px, transparent 1px);
-	background-size: 8px 8px;
-	background-color: var(--ds-color-bg-pane);
+  background-image:
+    linear-gradient(var(--color) 1px, transparent 1px), linear-gradient(90deg, var(--color) 1px, transparent 1px);
+  background-size: 8px 8px;
+  background-color: var(--ds-color-bg-pane);
 }
 .docs-bg.docs-bg-tiles {
-	background-image:
-		linear-gradient(45deg, var(--color) 25%, transparent 25%, transparent 75%, var(--color) 75%),
-		linear-gradient(45deg, var(--color) 25%, transparent 25%, transparent 75%, var(--color) 75%);
-	background-position:
-		0 0,
-		8px 8px;
-	background-size: 16px 16px;
-	background-color: var(--ds-color-bg-pane);
+  background-image:
+    linear-gradient(45deg, var(--color) 25%, transparent 25%, transparent 75%, var(--color) 75%),
+    linear-gradient(45deg, var(--color) 25%, transparent 25%, transparent 75%, var(--color) 75%);
+  background-position:
+    0 0,
+    8px 8px;
+  background-size: 16px 16px;
+  background-color: var(--ds-color-bg-pane);
 }
 .docs-bg.docs-bg-blank {
-	background-color: var(--ds-color-bg-pane);
+  background-color: var(--ds-color-bg-pane);
 }
 .docs-bg {
-	--color: var(--ds-color-black-alpha-2);
+  --color: var(--ds-color-black-alpha-2);
 }
 [data-color-theme='dark'] {
-	.docs-bg {
-		--color: var(--ds-color-white-alpha-2);
-	}
+  .docs-bg {
+    --color: var(--ds-color-white-alpha-2);
+  }
 }

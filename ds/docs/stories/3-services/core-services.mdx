@@ -23,16 +23,16 @@ Manages application configuration and library initialization. <br/>
 This service handles setup tasks that need to occur before the application renders, such as initializing third-party libraries or applying global configurations.
 
 <DocsColumns>
-	<div>
-		<h3>Provider</h3>
-		<DocsCodeBlock
-			code={`
+  <div>
+    <h3>Provider</h3>
+    <DocsCodeBlock
+      code={`
 				import { ConfigService } from '@ds/core.ts'
 				//
 				const App = ({ children }) => <ConfigService>{children}</ConfigService>
     		`}
-		/>
-	</div>
+    />
+  </div>
 </DocsColumns>
 
 ## I18n Service
@@ -41,10 +41,10 @@ Provides internationalization (i18n) support for your application. <br/>
 This service manages translations and loading states, allowing you to build multilingual applications with ease.
 
 <DocsColumns>
-	<div>
-		<h3>Consumer</h3>
-		<DocsCodeBlock
-			code={`
+  <div>
+    <h3>Consumer</h3>
+    <DocsCodeBlock
+      code={`
 				import { useI18nService } from '@ds/core.ts'
 				//
 				const App = () => {
@@ -52,12 +52,12 @@ This service manages translations and loading states, allowing you to build mult
 					return <div data-loading={loading}>{translate('key')}</div>
 				}
 			`}
-		/>
-	</div>
-	<div>
-		<h3>Provider</h3>
-		<DocsCodeBlock
-			code={`
+    />
+  </div>
+  <div>
+    <h3>Provider</h3>
+    <DocsCodeBlock
+      code={`
 				import { I18nService } from '@ds/core.ts'
 				//
 				const App = ({ children }) => (
@@ -66,8 +66,8 @@ This service manages translations and loading states, allowing you to build mult
 					</I18nService>
 				)
 			`}
-		/>
-	</div>
+    />
+  </div>
 </DocsColumns>
 
 | Property  | Type       | Params        | Return   | Description                                                              |
@@ -91,10 +91,10 @@ Enables programmatic navigation within your application. <br/>
 This service abstracts routing logic, making it easier to integrate with different routing libraries (React Router, Next.js router, etc.).
 
 <DocsColumns>
-	<div>
-		<h3>Consumer</h3>
-		<DocsCodeBlock
-			code={`
+  <div>
+    <h3>Consumer</h3>
+    <DocsCodeBlock
+      code={`
 				import { useRoutingService } from '@ds/core.ts'
 				//
 				const App = () => {
@@ -102,12 +102,12 @@ This service abstracts routing logic, making it easier to integrate with differe
 					return <button onClick={() => navigate('/home')}>Home</button>
 				}
 			`}
-		/>
-	</div>
-	<div>
-		<h3>Provider</h3>
-		<DocsCodeBlock
-			code={`
+    />
+  </div>
+  <div>
+    <h3>Provider</h3>
+    <DocsCodeBlock
+      code={`
 				import { RoutingService } from '@ds/core.ts'
 				//
 				const App = ({ children }) => (
@@ -116,8 +116,8 @@ This service abstracts routing logic, making it easier to integrate with differe
 					</RoutingService>
 				)
 			`}
-		/>
-	</div>
+    />
+  </div>
 </DocsColumns>
 
 | Property | Type       | Params         | Return | Description                                    |
@@ -135,10 +135,10 @@ Manages color themes and provides comprehensive access to design tokens. <br/>
 This service enables dark/light theme switching and exposes all design system tokens through CSS variables.
 
 <DocsColumns>
-	<div>
-		<h3>Consumer</h3>
-		<DocsCodeBlock
-			code={`
+  <div>
+    <h3>Consumer</h3>
+    <DocsCodeBlock
+      code={`
 				import { useThemeService } from '@ds/core.ts'
 				//
 				const App = () => {
@@ -150,20 +150,20 @@ This service enables dark/light theme switching and exposes all design system to
 					)
 				}
 			`}
-		/>
-	</div>
-	<div>
-		<h3>Provider</h3>
-		<DocsCodeBlock
-			code={`
+    />
+  </div>
+  <div>
+    <h3>Provider</h3>
+    <DocsCodeBlock
+      code={`
 				import { ThemeService } from '@ds/core.ts'
 				//
 				const App = ({ children }) => (
 					<ThemeService cookieKey="color-theme">{children}</ThemeService>
 				)
 			`}
-		/>
-	</div>
+    />
+  </div>
 </DocsColumns>
 
 | Property         | Type                     | Params              | Return | Description                                               |

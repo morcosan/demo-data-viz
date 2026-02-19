@@ -21,10 +21,10 @@ Manages accessibility mode detection for keyboard and pointer interactions. <br/
 This service automatically detects user input methods and adjusts the UI accordingly, supporting better keyboard navigation experiences.
 
 <DocsColumns>
-	<div>
-		<h3>Consumer</h3>
-		<DocsCodeBlock
-			code={`
+  <div>
+    <h3>Consumer</h3>
+    <DocsCodeBlock
+      code={`
 				import { useA11yService } from '@ds/core.ts'
 				//
 				const App = () => {
@@ -36,26 +36,26 @@ This service automatically detects user input methods and adjusts the UI accordi
 					)
 				}
 			`}
-		/>
-	</div>
-	<div>
-		<h3>Provider</h3>
-		<DocsCodeBlock
-			code={`
+    />
+  </div>
+  <div>
+    <h3>Provider</h3>
+    <DocsCodeBlock
+      code={`
 				import { A11yService } from '@ds/core.ts'
 				//
 				const App = ({ children }) => <A11yService>{children}</A11yService>
     	`}
-		/>
-		<h3>Utilities</h3>
-		<DocsCodeBlock
-			code={`
+    />
+    <h3>Utilities</h3>
+    <DocsCodeBlock
+      code={`
 				import { isA11yModeDefault, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core.ts'
 				//
 				console.log(isA11yModeDefault(), isA11yModePointer(), ATTR_KEY__A11Y_MODE)
     	`}
-		/>
-	</div>
+    />
+  </div>
 </DocsColumns>
 
 | Property      | Type       | Params           | Return | Description                                                                  |
@@ -77,10 +77,10 @@ Provides viewport size detection and breakpoint-based responsive utilities. <br/
 This service tracks window resize events and provides comprehensive breakpoint helpers for building responsive layouts that adapt to different screen sizes.
 
 <DocsColumns>
-	<div>
-		<h3>Consumer</h3>
-		<DocsCodeBlock
-			code={`
+  <div>
+    <h3>Consumer</h3>
+    <DocsCodeBlock
+      code={`
 				import { useViewportService } from '@ds/core.ts'
 				//
 				const App = () => {
@@ -95,18 +95,18 @@ This service tracks window resize events and provides comprehensive breakpoint h
 					)
 				}
 			`}
-		/>
-	</div>
-	<div>
-		<h3>Provider</h3>
-		<DocsCodeBlock
-			code={`
+    />
+  </div>
+  <div>
+    <h3>Provider</h3>
+    <DocsCodeBlock
+      code={`
 				import { ViewportService } from '@ds/core.ts'
 				//
 				const App = ({ children }) => <ViewportService>{children}</ViewportService>
 			`}
-		/>
-	</div>
+    />
+  </div>
 </DocsColumns>
 
 | Property         | Type      | Description                                                           |

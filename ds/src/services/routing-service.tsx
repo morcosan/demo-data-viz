@@ -7,10 +7,10 @@ import { createContext, useContext, useMemo } from 'react'
  */
 type NavigateFn = (path: string) => void
 type Store = {
-	navigate: NavigateFn
+  navigate: NavigateFn
 }
 const Context = createContext<Store>({
-	navigate: () => {},
+  navigate: () => {},
 })
 const useRoutingService = () => useContext(Context)
 
@@ -18,18 +18,18 @@ const useRoutingService = () => useContext(Context)
  * Provider
  */
 interface Props extends ReactProps {
-	navigate: NavigateFn
+  navigate: NavigateFn
 }
 
 const RoutingService = ({ navigate, children }: Props) => {
-	const store: Store = useMemo(
-		() => ({
-			navigate,
-		}),
-		[navigate]
-	)
+  const store: Store = useMemo(
+    () => ({
+      navigate,
+    }),
+    [navigate],
+  )
 
-	return <Context.Provider value={store}>{children}</Context.Provider>
+  return <Context.Provider value={store}>{children}</Context.Provider>
 }
 
 /**

@@ -8,13 +8,13 @@ import globalCSS from '@mantine/core/styles/global.css?raw'
 const fixOutlineCSS = (css?: string) => css?.replace(/^\s*(outline(?:-[^:\s]+)?\s*:[^;]+;)\s*$/gim, '/* $1 */')
 
 const ConfigService = (props: ReactProps) => {
-	// Nextjs cannot import ?raw, it will import files as CSS and give undefined vars
-	const mantineTheme = createTheme({})
-	const mantineCSS = `
+  // Nextjs cannot import ?raw, it will import files as CSS and give undefined vars
+  const mantineTheme = createTheme({})
+  const mantineCSS = `
 		${variablesCSS || ''}
 		${fixOutlineCSS(globalCSS) || ''}
 	`
-	const extraCSS = `
+  const extraCSS = `
 		body {
 			background-color: unset;
 			color: unset;
@@ -23,13 +23,13 @@ const ConfigService = (props: ReactProps) => {
 		}
 	`
 
-	return (
-		<MantineProvider theme={mantineTheme}>
-			<style>{mantineCSS}</style>
-			<style>{extraCSS}</style>
-			{props.children}
-		</MantineProvider>
-	)
+  return (
+    <MantineProvider theme={mantineTheme}>
+      <style>{mantineCSS}</style>
+      <style>{extraCSS}</style>
+      {props.children}
+    </MantineProvider>
+  )
 }
 
 export { ConfigService }

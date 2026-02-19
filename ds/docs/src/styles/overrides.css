@@ -1,102 +1,102 @@
 /* Disable padding in autodocs */
 .sbdocs-preview .docs-story > div {
-	padding: 0 !important;
+  padding: 0 !important;
 }
 
 /* Make docs full width and bg */
 .sbdocs-wrapper {
-	background-color: var(--ds-color-bg-page) !important;
-	padding: var(--ds-spacing-sm-2) var(--ds-spacing-sm-3) !important;
+  background-color: var(--ds-color-bg-page) !important;
+  padding: var(--ds-spacing-sm-2) var(--ds-spacing-sm-3) !important;
 }
 .sbdocs-content {
-	max-width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* Fix code blocks */
 .docblock-source {
-	margin: 0 !important;
-	border: 0 !important;
-	background: transparent !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
 }
 pre.prismjs {
-	background: transparent !important;
-	padding: var(--ds-spacing-xs-7) !important;
-	tab-size: 2;
+  background: transparent !important;
+  padding: var(--ds-spacing-xs-7) !important;
+  tab-size: 2;
 
-	& * {
-		font-family: var(--default-mono-font-family) !important;
-	}
+  & * {
+    font-family: var(--default-mono-font-family) !important;
+  }
 }
 
 /* Fix autodocs page */
 .sbdocs-content {
-	& .sbdocs-title {
-		margin-bottom: var(--ds-spacing-sm-2) !important;
-		color: unset !important;
-		font-weight: var(--ds-font-weight-xl) !important;
-		font-size: var(--ds-font-size-xxl) !important;
-		font-family: unset !important;
-	}
+  & .sbdocs-title {
+    margin-bottom: var(--ds-spacing-sm-2) !important;
+    color: unset !important;
+    font-weight: var(--ds-font-weight-xl) !important;
+    font-size: var(--ds-font-size-xxl) !important;
+    font-family: unset !important;
+  }
 
-	& .sbdocs-preview,
-	& [role='toolbar'] {
-		background: var(--ds-color-bg-card) !important;
-	}
-	& [role='toolbar'] {
-		& a,
-		& button {
-			color: var(--ds-color-text-default) !important;
-		}
-	}
+  & .sbdocs-preview,
+  & [role='toolbar'] {
+    background: var(--ds-color-bg-card) !important;
+  }
+  & [role='toolbar'] {
+    & a,
+    & button {
+      color: var(--ds-color-text-default) !important;
+    }
+  }
 
-	& div:has(> .docblock-code-toggle),
-	& .docblock-code-toggle {
-		background: var(--ds-color-bg-menu) !important;
-		color: var(--ds-color-text-default) !important;
-	}
+  & div:has(> .docblock-code-toggle),
+  & .docblock-code-toggle {
+    background: var(--ds-color-bg-menu) !important;
+    color: var(--ds-color-text-default) !important;
+  }
 }
 
 /* Fix autodocs table */
 .docblock-argstable {
-	font-size: var(--ds-font-size-sm) !important;
+  font-size: var(--ds-font-size-sm) !important;
 
-	/* Fix required mark */
-	& td:first-child > [title='Required'] {
-		margin-left: var(--ds-spacing-xs-1) !important;
-		font-weight: var(--ds-font-weight-lg) !important;
-		font-family: Consolas, 'Courier New', monospace !important;
-	}
+  /* Fix required mark */
+  & td:first-child > [title='Required'] {
+    margin-left: var(--ds-spacing-xs-1) !important;
+    font-weight: var(--ds-font-weight-lg) !important;
+    font-family: Consolas, 'Courier New', monospace !important;
+  }
 
-	/* Fix column widths */
-	& td:nth-child(1) {
-		width: 20% !important;
-	}
-	& td:nth-child(2) {
-		width: 40% !important;
-	}
+  /* Fix column widths */
+  & td:nth-child(1) {
+    width: 20% !important;
+  }
+  & td:nth-child(2) {
+    width: 40% !important;
+  }
 
-	/* Fix JSDoc params inside autodocs */
-	& table {
-		& td:first-child {
-			padding: var(--ds-spacing-xs-0) !important;
-		}
-		& td:last-child {
-			padding: var(--ds-spacing-xs-0) !important;
-			padding-right: var(--ds-spacing-xs-3) !important;
-			font-size: 12px !important;
-		}
-	}
+  /* Fix JSDoc params inside autodocs */
+  & table {
+    & td:first-child {
+      padding: var(--ds-spacing-xs-0) !important;
+    }
+    & td:last-child {
+      padding: var(--ds-spacing-xs-0) !important;
+      padding-right: var(--ds-spacing-xs-3) !important;
+      font-size: 12px !important;
+    }
+  }
 
-	/* Fix colors */
-	& tr *:not(button, input, textarea, label > *, [title='Required']) {
-		color: var(--ds-color-text-default) !important;
-		font-family: var(--default-font-family) !important;
-	}
-	& tr > td {
-		border-color: var(--ds-color-border-subtle) !important;
-		background: var(--ds-color-bg-card) !important;
-	}
-	& tr[title]:hover > td {
-		background: var(--ds-color-secondary-hover-default) !important;
-	}
+  /* Fix colors */
+  & tr *:not(button, input, textarea, label > *, [title='Required']) {
+    color: var(--ds-color-text-default) !important;
+    font-family: var(--default-font-family) !important;
+  }
+  & tr > td {
+    border-color: var(--ds-color-border-subtle) !important;
+    background: var(--ds-color-bg-card) !important;
+  }
+  & tr[title]:hover > td {
+    background: var(--ds-color-secondary-hover-default) !important;
+  }
 }

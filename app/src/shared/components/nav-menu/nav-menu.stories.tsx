@@ -3,27 +3,27 @@ import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { NavMenu, type NavMenuProps } from './nav-menu.tsx'
 
 const meta: Meta<typeof NavMenu> = {
-	title: 'Components / NavMenu',
-	...defineMeta(NavMenu, {
-		props: {
-			pathname: '',
-			closeMenu: () => {},
-			mobile: false,
-			collapsed: false,
-			className: 'w-lg-7 bg-color-bg-card',
-		},
-		events: ['onTogglePopup'],
-	}),
+  title: 'Components / NavMenu',
+  ...defineMeta(NavMenu, {
+    props: {
+      pathname: '',
+      closeMenu: () => {},
+      mobile: false,
+      collapsed: false,
+      className: 'w-lg-7 bg-color-bg-card',
+    },
+    events: ['onTogglePopup'],
+  }),
 
-	render: function Story(props: NavMenuProps) {
-		const { location } = useLocationMock()
+  render: function Story(props: NavMenuProps) {
+    const { location } = useLocationMock()
 
-		return <NavMenu {...props} pathname={props.pathname || location.pathname} />
-	},
+    return <NavMenu {...props} pathname={props.pathname || location.pathname} />
+  },
 }
 
 const Default: StoryObj<typeof NavMenu> = {
-	tags: ['controls', 'autodocs'],
+  tags: ['controls', 'autodocs'],
 }
 
 export default meta

@@ -1,11 +1,11 @@
 import type { DesignTokenGroup } from './__types.ts'
 
 export const TOKENS__RADIUS = {
-	xs: { $value: '4px' },
-	sm: { $value: '6px' },
-	md: { $value: '8px' },
-	lg: { $value: '12px' },
-	xl: { $value: '16px' },
-	max: { $value: '99px' },
-	full: { $value: '100%' },
+  xs: { $value: '4px' },
+  sm: { $value: '6px' },
+  md: { $value: '8px' },
+  lg: { $value: '12px' },
+  xl: { $value: '16px' },
+  max: { $value: '99px' },
+  full: { $value: '100%' },
 } as const satisfies DesignTokenGroup<string>

@@ -6,18 +6,18 @@ select,
 video,
 audio,
 [tabindex] {
-	outline-offset: var(--ds-spacing-a11y-outline);
+  outline-offset: var(--ds-spacing-a11y-outline);
 }
 
 .a11y-outline-proxy {
-	&:has(:focus),
-	&:has(:focus-visible) {
-		outline: auto;
-		outline-color: -webkit-focus-ring-color;
-		outline-offset: var(--ds-spacing-a11y-outline);
-	}
+  &:has(:focus),
+  &:has(:focus-visible) {
+    outline: auto;
+    outline-color: -webkit-focus-ring-color;
+    outline-offset: var(--ds-spacing-a11y-outline);
+  }
 }
 
 [data-a11y-mode='pointer'] * {
-	outline: none !important;
+  outline: none !important;
 }

@@ -5,12 +5,12 @@ import { createContext, useContext, useMemo } from 'react'
  */
 type DocsCanvasBg = 'tiles' | 'grid' | 'blank'
 type Store = {
-	canvasBg: DocsCanvasBg
-	canvasBgClass: string
+  canvasBg: DocsCanvasBg
+  canvasBgClass: string
 }
 const Context = createContext<Store>({
-	canvasBg: 'grid',
-	canvasBgClass: '',
+  canvasBg: 'grid',
+  canvasBgClass: '',
 })
 const useDocsCanvasService = () => useContext(Context)
 
@@ -18,18 +18,18 @@ const useDocsCanvasService = () => useContext(Context)
  * Provider
  */
 interface Props extends ReactProps {
-	canvasBg: DocsCanvasBg
+  canvasBg: DocsCanvasBg
 }
 
 const DocsCanvasService = ({ children, canvasBg }: Props) => {
-	const canvasBgClass = cx({
-		'docs-bg docs-bg-tiles': canvasBg === 'tiles',
-		'docs-bg docs-bg-grid': canvasBg === 'grid',
-		'docs-bg docs-bg-blank': canvasBg === 'blank',
-	})
-	const store: Store = useMemo(() => ({ canvasBgClass, canvasBg }), [canvasBg, canvasBgClass])
+  const canvasBgClass = cx({
+    'docs-bg docs-bg-tiles': canvasBg === 'tiles',
+    'docs-bg docs-bg-grid': canvasBg === 'grid',
+    'docs-bg docs-bg-blank': canvasBg === 'blank',
+  })
+  const store: Store = useMemo(() => ({ canvasBgClass, canvasBg }), [canvasBg, canvasBgClass])
 
-	return <Context.Provider value={store}>{children}</Context.Provider>
+  return <Context.Provider value={store}>{children}</Context.Provider>
 }
 
 /**

@@ -20,8 +20,8 @@ npm install -D tailwindcss @tailwindcss/postcss
 Create or update your `tailwind.config.ts` file to use the design system's theme:
 
 <DocsCodeBlock
-	filename="tailwind.config.ts"
-	code={`
+  filename="tailwind.config.ts"
+  code={`
 		import { type Config } from 'tailwindcss'
 		import { tailwindTheme } from '../../ds/dist/tooling/tailwind.ts'
 		//
@@ -40,8 +40,8 @@ Create or update your `tailwind.config.ts` file to use the design system's theme
 Configure PostCSS to use Tailwind CSS:
 
 <DocsCodeBlock
-	filename="postcss.config.mjs"
-	code={`
+  filename="postcss.config.mjs"
+  code={`
 		const config = {
 			plugins: {
 				'@tailwindcss/postcss': {},
@@ -55,8 +55,8 @@ Configure PostCSS to use Tailwind CSS:
 Import the design system styles in your global CSS file:
 
 <DocsCodeBlock
-	filename="globals.css"
-	code={`
+  filename="globals.css"
+  code={`
 		@import '@ds/styles.css';
 		//
 		@import 'tailwindcss';
@@ -69,8 +69,8 @@ Import the design system styles in your global CSS file:
 Set up all required providers using `HocComposer`. Create a providers file:
 
 <DocsCodeBlock
-	filename="providers.tsx"
-	code={`
+  filename="providers.tsx"
+  code={`
 		'use client'
 		//
 		import {
@@ -113,8 +113,8 @@ Set up all required providers using `HocComposer`. Create a providers file:
 If you're using Next.js, configure it to transpile the design system package and set up path aliases:
 
 <DocsCodeBlock
-	filename="next.config.ts"
-	code={`
+  filename="next.config.ts"
+  code={`
 		import { type NextConfig } from 'next'
 		import path from 'node:path'
 		//
@@ -145,8 +145,8 @@ If you're using Next.js, configure it to transpile the design system package and
 Configure ESLint to use the design system's custom plugin that enforces proper import paths:
 
 <DocsCodeBlock
-	filename="eslint.config.ts"
-	code={`
+  filename="eslint.config.ts"
+  code={`
 		import { defineConfig } from 'eslint/config'
 		import { dsImports } from '../ds/dist/tooling/eslint.ts'
 		//
@@ -170,8 +170,8 @@ To display the design system version in your application, configure environment 
 You can also generate a build number based on build time.
 
 <DocsCodeBlock
-	filename="vite.config.ts or next.config.ts"
-	code={`
+  filename="vite.config.ts or next.config.ts"
+  code={`
 		import { createBuildNumber, getDsVersion } from '../ds/dist/tooling/utilities.ts'
 		//
 		// For Vite:
@@ -195,8 +195,8 @@ You can also generate a build number based on build time.
 Add TypeScript type definitions for the documentation components:
 
 <DocsCodeBlock
-	filename=".storybook/preview.types.d.ts"
-	code={`
+  filename=".storybook/preview.types.d.ts"
+  code={`
 		import '@ds/docs/types.d.ts'
 	`}
 />

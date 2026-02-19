@@ -4,11 +4,11 @@ import { fixBrokenCSS } from './_preview-css-fix.ts'
 import { computeServices } from './_preview-utils.tsx'
 
 export const PreviewMdxPage = (props: ReactProps) => {
-	fixBrokenCSS()
+  fixBrokenCSS()
 
-	return (
-		<HocComposer hocs={computeServices([], {})}>
-			<DocsPage type="mdx">{props.children}</DocsPage>
-		</HocComposer>
-	)
+  return (
+    <HocComposer hocs={computeServices([], {})}>
+      <DocsPage type="mdx">{props.children}</DocsPage>
+    </HocComposer>
+  )
 }

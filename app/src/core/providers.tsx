@@ -11,23 +11,23 @@ import { StrictMode } from 'react'
 import { RouterProvider } from './router/router-provider.tsx'
 
 if (typeof window !== 'undefined') {
-	LOG('BUILD_NUMBER:', ENV__BUILD_NUMBER)
+  LOG('BUILD_NUMBER:', ENV__BUILD_NUMBER)
 }
 
 initClientI18n()
 
 const hoc = HocComposer.hoc
 const providers = [
-	hoc(StrictMode, {}),
-	hoc(ConfigService, {}),
-	hoc(A11yService, {}),
-	hoc(ViewportService, {}),
-	hoc(I18nProvider, {}),
-	hoc(QueryProvider, {}),
-	hoc(RouterProvider, {}),
-	hoc(ThemeService, { cookieKey: 'app-color-theme' }),
+  hoc(StrictMode, {}),
+  hoc(ConfigService, {}),
+  hoc(A11yService, {}),
+  hoc(ViewportService, {}),
+  hoc(I18nProvider, {}),
+  hoc(QueryProvider, {}),
+  hoc(RouterProvider, {}),
+  hoc(ThemeService, { cookieKey: 'app-color-theme' }),
 ]
 
 export const Providers = ({ children }: ReactProps) => {
-	return <HocComposer hocs={providers}>{children}</HocComposer>
+  return <HocComposer hocs={providers}>{children}</HocComposer>
 }

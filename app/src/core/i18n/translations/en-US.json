@@ -1,62 +1,62 @@
 {
-	"ds": {
-		"action": {
-			"close": "Close"
-		}
-	},
-	"core": {
-		"action": {
-			"back": "Back",
-			"closeMenu": "Close menu",
-			"openMenu": "Open menu",
-			"pinNavMenu": "Pin nav menu",
-			"unpinNavMenu": "Unpin nav menu",
-			"sort": "Sort"
-		},
-		"label": {
-			"appStorybook": "App Storybook",
-			"appTitle": "Demo Data Viz",
-			"dsStorybook": "Design System",
-			"githubRepo": "GitHub Repo",
-			"navigationBar": "Navigation bar",
-			"navigationMenu": "Navigation menu",
-			"openMenu": "Open menu",
-			"preferences": "Preferences",
-			"settings": "Settings",
-			"theme": "Theme",
-			"themeDark": "Dark",
-			"themeLight": "Light",
-			"unexpectedError": "Unexpected error"
-		},
-		"placeholder": {
-			"search": "Search..."
-		},
-		"status": {
-			"loading": "Loading..."
-		}
-	},
-	"appNav": {
-		"label": {
-			"dashboard": "Dashboard",
-			"datasets": "Datasets"
-		}
-	},
-	"dataViz": {
-		"label": {
-			"dataSize": "Data size",
-			"datasetId": "Dataset ID",
-			"datasetResults": "{total} datasets",
-			"datasetSearch": "Dataset search",
-			"datasetSize": "Size: {cols} x {rows}",
-			"datasetSizeUnknown": "Size: --",
-			"datasets": "Datasets",
-			"lastUpdate": "Last update",
-			"source": "Source"
-		},
-		"error": {
-			"fetchDataset": "Failed to load dataset",
-			"fetchDatasets": "Failed to load datasets",
-			"noDatasetSelected": "Select a dataset!"
-		}
-	}
+  "ds": {
+    "action": {
+      "close": "Close"
+    }
+  },
+  "core": {
+    "action": {
+      "back": "Back",
+      "closeMenu": "Close menu",
+      "openMenu": "Open menu",
+      "pinNavMenu": "Pin nav menu",
+      "unpinNavMenu": "Unpin nav menu",
+      "sort": "Sort"
+    },
+    "label": {
+      "appStorybook": "App Storybook",
+      "appTitle": "Demo Data Viz",
+      "dsStorybook": "Design System",
+      "githubRepo": "GitHub Repo",
+      "navigationBar": "Navigation bar",
+      "navigationMenu": "Navigation menu",
+      "openMenu": "Open menu",
+      "preferences": "Preferences",
+      "settings": "Settings",
+      "theme": "Theme",
+      "themeDark": "Dark",
+      "themeLight": "Light",
+      "unexpectedError": "Unexpected error"
+    },
+    "placeholder": {
+      "search": "Search..."
+    },
+    "status": {
+      "loading": "Loading..."
+    }
+  },
+  "appNav": {
+    "label": {
+      "dashboard": "Dashboard",
+      "datasets": "Datasets"
+    }
+  },
+  "dataViz": {
+    "label": {
+      "dataSize": "Data size",
+      "datasetId": "Dataset ID",
+      "datasetResults": "{total} datasets",
+      "datasetSearch": "Dataset search",
+      "datasetSize": "Size: {cols} x {rows}",
+      "datasetSizeUnknown": "Size: --",
+      "datasets": "Datasets",
+      "lastUpdate": "Last update",
+      "source": "Source"
+    },
+    "error": {
+      "fetchDataset": "Failed to load dataset",
+      "fetchDatasets": "Failed to load datasets",
+      "noDatasetSelected": "Select a dataset!"
+    }
+  }
 }

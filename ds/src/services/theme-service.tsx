@@ -15,17 +15,17 @@ const COLOR_THEMES: ColorTheme[] = ['light', 'dark']
  * Context
  */
 interface Store extends ThemeTokens {
-	colorTheme: ColorTheme
-	isUiDark: boolean
-	isUiLight: boolean
-	changeColorTheme(theme: ColorTheme): void
+  colorTheme: ColorTheme
+  isUiDark: boolean
+  isUiLight: boolean
+  changeColorTheme(theme: ColorTheme): void
 }
 const Context = createContext<Store>({
-	...lightThemeTokens,
-	colorTheme: 'light',
-	isUiDark: false,
-	isUiLight: true,
-	changeColorTheme() {},
+  ...lightThemeTokens,
+  colorTheme: 'light',
+  isUiDark: false,
+  isUiLight: true,
+  changeColorTheme() {},
 })
 const useThemeService = () => useContext(Context)
 
@@ -33,53 +33,53 @@ const useThemeService = () => useContext(Context)
  * Provider
  */
 interface Props extends ReactProps {
-	cookieKey: string
-	colorTheme?: ColorTheme
+  cookieKey: string
+  colorTheme?: ColorTheme
 }
 
 const ThemeService = (props: Props) => {
-	const [colorTheme, setColorTheme] = useState<ColorTheme>('light')
-	const [tokens, setTokens] = useState<ThemeTokens>(lightThemeTokens)
+  const [colorTheme, setColorTheme] = useState<ColorTheme>('light')
+  const [tokens, setTokens] = useState<ThemeTokens>(lightThemeTokens)
 
-	const isUiDark = colorTheme === 'dark'
-	const isUiLight = colorTheme === 'light'
+  const isUiDark = colorTheme === 'dark'
+  const isUiLight = colorTheme === 'light'
 
-	const setHtmlAttr = (theme: ColorTheme) => document.documentElement.setAttribute(ATTR_KEY__COLOR_THEME, theme)
-	const setCookie = (theme: ColorTheme) => localStorage.setItem(props.cookieKey, theme)
-	const getCookie = () => localStorage.getItem(props.cookieKey) as ColorTheme | null
+  const setHtmlAttr = (theme: ColorTheme) => document.documentElement.setAttribute(ATTR_KEY__COLOR_THEME, theme)
+  const setCookie = (theme: ColorTheme) => localStorage.setItem(props.cookieKey, theme)
+  const getCookie = () => localStorage.getItem(props.cookieKey) as ColorTheme | null
 
-	const changeUiTheme = (theme: ColorTheme) => {
-		setCookie(theme)
-		setHtmlAttr(theme)
-		setColorTheme(theme)
-		setTokens(theme === 'light' ? lightThemeTokens : darkThemeTokens)
-	}
+  const changeUiTheme = (theme: ColorTheme) => {
+    setCookie(theme)
+    setHtmlAttr(theme)
+    setColorTheme(theme)
+    setTokens(theme === 'light' ? lightThemeTokens : darkThemeTokens)
+  }
 
-	useEffect(() => {
-		if (props.colorTheme) {
-			changeUiTheme(props.colorTheme)
-			return
-		}
+  useEffect(() => {
+    if (props.colorTheme) {
+      changeUiTheme(props.colorTheme)
+      return
+    }
 
-		const theme = getCookie()
+    const theme = getCookie()
 
-		if (theme && COLOR_THEMES.includes(theme)) {
-			changeUiTheme(theme)
-		} else {
-			changeUiTheme(window.matchMedia(MEDIA_QUERY_DARK).matches ? 'dark' : 'light')
-		}
-	}, [])
+    if (theme && COLOR_THEMES.includes(theme)) {
+      changeUiTheme(theme)
+    } else {
+      changeUiTheme(window.matchMedia(MEDIA_QUERY_DARK).matches ? 'dark' : 'light')
+    }
+  }, [])
 
-	useEffect(() => {
-		props.colorTheme && changeUiTheme(props.colorTheme)
-	}, [props.colorTheme])
+  useEffect(() => {
+    props.colorTheme && changeUiTheme(props.colorTheme)
+  }, [props.colorTheme])
 
-	const store: Store = useMemo(
-		() => ({ ...tokens, colorTheme: colorTheme, isUiDark, isUiLight, changeColorTheme: changeUiTheme }),
-		[tokens, colorTheme, isUiDark, isUiLight, changeUiTheme]
-	)
+  const store: Store = useMemo(
+    () => ({ ...tokens, colorTheme: colorTheme, isUiDark, isUiLight, changeColorTheme: changeUiTheme }),
+    [tokens, colorTheme, isUiDark, isUiLight, changeUiTheme],
+  )
 
-	return <Context.Provider value={store}>{props.children}</Context.Provider>
+  return <Context.Provider value={store}>{props.children}</Context.Provider>
 }
 
 /**
