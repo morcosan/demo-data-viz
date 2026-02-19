@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 
 export const RouterProvider = ({ children }: ReactProps) => {
-	const router = useRouter()
+  const router = useRouter()
 
-	const navigate = useCallback((path: string) => router.push(path), [router])
+  const navigate = useCallback((path: string) => router.push(path), [router])
 
-	return <RoutingService navigate={navigate}>{children}</RoutingService>
+  return <RoutingService navigate={navigate}>{children}</RoutingService>
 }

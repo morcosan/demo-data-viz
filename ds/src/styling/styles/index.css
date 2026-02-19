@@ -7,17 +7,17 @@
 @import './_scrollbar.css';
 
 :root {
-	background-color: var(--ds-color-bg-page);
-	color: var(--ds-color-text-default);
+  background-color: var(--ds-color-bg-page);
+  color: var(--ds-color-text-default);
 }
 
 body {
-	margin: 0 !important;
-	padding: 0 !important;
-	width: unset !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: unset !important;
 }
 
 hr {
-	border-color: var(--ds-color-border-subtle);
-	width: 100%;
+  border-color: var(--ds-color-border-subtle);
+  width: 100%;
 }

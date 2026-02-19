@@ -1,27 +1,22 @@
 {
-	"extends": "../.config/tsconfig-base.json",
-	"compilerOptions": {
-		/* Build Metadata */
-		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.sb.tsbuildinfo",
+  "extends": "../.config/tsconfig-base.json",
+  "compilerOptions": {
+    /* Build Metadata */
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.sb.tsbuildinfo",
 
-		/* Language & Environment */
-		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"plugins": [{ "name": "next" }],
+    /* Language & Environment */
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "plugins": [{ "name": "next" }],
 
-		/* Modules & Resolution */
-		"paths": {
-			"@app-components": ["./src/shared/components/index.ts"],
-			"@app-utils": ["./src/shared/utils/index.ts"],
-			"@app-i18n": ["./src/core/i18n/index.ts"],
-			"@app-api": ["./src/core/api/index.ts"],
-			"@app/*": ["./src/*"],
-			"@ds/*": ["../ds/dist/*"]
-		}
-	},
-	"include": [
-		".storybook/preview.tsx",
-		".storybook/preview.types.d.ts",
-		"src/**/*.stories.ts",
-		"src/**/*.stories.tsx"
-	]
+    /* Modules & Resolution */
+    "paths": {
+      "@app-components": ["./src/shared/components/index.ts"],
+      "@app-utils": ["./src/shared/utils/index.ts"],
+      "@app-i18n": ["./src/core/i18n/index.ts"],
+      "@app-api": ["./src/core/api/index.ts"],
+      "@app/*": ["./src/*"],
+      "@ds/*": ["../ds/dist/*"]
+    }
+  },
+  "include": [".storybook/preview.tsx", ".storybook/preview.types.d.ts", "src/**/*.stories.ts", "src/**/*.stories.tsx"]
 }

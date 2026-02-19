@@ -3,17 +3,17 @@ import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { LoadingSpinner } from './loading-spinner.tsx'
 
 const meta: Meta = {
-	title: 'Components / LoadingSpinner',
-	...defineMeta(LoadingSpinner, {
-		props: {
-			size: 'sm',
-			className: '',
-		},
-	}),
+  title: 'Components / LoadingSpinner',
+  ...defineMeta(LoadingSpinner, {
+    props: {
+      size: 'sm',
+      className: '',
+    },
+  }),
 }
 
 const Default: StoryObj<typeof LoadingSpinner> = {
-	tags: ['controls', 'autodocs'],
+  tags: ['controls', 'autodocs'],
 }
 
 export default meta

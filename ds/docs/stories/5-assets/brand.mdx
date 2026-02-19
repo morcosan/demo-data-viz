@@ -9,7 +9,7 @@ export const assets = getAssetsFromFiles(files)
 # Brand <span className="text-size-md text-color-text-subtle align-middle">({assets.length})</span>
 
 <div className="gap-xs-9 flex flex-wrap">
-	{assets.map((asset) => (
-		<DocsAssetItem key={asset.name} asset={asset} />
-	))}
+  {assets.map((asset) => (
+    <DocsAssetItem key={asset.name} asset={asset} />
+  ))}
 </div>

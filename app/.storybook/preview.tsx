@@ -13,34 +13,34 @@ initClientI18n()
 
 const hoc = HocComposer.hoc
 const providers = [
-	hoc(I18nProvider, {}),
-	hoc(RoutingService, { navigate: mockNavigate }),
-	//
+  hoc(I18nProvider, {}),
+  hoc(RoutingService, { navigate: mockNavigate }),
+  //
 ]
 
 const preview: Preview = {
-	parameters: {
-		controls: {
-			matchers: {
-				color: /(background|color)$/i,
-				date: /Date$/i,
-			},
-		},
-		a11y: {
-			// 'todo' - show a11y violations in the test UI only
-			// 'error' - fail CI on a11y violations
-			// 'off' - skip a11y checks entirely
-			test: 'todo',
-		},
-		docs: {
-			...(getDocsConfig(providers) as any),
-			// Storybook bug: `theme` is empty during build when using `@storybook/nextjs-vite`
-			// Disable container overwrite to avoid the bug
-			container: undefined,
-		},
-	},
-	...toolbarConfig,
-	...getStoryConfig(providers),
+  parameters: {
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+    a11y: {
+      // 'todo' - show a11y violations in the test UI only
+      // 'error' - fail CI on a11y violations
+      // 'off' - skip a11y checks entirely
+      test: 'todo',
+    },
+    docs: {
+      ...(getDocsConfig(providers) as any),
+      // Storybook bug: `theme` is empty during build when using `@storybook/nextjs-vite`
+      // Disable container overwrite to avoid the bug
+      container: undefined,
+    },
+  },
+  ...toolbarConfig,
+  ...getStoryConfig(providers),
 }
 
 export default preview

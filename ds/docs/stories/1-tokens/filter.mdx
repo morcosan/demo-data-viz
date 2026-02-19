@@ -6,89 +6,89 @@ export const primitiveTokens = Object.entries(TOKENS__BLUR).filter(([, token]) =
 export const semanticTokens = Object.entries(TOKENS__BLUR).filter(([, token]) => token.$ref)
 
 export const BlurSemanticTokens = () => (
-	<table className="docs">
-		<thead>
-			<tr>
-				<th>Token</th>
-				<th>Reference</th>
-				<th>Value</th>
-				<th className="w-full">Preview</th>
-				<th>Coding</th>
-			</tr>
-		</thead>
-		<tbody>
-			{semanticTokens.map(([name, token]) => (
-				<tr key={name}>
-					<td>
-						<pre>{name}</pre>
-					</td>
-					<td>
-						<pre>{token.$ref}</pre>
-					</td>
-					<td>
-						<code>{getTokenValue_BLUR(token.$ref)}</code>
-					</td>
-					<td>
-						<div className="gap-xs-4 text-size-lg flex" style={{ filter: `blur(var(${CSS_PREFIX.BLUR}${name}))` }}>
-							<SettingsSvg className="w-xs-7" />
-							Blur example
-						</div>
-					</td>
-					<td>
-						<DocsTokenCoding
-							tsVar={`$blur['${name}']`}
-							tsSize="w-lg-1"
-							twVars={[`blur-${name}`]}
-							twSize="w-lg-0"
-							cssVar={`${CSS_PREFIX.BLUR}${name}`}
-							cssSize="w-lg-4"
-						/>
-					</td>
-				</tr>
-			))}
-		</tbody>
-	</table>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Reference</th>
+        <th>Value</th>
+        <th className="w-full">Preview</th>
+        <th>Coding</th>
+      </tr>
+    </thead>
+    <tbody>
+      {semanticTokens.map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <pre>{token.$ref}</pre>
+          </td>
+          <td>
+            <code>{getTokenValue_BLUR(token.$ref)}</code>
+          </td>
+          <td>
+            <div className="gap-xs-4 text-size-lg flex" style={{ filter: `blur(var(${CSS_PREFIX.BLUR}${name}))` }}>
+              <SettingsSvg className="w-xs-7" />
+              Blur example
+            </div>
+          </td>
+          <td>
+            <DocsTokenCoding
+              tsVar={`$blur['${name}']`}
+              tsSize="w-lg-1"
+              twVars={[`blur-${name}`]}
+              twSize="w-lg-0"
+              cssVar={`${CSS_PREFIX.BLUR}${name}`}
+              cssSize="w-lg-4"
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 )
 
 export const BlurPrimitiveTokens = () => (
-	<table className="docs">
-		<thead>
-			<tr>
-				<th>Token</th>
-				<th>Value</th>
-				<th className="w-full">Preview</th>
-				<th>Coding</th>
-			</tr>
-		</thead>
-		<tbody>
-			{primitiveTokens.map(([name, token]) => (
-				<tr key={name}>
-					<td>
-						<pre>{name}</pre>
-					</td>
-					<td>
-						<code>{token.$value}</code>
-					</td>
-					<td>
-						<div className="gap-xs-4 text-size-lg flex" style={{ filter: `blur(var(${CSS_PREFIX.BLUR}${name}))` }}>
-							<SettingsSvg className="w-xs-7" />
-							Blur example
-						</div>
-					</td>
-					<td>
-						<DocsTokenCoding
-							tsVar={`$blur['${name}']`}
-							tsSize="w-lg-1"
-							twVars={[`blur-${name}`]}
-							twSize="w-lg-0"
-							cssVar={`${CSS_PREFIX.BLUR}${name}`}
-							cssSize="w-lg-4"
-						/>
-					</td>
-				</tr>
-			))}
-		</tbody>
-	</table>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th className="w-full">Preview</th>
+        <th>Coding</th>
+      </tr>
+    </thead>
+    <tbody>
+      {primitiveTokens.map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <code>{token.$value}</code>
+          </td>
+          <td>
+            <div className="gap-xs-4 text-size-lg flex" style={{ filter: `blur(var(${CSS_PREFIX.BLUR}${name}))` }}>
+              <SettingsSvg className="w-xs-7" />
+              Blur example
+            </div>
+          </td>
+          <td>
+            <DocsTokenCoding
+              tsVar={`$blur['${name}']`}
+              tsSize="w-lg-1"
+              twVars={[`blur-${name}`]}
+              twSize="w-lg-0"
+              cssVar={`${CSS_PREFIX.BLUR}${name}`}
+              cssSize="w-lg-4"
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 )
 
 <Meta title="Design tokens / Filter" />
