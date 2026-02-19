@@ -5,6 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tsESLint from 'typescript-eslint'
+import { baseRules } from '../.config/eslint-rules.ts'
 import { dsImports } from './dist/tooling/eslint.ts'
 
 export default defineConfig([
@@ -30,14 +31,7 @@ export default defineConfig([
       'import/resolver': { typescript: true },
     },
     rules: {
-      'react-hooks/exhaustive-deps': 'off', // This rule is broken, it gives false positives all the time
-      'react-hooks/set-state-in-effect': 'off', // TODO: fix this issue
-
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { caughtErrors: 'none' }],
-
-      'import/extensions': ['error', 'ignorePackages'],
+      ...baseRules,
     },
   },
 ])
