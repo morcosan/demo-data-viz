@@ -1,5 +1,5 @@
 import { createInstance } from 'i18next'
-import { DEFAULT_LOCALE, I18N_NAMESPACE, i18nConfig, type Locale } from './i18n-config.ts'
+import { DEFAULT_LOCALE, I18N_NAMESPACE, i18nConfig, type Locale } from './i18n-config'
 
 const getServerT = async (locale: Locale = DEFAULT_LOCALE) => {
   const i18nInstance = createInstance()

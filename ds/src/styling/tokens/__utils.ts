@@ -1,4 +1,4 @@
-import type { ColorTheme, DesignToken, DesignTokenGroup, DesignTokenThemeValue } from './__types.ts'
+import type { ColorTheme, DesignToken, DesignTokenGroup, DesignTokenThemeValue } from './__types'
 
 type Group<V> = DesignTokenGroup<V>
 

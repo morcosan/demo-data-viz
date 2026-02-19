@@ -1,6 +1,6 @@
 'use client'
 
-import { ENV__IS_LOCALHOST } from '@app/env.ts'
+import { ENV__IS_LOCALHOST } from '@app/env'
 import { Query, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient({

@@ -1,6 +1,6 @@
-import { wait } from '@ds/core.ts'
+import { wait } from '@ds/core'
 import { type ComponentType, useState } from 'react'
-import { useDocsCanvasService } from '../services/docs-canvas-service.tsx'
+import { useDocsCanvasService } from '../services/docs-canvas-service'
 
 export interface DocsAsset {
   name: string

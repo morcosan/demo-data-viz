@@ -1,5 +1,5 @@
-import { IconButton, type IconButtonVariant, LogoutSvg } from '@ds/core.ts'
-import { defineMeta, DocsPage } from '@ds/docs/core.ts'
+import { IconButton, type IconButtonVariant, LogoutSvg } from '@ds/core'
+import { defineMeta, DocsPage } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 
 const meta: Meta = {

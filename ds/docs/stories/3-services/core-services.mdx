@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import { DocsColumns, DocsCodeBlock } from '@ds/docs/core.ts'
+import { DocsColumns, DocsCodeBlock } from '@ds/docs/core'
 
 <Meta title="Services / Core Services" />
 
@@ -27,7 +27,7 @@ This service handles setup tasks that need to occur before the application rende
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { ConfigService } from '@ds/core.ts'
+				import { ConfigService } from '@ds/core'
 				//
 				const App = ({ children }) => <ConfigService>{children}</ConfigService>
     		`}
@@ -45,7 +45,7 @@ This service manages translations and loading states, allowing you to build mult
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useI18nService } from '@ds/core.ts'
+				import { useI18nService } from '@ds/core'
 				//
 				const App = () => {
 					const { translate, loading } = useI18nService()
@@ -58,7 +58,7 @@ This service manages translations and loading states, allowing you to build mult
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { I18nService } from '@ds/core.ts'
+				import { I18nService } from '@ds/core'
 				//
 				const App = ({ children }) => (
 					<I18nService translate={() => ''} loading={false}>
@@ -95,7 +95,7 @@ This service abstracts routing logic, making it easier to integrate with differe
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useRoutingService } from '@ds/core.ts'
+				import { useRoutingService } from '@ds/core'
 				//
 				const App = () => {
 					const { navigate } = useRoutingService()
@@ -108,7 +108,7 @@ This service abstracts routing logic, making it easier to integrate with differe
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { RoutingService } from '@ds/core.ts'
+				import { RoutingService } from '@ds/core'
 				//
 				const App = ({ children }) => (
 					<RoutingService navigate={() => {}}>
@@ -139,7 +139,7 @@ This service enables dark/light theme switching and exposes all design system to
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useThemeService } from '@ds/core.ts'
+				import { useThemeService } from '@ds/core'
 				//
 				const App = () => {
 					const { colorTheme, isUiDark, isUiLight, changeColorTheme, $color } = useThemeService()
@@ -156,7 +156,7 @@ This service enables dark/light theme switching and exposes all design system to
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { ThemeService } from '@ds/core.ts'
+				import { ThemeService } from '@ds/core'
 				//
 				const App = ({ children }) => (
 					<ThemeService cookieKey="color-theme">{children}</ThemeService>

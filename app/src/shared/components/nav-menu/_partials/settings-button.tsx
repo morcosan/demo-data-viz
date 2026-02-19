@@ -1,4 +1,4 @@
-import { Button, type ButtonHighlight, SettingsSvg } from '@ds/core.ts'
+import { Button, type ButtonHighlight, SettingsSvg } from '@ds/core'
 import { t } from 'i18next'
 
 interface Props extends ReactProps {

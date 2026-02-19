@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { DocsCanvas } from './docs-canvas.tsx'
+import { DocsCanvas } from './docs-canvas'
 
 interface Props extends ReactProps {
   title?: string | ReactNode

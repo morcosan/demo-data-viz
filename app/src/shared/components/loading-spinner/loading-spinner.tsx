@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { useDefaults } from '@ds/core.ts'
+import { useDefaults } from '@ds/core'
 import { Loader } from '@mantine/core'
 
 interface Props extends ReactProps {

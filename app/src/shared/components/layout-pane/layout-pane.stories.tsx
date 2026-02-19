@@ -1,6 +1,6 @@
-import { defineMeta, loremLongText } from '@ds/docs/core.ts'
+import { defineMeta, loremLongText } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { LayoutPane } from './layout-pane.tsx'
+import { LayoutPane } from './layout-pane'
 
 const meta: Meta = {
   title: 'Components / LayoutPane',

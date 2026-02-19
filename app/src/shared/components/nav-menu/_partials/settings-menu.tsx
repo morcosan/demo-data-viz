@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { ENV__BASE_PATH } from '@app/env.ts'
+import { ENV__BASE_PATH } from '@app/env'
 import {
   ArrowBackSvg,
   Button,
@@ -12,7 +12,7 @@ import {
   SettingsSvg,
   StorybookSvg,
   useThemeService,
-} from '@ds/core.ts'
+} from '@ds/core'
 
 interface Props {
   closeMenu: () => void

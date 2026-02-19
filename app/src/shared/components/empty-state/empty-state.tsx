@@ -1,4 +1,4 @@
-import { useDefaults } from '@ds/core.ts'
+import { useDefaults } from '@ds/core'
 
 interface Props extends ReactProps {
   type?: 'default' | 'error'

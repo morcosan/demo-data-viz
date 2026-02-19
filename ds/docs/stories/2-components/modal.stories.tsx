@@ -1,5 +1,5 @@
-import { Button, Modal, type ModalProps } from '@ds/core.ts'
-import { defineMeta, DocsPage, loremLongText } from '@ds/docs/core.ts'
+import { Button, Modal, type ModalProps } from '@ds/core'
+import { defineMeta, DocsPage, loremLongText } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useMemo, useState } from 'react'
 

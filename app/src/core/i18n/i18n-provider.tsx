@@ -1,11 +1,11 @@
 'use client'
 
-import { I18nService } from '@ds/core.ts'
+import { I18nService } from '@ds/core'
 import countries from 'i18n-iso-countries'
 import i18n from 'i18next'
 import { useEffect, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
-import { I18N_NAMESPACE, type Locale } from './i18n-config.ts'
+import { I18N_NAMESPACE, type Locale } from './i18n-config'
 
 interface I18nWrapperProps extends ReactProps {
   loading?: boolean

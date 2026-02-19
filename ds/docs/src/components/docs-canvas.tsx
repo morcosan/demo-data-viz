@@ -1,6 +1,6 @@
-import { useA11yService } from '@ds/core.ts'
+import { useA11yService } from '@ds/core'
 import { useRef } from 'react'
-import { useDocsCanvasService } from '../services/docs-canvas-service.tsx'
+import { useDocsCanvasService } from '../services/docs-canvas-service'
 
 interface Props extends ReactProps {
   extended?: boolean

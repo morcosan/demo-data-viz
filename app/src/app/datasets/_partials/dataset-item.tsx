@@ -2,7 +2,7 @@ import { TextHighlight } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app-utils'
 import Link from 'next/link'
-import { type BaseDataset } from '../_types.ts'
+import { type BaseDataset } from '../_types'
 
 interface Props extends ReactProps {
   dataset: BaseDataset

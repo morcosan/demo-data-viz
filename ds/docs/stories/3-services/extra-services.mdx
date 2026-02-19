@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import { DocsColumns, DocsCodeBlock } from '@ds/docs/core.ts'
+import { DocsColumns, DocsCodeBlock } from '@ds/docs/core'
 
 <Meta title="Services / Extra Services" />
 
@@ -25,7 +25,7 @@ This service automatically detects user input methods and adjusts the UI accordi
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useA11yService } from '@ds/core.ts'
+				import { useA11yService } from '@ds/core'
 				//
 				const App = () => {
 					const { a11yMode, isPointer, forceA11yMode } = useA11yService()
@@ -42,7 +42,7 @@ This service automatically detects user input methods and adjusts the UI accordi
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { A11yService } from '@ds/core.ts'
+				import { A11yService } from '@ds/core'
 				//
 				const App = ({ children }) => <A11yService>{children}</A11yService>
     	`}
@@ -50,7 +50,7 @@ This service automatically detects user input methods and adjusts the UI accordi
     <h3>Utilities</h3>
     <DocsCodeBlock
       code={`
-				import { isA11yModeDefault, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core.ts'
+				import { isA11yModeDefault, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core'
 				//
 				console.log(isA11yModeDefault(), isA11yModePointer(), ATTR_KEY__A11Y_MODE)
     	`}
@@ -81,7 +81,7 @@ This service tracks window resize events and provides comprehensive breakpoint h
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useViewportService } from '@ds/core.ts'
+				import { useViewportService } from '@ds/core'
 				//
 				const App = () => {
 					const { viewportWidth, isViewportLG, isViewportMinMD, isViewportMaxSM } = useViewportService()
@@ -101,7 +101,7 @@ This service tracks window resize events and provides comprehensive breakpoint h
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { ViewportService } from '@ds/core.ts'
+				import { ViewportService } from '@ds/core'
 				//
 				const App = ({ children }) => <ViewportService>{children}</ViewportService>
 			`}

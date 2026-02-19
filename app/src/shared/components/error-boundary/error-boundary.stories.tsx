@@ -1,6 +1,6 @@
-import { defineMeta } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { ErrorBoundary } from './error-boundary.tsx'
+import { ErrorBoundary } from './error-boundary'
 
 const meta: Meta = {
   title: 'Components / ErrorBoundary',

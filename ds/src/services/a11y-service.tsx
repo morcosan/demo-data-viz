@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { Keyboard } from '../utilities/various-utils.ts'
+import { Keyboard } from '../utilities/various-utils'
 
 /**
  * Constants

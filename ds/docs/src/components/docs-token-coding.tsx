@@ -1,6 +1,6 @@
-import { CssSvg, TailwindSvg, TypescriptSvg } from '@ds/core.ts'
+import { CssSvg, TailwindSvg, TypescriptSvg } from '@ds/core'
 import { useEffect, useState } from 'react'
-import { DocsTokenCode } from './docs-token-code.tsx'
+import { DocsTokenCode } from './docs-token-code'
 
 interface Props {
   tsVar: string

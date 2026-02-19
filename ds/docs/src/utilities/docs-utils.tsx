@@ -1,6 +1,6 @@
 import { camelCase, upperFirst } from 'lodash'
 import { type ComponentType, useEffect, useMemo, useState } from 'react'
-import { type DocsAsset } from '../components/docs-asset-item.tsx'
+import { type DocsAsset } from '../components/docs-asset-item'
 
 const renderHtml = (html: string): string => {
   return html

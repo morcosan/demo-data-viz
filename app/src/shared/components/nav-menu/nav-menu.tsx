@@ -1,10 +1,10 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { Button, DatabaseSvg, HomeSvg } from '@ds/core.ts'
+import { Button, DatabaseSvg, HomeSvg } from '@ds/core'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
-import { SettingsButton } from './_partials/settings-button.tsx'
-import { SettingsMenu } from './_partials/settings-menu.tsx'
+import { SettingsButton } from './_partials/settings-button'
+import { SettingsMenu } from './_partials/settings-menu'
 
 export interface NavMenuProps extends ReactProps {
   /** Current url pathname (same as `location.pathname`) */

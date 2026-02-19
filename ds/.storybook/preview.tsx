@@ -1,5 +1,5 @@
-import { HocComposer, I18nService, RoutingService } from '@ds/core.ts'
-import { getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig } from '@ds/docs/core.ts'
+import { HocComposer, I18nService, RoutingService } from '@ds/core'
+import { getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig } from '@ds/docs/core'
 import { type Preview } from '@storybook/react-vite'
 import './styles.css'
 

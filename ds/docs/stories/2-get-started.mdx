@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import { DocsCodeBlock } from '@ds/docs/core.ts'
+import { DocsCodeBlock } from '@ds/docs/core'
 
 <Meta title="Get Started" />
 
@@ -81,7 +81,7 @@ Set up all required providers using `HocComposer`. Create a providers file:
 			RoutingService,
 			ThemeService,
 			ViewportService,
-		} from '@ds/core.ts'
+		} from '@ds/core'
 		import { useRouter } from 'next/navigation'
 		import { useMemo } from 'react'
 		import { useTranslation } from 'react-i18next'
@@ -145,10 +145,10 @@ If you're using Next.js, configure it to transpile the design system package and
 Configure ESLint to use the design system's custom plugin that enforces proper import paths:
 
 <DocsCodeBlock
-  filename="eslint.config.ts"
+  filename="base-eslint.config.ts"
   code={`
 		import { defineConfig } from 'eslint/config'
-		import { dsImports } from '../ds/dist/tooling/eslint.ts'
+		import { dsImports } from '../ds/dist/tooling/eslint'
 		//
 		export default defineConfig([
 			{
@@ -172,7 +172,7 @@ You can also generate a build number based on build time.
 <DocsCodeBlock
   filename="vite.config.ts or next.config.ts"
   code={`
-		import { createBuildNumber, getDsVersion } from '../ds/dist/tooling/utilities.ts'
+		import { createBuildNumber, getDsVersion } from '../ds/dist/tooling/utilities'
 		//
 		// For Vite:
 		config.define = {

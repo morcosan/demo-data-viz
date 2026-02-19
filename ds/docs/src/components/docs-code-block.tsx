@@ -1,4 +1,4 @@
-import { useThemeService } from '@ds/core.ts'
+import { useThemeService } from '@ds/core'
 import { Source, type SourceProps } from '@storybook/addon-docs/blocks'
 
 interface Props extends SourceProps {

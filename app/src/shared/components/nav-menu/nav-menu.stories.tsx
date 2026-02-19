@@ -1,6 +1,6 @@
-import { defineMeta, useLocationMock } from '@ds/docs/core.ts'
+import { defineMeta, useLocationMock } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { NavMenu, type NavMenuProps } from './nav-menu.tsx'
+import { NavMenu, type NavMenuProps } from './nav-menu'
 
 const meta: Meta<typeof NavMenu> = {
   title: 'Components / NavMenu',
