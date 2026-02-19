@@ -1,7 +1,7 @@
 import { type TableCol } from '@app-utils'
-import { defineMeta, loremArray, loremInt, loremText } from '@ds/docs/core.ts'
+import { defineMeta, loremArray, loremInt, loremText } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { DataTable } from './data-table.tsx'
+import { DataTable } from './data-table'
 
 const cols: TableCol[] = loremArray(4, 10).map((_, index: number) => ({
   key: String(index),

@@ -1,6 +1,6 @@
-import { defineMeta } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { AppLogo } from './app-logo.tsx'
+import { AppLogo } from './app-logo'
 
 const meta: Meta = {
   title: 'Components / AppLogo',

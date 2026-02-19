@@ -1,15 +1,15 @@
-import type { ColorTheme, DesignTokenThemeValue } from './__types.ts'
-import { getTokenValue } from './__utils.ts'
-import { TOKENS__BLUR } from './_blur.ts'
-import { TOKENS__BREAKPOINT } from './_breakpoint.ts'
-import { TOKENS__COLOR } from './_color.ts'
-import { TOKENS__FONT_SIZE } from './_font-size.ts'
-import { TOKENS__FONT_WEIGHT } from './_font-weight.ts'
-import { TOKENS__LINE_HEIGHT } from './_line-height.ts'
-import { TOKENS__RADIUS } from './_radius.ts'
-import { TOKENS__SHADOW } from './_shadow.ts'
-import { TOKENS__SPACING } from './_spacing.ts'
-import { TOKENS__Z_INDEX } from './_z-index.ts'
+import type { ColorTheme, DesignTokenThemeValue } from './__types'
+import { getTokenValue } from './__utils'
+import { TOKENS__BLUR } from './_blur'
+import { TOKENS__BREAKPOINT } from './_breakpoint'
+import { TOKENS__COLOR } from './_color'
+import { TOKENS__FONT_SIZE } from './_font-size'
+import { TOKENS__FONT_WEIGHT } from './_font-weight'
+import { TOKENS__LINE_HEIGHT } from './_line-height'
+import { TOKENS__RADIUS } from './_radius'
+import { TOKENS__SHADOW } from './_shadow'
+import { TOKENS__SPACING } from './_spacing'
+import { TOKENS__Z_INDEX } from './_z-index'
 
 type Blur = keyof typeof TOKENS__BLUR
 type Breakpoint = keyof typeof TOKENS__BREAKPOINT
@@ -63,7 +63,7 @@ const TOKENS = {
   Z_INDEX: TOKENS__Z_INDEX,
 }
 
-export * from './__types.ts'
+export * from './__types'
 export {
   CSS_PREFIX,
   getTokenValue,

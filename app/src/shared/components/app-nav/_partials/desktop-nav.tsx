@@ -1,8 +1,8 @@
 import { useTranslation } from '@app-i18n'
-import { IconButton, PinSvg } from '@ds/core.ts'
+import { IconButton, PinSvg } from '@ds/core'
 import { usePathname } from 'next/navigation'
 import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react'
-import { type AppLogo, type NavMenu } from '../types.ts'
+import { type AppLogo, type NavMenu } from '../types'
 
 interface Props extends ReactProps {
   appLogo: AppLogo

@@ -6,9 +6,9 @@ import {
   HocComposer,
   ThemeService,
   ViewportService,
-} from '@ds/core.ts'
+} from '@ds/core'
 import { type ComponentType, type ReactNode, StrictMode } from 'react'
-import { type DocsCanvasBg, DocsCanvasService } from '../services/docs-canvas-service.tsx'
+import { type DocsCanvasBg, DocsCanvasService } from '../services/docs-canvas-service'
 
 interface GlobalConfig<T> {
   description: string

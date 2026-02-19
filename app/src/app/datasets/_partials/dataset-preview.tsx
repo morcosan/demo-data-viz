@@ -6,9 +6,9 @@ import { useCountries, useTranslation } from '@app-i18n'
 import { convertJsonStatToTable, formatDate, formatNumber, type TableRowValue, useLocalStorage } from '@app-utils'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useMemo } from 'react'
-import { EurostatApi } from '../_api/eurostat-api.ts'
-import { type Dataset, type ViewedDatasets } from '../_types.ts'
-import { StatsCard } from './stats-card.tsx'
+import { EurostatApi } from '../_api/eurostat-api'
+import { type Dataset, type ViewedDatasets } from '../_types'
+import { StatsCard } from './stats-card'
 
 export const DatasetPreview = (props: ReactProps) => {
   const { t } = useTranslation()

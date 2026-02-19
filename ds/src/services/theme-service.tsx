@@ -1,8 +1,8 @@
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { type ColorTheme } from '../styling/tokens/index.ts'
-import { darkThemeTokens, lightThemeTokens, type ThemeTokens } from './_partials/theme-config.ts'
+import { type ColorTheme } from '../styling/tokens/index'
+import { darkThemeTokens, lightThemeTokens, type ThemeTokens } from './_partials/theme-config'
 
 /**
  * Constants

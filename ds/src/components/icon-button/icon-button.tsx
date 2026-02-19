@@ -4,13 +4,13 @@ import { type CSSObject } from '@emotion/react'
 import { Button as MantineButton } from '@mantine/core'
 import '@mantine/core/styles/Button.css'
 import '@mantine/core/styles/Loader.css'
-import { useThemeService } from '../../services/theme-service.tsx'
-import { useDefaults } from '../../utilities/react-utils.tsx'
-import { useBaseButton } from '../_partials/use-base-button.tsx'
-import { type IconButtonProps } from './_types.ts'
+import { useThemeService } from '../../services/theme-service'
+import { useDefaults } from '../../utilities/react-utils'
+import { useBaseButton } from '../_partials/use-base-button'
+import { type IconButtonProps } from './_types'
 
-export type { LinkType } from '../_partials/types.ts'
-export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_types.ts'
+export type { LinkType } from '../_partials/types'
+export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_types'
 
 /** Fundamental component for user actions and navigation, displayed as icon */
 export const IconButton = (rawProps: IconButtonProps) => {

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
-import { isA11yModePointer } from '../../services/a11y-service.tsx'
-import { useRoutingService } from '../../services/routing-service.tsx'
-import { Keyboard } from '../../utilities/various-utils.ts'
-import { type LinkType } from './types.ts'
+import { isA11yModePointer } from '../../services/a11y-service'
+import { useRoutingService } from '../../services/routing-service'
+import { Keyboard } from '../../utilities/various-utils'
+import { type LinkType } from './types'
 
 export interface ClickableProps {
   loading?: boolean

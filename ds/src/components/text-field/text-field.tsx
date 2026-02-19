@@ -4,13 +4,13 @@ import { type CSSObject } from '@emotion/react'
 import { TextInput as MantineInput, Textarea as MantineTextarea, type TextareaProps } from '@mantine/core'
 import '@mantine/core/styles/Input.css'
 import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { useThemeService } from '../../services/theme-service.tsx'
-import { CSS__ABSOLUTE_OVERLAY, CSS_A11Y_OUTLINE_PROXY } from '../../utilities/internal/css-utils.ts'
-import { useDefaults } from '../../utilities/react-utils.tsx'
-import { Keyboard } from '../../utilities/various-utils.ts'
-import { type InputElement, type TextFieldProps, type TextFieldRef } from './_types.ts'
+import { useThemeService } from '../../services/theme-service'
+import { CSS__ABSOLUTE_OVERLAY, CSS_A11Y_OUTLINE_PROXY } from '../../utilities/internal/css-utils'
+import { useDefaults } from '../../utilities/react-utils'
+import { Keyboard } from '../../utilities/various-utils'
+import { type InputElement, type TextFieldProps, type TextFieldRef } from './_types'
 
-export type { TextFieldProps, TextFieldRef, TextFieldSize, TextFieldVariant } from './_types.ts'
+export type { TextFieldProps, TextFieldRef, TextFieldSize, TextFieldVariant } from './_types'
 
 /** Basic text and textarea field component */
 export const TextField = (rawProps: TextFieldProps) => {

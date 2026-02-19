@@ -1,4 +1,4 @@
-import type { DesignTokenGroup } from './__types.ts'
+import type { DesignTokenGroup } from './__types'
 
 export const TOKENS__SPACING = {
   'xs-0': { $value: '2px' },

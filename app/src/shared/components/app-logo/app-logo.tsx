@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { LogoSvg } from '@ds/core.ts'
+import { LogoSvg } from '@ds/core'
 import Link from 'next/link'
 
 export interface AppLogoProps extends ReactProps {

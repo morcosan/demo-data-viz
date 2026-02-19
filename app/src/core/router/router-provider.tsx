@@ -1,6 +1,6 @@
 'use client'
 
-import { RoutingService } from '@ds/core.ts'
+import { RoutingService } from '@ds/core'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 

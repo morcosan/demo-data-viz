@@ -1,8 +1,8 @@
-import { defineMeta, loremLongText, useLocationMock } from '@ds/docs/core.ts'
+import { defineMeta, loremLongText, useLocationMock } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { AppLogo } from '../app-logo/app-logo.tsx'
-import { NavMenu, type NavMenuProps } from '../nav-menu/nav-menu.tsx'
-import { AppNav, type AppNavProps } from './app-nav.tsx'
+import { AppLogo } from '../app-logo/app-logo'
+import { NavMenu, type NavMenuProps } from '../nav-menu/nav-menu'
+import { AppNav, type AppNavProps } from './app-nav'
 
 const meta: Meta<typeof AppNav> = {
   title: 'Components / AppNav',

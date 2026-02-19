@@ -1,4 +1,4 @@
-import { wait } from '@ds/core.ts'
+import { wait } from '@ds/core'
 import { type ReactNode, useState } from 'react'
 
 interface Props {

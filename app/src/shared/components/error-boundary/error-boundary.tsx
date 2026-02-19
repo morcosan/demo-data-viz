@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { WarningSvg } from '@ds/core.ts'
+import { WarningSvg } from '@ds/core'
 import { ErrorBoundary as ReactErrorBoundary, type FallbackProps } from 'react-error-boundary'
 
 export const ErrorBoundary = (props: ReactProps) => {

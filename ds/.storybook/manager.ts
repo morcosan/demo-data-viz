@@ -1,6 +1,6 @@
 import { addons } from 'storybook/manager-api'
 import { create } from 'storybook/theming'
-import { addonConfig } from '../dist/tooling/storybook.ts'
+import { addonConfig } from '../dist/tooling/storybook'
 
 addons.setConfig({
   theme: create({

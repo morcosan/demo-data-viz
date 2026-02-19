@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import { DocsCodeBlock } from '@ds/docs/core.ts'
+import { DocsCodeBlock } from '@ds/docs/core'
 
 <Meta title="Utilities / React Utilities" />
 
@@ -20,7 +20,7 @@ Component for composing multiple Higher-Order Components (HOCs) in a declarative
 This utility simplifies nesting multiple providers or HOCs by allowing you to define them as an array, avoiding deeply nested JSX.
 
 ```
-import { HocComposer } from '@ds/core.ts'
+import { HocComposer } from '@ds/core'
 //
 const App = ({ children }) => (
 	<HocComposer
@@ -56,7 +56,7 @@ Hook for merging component props with default values. <br/>
 This utility provides a clean way to handle optional props by merging them with defaults, with optional truthy validation.
 
 ```
-import { useDefaults } from '@ds/core.ts'
+import { useDefaults } from '@ds/core'
 //
 const Button = (rawProps) => {
 	const props = useDefaults(

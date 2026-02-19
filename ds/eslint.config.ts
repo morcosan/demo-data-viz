@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tsESLint from 'typescript-eslint'
-import { baseRules } from '../.config/eslint-rules.ts'
+import { baseConfig } from '../.config/base-eslint.config.ts'
 import { dsImports } from './dist/tooling/eslint.ts'
 
 export default defineConfig([
@@ -30,8 +30,12 @@ export default defineConfig([
     settings: {
       'import/resolver': { typescript: true },
     },
+  },
+  ...baseConfig,
+  {
+    files: ['**/tooling/**/*.ts'],
     rules: {
-      ...baseRules,
+      'import/extensions': ['error', 'ignorePackages'],
     },
   },
 ])

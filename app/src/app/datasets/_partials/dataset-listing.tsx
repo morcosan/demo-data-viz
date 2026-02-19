@@ -4,12 +4,12 @@ import { QueryKey, useQuery } from '@app-api'
 import { EmptyState, LayoutPane, LoadingSpinner } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { formatNumber, useLocalStorage, useVirtualScroll, type VirtualItem } from '@app-utils'
-import { SearchSvg, TextField, TOKENS__SPACING } from '@ds/core.ts'
+import { SearchSvg, TextField, TOKENS__SPACING } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
-import { EurostatApi } from '../_api/eurostat-api.ts'
-import { type BaseDataset, type ViewedDatasets } from '../_types.ts'
-import { DatasetItem } from './dataset-item.tsx'
+import { EurostatApi } from '../_api/eurostat-api'
+import { type BaseDataset, type ViewedDatasets } from '../_types'
+import { DatasetItem } from './dataset-item'
 
 interface Props extends ReactProps {
   onClickDataset?: () => void

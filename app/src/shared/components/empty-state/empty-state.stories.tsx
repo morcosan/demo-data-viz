@@ -1,6 +1,6 @@
-import { defineMeta } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { EmptyState } from './empty-state.tsx'
+import { EmptyState } from './empty-state'
 
 const meta: Meta = {
   title: 'Components / EmptyState',

@@ -1,10 +1,10 @@
 'use client'
 
 import { ErrorBoundary } from '@app-components'
-import { useDefaults } from '@ds/core.ts'
-import { DesktopNav } from './_partials/desktop-nav.tsx'
-import { MobileNav } from './_partials/mobile-nav.tsx'
-import { type AppLogo, type NavMenu } from './types.ts'
+import { useDefaults } from '@ds/core'
+import { DesktopNav } from './_partials/desktop-nav'
+import { MobileNav } from './_partials/mobile-nav'
+import { type AppLogo, type NavMenu } from './types'
 
 export interface AppNavProps extends ReactProps {
   /** App logo to be rendered on top of navigation */

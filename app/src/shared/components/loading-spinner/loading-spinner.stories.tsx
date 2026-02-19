@@ -1,6 +1,6 @@
-import { defineMeta } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { LoadingSpinner } from './loading-spinner.tsx'
+import { LoadingSpinner } from './loading-spinner'
 
 const meta: Meta = {
   title: 'Components / LoadingSpinner',

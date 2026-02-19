@@ -1,8 +1,8 @@
 import { type CSSObject } from '@emotion/react'
 import { type ReactNode } from 'react'
-import { useThemeService } from '../../services/theme-service.tsx'
-import type { LinkType } from './types.ts'
-import { useClickable } from './use-clickable.ts'
+import { useThemeService } from '../../services/theme-service'
+import type { LinkType } from './types'
+import { useClickable } from './use-clickable'
 
 export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type BaseButtonHighlight = 'default' | 'pressed' | 'selected'

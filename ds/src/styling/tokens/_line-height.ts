@@ -1,4 +1,4 @@
-import type { DesignTokenGroup } from './__types.ts'
+import type { DesignTokenGroup } from './__types'
 
 export const TOKENS__LINE_HEIGHT = {
   '0': { $value: 0 },

@@ -1,10 +1,10 @@
-import { type HOC, HocComposer } from '@ds/core.ts'
+import { type HOC, HocComposer } from '@ds/core'
 import { DocsContainer } from '@storybook/addon-docs/blocks'
 import { type ComponentType } from 'react'
 import { fn } from 'storybook/test'
-import { DocsCodeBlock } from '../components/docs-code-block.tsx'
-import { DocsPage } from '../components/docs-page.tsx'
-import { fixBrokenCSS } from './_preview-css-fix.ts'
+import { DocsCodeBlock } from '../components/docs-code-block'
+import { DocsPage } from '../components/docs-page'
+import { fixBrokenCSS } from './_preview-css-fix'
 import {
   computeServices,
   type DocsContainerProps,
@@ -15,7 +15,7 @@ import {
   type PreviewStory,
   type PreviewToolbar,
   type StoryContext,
-} from './_preview-utils.tsx'
+} from './_preview-utils'
 
 const toolbarConfig = {
   globalTypes: {

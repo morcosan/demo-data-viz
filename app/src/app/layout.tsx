@@ -1,7 +1,7 @@
 import { AppLogo, AppNav, ErrorBoundary, NavMenu } from '@app-components'
-import { DEFAULT_LOCALE } from '@app/core/i18n/i18n-config.ts'
-import { Providers } from '@app/core/providers.tsx'
-import '@app/globals.ts'
+import { DEFAULT_LOCALE } from '@app/core/i18n/i18n-config'
+import { Providers } from '@app/core/providers'
+import '@app/globals'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {

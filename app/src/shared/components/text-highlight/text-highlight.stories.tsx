@@ -1,6 +1,6 @@
-import { defineMeta } from '@ds/docs/core.ts'
+import { defineMeta } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { TextHighlight } from './text-highlight.tsx'
+import { TextHighlight } from './text-highlight'
 
 const meta: Meta = {
   title: 'Components / TextHighlight',

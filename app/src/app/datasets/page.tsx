@@ -2,10 +2,10 @@
 
 import { ErrorBoundary } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { ArrowBackSvg, IconButton } from '@ds/core.ts'
+import { ArrowBackSvg, IconButton } from '@ds/core'
 import { Suspense, useState } from 'react'
-import { DatasetListing } from './_partials/dataset-listing.tsx'
-import { DatasetPreview } from './_partials/dataset-preview.tsx'
+import { DatasetListing } from './_partials/dataset-listing'
+import { DatasetPreview } from './_partials/dataset-preview'
 
 type MobileView = 'listing' | 'preview'
 

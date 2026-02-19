@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import { DocsCodeBlock } from '@ds/docs/core.ts'
+import { DocsCodeBlock } from '@ds/docs/core'
 
 <Meta title="Utilities / Various Utilities" />
 
@@ -21,7 +21,7 @@ Promise-based delay utility for async operations. <br/>
 This function creates a promise that resolves after a specified time, useful for implementing delays, debouncing, or testing async behavior.
 
 ```
-import { wait } from '@ds/core.ts'
+import { wait } from '@ds/core'
 //
 // Simple delay
 wait(1000).then(() => console.log('Executed after 1 second'))
@@ -54,7 +54,7 @@ Comprehensive keyboard key constants for event handling. <br/>
 This object provides type-safe constants for keyboard keys, making event handling more readable and less error-prone.
 
 ```
-import { Keyboard } from '@ds/core.ts'
+import { Keyboard } from '@ds/core'
 //
 // Keyboard event handling
 const handleKeyDown = (event: KeyboardEvent) => {
