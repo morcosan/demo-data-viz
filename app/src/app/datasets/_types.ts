@@ -1,4 +1,4 @@
-import { type JsonStat } from '@app-utils'
+import { type JsonStat } from '@app/shared/utils/json-stat'
 
 export interface Dataset extends BaseDataset {
   jsonStat: JsonStat

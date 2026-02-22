@@ -2,9 +2,9 @@
 
 import { QueryProvider } from '@app-api'
 import { I18nProvider, initClientI18n } from '@app-i18n'
-import { LOG } from '@app-utils'
 import { ENV__BUILD_NUMBER } from '@app/env'
 import '@app/globals'
+import { LOG } from '@app/shared/utils/js-utils'
 import '@app/styling/index'
 import { A11yService, ConfigService, HocComposer, ThemeService, ViewportService } from '@ds/core'
 import { StrictMode } from 'react'

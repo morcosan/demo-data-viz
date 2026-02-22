@@ -1,5 +1,5 @@
-import { JsonStatSchema } from '@app-utils'
 import { type BaseDataset, type Dataset } from '@app/app/datasets/_types'
+import { JsonStatSchema } from '@app/shared/utils/json-stat'
 import { z } from 'zod'
 
 const StatisticsSchema = z.object({
