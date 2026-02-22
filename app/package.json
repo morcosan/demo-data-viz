@@ -7,12 +7,12 @@
     "app--dev": "next dev",
     "app--build": "next build",
     "app--serve": "vite preview --outDir out --port 3000",
-    "app--lint": "eslint",
     "sb--dev": "storybook dev -p 6006 --no-open",
     "sb--build": "storybook build -o out-sb",
     "sb--serve": "vite preview --outDir out-sb --port 6006",
     "sb--test": "vitest --project=storybook",
     "no-cors-proxy": "node tooling/no-cors-proxy/server.ts",
+    "lint": "eslint .",
     "clear-cache": "rmdir /s /q .next"
   },
   "dependencies": {

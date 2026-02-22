@@ -19,8 +19,8 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname, '..'), // Monorepo root
     resolveAlias: {
+      // ESLint doesn't detect "@app-utils/*.ts" imports
       '@app-components': './src/shared/components/index.ts',
-      '@app-utils': './src/shared/utils/index.ts',
       '@app-i18n': './src/core/i18n/index.ts',
       '@app-api': './src/core/api/index.ts',
       '@app/*': './src/*',

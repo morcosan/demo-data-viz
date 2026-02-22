@@ -19,10 +19,10 @@ jobs:
         uses: ./.github/actions/install-deps
 
       - name: Lint DS project
-        run: cd ds && pnpm run ds--lint
+        run: cd ds && pnpm run lint
 
       - name: Lint app project
-        run: cd app && pnpm run app--lint
+        run: cd app && pnpm run lint
 
   test:
     name: Testing

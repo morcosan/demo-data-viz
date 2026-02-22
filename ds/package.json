@@ -8,7 +8,7 @@
     "ds--build": "storybook build -o out",
     "ds--serve": "vite preview --outDir out --port 9000",
     "ds--test": "vitest --project=storybook",
-    "ds--lint": "eslint ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

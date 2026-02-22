@@ -8,6 +8,8 @@ import { createBuildNumber, getDsVersion } from '../../ds/dist/tooling/utilities
 
 const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
+const srcPath = path.join(dirname, '../src')
+const dsPath = path.join(dirname, '../../ds/dist')
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.@(mdx|stories.@(js|jsx|mjs|ts|tsx))'], // Must be a single regex
@@ -32,12 +34,12 @@ const config: StorybookConfig = {
       ...(config.resolve || {}),
       alias: {
         ...(config.resolve?.alias || {}),
-        '@app-components': path.resolve(dirname, '../src/shared/components/index.ts'),
-        '@app-utils': path.resolve(dirname, '../src/shared/utils/index.ts'),
-        '@app-i18n': path.resolve(dirname, '../src/core/i18n/index.ts'),
-        '@app-api': path.resolve(dirname, '../src/core/api/index.ts'),
-        '@app': path.resolve(dirname, '../src/'),
-        '@ds': path.resolve(dirname, '../../ds/dist/'),
+        // ESLint doesn't detect "@app-utils/*.ts" imports
+        '@app-components': path.resolve(srcPath, 'shared/components/index.ts'),
+        '@app-i18n': path.resolve(srcPath, 'core/i18n/index.ts'),
+        '@app-api': path.resolve(srcPath, 'core/api/index.ts'),
+        '@app': srcPath,
+        '@ds': dsPath,
       },
     }
     config.define = {

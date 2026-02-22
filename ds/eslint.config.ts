@@ -32,10 +32,4 @@ export default defineConfig([
     },
   },
   ...baseConfig,
-  {
-    files: ['**/tooling/**/*.ts'],
-    rules: {
-      'import/extensions': ['error', 'ignorePackages'],
-    },
-  },
 ])

@@ -1,7 +1,8 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { type TableData, type TableRow, type TableRowValue, useVirtualScroll, type VirtualItem } from '@app-utils'
+import { type TableData, type TableRow, type TableRowValue } from '@app/shared/utils/json-stat'
+import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
 import { IconButton, SortAscSvg, SortDescSvg, SortNoneSvg } from '@ds/core'
 import {
   type ColumnDef,
