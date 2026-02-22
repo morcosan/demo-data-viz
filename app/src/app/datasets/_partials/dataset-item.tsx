@@ -1,6 +1,6 @@
 import { TextHighlight } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { formatNumber } from '@app/shared/utils/js-utils'
+import { formatNumber } from '@app/shared/utils/formatting'
 import Link from 'next/link'
 import { type BaseDataset } from '../_types'
 

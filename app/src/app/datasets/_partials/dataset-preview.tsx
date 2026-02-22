@@ -3,11 +3,11 @@
 import { QueryKey, useQuery } from '@app-api'
 import { DataTable, EmptyState, LayoutPane, LoadingSpinner } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
-import { formatDate, formatNumber } from '@app/shared/utils/js-utils'
-import { convertJsonStatToTable, type TableRowValue } from '@app/shared/utils/json-stat'
+import { formatDate, formatNumber } from '@app/shared/utils/formatting'
+import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useEffect, useMemo } from 'react'
+import { type ReactNode, useEffect } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { type Dataset, type ViewedDatasets } from '../_types'
 import { StatsCard } from './stats-card'
@@ -18,13 +18,19 @@ export const DatasetPreview = (props: ReactProps) => {
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
-  const { data, isLoading, error } = useQuery<Dataset>({
+  const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
     enabled: Boolean(idParam),
   })
-  const dataset = data
-  const tableData = useMemo(() => (dataset ? convertJsonStatToTable(dataset?.jsonStat) : null), [dataset])
+  const [tableData, tableLoading, tableError] = useQuery<TableData>({
+    queryKey: [QueryKey.JSON_STAT_TABLE, idParam],
+    queryFn: () => convertJsonStatToTable(dataset!.jsonStatStr),
+    enabled: Boolean(dataset),
+    staleTime: 0,
+  })
+  const loading = datasetLoading || tableLoading
+  const error = datasetError || tableError
 
   const saveViewedDataset = (dataset: Dataset) => {
     storage.setItem({
@@ -36,6 +42,10 @@ export const DatasetPreview = (props: ReactProps) => {
     })
   }
 
+  useEffect(() => {
+    dataset && saveViewedDataset(dataset)
+  }, [dataset])
+
   const cellFn = (value: TableRowValue): ReactNode => {
     const flag = getCountryCode(String(value))
     return (
@@ -46,14 +56,10 @@ export const DatasetPreview = (props: ReactProps) => {
     )
   }
 
-  useEffect(() => {
-    dataset && saveViewedDataset(dataset)
-  }, [dataset])
-
-  if (isLoading || !tableData || !dataset) {
+  if (loading || !tableData || !dataset) {
     return (
       <LayoutPane className={cx('flex-center flex', props.className)}>
-        {isLoading ? (
+        {loading ? (
           <LoadingSpinner />
         ) : error ? (
           <EmptyState type="error">{t('dataViz.error.fetchDataset')}</EmptyState>

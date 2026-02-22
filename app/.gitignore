@@ -37,6 +37,7 @@ lerna-debug.log*
 
 # Next.js
 next-env.d.ts
+/public/workers
 
 # Output
 /.next
