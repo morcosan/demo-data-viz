@@ -4,7 +4,7 @@ import { pipeline } from 'node:stream/promises'
 
 const PORT = 8666
 
-createServer(async (req: IncomingMessage, res: ServerResponse) => {
+const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   // CORS (allow everything)
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS')
@@ -31,6 +31,11 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     res.statusCode = 502
     res.end(String(err))
   }
-}).listen(PORT)
+})
 
-console.log(`No CORS Proxy at http://localhost:${PORT}/?url=...`)
+const startNoCorsProxy = () => {
+  server.listen(PORT)
+  console.log(`No-CORS Proxy at http://localhost:${PORT}/?url=\n`)
+}
+
+export { startNoCorsProxy }
