@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     ENV__EUROSTAT_BASE_URL: process.env.NEXT_PUBLIC__EUROSTAT_BASE_URL || '',
   },
   compiler: { emotion: true },
+  reactStrictMode: false, // StrictMode is added manually
 
   turbopack: {
     root: path.resolve(__dirname, '..'), // Monorepo root

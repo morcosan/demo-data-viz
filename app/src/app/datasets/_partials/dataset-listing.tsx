@@ -3,7 +3,7 @@
 import { QueryKey, useQuery } from '@app-api'
 import { EmptyState, LayoutPane, LoadingSpinner } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { formatNumber } from '@app/shared/utils/js-utils'
+import { formatNumber } from '@app/shared/utils/formatting'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
 import { SearchSvg, TextField, TOKENS__SPACING } from '@ds/core'

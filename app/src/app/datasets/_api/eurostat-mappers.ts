@@ -1,16 +1,13 @@
-import { type BaseDataset, type Dataset } from '@app/app/datasets/_types'
 import { JsonStatSchema } from '@app/shared/utils/json-stat'
 import { z } from 'zod'
+import { type BaseDataset, type Dataset } from '../_types'
 
-const StatisticsSchema = z.object({
-  label: z.string(),
-  updated: z.string(),
-  id: JsonStatSchema.shape.id,
-  size: JsonStatSchema.shape.size,
-  value: JsonStatSchema.shape.value,
-  dimension: JsonStatSchema.shape.dimension,
-})
 const DatasetIdSchema = z.string().regex(/^[a-zA-Z0-9_]+$/, 'Invalid ID format')
+
+const WorkType = {
+  MAP_DATASET_ARRAY: 0,
+  MAP_DATASET: 1,
+} as const
 
 const mapCatalogueToDatasetArray = (data: string): BaseDataset[] => {
   const uniqueIds = new Set<string>()
@@ -29,24 +26,20 @@ const mapCatalogueToDatasetArray = (data: string): BaseDataset[] => {
     .map(([id, title]) => ({ id, title, source: 'eurostat' }))
 }
 
-const mapStatisticsToDataset = (rawData: unknown, id: string): Dataset => {
-  const data = StatisticsSchema.parse(rawData)
+const mapJsonStatToDataset = (rawStr: string, id: string): Dataset => {
+  const rawData = JSON.parse(rawStr)
+  const data = JsonStatSchema.parse(rawData)
   return {
     id,
     title: data.label,
     source: 'eurostat',
     updatedAt: data.updated,
-    jsonStat: {
-      id: data.id,
-      size: data.size,
-      value: data.value,
-      dimension: data.dimension,
-    },
     stats: {
       colsCount: data.id.length,
       rowsCount: data.size.reduce((acc: number, size: number) => acc * size, 1),
     },
+    jsonStatStr: rawStr,
   }
 }
 
-export { DatasetIdSchema, mapCatalogueToDatasetArray, mapStatisticsToDataset }
+export { DatasetIdSchema, mapCatalogueToDatasetArray, mapJsonStatToDataset, WorkType }

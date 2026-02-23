@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
-    "app--dev": "next dev",
-    "app--build": "next build",
-    "app--serve": "vite preview --outDir out --port 3000",
+    "app--dev": "concurrently \"node tooling/run-dev.ts\" \"next dev\"",
+    "app--build": "node tooling/run-build.ts && next build",
+    "app--serve": "concurrently \"node tooling/run-dev.ts\" \"vite preview --outDir out --port 3000\"",
     "sb--dev": "storybook dev -p 6006 --no-open",
     "sb--build": "storybook build -o out-sb",
     "sb--serve": "vite preview --outDir out-sb --port 6006",
     "sb--test": "vitest --project=storybook",
-    "no-cors-proxy": "node tooling/no-cors-proxy/server.ts",
     "lint": "eslint .",
     "clear-cache": "rmdir /s /q .next"
   },
@@ -46,6 +48,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitest/browser-playwright": "^4.0.18",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",
     "eslint-plugin-storybook": "^10.2.8",

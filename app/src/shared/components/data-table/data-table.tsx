@@ -3,16 +3,10 @@
 import { useTranslation } from '@app-i18n'
 import { type TableData, type TableRow, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { IconButton, SortAscSvg, SortDescSvg, SortNoneSvg } from '@ds/core'
-import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  type SortingState,
-  useReactTable,
-} from '@tanstack/react-table'
+import { IconButton, SortAscSvg, SortDescSvg, SortNoneSvg } from '@ds/core.ts'
+import { type ColumnDef, flexRender, type SortingState, useReactTable } from '@tanstack/react-table'
 import { type ReactNode, useEffect, useMemo, useState } from 'react'
+import { coreRowModel, sortedRowModel } from './_react-table'
 
 interface Props extends ReactProps {
   data: TableData
@@ -20,6 +14,7 @@ interface Props extends ReactProps {
 }
 
 export const DataTable = (props: Props) => {
+  // const renderTimer = useRef(startTimer('DataTable'))
   const { t } = useTranslation()
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -40,8 +35,8 @@ export const DataTable = (props: Props) => {
     data: props.data.rows,
     state: { sorting },
     onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getCoreRowModel: coreRowModel,
+    getSortedRowModel: sortedRowModel,
   })
   const { rows } = table.getRowModel()
   const headers = table.getHeaderGroups()[0].headers
@@ -60,6 +55,11 @@ export const DataTable = (props: Props) => {
       vScrollerRef.current.scrollTop = 0
     }
   }, [props.data])
+
+  // useEffect(() => {
+  //   renderTimer.current.stop('render')
+  //   renderTimer.current = startTimer('DataTable')
+  // })
 
   return (
     <div ref={vScrollerRef} className={cx('overflow-auto', props.className)} style={props.style}>
