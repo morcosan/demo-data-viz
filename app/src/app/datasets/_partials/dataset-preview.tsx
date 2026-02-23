@@ -6,8 +6,9 @@ import { useCountries, useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
+import { wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useEffect } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { type Dataset, type ViewedDatasets } from '../_types'
 import { StatsCard } from './stats-card'
@@ -18,18 +19,18 @@ export const DatasetPreview = (props: ReactProps) => {
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
+  const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
     enabled: Boolean(idParam),
   })
   const [tableData, tableLoading, tableError] = useQuery<TableData>({
-    queryKey: [QueryKey.JSON_STAT_TABLE, idParam],
+    queryKey: [QueryKey.JSON_STAT_TABLE, idParam, dataset?.updatedAt],
     queryFn: () => convertJsonStatToTable(dataset!.jsonStatStr),
     enabled: Boolean(dataset),
-    staleTime: 0,
   })
-  const loading = datasetLoading || tableLoading
+  const loading = datasetLoading || tableLoading || prevIdParam !== idParam
   const error = datasetError || tableError
 
   const saveViewedDataset = (dataset: Dataset) => {
@@ -41,6 +42,11 @@ export const DatasetPreview = (props: ReactProps) => {
       },
     })
   }
+
+  useEffect(() => {
+    // Show 200ms loading when id changes to avoid UI freeze due to large data
+    wait(200).then(() => setPrevIdParam(idParam))
+  }, [idParam])
 
   useEffect(() => {
     dataset && saveViewedDataset(dataset)

@@ -1,4 +1,4 @@
-import type { Cell, Column, Row, RowModel, Table } from '@tanstack/react-table'
+import type { Cell, Column, ColumnDef, Row, RowModel, Table } from '@tanstack/react-table'
 import { getSortedRowModel } from '@tanstack/react-table'
 
 /**
@@ -19,11 +19,14 @@ const getCoreRowModel = () => {
   return (table: Table<TData>) => {
     let lastData: TData[] | null = null
     let lastRows: RowModel<TData> | null = null
+    let lastCols: ColumnDef<TData>[] | null = null
 
     return (): RowModel<TData> => {
-      if (lastRows && table.options.data === lastData) return lastRows
+      const { data, columns } = table.options
 
-      const rows = table.options.data.map((rowData: TData, index: number): Row<TData> => {
+      if (lastRows && data === lastData && columns === lastCols) return lastRows
+
+      const rows = data.map((rowData: TData, index: number): Row<TData> => {
         let cachedCells: TCell[] | null = null
 
         const row = {
@@ -35,21 +38,18 @@ const getCoreRowModel = () => {
             if (cachedCells) return cachedCells
 
             cachedCells = table.getVisibleLeafColumns().map((column: TColumn) => {
-              return {
+              const getValue = <TValue>() => rowData[column.id] as TValue
+              const renderValue = <TValue>() => rowData[column.id] as TValue
+              const cell = {
                 id: `${index}_${column.id}`,
                 column,
                 row,
-                getValue: <TValue>() => rowData[column.id] as TValue,
-                renderValue: <TValue>() => rowData[column.id] as TValue,
-                getContext: () => ({
-                  table,
-                  column,
-                  row,
-                  cell: null as any,
-                  getValue: <TValue>() => rowData[column.id] as TValue,
-                  renderValue: <TValue>() => rowData[column.id] as TValue,
-                }),
+                getValue,
+                renderValue,
+                getContext: () => ({ table, column, row, cell, getValue, renderValue }),
               } as TCell
+
+              return cell
             })
 
             return cachedCells
@@ -60,6 +60,7 @@ const getCoreRowModel = () => {
       })
 
       lastData = table.options.data
+      lastCols = table.options.columns
       lastRows = { rows, flatRows: rows, rowsById: {} }
 
       return lastRows

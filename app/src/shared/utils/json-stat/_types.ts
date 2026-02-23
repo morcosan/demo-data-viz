@@ -29,6 +29,8 @@ type TableData = {
 }
 
 const JsonStatSchema = z.object({
+  label: z.string(),
+  updated: z.string(),
   id: z.array(z.string()),
   size: z.array(z.number()),
   dimension: z.record(

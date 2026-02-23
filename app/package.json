@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "app--dev": "concurrently \"node tooling/run-dev.ts\" \"next dev\"",
     "app--build": "node tooling/run-build.ts && next build",

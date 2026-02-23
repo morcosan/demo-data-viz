@@ -2,14 +2,6 @@ import { JsonStatSchema } from '@app/shared/utils/json-stat'
 import { z } from 'zod'
 import { type BaseDataset, type Dataset } from '../_types'
 
-const StatisticsSchema = z.object({
-  label: z.string(),
-  updated: z.string(),
-  id: JsonStatSchema.shape.id,
-  size: JsonStatSchema.shape.size,
-  value: JsonStatSchema.shape.value,
-  dimension: JsonStatSchema.shape.dimension,
-})
 const DatasetIdSchema = z.string().regex(/^[a-zA-Z0-9_]+$/, 'Invalid ID format')
 
 const WorkType = {
@@ -36,7 +28,7 @@ const mapCatalogueToDatasetArray = (data: string): BaseDataset[] => {
 
 const mapJsonStatToDataset = (rawStr: string, id: string): Dataset => {
   const rawData = JSON.parse(rawStr)
-  const data = StatisticsSchema.parse(rawData)
+  const data = JsonStatSchema.parse(rawData)
   return {
     id,
     title: data.label,

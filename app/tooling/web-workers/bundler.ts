@@ -40,7 +40,7 @@ const options: BuildOptions = {
   format: 'esm',
   platform: 'browser',
   define: {
-    'process.env.NODE_ENV': JSON.stringify(''),
+    'process.env.NODE_ENV': JSON.stringify('production'),
     'process.env.ENV__BASE_PATH': JSON.stringify(''),
     'process.env.ENV__BUILD_NUMBER': JSON.stringify(''),
     'process.env.ENV__EUROSTAT_BASE_URL': JSON.stringify(''),
