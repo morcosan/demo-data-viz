@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary } from '@app-components'
-import { useDefaults } from '@ds/core'
+import { useDefaults, useViewportService } from '@ds/core'
 import { DesktopNav } from './_partials/desktop-nav'
 import { MobileNav } from './_partials/mobile-nav'
 import { type AppLogo, type NavMenu } from './types'
@@ -23,6 +23,7 @@ export interface AppNavProps extends ReactProps {
 
 /** Navigation bar and menu for the entire app */
 export const AppNav = (rawProps: AppNavProps) => {
+  const { isViewportMaxLG } = useViewportService()
   const props = useDefaults(rawProps, {
     mobileHeight: 'var(--ds-spacing-sm-6)',
     desktopMinWidth: 'var(--ds-spacing-md-2)',
@@ -35,22 +36,19 @@ export const AppNav = (rawProps: AppNavProps) => {
       className="flex h-full w-full flex-1 flex-col items-stretch lg:flex-row lg:pt-0!"
       style={{ paddingTop: props.mobileHeight }}
     >
-      <ErrorBoundary className="max-h-md-0 lg:max-h-unset lg:max-w-lg-9">
+      <ErrorBoundary>
         {/* NAVIGATION */}
-        <MobileNav
-          className="lg:hidden"
-          appLogo={props.appLogo}
-          navMenu={props.navMenu}
-          mobileHeight={props.mobileHeight!}
-        />
-        <DesktopNav
-          className="hidden lg:block"
-          appLogo={props.appLogo}
-          navMenu={props.navMenu}
-          desktopMinWidth={props.desktopMinWidth!}
-          desktopMaxWidth={props.desktopMaxWidth!}
-          cookieKeyPinned={props.cookieKeyPinned!}
-        />
+        {isViewportMaxLG ? (
+          <MobileNav appLogo={props.appLogo} navMenu={props.navMenu} mobileHeight={props.mobileHeight!} />
+        ) : (
+          <DesktopNav
+            appLogo={props.appLogo}
+            navMenu={props.navMenu}
+            desktopMinWidth={props.desktopMinWidth!}
+            desktopMaxWidth={props.desktopMaxWidth!}
+            cookieKeyPinned={props.cookieKeyPinned!}
+          />
+        )}
       </ErrorBoundary>
 
       {/* PAGE CONTENT */}

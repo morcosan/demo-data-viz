@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react'
 import { type AppLogo, type NavMenu } from '../types'
 
-interface Props extends ReactProps {
+interface Props {
   appLogo: AppLogo
   navMenu: NavMenu
   desktopMinWidth: string
@@ -86,15 +86,10 @@ export const DesktopNav = (props: Props) => {
   return (
     <>
       {/* PAGE OVERLAY */}
-      <div
-        className={cx(
-          isCollapsed || isPinned || false ? 'hidden' : 'absolute-overlay z-navbar backdrop-blur-subtle',
-          props.className,
-        )}
-      />
+      <div className={isCollapsed || isPinned || false ? 'hidden' : 'absolute-overlay z-navbar backdrop-blur-subtle'} />
 
       {/* SIDEBAR WRAPPER */}
-      <div className={cx('relative', props.className)} style={isPinned ? expandedStyle : collapsedStyle}>
+      <div className="relative" style={isPinned ? expandedStyle : collapsedStyle}>
         {/* FUNCTIONAL OVERLAY */}
         <div
           className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}

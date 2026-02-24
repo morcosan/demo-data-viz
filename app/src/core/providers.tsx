@@ -1,6 +1,7 @@
 'use client'
 
 import { QueryProvider } from '@app-api'
+import { LoadingScreen } from '@app-components'
 import { I18nProvider, initClientI18n } from '@app-i18n'
 import { ENV__BUILD_NUMBER } from '@app/env'
 import '@app/globals'
@@ -25,6 +26,7 @@ const providers = [
   hoc(I18nProvider, {}),
   hoc(QueryProvider, {}),
   hoc(RouterProvider, {}),
+  hoc(LoadingScreen, {}),
   hoc(ThemeService, { cookieKey: 'app-color-theme' }),
 ]
 
