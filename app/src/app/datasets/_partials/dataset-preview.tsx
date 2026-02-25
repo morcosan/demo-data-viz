@@ -1,17 +1,17 @@
 'use client'
 
 import { QueryKey, useQuery } from '@app-api'
-import { DataTable, EmptyState, LayoutPane, LoadingSpinner } from '@app-components'
+import { DataTable, EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
-import { wait } from '@ds/core'
+import { PreviewSvg, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { type Dataset, type ViewedDatasets } from '../_types'
-import { StatsCard } from './stats-card'
+import { DatasetModal } from './dataset-modal'
 
 export const DatasetPreview = (props: ReactProps) => {
   const { t } = useTranslation()
@@ -20,6 +20,7 @@ export const DatasetPreview = (props: ReactProps) => {
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
+  const [openedDetails, setOpenedDetails] = useState(false)
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -44,6 +45,7 @@ export const DatasetPreview = (props: ReactProps) => {
   }
 
   useEffect(() => {
+    setOpenedDetails(false)
     // Show 200ms loading when id changes to avoid UI freeze due to large data
     wait(200).then(() => setPrevIdParam(idParam))
   }, [idParam])
@@ -78,9 +80,9 @@ export const DatasetPreview = (props: ReactProps) => {
 
   return (
     <LayoutPane className={cx('py-xs-5 px-xs-8 flex flex-col', props.className)}>
-      <h2 className="mb-xs-5 text-size-lg font-weight-md">{dataset.title}</h2>
+      <h2 className="text-size-lg font-weight-md">{dataset.title}</h2>
 
-      <div className="gap-xs-5 mb-xs-5 flex flex-wrap">
+      <div className="gap-xs-5 my-xs-5 flex flex-wrap">
         <StatsCard label={t('dataViz.label.dataSize')}>
           {formatNumber(dataset.stats?.colsCount)} x {formatNumber(dataset.stats?.rowsCount)}
         </StatsCard>
@@ -92,7 +94,10 @@ export const DatasetPreview = (props: ReactProps) => {
           <span className="ml-xs-0">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
         </StatsCard>
 
-        <StatsCard label={t('dataViz.label.datasetId')}>{dataset.id}</StatsCard>
+        <StatsCard type="button" className="ml-auto" onClick={() => setOpenedDetails(true)}>
+          <PreviewSvg className="h-xs-8 mr-xs-3" />
+          {t('dataViz.action.viewDetails')}
+        </StatsCard>
       </div>
 
       <DataTable
@@ -100,6 +105,8 @@ export const DatasetPreview = (props: ReactProps) => {
         cellFn={cellFn}
         className="border-color-border-subtle min-h-0 flex-1 rounded-md border"
       />
+
+      <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
     </LayoutPane>
   )
 }

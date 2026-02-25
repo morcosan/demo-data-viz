@@ -23,9 +23,15 @@ type TableCol = {
   label: string
   size?: number
 }
+type TableConst = {
+  key: string
+  label: string
+  value: TableRowValue
+}
 type TableData = {
   cols: TableCol[]
   rows: TableRow[]
+  consts: TableConst[]
 }
 
 const JsonStatSchema = z.object({
@@ -51,4 +57,4 @@ const JsonStatSchema = z.object({
 }) satisfies z.ZodType<JsonStat>
 
 export { JsonStatSchema }
-export type { JsonStat, TableCol, TableData, TableRow, TableRowValue }
+export type { JsonStat, TableCol, TableConst, TableData, TableRow, TableRowValue }

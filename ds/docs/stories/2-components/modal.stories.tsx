@@ -56,7 +56,7 @@ const Default: StoryObj<typeof Modal> = {
 }
 
 const Nesting: StoryObj<typeof Modal> = {
-  render: function Render() {
+  render: function Story() {
     const [opened1, setOpened1] = useState(false)
     const [opened2, setOpened2] = useState(false)
     const [opened3, setOpened3] = useState(false)

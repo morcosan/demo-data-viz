@@ -42,16 +42,22 @@
     }
   },
   "dataViz": {
+    "action": {
+      "viewDetails": "View details"
+    },
     "label": {
       "dataSize": "Data size",
+      "datasetDetails": "Dataset details",
       "datasetId": "Dataset ID",
       "datasetResults": "{total} datasets",
       "datasetSearch": "Dataset search",
-      "datasetSize": "Size: {cols} x {rows}",
-      "datasetSizeUnknown": "Size: --",
       "datasets": "Datasets",
       "lastUpdate": "Last update",
       "source": "Source"
+    },
+    "header": {
+      "constants": "Coverage",
+      "metadata": "Metadata"
     },
     "error": {
       "fetchDataset": "Failed to load dataset",

@@ -1,5 +1,4 @@
 import { TextHighlight } from '@app-components'
-import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app/shared/utils/formatting'
 import Link from 'next/link'
 import { type BaseDataset } from '../_types'
@@ -13,12 +12,12 @@ interface Props extends ReactProps {
 }
 
 export const DatasetItem = (props: Props) => {
-  const { t } = useTranslation()
+  const { dataset } = props
 
   return (
     <li className={props.className} style={props.style}>
       <Link
-        href={`/datasets?id=${encodeURIComponent(props.dataset.id)}`}
+        href={`/datasets?id=${encodeURIComponent(dataset.id)}`}
         className={cx(
           'relative flex flex-wrap items-center overflow-hidden',
           'px-xs-4 py-xs-2 rounded-sm shadow-xs',
@@ -31,17 +30,13 @@ export const DatasetItem = (props: Props) => {
         onClick={props.onClick}
       >
         <TextHighlight
-          text={props.dataset.title}
+          text={dataset.title}
           query={props.keyword}
           className="text-size-sm font-weight-md line-clamp-2"
         />
-        <span className="text-size-xs text-color-text-subtle font-weight-sm w-full">
-          {props.dataset.stats
-            ? t('dataViz.label.datasetSize', {
-                cols: formatNumber(props.dataset.stats.colsCount),
-                rows: formatNumber(props.dataset.stats.rowsCount),
-              })
-            : t('dataViz.label.datasetSizeUnknown')}
+        <span className="w-full" />
+        <span className="text-size-xs text-color-text-subtle font-weight-sm">
+          {dataset.stats && `${formatNumber(dataset.stats.colsCount)} x ${formatNumber(dataset.stats.rowsCount)}`}
         </span>
 
         {/* OVERLAY */}

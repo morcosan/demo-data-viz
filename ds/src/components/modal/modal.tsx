@@ -168,7 +168,7 @@ export const Modal = (rawProps: ModalProps) => {
   const slotContent = (
     <>
       {/* TITLE */}
-      <div css={cssModalTitle}>{props.title}</div>
+      <h1 css={cssModalTitle}>{props.title}</h1>
       {/* CLOSE-X */}
       {slotCloseX}
       {/* BODY */}
