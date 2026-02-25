@@ -15,5 +15,6 @@ const convertJsonStatToTable = async (jsonStatStr: string): Promise<TableData> =
 }
 
 export { JsonStatSchema } from './_types'
-export type { JsonStat, TableCol, TableData, TableRow, TableRowValue } from './_types'
+export type { JsonStat, TableCol, TableConst, TableData, TableRow, TableRowValue } from './_types'
+export { extractConstantsFromJsonStat } from './_utils'
 export { convertJsonStatToTable }

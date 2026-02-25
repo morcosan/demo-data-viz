@@ -1,20 +1,22 @@
 import type { JsonStat, TableCol, TableData, TableRow } from './_types'
+import { extractConstantsFromJsonStat } from './_utils'
 
 const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
   const { id, size, dimension, value } = jsonStat
   const rows: TableRow[] = []
-
-  // Convert value to array if it's an object
-  const values = Array.isArray(value) ? value : Object.keys(value).map((key) => value[key])
-
+  const values = Array.isArray(value) ? value : Object.values(value)
   const totalRows = values.length
+  const consts = extractConstantsFromJsonStat(jsonStat)
+  const constKeys = consts.map((c) => c.key)
 
   // Build headers from dimension labels plus value column
-  const headers: TableCol[] = [
-    ...id.map((dimId) => ({
-      key: dimId,
-      label: dimension[dimId]?.label || dimId,
-    })),
+  const cols: TableCol[] = [
+    ...id
+      .filter((dimId) => !constKeys.includes(dimId))
+      .map((dimId) => ({
+        key: dimId,
+        label: dimension[dimId]?.label || dimId,
+      })),
     { key: 'value', label: 'Value' },
   ]
 
@@ -52,7 +54,7 @@ const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
     rows.push(row)
   }
 
-  return { cols: headers, rows }
+  return { cols, rows, consts }
 }
 
 export { mapJsonStatToTable }

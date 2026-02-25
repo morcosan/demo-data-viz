@@ -1,4 +1,4 @@
-import { JsonStatSchema } from '@app/shared/utils/json-stat'
+import { extractConstantsFromJsonStat, JsonStatSchema } from '@app/shared/utils/json-stat'
 import { z } from 'zod'
 import { type BaseDataset, type Dataset } from '../_types'
 
@@ -27,16 +27,18 @@ const mapCatalogueToDatasetArray = (data: string): BaseDataset[] => {
 }
 
 const mapJsonStatToDataset = (rawStr: string, id: string): Dataset => {
-  const rawData = JSON.parse(rawStr)
-  const data = JsonStatSchema.parse(rawData)
+  const data = JSON.parse(rawStr)
+  const jsonStat = JsonStatSchema.parse(data)
+  const constants = extractConstantsFromJsonStat(jsonStat)
   return {
     id,
-    title: data.label,
+    constants,
+    title: jsonStat.label,
     source: 'eurostat',
-    updatedAt: data.updated,
+    updatedAt: jsonStat.updated,
     stats: {
-      colsCount: data.id.length,
-      rowsCount: data.size.reduce((acc: number, size: number) => acc * size, 1),
+      colsCount: jsonStat.id.length + 1 - constants.length,
+      rowsCount: jsonStat.size.reduce((acc: number, size: number) => acc * size, 1),
     },
     jsonStatStr: rawStr,
   }
