@@ -1,4 +1,9 @@
-<!-- Lucide - https://lucide.dev/icons -->
+<!--
+  Copyright (c) Lucide Contributors
+  ISC License — https://lucide.dev/license
+  Permission to use, copy, modify, and/or distribute this file for any purpose with or without fee is hereby granted.
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES.
+-->
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +14,7 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="m9 6-6 6 6 6"/>
-  <path d="M3 12h14"/>
-  <path d="M21 19V5"/>
+  <path d="m9 6-6 6 6 6" />
+  <path d="M3 12h14" />
+  <path d="M21 19V5" />
 </svg>

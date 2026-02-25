@@ -14,7 +14,8 @@ const renderHtml = (html: string): string => {
 const getAssetsFromFiles = (files: Record<string, unknown>): DocsAsset[] => {
   return Object.keys(files)
     .map((path: string) => {
-      const name = path.split('/').pop()!.replace('.svg', '')
+      const filename = path.split('/').pop()
+      const name = filename?.replace(/\.svgr?$/, '') || ''
       const asset: DocsAsset = {
         name,
         elem: files[path] as ComponentType,

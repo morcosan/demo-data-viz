@@ -1,16 +1,19 @@
-<!-- Iconify - https://icon-sets.iconify.design -->
+<!-- SVG Repo - https://www.svgrepo.com -->
+<!--
+  Copyright (c) Sketch-icons Contributors
+  Licensed under the MIT License: https://github.com/cognizance-amrita/Sketch-icons/blob/main/LICENSE
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this icon and associated documentation files (the “Icons”), to deal
+  in the Icons without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Icons, subject to including this notice in all copies.
+-->
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <path fill="#1572b6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754l-45.243 12.543z"/>
-  <path fill="#33a9dc" d="m64.001 117.062l36.559-10.136l8.601-96.354h-45.16z"/>
-  <path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711l-3.4 38.114h-30.95z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <path d="M6 28L4 3H28L26 28L16 31L6 28Z" fill="#1172B8" />
+  <path d="M26 5H16V29.5L24 27L26 5Z" fill="#33AADD" />
   <path
-    fill="#ebebeb"
-    d="m64.083 87.349l-.061.018l-15.403-4.159l-.985-11.031H33.752l1.937 21.717l28.331 7.863l.063-.018z"
-  />
-  <path fill="#fff" d="m81.127 64.675l-1.666 18.522l-15.426 4.164v14.39l28.354-7.858l.208-2.337l2.406-26.881z"/>
-  <path
-    fill="#ebebeb"
-    d="M64.048 23.435v13.831H30.64l-.277-3.108l-.63-7.012l-.331-3.711zm-.047 27.996v13.831H48.792l-.277-3.108l-.631-7.012l-.33-3.711z"
+    d="M19.5 17.5H9.5L9 14L17 11.5H9L8.5 8.5H24L23.5 12L17 14.5H23L22 24L16 26L10 24L9.5 19H12.5L13 21.5L16 22.5L19 21.5L19.5 17.5Z"
+    fill="white"
   />
 </svg>
