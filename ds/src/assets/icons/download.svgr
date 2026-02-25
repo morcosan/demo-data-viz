@@ -1,4 +1,9 @@
-<!-- Lucide - https://lucide.dev/icons -->
+<!--
+  Copyright (c) Lucide Contributors
+  ISC License — https://lucide.dev/license
+  Permission to use, copy, modify, and/or distribute this file for any purpose with or without fee is hereby granted.
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES.
+-->
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +14,7 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-  <polyline points="7 10 12 15 17 10"/>
-  <line x1="12" x2="12" y1="15" y2="3"/>
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  <polyline points="7 10 12 15 17 10" />
+  <line x1="12" x2="12" y1="15" y2="3" />
 </svg>

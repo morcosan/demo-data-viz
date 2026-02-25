@@ -8,7 +8,7 @@ const config = {
   semi: false,
 
   // Format SVG
-  overrides: [{ files: '*.svg', options: { parser: 'html' } }],
+  overrides: [{ files: '*.svg?(r)', options: { parser: 'html' } }],
 
   // Plugins
   plugins: ['prettier-plugin-css-order', 'prettier-plugin-organize-imports', 'prettier-plugin-tailwindcss'],
