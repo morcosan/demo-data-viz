@@ -65,7 +65,7 @@ export const DatasetModal = (props: Props) => {
       </section>
 
       {/* CONSTANTS */}
-      {dataset.constants.length && (
+      {dataset.constants.length > 0 && (
         <section className="mt-sm-7">
           <h2 className={headerClass}>{t('dataViz.header.constants')}</h2>
           <dl>

@@ -45,6 +45,7 @@ export const DatasetPreview = (props: ReactProps) => {
   }
 
   useEffect(() => {
+    setOpenedDetails(false)
     // Show 200ms loading when id changes to avoid UI freeze due to large data
     wait(200).then(() => setPrevIdParam(idParam))
   }, [idParam])
