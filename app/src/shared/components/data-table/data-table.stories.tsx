@@ -18,8 +18,10 @@ const meta: Meta = {
         rows: loremArray(100).map(() => {
           return Object.fromEntries(cols.map((col: TableCol) => [col.key, loremText(3)]))
         }),
+        consts: [],
       },
       className: '',
+      tableClassName: '',
       style: { height: '600px' },
     },
   }),

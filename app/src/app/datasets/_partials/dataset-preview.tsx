@@ -103,7 +103,8 @@ export const DatasetPreview = (props: ReactProps) => {
       <DataTable
         data={tableData}
         cellFn={cellFn}
-        className="border-color-border-subtle min-h-0 flex-1 rounded-md border"
+        className="min-h-0 flex-1"
+        tableClassName="border-color-border-subtle rounded-md border"
       />
 
       <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
