@@ -7,7 +7,7 @@
     /* Language & Environment */
     "target": "ES2022",
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
+    // Setting jsxImportSource breaks autocomplete for Webstorm, use triple-slash directives instead
 
     /* Modules & Resolution */
     "module": "ESNext",
