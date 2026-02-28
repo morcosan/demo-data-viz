@@ -14,7 +14,6 @@ interface Props extends ReactProps {
   data: TableData
   cellFn?: (value: TableRowValue, query: string) => ReactNode
   toolbar?: ReactNode
-  tableClassName?: string
 }
 
 export const DataTable = (props: Props) => {
@@ -78,12 +77,18 @@ export const DataTable = (props: Props) => {
   // })
 
   return (
-    <div className={cx('flex max-w-full flex-col', props.className)} style={props.style}>
-      <div className="mb-xs-2 flex items-center justify-between">
+    <div
+      className={cx(
+        'bg-color-bg-card border-color-border-subtle flex max-w-full flex-col rounded-md border',
+        props.className,
+      )}
+      style={props.style}
+    >
+      <div className="m-xs-2 flex items-center justify-between">
         <TextField
           value={searchKeyword}
           id="dataset-search"
-          className="max-w-lg-9 bg-color-bg-card ml-px"
+          className="lg:max-w-lg-9 w-full"
           size="sm"
           placeholder={t('core.placeholder.search')}
           ariaLabel={t('dataViz.label.dataTableSearch')}
@@ -104,8 +109,8 @@ export const DataTable = (props: Props) => {
         {props.toolbar}
       </div>
 
-      <div ref={vScrollerRef} className={cx('min-h-0 flex-1 overflow-auto', props.tableClassName)}>
-        <table className="bg-color-bg-card min-w-full table-fixed border-collapse">
+      <div ref={vScrollerRef} className="border-color-border-subtle min-h-0 flex-1 overflow-auto border-t">
+        <table className="min-w-full table-fixed border-collapse">
           <thead className="z-sticky bg-color-bg-card shadow-below-sm sticky top-0">
             <tr>
               {headers.map((header) => {

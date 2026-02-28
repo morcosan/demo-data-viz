@@ -135,12 +135,7 @@ export const DatasetPreview = (props: Props) => {
       </div>
 
       {/* TABLE */}
-      <DataTable
-        data={tableData}
-        cellFn={cellFn}
-        className="min-h-0 flex-1"
-        tableClassName="border-color-border-subtle rounded-md border"
-      />
+      <DataTable data={tableData} cellFn={cellFn} className="min-h-0 flex-1" />
 
       {/* MODAL */}
       <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />

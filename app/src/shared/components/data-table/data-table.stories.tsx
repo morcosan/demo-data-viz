@@ -25,7 +25,6 @@ const meta: Meta = {
       },
       cellFn: undefined,
       className: '',
-      tableClassName: '',
       style: { height: '600px' },
     },
   }),

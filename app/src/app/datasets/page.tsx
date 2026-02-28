@@ -17,7 +17,7 @@ export default function DatasetsPage() {
     <div className="gap-xs-9 flex h-full w-full">
       {/* LEFT SIDE */}
       <div className={cx('lg:w-xl-0 min-w-xl-0 w-full flex-col', mobileView === 'listing' ? 'flex' : 'hidden lg:flex')}>
-        <h1 className="text-size-lg lg:text-size-xl font-weight-xl mb-xs-5 lg:mb-xs-7">
+        <h1 className="text-size-lg lg:text-size-xl font-weight-xl mb-xs-5 lg:mb-xs-7 ml-px">
           {t('dataViz.label.datasets')}
         </h1>
         <Suspense fallback={null}>
@@ -29,7 +29,7 @@ export default function DatasetsPage() {
       <div className={cx('min-w-0 flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}>
         <Suspense fallback={null}>
           <ErrorBoundary>
-            <DatasetPreview className="w-full" mobileView={mobileView} onClickBack={handleBackClick} />
+            <DatasetPreview mobileView={mobileView} className="w-full" onClickBack={handleBackClick} />
           </ErrorBoundary>
         </Suspense>
       </div>
