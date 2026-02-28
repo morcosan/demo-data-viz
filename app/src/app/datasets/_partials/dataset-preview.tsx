@@ -6,14 +6,19 @@ import { useCountries, useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
-import { Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
+import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
-import { type Dataset, type ViewedDatasets } from '../_types'
+import { type Dataset, type MobileView, type ViewedDatasets } from '../_types'
 import { DatasetModal } from './dataset-modal'
 
-export const DatasetPreview = (props: ReactProps) => {
+interface Props extends ReactProps {
+  mobileView: MobileView
+  onClickBack: () => void
+}
+
+export const DatasetPreview = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinXL } = useViewportService()
   const { getCountryCode } = useCountries()
@@ -81,9 +86,18 @@ export const DatasetPreview = (props: ReactProps) => {
   }
 
   return (
-    <LayoutPane className={cx('py-xs-5 px-xs-8 flex flex-col', props.className)}>
+    <LayoutPane className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex flex-col', props.className)}>
       {/* HEADER */}
       <div className="flex">
+        <IconButton
+          tooltip={t('core.action.back')}
+          size="sm"
+          className={cx('mr-xs-1', props.mobileView === 'listing' && 'hidden!', 'translate-y-px lg:hidden!')}
+          onClick={props.onClickBack}
+        >
+          <ArrowBackSvg className="h-xs-7" />
+        </IconButton>
+
         <h2 title={dataset.title} className="text-size-lg font-weight-md mr-xs-5 line-clamp-3">
           {dataset.title}
         </h2>

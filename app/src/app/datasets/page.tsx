@@ -2,12 +2,10 @@
 
 import { ErrorBoundary } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { ArrowBackSvg, IconButton } from '@ds/core'
 import { Suspense, useState } from 'react'
 import { DatasetListing } from './_partials/dataset-listing'
 import { DatasetPreview } from './_partials/dataset-preview'
-
-type MobileView = 'listing' | 'preview'
+import { type MobileView } from './_types'
 
 export default function DatasetsPage() {
   const { t } = useTranslation()
@@ -16,26 +14,22 @@ export default function DatasetsPage() {
   const handleBackClick = () => setMobileView('listing')
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <div className="gap-xs-1 mb-xs-5 lg:mb-xs-7 flex items-center">
-        <IconButton
-          tooltip={t('core.action.back')}
-          className={cx(mobileView === 'listing' && 'hidden!', 'translate-y-px lg:hidden!')}
-          onClick={handleBackClick}
-        >
-          <ArrowBackSvg className="h-xs-7" />
-        </IconButton>
-        <h1 className="text-size-lg lg:text-size-xl font-weight-xl">{t('dataViz.label.datasets')}</h1>
+    <div className="gap-xs-9 flex h-full w-full">
+      {/* LEFT SIDE */}
+      <div className={cx('lg:w-xl-0 min-w-xl-0 w-full flex-col', mobileView === 'listing' ? 'flex' : 'hidden lg:flex')}>
+        <h1 className="text-size-lg lg:text-size-xl font-weight-xl mb-xs-5 lg:mb-xs-7">
+          {t('dataViz.label.datasets')}
+        </h1>
+        <Suspense fallback={null}>
+          <DatasetListing className="min-h-0 flex-1" onClickDataset={() => setMobileView('preview')} />
+        </Suspense>
       </div>
 
-      <div className="gap-xs-9 flex min-h-0 flex-1">
+      {/* RIGHT SIDE */}
+      <div className={cx('min-w-0 flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}>
         <Suspense fallback={null}>
-          <DatasetListing
-            className={cx('lg:w-xl-0 w-full', mobileView === 'listing' ? 'flex' : 'hidden lg:flex')}
-            onClickDataset={() => setMobileView('preview')}
-          />
           <ErrorBoundary>
-            <DatasetPreview className={cx('min-w-0 flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')} />
+            <DatasetPreview className="w-full" mobileView={mobileView} onClickBack={handleBackClick} />
           </ErrorBoundary>
         </Suspense>
       </div>

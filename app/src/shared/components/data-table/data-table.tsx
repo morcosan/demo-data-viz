@@ -83,7 +83,7 @@ export const DataTable = (props: Props) => {
         <TextField
           value={searchKeyword}
           id="dataset-search"
-          className="max-w-lg-9ml-px"
+          className="max-w-lg-9 bg-color-bg-card ml-px"
           size="sm"
           placeholder={t('core.placeholder.search')}
           ariaLabel={t('dataViz.label.dataTableSearch')}
