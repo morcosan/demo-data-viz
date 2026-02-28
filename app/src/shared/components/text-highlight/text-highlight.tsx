@@ -6,6 +6,10 @@ interface Props extends ReactProps {
 }
 
 export const TextHighlight = ({ text, query, className }: Props) => {
+  if (!query.trim()) {
+    return <span className={className}>{text}</span>
+  }
+
   const normalizedQuery = query.toLowerCase()
   const queryForRegex = !query.trim() ? '(?!)' : query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const regex = new RegExp(`(${queryForRegex}|\n)`, 'gi')
