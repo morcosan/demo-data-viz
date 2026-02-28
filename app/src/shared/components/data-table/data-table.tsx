@@ -13,6 +13,7 @@ import { coreRowModel, filteredRowModel, sortedRowModel } from './_react-table'
 interface Props extends ReactProps {
   data: TableData
   cellFn?: (value: TableRowValue, query: string) => ReactNode
+  toolbar?: ReactNode
   tableClassName?: string
 }
 
@@ -78,26 +79,30 @@ export const DataTable = (props: Props) => {
 
   return (
     <div className={cx('flex max-w-full flex-col', props.className)} style={props.style}>
-      <TextField
-        value={searchKeyword}
-        id="dataset-search"
-        className="max-w-lg-9 mb-xs-2 ml-px"
-        size="sm"
-        placeholder={t('core.placeholder.search')}
-        ariaLabel={t('dataViz.label.dataTableSearch')}
-        prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
-        suffix={
-          <IconButton
-            tooltip={t('core.action.clearSearch')}
-            variant="text-subtle"
-            size="xs"
-            onClick={() => setSearchKeyword('')}
-          >
-            <CloseSvg className="h-xs-7" />
-          </IconButton>
-        }
-        onChange={handleSearchChange}
-      />
+      <div className="mb-xs-2 flex items-center justify-between">
+        <TextField
+          value={searchKeyword}
+          id="dataset-search"
+          className="max-w-lg-9ml-px"
+          size="sm"
+          placeholder={t('core.placeholder.search')}
+          ariaLabel={t('dataViz.label.dataTableSearch')}
+          prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
+          suffix={
+            <IconButton
+              tooltip={t('core.action.clearSearch')}
+              variant="text-subtle"
+              size="xs"
+              onClick={() => setSearchKeyword('')}
+            >
+              <CloseSvg className="h-xs-7" />
+            </IconButton>
+          }
+          onChange={handleSearchChange}
+        />
+
+        {props.toolbar}
+      </div>
 
       <div ref={vScrollerRef} className={cx('min-h-0 flex-1 overflow-auto', props.tableClassName)}>
         <table className="bg-color-bg-card min-w-full table-fixed border-collapse">

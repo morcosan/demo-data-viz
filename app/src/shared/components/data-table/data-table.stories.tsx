@@ -12,6 +12,9 @@ const cols: TableCol[] = loremArray(4, 10).map((_, index: number) => ({
 const meta: Meta = {
   title: 'Components / DataTable',
   ...defineMeta(DataTable, {
+    slots: {
+      toolbar: 'Toolbar slot',
+    },
     props: {
       data: {
         cols,
@@ -20,6 +23,7 @@ const meta: Meta = {
         }),
         consts: [],
       },
+      cellFn: undefined,
       className: '',
       tableClassName: '',
       style: { height: '600px' },
