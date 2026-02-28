@@ -1,7 +1,7 @@
 import { useTranslation } from '@app-i18n'
-import type { Dataset } from '@app/app/datasets/_types'
+import { type Dataset } from '@app/app/datasets/_types'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
-import type { TableConst } from '@app/shared/utils/json-stat/index'
+import { type TableConst } from '@app/shared/utils/json-stat/index'
 import { Modal } from '@ds/core'
 
 interface Props {
