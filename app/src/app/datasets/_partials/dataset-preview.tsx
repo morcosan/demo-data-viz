@@ -8,55 +8,11 @@ import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, FullscreenSvg, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { type Dataset, type ViewedDatasets } from '../_types'
 import { DatasetModal } from './dataset-modal'
-
-const useFullscreen = (padding: string) => {
-  const [enabled, setEnabled] = useState(false)
-  const [isExpanding, setIsExpanding] = useState(false)
-  const [isCollapsing, setIsCollapsing] = useState(false)
-  const targetRef = useRef<HTMLDivElement>(null)
-  const [clientRect, setClientRect] = useState<DOMRect | null>(null)
-  const isFullscreen = isExpanding || isCollapsing
-  const duration = 300
-
-  const targetStyle: CSSProperties = {
-    transitionProperty: isFullscreen ? 'all' : undefined,
-    transitionDuration: isFullscreen ? `${duration}ms` : undefined,
-    position: isFullscreen ? 'fixed' : undefined,
-    top: isExpanding ? padding : clientRect?.top,
-    left: isExpanding ? padding : clientRect?.left,
-    width: isExpanding ? `calc(100vw - 2 * ${padding})` : clientRect?.width,
-    height: isExpanding ? `calc(100vh - 2 * ${padding})` : clientRect?.height,
-  }
-
-  const handleExpandToggle = () => {
-    if (!enabled) {
-      // Expanding
-      setClientRect(targetRef.current?.getBoundingClientRect() || null)
-      setEnabled(true)
-      requestAnimationFrame(() => setIsExpanding(true))
-    } else {
-      // Collapsing
-      setEnabled(false)
-      setIsExpanding(false)
-      setIsCollapsing(true)
-      wait(duration).then(() => {
-        setIsCollapsing(false)
-        setClientRect(null)
-      })
-    }
-  }
-
-  return {
-    handleExpandToggle,
-    isFullscreen,
-    targetRef,
-    targetStyle,
-  }
-}
+import { useFullscreen } from './use-fullscreen'
 
 interface Props extends ReactProps {
   onClickBack: () => void
@@ -71,7 +27,7 @@ export const DatasetPreview = (props: Props) => {
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
-  const { targetRef, targetStyle, isFullscreen, handleExpandToggle } = useFullscreen('var(--ds-spacing-xs-5)')
+  const { fsRef, fsStyle, fsOverlay, isFullscreen, toggleFullscreen } = useFullscreen('var(--ds-spacing-xs-5)')
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -100,7 +56,7 @@ export const DatasetPreview = (props: Props) => {
     })
   }
 
-  const handleTitleIconClick = () => (isViewportMinLG ? handleExpandToggle() : props.onClickBack())
+  const handleTitleIconClick = () => (isViewportMinLG ? toggleFullscreen() : props.onClickBack())
 
   useEffect(() => {
     setOpenedDetails(false)
@@ -138,17 +94,9 @@ export const DatasetPreview = (props: Props) => {
   }
 
   return (
-    <div className={cx('flex w-full', isFullscreen && 'z-modal')}>
-      {/* OVERLAY */}
-      <div
-        className={cx(
-          'bg-color-modal-overlay-subtle z-[-1] transition-opacity duration-300',
-          isFullscreen ? 'fixed-overlay opacity-100' : 'opacity-0',
-        )}
-      ></div>
-
-      {/* CONTENT */}
-      <LayoutPane ref={targetRef} className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')} style={targetStyle}>
+    <div className="flex w-full">
+      {fsOverlay}
+      <LayoutPane ref={fsRef} className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')} style={fsStyle}>
         {/* HEADER */}
         <div className="flex">
           <IconButton tooltip={titleIconTooltip} size="sm" className="mr-xs-1" onClick={handleTitleIconClick}>
