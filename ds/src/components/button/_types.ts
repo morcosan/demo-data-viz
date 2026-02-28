@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { type CSSProperties, type ReactNode } from 'react'
 import { type LinkType } from '../_partials/types'
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
@@ -55,6 +55,8 @@ export interface ButtonProps {
   linkType?: LinkType
   /** CSS class attribute for the wrapper element */
   className?: string
+  /** CSS style attribute for the wrapper element */
+  style?: CSSProperties
 
   /**
    * Events

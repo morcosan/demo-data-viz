@@ -6,7 +6,7 @@ import { useCountries, useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
-import { ArrowBackSvg, Button, FullscreenSvg, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
+import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
@@ -20,14 +20,14 @@ interface Props extends ReactProps {
 
 export const DatasetPreview = (props: Props) => {
   const { t } = useTranslation()
-  const { isViewportMinXL, isViewportMinLG } = useViewportService()
+  const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const { getCountryCode } = useCountries()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
-  const { fsRef, fsStyle, fsOverlay, isFullscreen, toggleFullscreen } = useFullscreen('var(--ds-spacing-xs-5)')
+  const { fsRef, fsStyle, fsOverlay, fsButton } = useFullscreen('var(--ds-spacing-xs-5)')
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -40,11 +40,6 @@ export const DatasetPreview = (props: Props) => {
   })
   const loading = datasetLoading || tableLoading || prevIdParam !== idParam
   const error = datasetError || tableError
-  const titleIconTooltip = isViewportMinLG
-    ? isFullscreen
-      ? t('core.action.collapseView')
-      : t('core.action.expandView')
-    : t('core.action.back')
 
   const saveViewedDataset = (dataset: Dataset) => {
     storage.setItem({
@@ -55,8 +50,6 @@ export const DatasetPreview = (props: Props) => {
       },
     })
   }
-
-  const handleTitleIconClick = () => (isViewportMinLG ? toggleFullscreen() : props.onClickBack())
 
   useEffect(() => {
     setOpenedDetails(false)
@@ -99,31 +92,39 @@ export const DatasetPreview = (props: Props) => {
       <LayoutPane ref={fsRef} className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')} style={fsStyle}>
         {/* HEADER */}
         <div className="flex">
-          <IconButton tooltip={titleIconTooltip} size="sm" className="mr-xs-1" onClick={handleTitleIconClick}>
-            <ArrowBackSvg className="h-xs-7 lg:hidden" />
-            <FullscreenSvg className="h-xs-9 hidden lg:block" />
+          <IconButton
+            tooltip={t('core.action.back')}
+            size="sm"
+            className="mr-xs-1 lg:hidden!"
+            onClick={props.onClickBack}
+          >
+            <ArrowBackSvg className="h-xs-7" />
           </IconButton>
 
           <h2 title={dataset.title} className="text-size-lg font-weight-md mr-xs-5 line-clamp-3">
             {dataset.title}
           </h2>
 
-          {isViewportMinXL ? (
-            <Button variant="text-default" size="sm" className="ml-auto" onClick={() => setOpenedDetails(true)}>
-              <PreviewSvg className="h-xs-8 mr-xs-3" />
-              {t('dataViz.action.viewDetails')}
-            </Button>
-          ) : (
-            <IconButton
-              tooltip={t('dataViz.action.viewDetails')}
-              variant="text-default"
-              size="sm"
-              className="ml-auto"
-              onClick={() => setOpenedDetails(true)}
-            >
-              <PreviewSvg className="h-xs-8" />
-            </IconButton>
-          )}
+          <div className="gap-xs-2 ml-auto flex">
+            {isViewportMinXL || isViewportMD ? (
+              <Button variant="text-default" size="sm" onClick={() => setOpenedDetails(true)}>
+                <PreviewSvg className="h-xs-8 mr-xs-3" />
+                {t('dataViz.action.viewDetails')}
+              </Button>
+            ) : (
+              <IconButton
+                tooltip={t('dataViz.action.viewDetails')}
+                variant="text-default"
+                size="sm"
+                className="ml-auto"
+                onClick={() => setOpenedDetails(true)}
+              >
+                <PreviewSvg className="h-xs-8" />
+              </IconButton>
+            )}
+
+            {isViewportMinLG && fsButton}
+          </div>
         </div>
 
         {/* CARDS */}

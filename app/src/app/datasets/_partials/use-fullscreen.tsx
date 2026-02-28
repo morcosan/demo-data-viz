@@ -1,24 +1,28 @@
-import { wait } from '@ds/core'
+import { useTranslation } from '@app-i18n'
+import { FullscreenSvg, IconButton, wait } from '@ds/core'
 import { type CSSProperties, useMemo, useRef, useState } from 'react'
 
 export const useFullscreen = (padding: string) => {
+  const { t } = useTranslation()
   const [enabled, setEnabled] = useState(false)
   const [isExpanding, setIsExpanding] = useState(false)
   const [isCollapsing, setIsCollapsing] = useState(false)
   const fsRef = useRef<HTMLDivElement>(null)
   const [clientRect, setClientRect] = useState<DOMRect | null>(null)
   const isFullscreen = isExpanding || isCollapsing
-  const duration = 300
+  const animTime = 300
+  const endingTime = 100
 
   const fsStyle: CSSProperties = {
-    transitionProperty: isFullscreen ? 'all' : undefined,
-    transitionDuration: isFullscreen ? `${duration}ms` : undefined,
+    zIndex: isFullscreen ? 'var(--ds-z-index-modal)' : undefined,
     position: isFullscreen ? 'fixed' : undefined,
+    transitionProperty: isFullscreen ? 'all' : undefined,
+    transitionDuration: isFullscreen ? `${animTime}ms` : undefined,
     top: isExpanding ? padding : clientRect?.top,
     left: isExpanding ? padding : clientRect?.left,
     width: isExpanding ? `calc(100vw - 2 * ${padding})` : clientRect?.width,
     height: isExpanding ? `calc(100vh - 2 * ${padding})` : clientRect?.height,
-    zIndex: isFullscreen ? 'var(--ds-z-index-modal)' : undefined,
+    boxShadow: isExpanding ? 'var(--ds-shadow-sm)' : undefined,
   }
 
   const toggleFullscreen = () => {
@@ -32,7 +36,7 @@ export const useFullscreen = (padding: string) => {
       setEnabled(false)
       setIsExpanding(false)
       setIsCollapsing(true)
-      wait(duration).then(() => {
+      wait(animTime + endingTime).then(() => {
         setIsCollapsing(false)
         setClientRect(null)
       })
@@ -43,17 +47,32 @@ export const useFullscreen = (padding: string) => {
     () => (
       <div
         className={cx(
-          'bg-color-modal-overlay-subtle z-[-1] transition-opacity duration-300',
-          isFullscreen ? 'fixed-overlay opacity-100' : 'opacity-0',
+          'bg-color-modal-overlay-subtle z-[-1] transition-opacity',
+          isFullscreen && 'fixed-overlay',
+          isExpanding ? 'opacity-100' : 'opacity-0',
         )}
-        style={{ zIndex: 'calc(var(--ds-z-index-modal) - 1)' }}
+        style={{ zIndex: 'calc(var(--ds-z-index-modal) - 1)', transitionDuration: `${animTime}ms` }}
       />
     ),
+    [isFullscreen, isExpanding],
+  )
 
+  const fsButton = useMemo(
+    () => (
+      <IconButton
+        tooltip={isFullscreen ? t('core.action.collapseView') : t('core.action.expandView')}
+        size="sm"
+        style={{ marginRight: '10px' }}
+        onClick={toggleFullscreen}
+      >
+        <FullscreenSvg className="h-xs-9" />
+      </IconButton>
+    ),
     [isFullscreen],
   )
 
   return {
+    fsButton,
     fsOverlay,
     fsRef,
     fsStyle,
