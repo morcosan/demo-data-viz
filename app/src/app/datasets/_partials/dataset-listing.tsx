@@ -49,8 +49,6 @@ export const DatasetListing = (props: Props) => {
     itemSize: itemHeight + gapSize,
   })
 
-  const handleSearchChange = (value: string) => setSearchKeyword(value)
-
   return (
     <LayoutPane className={cx('flex flex-col', props.className)}>
       <div className="shadow-below-sm z-sticky p-scrollbar-w relative">
@@ -62,7 +60,7 @@ export const DatasetListing = (props: Props) => {
           placeholder={t('core.placeholder.search')}
           ariaLabel={t('dataViz.label.datasetSearch')}
           prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
-          onChange={handleSearchChange}
+          onChange={setSearchKeyword}
         />
 
         <div className="text-size-xs mt-xs-1 ml-xs-0 -mb-xs-1">

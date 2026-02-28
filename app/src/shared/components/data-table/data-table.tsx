@@ -6,7 +6,7 @@ import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtua
 import { IconButton, SearchSvg, SortAscSvg, SortDescSvg, SortNoneSvg, TextField } from '@ds/core.ts'
 import { type ColumnDef, flexRender, type SortingState, useReactTable } from '@tanstack/react-table'
 import { type ReactNode, useEffect, useMemo, useState } from 'react'
-import { coreRowModel, sortedRowModel } from './_react-table'
+import { coreRowModel, filteredRowModel, sortedRowModel } from './_react-table'
 
 interface Props extends ReactProps {
   data: TableData
@@ -35,10 +35,11 @@ export const DataTable = (props: Props) => {
   const table = useReactTable({
     columns,
     data: props.data.rows,
-    state: { sorting },
+    state: { sorting, globalFilter: searchKeyword },
     onSortingChange: setSorting,
     getCoreRowModel: coreRowModel,
     getSortedRowModel: sortedRowModel,
+    getFilteredRowModel: filteredRowModel,
   })
   const { rows } = table.getRowModel()
   const headers = table.getHeaderGroups()[0].headers
@@ -51,8 +52,6 @@ export const DataTable = (props: Props) => {
   const cellClass = cx('px-xs-6 py-xs-2 text-size-sm border-color-border-subtle truncate')
   const headerClass = cx('font-weight-lg', cellClass)
   const rowClass = cx('border-b', cellClass)
-
-  const handleSearchChange = (value: string) => setSearchKeyword(value)
 
   useEffect(() => {
     if (vScrollerRef.current) {
@@ -75,7 +74,7 @@ export const DataTable = (props: Props) => {
         placeholder={t('core.placeholder.search')}
         ariaLabel={t('dataViz.label.dataTableSearch')}
         prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
-        onChange={handleSearchChange}
+        onChange={setSearchKeyword}
       />
 
       <div ref={vScrollerRef} className={cx('min-h-0 flex-1 overflow-auto', props.tableClassName)}>
