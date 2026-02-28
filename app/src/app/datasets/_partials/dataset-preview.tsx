@@ -8,41 +8,53 @@ import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, FullscreenSvg, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useEffect, useRef, useState } from 'react'
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { type Dataset, type ViewedDatasets } from '../_types'
 import { DatasetModal } from './dataset-modal'
 
-const useExpandable = () => {
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [isAnimating, setIsAnimating] = useState(false)
+const useFullscreen = (padding: string) => {
+  const [enabled, setEnabled] = useState(false)
+  const [isExpanding, setIsExpanding] = useState(false)
+  const [isCollapsing, setIsCollapsing] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
-  const [targetRect, setTargetRect] = useState<DOMRect | null>(null)
+  const [clientRect, setClientRect] = useState<DOMRect | null>(null)
+  const isFullscreen = isExpanding || isCollapsing
+  const duration = 300
+
+  const targetStyle: CSSProperties = {
+    transitionProperty: isFullscreen ? 'all' : undefined,
+    transitionDuration: isFullscreen ? `${duration}ms` : undefined,
+    position: isFullscreen ? 'fixed' : undefined,
+    top: isExpanding ? padding : clientRect?.top,
+    left: isExpanding ? padding : clientRect?.left,
+    width: isExpanding ? `calc(100vw - 2 * ${padding})` : clientRect?.width,
+    height: isExpanding ? `calc(100vh - 2 * ${padding})` : clientRect?.height,
+  }
 
   const handleExpandToggle = () => {
-    if (!isExpanded) {
+    if (!enabled) {
       // Expanding
-      setTargetRect(targetRef.current?.getBoundingClientRect() || null)
-      setIsExpanded(true)
-      requestAnimationFrame(() => {
-        setIsAnimating(true)
-      })
+      setClientRect(targetRef.current?.getBoundingClientRect() || null)
+      setEnabled(true)
+      requestAnimationFrame(() => setIsExpanding(true))
     } else {
       // Collapsing
-      setIsAnimating(false)
-      setTimeout(() => {
-        setIsExpanded(false)
-        setTargetRect(null)
-      }, 300)
+      setEnabled(false)
+      setIsExpanding(false)
+      setIsCollapsing(true)
+      wait(duration).then(() => {
+        setIsCollapsing(false)
+        setClientRect(null)
+      })
     }
   }
 
   return {
-    isExpanded,
-    isAnimating,
-    targetRef,
-    targetRect,
     handleExpandToggle,
+    isFullscreen,
+    targetRef,
+    targetStyle,
   }
 }
 
@@ -59,7 +71,7 @@ export const DatasetPreview = (props: Props) => {
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
-  const { isExpanded, isAnimating, targetRef, targetRect, handleExpandToggle } = useExpandable()
+  const { targetRef, targetStyle, isFullscreen, handleExpandToggle } = useFullscreen('var(--ds-spacing-xs-5)')
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -73,7 +85,7 @@ export const DatasetPreview = (props: Props) => {
   const loading = datasetLoading || tableLoading || prevIdParam !== idParam
   const error = datasetError || tableError
   const titleIconTooltip = isViewportMinLG
-    ? isExpanded
+    ? isFullscreen
       ? t('core.action.collapseView')
       : t('core.action.expandView')
     : t('core.action.back')
@@ -126,27 +138,17 @@ export const DatasetPreview = (props: Props) => {
   }
 
   return (
-    <div className={cx('flex w-full', isExpanded && 'z-modal')}>
+    <div className={cx('flex w-full', isFullscreen && 'z-modal')}>
       {/* OVERLAY */}
       <div
         className={cx(
-          'bg-color-modal-overlay-subtle z-[-1] transition-all duration-300',
-          isAnimating ? 'fixed-overlay opacity-100' : 'opacity-0',
+          'bg-color-modal-overlay-subtle z-[-1] transition-opacity duration-300',
+          isFullscreen ? 'fixed-overlay opacity-100' : 'opacity-0',
         )}
       ></div>
 
       {/* CONTENT */}
-      <LayoutPane
-        ref={targetRef}
-        className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex flex-col', isAnimating && 'transition-all duration-300')}
-        style={{
-          position: isAnimating ? 'fixed' : undefined,
-          top: isAnimating ? 'var(--ds-spacing-xs-5)' : targetRect?.top,
-          left: isAnimating ? 'var(--ds-spacing-xs-5)' : targetRect?.left,
-          width: isAnimating ? 'calc(100vw - 2 * var(--ds-spacing-xs-5))' : targetRect?.width || '100%',
-          height: isAnimating ? 'calc(100vh - 2 * var(--ds-spacing-xs-5))' : targetRect?.height,
-        }}
-      >
+      <LayoutPane ref={targetRef} className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')} style={targetStyle}>
         {/* HEADER */}
         <div className="flex">
           <IconButton tooltip={titleIconTooltip} size="sm" className="mr-xs-1" onClick={handleTitleIconClick}>
