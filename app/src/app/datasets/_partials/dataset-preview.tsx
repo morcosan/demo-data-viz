@@ -1,7 +1,7 @@
 'use client'
 
 import { QueryKey, useQuery } from '@app-api'
-import { DataTable, EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
+import { DataTable, EmptyState, LayoutPane, LoadingSpinner, StatsCard, TextHighlight } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
@@ -54,12 +54,13 @@ export const DatasetPreview = (props: ReactProps) => {
     dataset && saveViewedDataset(dataset)
   }, [dataset])
 
-  const cellFn = (value: TableRowValue): ReactNode => {
-    const flag = getCountryCode(String(value))
+  const cellFn = (value: TableRowValue, query: string): ReactNode => {
+    const text = String(value ?? '')
+    const flag = getCountryCode(text)
     return (
       <>
         {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        {value}
+        <TextHighlight text={text} query={query} />
       </>
     )
   }

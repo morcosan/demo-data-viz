@@ -1,5 +1,6 @@
 'use client'
 
+import { TextHighlight } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { type TableData, type TableRow, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
@@ -11,7 +12,7 @@ import { coreRowModel, filteredRowModel, sortedRowModel } from './_react-table'
 
 interface Props extends ReactProps {
   data: TableData
-  cellFn?: (value: TableRowValue) => ReactNode
+  cellFn?: (value: TableRowValue, query: string) => ReactNode
   tableClassName?: string
 }
 
@@ -27,10 +28,18 @@ export const DataTable = (props: Props) => {
         accessorKey: col.key,
         header: col.label,
         size: col.size,
-        cell: (info) => (props.cellFn ? props.cellFn(info.getValue() as TableRowValue) : info.getValue()),
+        cell: (info) => {
+          const value = info.getValue() as TableRowValue
+          const cell = props.cellFn ? props.cellFn(value, searchKeyword) : value
+          return !searchKeyword.trim() || typeof cell !== 'string' ? (
+            cell
+          ) : (
+            <TextHighlight text={String(cell ?? '')} query={searchKeyword} />
+          )
+        },
       }),
     )
-  }, [props.data.cols, props.cellFn])
+  }, [props.data.cols, props.cellFn, searchKeyword])
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
