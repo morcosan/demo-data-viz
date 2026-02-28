@@ -6,27 +6,27 @@ import { useCountries, useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
-import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
+import { ArrowBackSvg, Button, FullscreenSvg, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
-import { type Dataset, type MobileView, type ViewedDatasets } from '../_types'
+import { type Dataset, type ViewedDatasets } from '../_types'
 import { DatasetModal } from './dataset-modal'
 
 interface Props extends ReactProps {
-  mobileView: MobileView
   onClickBack: () => void
 }
 
 export const DatasetPreview = (props: Props) => {
   const { t } = useTranslation()
-  const { isViewportMinXL } = useViewportService()
+  const { isViewportMinXL, isViewportMinLG } = useViewportService()
   const { getCountryCode } = useCountries()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
+  const [expandedView, setExpandedView] = useState(false)
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -39,6 +39,11 @@ export const DatasetPreview = (props: Props) => {
   })
   const loading = datasetLoading || tableLoading || prevIdParam !== idParam
   const error = datasetError || tableError
+  const titleIconTooltip = isViewportMinLG
+    ? expandedView
+      ? t('core.action.collapseView')
+      : t('core.action.expandView')
+    : t('core.action.back')
 
   const saveViewedDataset = (dataset: Dataset) => {
     storage.setItem({
@@ -48,6 +53,14 @@ export const DatasetPreview = (props: Props) => {
         rowsCount: dataset.stats?.rowsCount || 0,
       },
     })
+  }
+
+  const handleTitleIconClick = () => {
+    if (isViewportMinLG) {
+      setExpandedView(!expandedView)
+    } else {
+      props.onClickBack()
+    }
   }
 
   useEffect(() => {
@@ -89,13 +102,9 @@ export const DatasetPreview = (props: Props) => {
     <LayoutPane className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex flex-col', props.className)}>
       {/* HEADER */}
       <div className="flex">
-        <IconButton
-          tooltip={t('core.action.back')}
-          size="sm"
-          className={cx('mr-xs-1', props.mobileView === 'listing' && 'hidden!', 'translate-y-px lg:hidden!')}
-          onClick={props.onClickBack}
-        >
-          <ArrowBackSvg className="h-xs-7" />
+        <IconButton tooltip={titleIconTooltip} size="sm" className="mr-xs-1" onClick={handleTitleIconClick}>
+          <ArrowBackSvg className="h-xs-7 lg:hidden" />
+          <FullscreenSvg className="h-xs-9 hidden lg:block" />
         </IconButton>
 
         <h2 title={dataset.title} className="text-size-lg font-weight-md mr-xs-5 line-clamp-3">

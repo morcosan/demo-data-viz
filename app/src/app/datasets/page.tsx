@@ -29,7 +29,7 @@ export default function DatasetsPage() {
       <div className={cx('min-w-0 flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}>
         <Suspense fallback={null}>
           <ErrorBoundary>
-            <DatasetPreview mobileView={mobileView} className="w-full" onClickBack={handleBackClick} />
+            <DatasetPreview className="w-full" onClickBack={handleBackClick} />
           </ErrorBoundary>
         </Suspense>
       </div>
