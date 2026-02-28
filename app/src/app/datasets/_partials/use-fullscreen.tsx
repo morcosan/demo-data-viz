@@ -2,14 +2,14 @@ import { useTranslation } from '@app-i18n'
 import { FullscreenSvg, IconButton, wait } from '@ds/core'
 import { type CSSProperties, useMemo, useRef, useState } from 'react'
 
-type ClientRectRef = { getBoundingClientRect: () => DOMRect | undefined }
+type WithClientRect = { getBoundingClientRect: () => DOMRect | undefined }
 
 export const useFullscreen = (padding: string) => {
   const { t } = useTranslation()
   const [enabled, setEnabled] = useState(false)
   const [isExpanding, setIsExpanding] = useState(false)
   const [isCollapsing, setIsCollapsing] = useState(false)
-  const fsRef = useRef<ClientRectRef>(null)
+  const fsRef = useRef<WithClientRect>(null)
   const [clientRect, setClientRect] = useState<DOMRect | null>(null)
   const isFullscreen = isExpanding || isCollapsing
   const animTime = 300
