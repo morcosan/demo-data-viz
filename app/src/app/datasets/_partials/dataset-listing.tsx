@@ -7,6 +7,7 @@ import { formatNumber } from '@app/shared/utils/formatting'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
 import { SearchSvg, TextField, TOKENS__SPACING } from '@ds/core'
+import { debounce } from 'lodash'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
@@ -49,6 +50,8 @@ export const DatasetListing = (props: Props) => {
     itemSize: itemHeight + gapSize,
   })
 
+  const handleSearchChange = useMemo(() => debounce((value: string) => setSearchKeyword(value), 300), [])
+
   return (
     <LayoutPane className={cx('flex flex-col', props.className)}>
       <div className="shadow-below-sm z-sticky p-scrollbar-w relative">
@@ -60,7 +63,7 @@ export const DatasetListing = (props: Props) => {
           placeholder={t('core.placeholder.search')}
           ariaLabel={t('dataViz.label.datasetSearch')}
           prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
-          onChange={setSearchKeyword}
+          onChange={handleSearchChange}
         />
 
         <div className="text-size-xs mt-xs-1 ml-xs-0 -mb-xs-1">
