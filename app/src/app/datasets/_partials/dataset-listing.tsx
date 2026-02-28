@@ -6,7 +6,7 @@ import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app/shared/utils/formatting'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { SearchSvg, TextField, TOKENS__SPACING } from '@ds/core'
+import { CloseSvg, IconButton, SearchSvg, TextField, TOKENS__SPACING } from '@ds/core'
 import { debounce } from 'lodash'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
@@ -63,6 +63,16 @@ export const DatasetListing = (props: Props) => {
           placeholder={t('core.placeholder.search')}
           ariaLabel={t('dataViz.label.datasetSearch')}
           prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
+          suffix={
+            <IconButton
+              tooltip={t('core.action.clearSearch')}
+              variant="text-subtle"
+              size="xs"
+              onClick={() => setSearchKeyword('')}
+            >
+              <CloseSvg className="h-xs-7" />
+            </IconButton>
+          }
           onChange={handleSearchChange}
         />
 

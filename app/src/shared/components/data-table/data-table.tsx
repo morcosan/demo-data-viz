@@ -3,7 +3,7 @@
 import { useTranslation } from '@app-i18n'
 import { type TableData, type TableRow, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { IconButton, SearchSvg, SortAscSvg, SortDescSvg, SortNoneSvg, TextField } from '@ds/core.ts'
+import { CloseSvg, IconButton, SearchSvg, SortAscSvg, SortDescSvg, SortNoneSvg, TextField } from '@ds/core.ts'
 import { type ColumnDef, flexRender, type SortingState, useReactTable } from '@tanstack/react-table'
 import { debounce } from 'lodash'
 import { type ReactNode, useEffect, useMemo, useState } from 'react'
@@ -77,6 +77,16 @@ export const DataTable = (props: Props) => {
         placeholder={t('core.placeholder.search')}
         ariaLabel={t('dataViz.label.dataTableSearch')}
         prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
+        suffix={
+          <IconButton
+            tooltip={t('core.action.clearSearch')}
+            variant="text-subtle"
+            size="xs"
+            onClick={() => setSearchKeyword('')}
+          >
+            <CloseSvg className="h-xs-7" />
+          </IconButton>
+        }
         onChange={handleSearchChange}
       />
 
