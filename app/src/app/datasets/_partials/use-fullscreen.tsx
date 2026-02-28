@@ -62,13 +62,17 @@ export const useFullscreen = (padding: string) => {
       <IconButton
         tooltip={isFullscreen ? t('core.action.collapseView') : t('core.action.expandView')}
         size="sm"
-        style={{ marginRight: '10px' }}
+        style={{
+          transitionProperty: 'margin',
+          transitionDuration: `${animTime}ms`,
+          marginRight: clientRect && isExpanding ? `calc(${window.innerWidth - clientRect.right}px - ${padding})` : 0,
+        }}
         onClick={toggleFullscreen}
       >
         <FullscreenSvg className="h-xs-9" />
       </IconButton>
     ),
-    [isFullscreen],
+    [isFullscreen, isExpanding, clientRect],
   )
 
   return {

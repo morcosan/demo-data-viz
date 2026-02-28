@@ -1,5 +1,5 @@
 import { type CSSObject } from '@emotion/react'
-import { type ReactNode } from 'react'
+import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
 import type { LinkType } from './types'
 import { useClickable } from './use-clickable'
@@ -48,6 +48,7 @@ interface BaseButtonProps {
   linkHref?: string
   linkType?: LinkType
   className?: string
+  style?: CSSProperties
 }
 
 export const useBaseButton = (props: BaseButtonProps) => {
@@ -184,6 +185,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     ...bindings,
     title: props.tooltip,
     className: props.className,
+    style: props.style,
     'aria-description': props.ariaDescription,
     css: cssBaseButton,
   }
