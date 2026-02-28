@@ -6,7 +6,7 @@ import { useCountries, useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
-import { PreviewSvg, wait } from '@ds/core'
+import { Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
@@ -15,6 +15,7 @@ import { DatasetModal } from './dataset-modal'
 
 export const DatasetPreview = (props: ReactProps) => {
   const { t } = useTranslation()
+  const { isViewportMinXL } = useViewportService()
   const { getCountryCode } = useCountries()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
@@ -81,9 +82,32 @@ export const DatasetPreview = (props: ReactProps) => {
 
   return (
     <LayoutPane className={cx('py-xs-5 px-xs-8 flex flex-col', props.className)}>
-      <h2 className="text-size-lg font-weight-md">{dataset.title}</h2>
+      {/* HEADER */}
+      <div className="flex">
+        <h2 title={dataset.title} className="text-size-lg font-weight-md mr-xs-5 line-clamp-3">
+          {dataset.title}
+        </h2>
 
-      <div className="gap-xs-5 my-xs-5 flex flex-wrap">
+        {isViewportMinXL ? (
+          <Button variant="text-default" size="sm" className="ml-auto" onClick={() => setOpenedDetails(true)}>
+            <PreviewSvg className="h-xs-8 mr-xs-3" />
+            {t('dataViz.action.viewDetails')}
+          </Button>
+        ) : (
+          <IconButton
+            tooltip={t('dataViz.action.viewDetails')}
+            variant="text-default"
+            size="sm"
+            className="ml-auto"
+            onClick={() => setOpenedDetails(true)}
+          >
+            <PreviewSvg className="h-xs-8" />
+          </IconButton>
+        )}
+      </div>
+
+      {/* CARDS */}
+      <div className="gap-xs-5 my-xs-7 flex flex-wrap">
         <StatsCard label={t('dataViz.label.dataSize')}>
           {formatNumber(dataset.stats?.colsCount)} x {formatNumber(dataset.stats?.rowsCount)}
         </StatsCard>
@@ -94,13 +118,9 @@ export const DatasetPreview = (props: ReactProps) => {
           {dataset.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
           <span className="ml-xs-0">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
         </StatsCard>
-
-        <StatsCard type="button" className="ml-auto" onClick={() => setOpenedDetails(true)}>
-          <PreviewSvg className="h-xs-8 mr-xs-3" />
-          {t('dataViz.action.viewDetails')}
-        </StatsCard>
       </div>
 
+      {/* TABLE */}
       <DataTable
         data={tableData}
         cellFn={cellFn}
@@ -108,6 +128,7 @@ export const DatasetPreview = (props: ReactProps) => {
         tableClassName="border-color-border-subtle rounded-md border"
       />
 
+      {/* MODAL */}
       <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
     </LayoutPane>
   )
