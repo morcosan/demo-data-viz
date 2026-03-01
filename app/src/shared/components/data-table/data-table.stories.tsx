@@ -12,13 +12,18 @@ const cols: TableCol[] = loremArray(4, 10).map((_, index: number) => ({
 const meta: Meta = {
   title: 'Components / DataTable',
   ...defineMeta(DataTable, {
+    slots: {
+      toolbar: 'Toolbar slot',
+    },
     props: {
       data: {
         cols,
         rows: loremArray(100).map(() => {
           return Object.fromEntries(cols.map((col: TableCol) => [col.key, loremText(3)]))
         }),
+        consts: [],
       },
+      cellFn: undefined,
       className: '',
       style: { height: '600px' },
     },

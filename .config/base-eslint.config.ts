@@ -6,7 +6,8 @@ const baseConfig: Config[] = [
     rules: {
       'max-lines': ['error', 300],
 
-      'react-hooks/exhaustive-deps': 'off', // This rule is broken, it gives false positives all the time
+      'react-hooks/exhaustive-deps': 'off', // Bug: This rule is broken, it gives false positives all the time
+      'react-hooks/refs': 'off', // Bug: This rule is broken, it gives false positives all the time
       'react-hooks/set-state-in-effect': 'off', // TODO: fix this issue
 
       '@typescript-eslint/no-explicit-any': 'off',

@@ -1,5 +1,5 @@
 import type { Cell, Column, ColumnDef, Row, RowModel, Table } from '@tanstack/react-table'
-import { getSortedRowModel } from '@tanstack/react-table'
+import { getFilteredRowModel, getSortedRowModel } from '@tanstack/react-table'
 
 /**
  * Generated with Claude 4.6
@@ -27,36 +27,18 @@ const getCoreRowModel = () => {
       if (lastRows && data === lastData && columns === lastCols) return lastRows
 
       const rows = data.map((rowData: TData, index: number): Row<TData> => {
-        let cachedCells: TCell[] | null = null
-
         const row = {
           id: String(index),
           index,
           original: rowData,
           getValue: <TValue>(columnId: string) => rowData[columnId] as TValue,
-          getVisibleCells() {
-            if (cachedCells) return cachedCells
+          getVisibleCells: () => cellCache.getCells(),
+          _getAllCellsByColumnId: () => cellCache.getCellsById(),
+        } as Row<TData>
 
-            cachedCells = table.getVisibleLeafColumns().map((column: TColumn) => {
-              const getValue = <TValue>() => rowData[column.id] as TValue
-              const renderValue = <TValue>() => rowData[column.id] as TValue
-              const cell = {
-                id: `${index}_${column.id}`,
-                column,
-                row,
-                getValue,
-                renderValue,
-                getContext: () => ({ table, column, row, cell, getValue, renderValue }),
-              } as TCell
+        const cellCache = buildCells(table, row, rowData, index)
 
-              return cell
-            })
-
-            return cachedCells
-          },
-        }
-
-        return row as Row<TData>
+        return row
       })
 
       lastData = table.options.data
@@ -68,7 +50,41 @@ const getCoreRowModel = () => {
   }
 }
 
+const buildCells = (table: Table<TData>, row: Row<TData>, rowData: TData, index: number) => {
+  let cells: TCell[] | null = null
+  let cellsById: Record<string, TCell> | null = null
+
+  const build = (): undefined => {
+    if (cells) return
+
+    cells = []
+    cellsById = {}
+
+    for (const column of table.getVisibleLeafColumns() as TColumn[]) {
+      const getValue = <TValue>() => rowData[column.id] as TValue
+      const renderValue = <TValue>() => rowData[column.id] as TValue
+      const cell = {
+        id: `${index}_${column.id}`,
+        column,
+        row,
+        getValue,
+        renderValue,
+        getContext: () => ({ table, column, row, cell, getValue, renderValue }),
+      } as TCell
+
+      cells.push(cell)
+      cellsById[column.id] = cell
+    }
+  }
+
+  return {
+    getCells: () => build() || cells,
+    getCellsById: () => build() || cellsById,
+  }
+}
+
 const coreRowModel = getCoreRowModel()
 const sortedRowModel = getSortedRowModel()
+const filteredRowModel = getFilteredRowModel()
 
-export { coreRowModel, sortedRowModel }
+export { coreRowModel, filteredRowModel, sortedRowModel }

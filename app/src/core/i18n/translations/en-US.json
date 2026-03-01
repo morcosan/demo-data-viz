@@ -7,11 +7,14 @@
   "core": {
     "action": {
       "back": "Back",
+      "clearSearch": "Clear search",
       "closeMenu": "Close menu",
+      "collapseView": "Collapse view",
+      "expandView": "Expand view",
       "openMenu": "Open menu",
       "pinNavMenu": "Pin nav menu",
-      "unpinNavMenu": "Unpin nav menu",
-      "sort": "Sort"
+      "sort": "Sort",
+      "unpinNavMenu": "Unpin nav menu"
     },
     "label": {
       "appStorybook": "App Storybook",
@@ -47,6 +50,7 @@
     },
     "label": {
       "dataSize": "Data size",
+      "dataTableSearch": "Data table search",
       "datasetDetails": "Dataset details",
       "datasetId": "Dataset ID",
       "datasetResults": "{total} datasets",
