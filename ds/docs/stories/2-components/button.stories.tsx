@@ -19,6 +19,7 @@ const meta: Meta = {
       linkHref: '',
       linkType: 'internal',
       className: '',
+      style: {},
     },
     events: ['onClick'],
     inlineRadios: ['size', 'variant', 'highlight', 'linkType'],

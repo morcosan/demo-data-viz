@@ -1,4 +1,4 @@
-import { type ReactNode, type Ref } from 'react'
+import { type CSSProperties, type ReactNode, type Ref } from 'react'
 
 export type InputElement = HTMLInputElement & HTMLTextAreaElement
 export type TextFieldVariant = 'default' | 'primary' | 'secondary'
@@ -56,6 +56,8 @@ export interface TextFieldProps {
   invalid?: boolean
   /** CSS class attribute for the wrapper element */
   className?: string
+  /** CSS style attribute for the wrapper element */
+  style?: CSSProperties
 
   /**
    * Events

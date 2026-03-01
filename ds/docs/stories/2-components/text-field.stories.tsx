@@ -32,6 +32,7 @@ const meta: Meta = {
       disabled: false,
       invalid: false,
       className: '',
+      style: {},
     },
     events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
     inlineRadios: ['variant', 'size'],
