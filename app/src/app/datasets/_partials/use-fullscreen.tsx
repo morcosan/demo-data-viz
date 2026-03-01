@@ -6,16 +6,16 @@ type WithClientRect = { getBoundingClientRect: () => DOMRect | undefined }
 
 export const useFullscreen = (padding: string) => {
   const { t } = useTranslation()
+  const elemRef = useRef<WithClientRect>(null)
   const [enabled, setEnabled] = useState(false)
   const [isExpanding, setIsExpanding] = useState(false)
   const [isCollapsing, setIsCollapsing] = useState(false)
-  const fsRef = useRef<WithClientRect>(null)
   const [clientRect, setClientRect] = useState<DOMRect | null>(null)
   const isFullscreen = isExpanding || isCollapsing
   const animTime = 300
   const endingTime = 100
 
-  const fsStyle: CSSProperties = {
+  const elemStyle: CSSProperties = {
     zIndex: isFullscreen ? 'var(--ds-z-index-modal)' : undefined,
     position: isFullscreen ? 'fixed' : undefined,
     transitionProperty: isFullscreen ? 'all' : undefined,
@@ -30,7 +30,7 @@ export const useFullscreen = (padding: string) => {
   const toggleFullscreen = () => {
     if (!enabled) {
       // Expanding
-      setClientRect(fsRef.current?.getBoundingClientRect() || null)
+      setClientRect(elemRef.current?.getBoundingClientRect() || null)
       setEnabled(true)
       requestAnimationFrame(() => setIsExpanding(true))
     } else {
@@ -45,7 +45,7 @@ export const useFullscreen = (padding: string) => {
     }
   }
 
-  const fsOverlay = useMemo(
+  const Overlay = useMemo(
     () => (
       <div
         className={cx(
@@ -59,7 +59,7 @@ export const useFullscreen = (padding: string) => {
     [isFullscreen, isExpanding],
   )
 
-  const fsButton = useMemo(
+  const Button = useMemo(
     () => (
       <IconButton
         tooltip={isFullscreen ? t('core.action.collapseView') : t('core.action.expandView')}
@@ -78,11 +78,9 @@ export const useFullscreen = (padding: string) => {
   )
 
   return {
-    fsButton,
-    fsOverlay,
-    fsRef,
-    fsStyle,
-    isFullscreen,
-    toggleFullscreen,
+    Button,
+    Overlay,
+    elemRef,
+    elemStyle,
   }
 }

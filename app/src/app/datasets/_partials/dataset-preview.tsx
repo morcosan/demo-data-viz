@@ -22,12 +22,12 @@ export const DatasetPreview = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const { getCountryCode } = useCountries()
+  const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
-  const { fsRef, fsStyle, fsOverlay, fsButton } = useFullscreen('var(--ds-spacing-xs-5)')
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -88,8 +88,12 @@ export const DatasetPreview = (props: Props) => {
 
   return (
     <div className="flex w-full">
-      {fsOverlay}
-      <LayoutPane ref={fsRef} className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')} style={fsStyle}>
+      {fullscreen.Overlay}
+      <LayoutPane
+        ref={fullscreen.elemRef}
+        className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')}
+        style={fullscreen.elemStyle}
+      >
         {/* HEADER */}
         <div className="flex">
           <IconButton
@@ -123,7 +127,7 @@ export const DatasetPreview = (props: Props) => {
               </IconButton>
             )}
 
-            {isViewportMinLG && fsButton}
+            {isViewportMinLG && fullscreen.Button}
           </div>
         </div>
 
