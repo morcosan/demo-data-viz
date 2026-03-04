@@ -3,8 +3,8 @@ import { tailwindTheme } from '../../../ds/dist/tooling/tailwind'
 
 const config: Config = {
   content: [
-    '../{src}/**/*.{ts,tsx}', // app
-    '../../ds/{src}/**/*.{ts,tsx}', // ds
+    '../../{src}/**/*.{ts,tsx,mdx}', // app + docs
+    '../../../ds/{src,docs}/**/*.{ts,tsx,mdx}', // ds + docs
   ],
   theme: tailwindTheme,
 }
