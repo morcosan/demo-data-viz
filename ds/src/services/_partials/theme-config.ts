@@ -1,4 +1,4 @@
-import { type ColorTheme, CSS_PREFIX, type DesignTokenGroup, getTokenValue, TOKENS } from '../../styling/tokens/index'
+import { type ColorTheme, CSS_PREFIX, type DesignTokenGroup, getTokenValue, TOKENS } from '../../styles/tokens'
 
 interface ThemeTokens {
   $blur: Record<keyof typeof TOKENS.BLUR, string>

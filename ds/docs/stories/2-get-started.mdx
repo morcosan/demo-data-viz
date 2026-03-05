@@ -23,7 +23,7 @@ Create or update your `tailwind.config.ts` file to use the design system's theme
   filename="tailwind.config.ts"
   code={`
 		import { type Config } from 'tailwindcss'
-		import { tailwindTheme } from '../../ds/dist/tooling/tailwind.ts'
+		import { tailwindTheme } from '../../ds/dist/scripts/tailwind'
 		//
 		const config: Config = {
 			content: [
@@ -148,7 +148,7 @@ Configure ESLint to use the design system's custom plugin that enforces proper i
   filename="base-eslint.config.ts"
   code={`
 		import { defineConfig } from 'eslint/config'
-		import { dsImports } from '../ds/dist/tooling/eslint'
+		import { dsImports } from '../ds/dist/scripts/eslint'
 		//
 		export default defineConfig([
 			{
@@ -172,7 +172,7 @@ You can also generate a build number based on build time.
 <DocsCodeBlock
   filename="vite.config.ts or next.config.ts"
   code={`
-		import { createBuildNumber, getDsVersion } from '../ds/dist/tooling/utilities'
+		import { createBuildNumber, getDsVersion } from '../ds/dist/scripts/utilities'
 		//
 		// For Vite:
 		config.define = {

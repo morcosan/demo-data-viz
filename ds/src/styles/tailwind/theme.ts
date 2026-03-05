@@ -1,4 +1,4 @@
-import { CSS_PREFIX, type DesignToken, type DesignTokenGroup, TOKENS } from '../tokens/index'
+import { CSS_PREFIX, type DesignToken, type DesignTokenGroup, TOKENS } from '../tokens'
 
 type DTG = DesignTokenGroup
 type RSS = Record<string, string>

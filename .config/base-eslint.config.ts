@@ -18,7 +18,7 @@ const baseConfig: Config[] = [
     },
   },
   {
-    files: ['**/*.d.ts', './*.ts', '.storybook/main.ts', '**/tooling/**/*.ts'],
+    files: ['**/*.d.ts', './*.ts', '.storybook/main.ts', '**/scripts/**/*.ts'],
     rules: {
       'import/extensions': ['error', 'ignorePackages', { ts: 'always' }],
     },

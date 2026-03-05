@@ -6,7 +6,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tsESLint from 'typescript-eslint'
 import { baseConfig } from '../.config/base-eslint.config.ts'
-import { dsImports } from './dist/tooling/eslint.ts'
+import { dsImports } from './dist/scripts/eslint.ts'
 
 export default defineConfig([
   globalIgnores(['out/**']),

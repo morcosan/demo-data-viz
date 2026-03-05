@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import remarkGfm from 'remark-gfm'
 import { type InlineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
-import { createBuildNumber, getDsVersion } from '../../ds/dist/tooling/utilities.ts'
+import { createBuildNumber, getDsVersion } from '../../ds/dist/scripts/utilities.ts'
 
 const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
