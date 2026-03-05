@@ -5,7 +5,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
-import { createBuildNumber, getDsVersion } from './dist/tooling/utilities.ts'
+import { createBuildNumber, getDsVersion } from './dist/scripts/utilities.ts'
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
 

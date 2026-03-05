@@ -1,6 +1,6 @@
 import { type NextConfig } from 'next'
 import path from 'node:path'
-import { createBuildNumber } from '../ds/dist/tooling/utilities.ts'
+import { createBuildNumber } from '../ds/dist/scripts/utilities.ts'
 
 const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
 const BUILD_NUMBER = createBuildNumber()

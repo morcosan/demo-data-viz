@@ -1,7 +1,7 @@
 /**
  * Design tokens
  */
-export * from '../src/styling/tokens/index'
+export * from '../src/styles/tokens'
 
 /**
  * Assets

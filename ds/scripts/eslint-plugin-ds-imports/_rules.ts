@@ -5,8 +5,8 @@ const enforceDistImports: Rule.RuleModule = {
   meta: {
     type: 'problem',
     fixable: 'code',
-    docs: { description: "Enforce DS imports to use '@ds/core.ts' or '/ds/dist/tooling/'" },
-    messages: { useDistImport: "DS imports must use '@ds/core.ts' or '/ds/dist/tooling/'" },
+    docs: { description: "Enforce DS imports to use '@ds/core.ts' or '/ds/dist/scripts/'" },
+    messages: { useDistImport: "DS imports must use '@ds/core.ts' or '/ds/dist/scripts/'" },
   },
   create: (context: Rule.RuleContext) => ({
     ImportDeclaration: (node: ImportDeclaration) => {
@@ -16,13 +16,13 @@ const enforceDistImports: Rule.RuleModule = {
       if (!isDsImport) return
 
       const isDocsImport = path.includes('/docs')
-      const isToolingImport = path.includes('/tooling')
+      const isScriptsImport = path.includes('/scripts')
       const relativePrefix = path.match(/^(\.\.\/)+/)?.[0] || '' // Tooling cannot use alias, only relative
       const validPath =
-        isDocsImport && isToolingImport
-          ? `${relativePrefix}ds/dist/docs/tooling.ts`
-          : isToolingImport
-            ? `${relativePrefix}ds/dist/tooling/`
+        isDocsImport && isScriptsImport
+          ? `${relativePrefix}ds/dist/docs/scripts.ts`
+          : isScriptsImport
+            ? `${relativePrefix}ds/dist/scripts/`
             : isDocsImport
               ? '@ds/docs/core.ts'
               : '@ds/core.ts'

@@ -2,7 +2,7 @@
 
 import { debounce } from 'lodash'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { type DesignToken, TOKENS__BREAKPOINT } from '../styling/tokens/index'
+import { type DesignToken, TOKENS__BREAKPOINT } from '../styles/tokens'
 
 /**
  * Context

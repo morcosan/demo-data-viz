@@ -1,6 +1,6 @@
-@import '../tailwind/styles.css';
+@import './tailwind/styles.css';
 
-@import '../tokens/index.css';
+@import './tokens/index.css';
 
 @import './_a11y.css';
 @import './_link.css';
