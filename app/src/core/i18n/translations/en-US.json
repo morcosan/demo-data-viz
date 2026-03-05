@@ -8,6 +8,7 @@
     "action": {
       "back": "Back",
       "clearSearch": "Clear search",
+      "clearSelection": "Clear selection",
       "closeMenu": "Close menu",
       "collapseView": "Collapse view",
       "expandView": "Expand view",
@@ -23,6 +24,7 @@
       "githubRepo": "GitHub Repo",
       "navigationBar": "Navigation bar",
       "navigationMenu": "Navigation menu",
+      "none": "None",
       "openMenu": "Open menu",
       "preferences": "Preferences",
       "settings": "Settings",
@@ -49,6 +51,7 @@
       "viewDetails": "View details"
     },
     "label": {
+      "colsFilter": "Columns filter",
       "dataSize": "Data size",
       "dataTableSearch": "Data table search",
       "datasetDetails": "Dataset details",
@@ -57,6 +60,7 @@
       "datasetSearch": "Dataset search",
       "datasets": "Datasets",
       "lastUpdate": "Last update",
+      "rowsFilter": "Rows filter",
       "source": "Source"
     },
     "header": {

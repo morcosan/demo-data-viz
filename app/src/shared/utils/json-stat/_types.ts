@@ -1,3 +1,4 @@
+import type { TableData, TableRowValue } from '@app/shared/types/table'
 import { z } from 'zod'
 
 interface JsonStat {
@@ -15,23 +16,14 @@ interface JsonStat {
   >
   value: (number | null)[] | Record<string, number>
 }
-
-type TableRowValue = string | number
-type TableRow = Record<string, TableRowValue>
-type TableCol = {
-  key: string
-  label: string
-  size?: number
+interface JsonStatData extends TableData {
+  consts: JsonStatConst[]
+  valuesByCol: Record<string, string[]>
 }
-type TableConst = {
+interface JsonStatConst {
   key: string
   label: string
   value: TableRowValue
-}
-type TableData = {
-  cols: TableCol[]
-  rows: TableRow[]
-  consts: TableConst[]
 }
 
 const JsonStatSchema = z.object({
@@ -57,4 +49,4 @@ const JsonStatSchema = z.object({
 }) satisfies z.ZodType<JsonStat>
 
 export { JsonStatSchema }
-export type { JsonStat, TableCol, TableConst, TableData, TableRow, TableRowValue }
+export type { JsonStat, JsonStatConst, JsonStatData }

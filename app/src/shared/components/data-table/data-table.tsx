@@ -2,7 +2,7 @@
 
 import { TextHighlight } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { type TableData, type TableRow, type TableRowValue } from '@app/shared/utils/json-stat'
+import { type TableData, type TableRow, type TableRowValue } from '@app/shared/types/table'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
 import { CloseSvg, IconButton, SearchSvg, SortAscSvg, SortDescSvg, SortNoneSvg, TextField } from '@ds/core'
 import { type ColumnDef, flexRender, type SortingState, useReactTable } from '@tanstack/react-table'
@@ -84,7 +84,9 @@ export const DataTable = (props: Props) => {
       )}
       style={props.style}
     >
-      <div className="m-xs-2 flex items-center justify-between">
+      <div className="m-xs-2 flex flex-wrap items-center justify-between">
+        {props.toolbar}
+
         <TextField
           value={searchKeyword}
           id="dataset-search"
@@ -105,8 +107,6 @@ export const DataTable = (props: Props) => {
           }
           onChange={handleSearchChange}
         />
-
-        {props.toolbar}
       </div>
 
       <div ref={vScrollerRef} className="border-color-border-subtle min-h-0 flex-1 overflow-auto border-t">

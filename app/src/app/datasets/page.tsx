@@ -3,8 +3,8 @@
 import { ErrorBoundary } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { Suspense, useState } from 'react'
-import { DatasetListing } from './_partials/dataset-listing'
-import { DatasetPreview } from './_partials/dataset-preview'
+import { Listing } from './_sections/listing'
+import { Preview } from './_sections/preview'
 import { type MobileView } from './_types'
 
 export default function DatasetsPage() {
@@ -21,7 +21,7 @@ export default function DatasetsPage() {
           {t('dataViz.label.datasets')}
         </h1>
         <Suspense fallback={null}>
-          <DatasetListing className="min-h-0 flex-1" onClickDataset={() => setMobileView('preview')} />
+          <Listing className="min-h-0 flex-1" onClickDataset={() => setMobileView('preview')} />
         </Suspense>
       </div>
 
@@ -29,7 +29,7 @@ export default function DatasetsPage() {
       <div className={cx('min-w-0 flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}>
         <Suspense fallback={null}>
           <ErrorBoundary>
-            <DatasetPreview onClickBack={handleBackClick} />
+            <Preview onClickBack={handleBackClick} />
           </ErrorBoundary>
         </Suspense>
       </div>

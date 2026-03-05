@@ -1,0 +1,71 @@
+.app-select-field {
+  --input-height-sm: var(--ds-spacing-field-h-sm);
+
+  & .mantine-Input-section {
+    justify-content: end;
+  }
+
+  & [data-combined-clear-section] {
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+.app-select-field--input {
+  cursor: default;
+  border: 1px solid var(--ds-color-border-default);
+  background-color: var(--ds-color-bg-field);
+  padding-right: var(--ds-spacing-sm-6);
+  padding-left: var(--ds-spacing-xs-4);
+  pointer-events: auto;
+  color: var(--ds-color-text-default);
+  text-overflow: ellipsis;
+
+  &:focus {
+    border: 1px solid var(--ds-color-border-active);
+  }
+
+  &::placeholder {
+    color: var(--ds-color-text-placeholder);
+  }
+}
+
+.app-select-field--clear {
+  cursor: pointer;
+  border-radius: var(--ds-radius-full);
+  background-color: transparent !important;
+  color: var(--ds-color-text-subtle);
+
+  &:hover {
+    background-color: var(--ds-color-hover-text-default) !important;
+  }
+}
+
+.app-select-field--dropdown {
+  z-index: var(--ds-z-index-dropdown) !important;
+  box-shadow: var(--ds-shadow-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-bg-menu);
+  padding: var(--ds-spacing-xs-1);
+}
+
+.app-select-field--option {
+  position: relative;
+  color: var(--ds-color-text-default);
+
+  &:hover:not([data-combobox-disabled]) {
+    background: var(--ds-color-hover-text-default);
+  }
+  /*&[data-combobox-active] {*/
+  /*  background: var(--ds-color-yellow-1);*/
+  /*  color: var(--ds-color-secondary-button-text) !important;*/
+  /*}*/
+  &[data-combobox-selected] {
+    background: var(--ds-color-secondary-button-bg) !important;
+    color: var(--ds-color-secondary-button-text) !important;
+  }
+
+  & svg {
+    opacity: 1;
+  }
+}

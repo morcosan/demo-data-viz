@@ -3,22 +3,24 @@
 import { QueryKey, useQuery } from '@app-api'
 import { DataTable, EmptyState, LayoutPane, LoadingSpinner, StatsCard, TextHighlight } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
+import { type TableRowValue } from '@app/shared/types/table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
-import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
+import { convertJsonStatToTable, type JsonStatData } from '@app/shared/utils/json-stat/index'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
+import { DatasetModal } from '../_partials/dataset-modal'
+import { DatasetToolbar } from '../_partials/dataset-toolbar'
+import { useFullscreen } from '../_partials/use-fullscreen'
 import { type Dataset, type ViewedDatasets } from '../_types'
-import { DatasetModal } from './dataset-modal'
-import { useFullscreen } from './use-fullscreen'
 
 interface Props extends ReactProps {
   onClickBack: () => void
 }
 
-export const DatasetPreview = (props: Props) => {
+export const Preview = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const { getCountryCode } = useCountries()
@@ -33,7 +35,7 @@ export const DatasetPreview = (props: Props) => {
     queryFn: () => EurostatApi.fetchDataset(idParam),
     enabled: Boolean(idParam),
   })
-  const [tableData, tableLoading, tableError] = useQuery<TableData>({
+  const [tableData, tableLoading, tableError] = useQuery<JsonStatData>({
     queryKey: [QueryKey.JSON_STAT_TABLE, idParam, dataset?.updatedAt],
     queryFn: () => convertJsonStatToTable(dataset!.jsonStatStr),
     enabled: Boolean(dataset),
@@ -112,7 +114,7 @@ export const DatasetPreview = (props: Props) => {
           <div className="gap-xs-2 ml-auto flex">
             {isViewportMinXL || isViewportMD ? (
               <Button variant="text-default" size="sm" onClick={() => setOpenedDetails(true)}>
-                <PreviewSvg className="h-xs-8 mr-xs-3" />
+                <PreviewSvg className="h-xs-8 mr-xs-2" />
                 {t('dataViz.action.viewDetails')}
               </Button>
             ) : (
@@ -146,7 +148,12 @@ export const DatasetPreview = (props: Props) => {
         </div>
 
         {/* TABLE */}
-        <DataTable data={tableData} cellFn={cellFn} className="min-h-0 flex-1" />
+        <DataTable
+          data={tableData}
+          cellFn={cellFn}
+          toolbar={<DatasetToolbar data={tableData} />}
+          className="min-h-0 flex-1"
+        />
 
         {/* MODAL */}
         <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />

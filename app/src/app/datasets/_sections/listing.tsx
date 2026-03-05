@@ -11,14 +11,14 @@ import { debounce } from 'lodash'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
+import { DatasetItem } from '../_partials/dataset-item'
 import { type BaseDataset, type ViewedDatasets } from '../_types'
-import { DatasetItem } from './dataset-item'
 
 interface Props extends ReactProps {
   onClickDataset?: () => void
 }
 
-export const DatasetListing = (props: Props) => {
+export const Listing = (props: Props) => {
   const { t } = useTranslation()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()

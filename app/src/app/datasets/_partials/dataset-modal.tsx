@@ -1,7 +1,7 @@
 import { useTranslation } from '@app-i18n'
 import { type Dataset } from '@app/app/datasets/_types'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
-import { type TableConst } from '@app/shared/utils/json-stat/index'
+import { type JsonStatConst } from '@app/shared/utils/json-stat/index'
 import { Modal } from '@ds/core'
 
 interface Props {
@@ -69,7 +69,7 @@ export const DatasetModal = (props: Props) => {
         <section className="mt-sm-7">
           <h2 className={headerClass}>{t('dataViz.header.constants')}</h2>
           <dl>
-            {dataset.constants.map((constant: TableConst) => (
+            {dataset.constants.map((constant: JsonStatConst) => (
               <div key={constant.key} className={groupClass}>
                 <dt>{constant.label}</dt>
                 <dd>{constant.value}</dd>

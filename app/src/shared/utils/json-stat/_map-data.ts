@@ -1,20 +1,21 @@
-import type { JsonStat, TableCol, TableData, TableRow } from './_types'
-import { extractConstantsFromJsonStat } from './_utils'
+import type { TableCol, TableRow } from '@app/shared/types/table'
+import { mapJsonStatConstants } from './_map-constants'
+import type { JsonStat, JsonStatData } from './_types'
 
-const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
+const mapJsonStatData = (jsonStat: JsonStat): JsonStatData => {
   const { id, size, dimension, value } = jsonStat
   const rows: TableRow[] = []
   const indexedValues = Array.isArray(value)
     ? value.map((v, idx) => [idx, v] as const)
     : (() => {
-        const result = [] // Object.entries and Object.keys are too slow for large datasets
+        const result = []
         for (const key in value) {
           result.push([Number(key), value[key]] as const)
         }
         return result
       })()
   const totalRows = indexedValues.length
-  const consts = extractConstantsFromJsonStat(jsonStat)
+  const consts = mapJsonStatConstants(jsonStat)
   const constKeys = consts.map((c) => c.key)
 
   // Build headers from dimension labels plus value column
@@ -63,7 +64,18 @@ const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
     rows.push(row)
   }
 
-  return { cols, rows, consts }
+  // Build valuesByCol
+  const valuesByCol: Record<string, string[]> = Object.fromEntries(
+    id
+      .map((dimId: string) => {
+        const { index, label } = dimension[dimId].category
+        const values = Object.keys(index).map((code) => label[code] ?? code)
+        return [dimId, values] as const
+      })
+      .filter(([, values]) => values.length > 1),
+  )
+
+  return { cols, rows, consts, valuesByCol }
 }
 
-export { mapJsonStatToTable }
+export { mapJsonStatData }
