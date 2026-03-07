@@ -31,8 +31,8 @@ export const SelectField = (props: SelectFieldProps) => {
       middlewares: {
         size: {
           apply({ availableHeight, elements }) {
-            elements.floating.style.maxHeight = `min(${availableHeight}px, 400px)`
-            elements.floating.style.minHeight = '200px'
+            elements.floating.style.maxHeight = `min(400px, ${availableHeight}px)`
+            elements.floating.style.minHeight = `min(200px, ${elements.floating.scrollHeight}px)`
           },
         },
       },
