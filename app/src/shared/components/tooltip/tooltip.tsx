@@ -8,6 +8,11 @@ export interface TooltipProps extends ReactProps {
 }
 
 export const Tooltip = (props: TooltipProps) => {
+  const divProps: ReactProps = {
+    className: props.className,
+    style: props.style,
+  }
+
   return (
     <MantineTooltip
       label={props.label}
@@ -25,7 +30,7 @@ export const Tooltip = (props: TooltipProps) => {
       }}
       events={{ hover: true, focus: true, touch: true }}
     >
-      {createElement(props.inline ? 'span' : 'div', {}, props.children)}
+      {createElement(props.inline ? 'span' : 'div', divProps, props.children)}
     </MantineTooltip>
   )
 }

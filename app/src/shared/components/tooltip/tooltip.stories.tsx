@@ -14,7 +14,7 @@ const meta: Meta = {
     },
     clearDefaults: ['label'],
   }),
-  // @ts-ignore
+  // @ts-expect-error: TS bug
   render: function Story(props: TooltipProps) {
     return (
       <Tooltip {...props}>

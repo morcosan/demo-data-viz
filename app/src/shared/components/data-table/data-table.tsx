@@ -84,13 +84,13 @@ export const DataTable = (props: Props) => {
       )}
       style={props.style}
     >
-      <div className="m-xs-2 gap-y-xs-2 flex flex-wrap items-center justify-between">
+      <div className="m-xs-2 gap-xs-2 flex flex-wrap items-center justify-between">
         {props.toolbar}
 
         <TextField
           value={searchKeyword}
           id="dataset-search"
-          className="lg:max-w-lg-9 w-full"
+          className="xl:max-w-lg-9 w-full"
           size="sm"
           placeholder={t('core.placeholder.search')}
           ariaLabel={t('dataViz.label.dataTableSearch')}

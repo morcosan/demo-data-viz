@@ -16,6 +16,8 @@ const meta: Meta = {
       value: '0',
       placeholder: '',
       clearable: false,
+      className: '',
+      style: '',
     },
     events: ['onChange'],
     clearDefaults: ['options', 'value'],

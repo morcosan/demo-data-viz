@@ -10,7 +10,7 @@ import '@mantine/core/styles/Popover.css'
 export type SelectOption = ComboboxItem
 export type SelectValue = string | null
 
-export interface SelectFieldProps {
+export interface SelectFieldProps extends ReactProps {
   options: SelectOption[]
   value: SelectValue
   placeholder?: string
@@ -40,7 +40,8 @@ export const SelectField = (props: SelectFieldProps) => {
         },
       },
     },
-    className: 'a11y-outline-proxy',
+    className: cx('a11y-outline-proxy', props.className),
+    style: props.style,
     classNames: {
       root: css`
         ${cssField.styles}
