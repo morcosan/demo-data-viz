@@ -1,7 +1,7 @@
 import { DataTable, type SelectValue, TextHighlight } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
 import { type TableRowValue } from '@app/shared/types/table'
-import { DEFAULT_COL_KEY, DEFAULT_ROW_KEY, type JsonStatData, VALUE_KEY } from '@app/shared/utils/json-stat'
+import { EUROSTAT_COL_KEY, EUROSTAT_ROW_KEY, JSON_STAT_VALUE_KEY, type JsonStatData } from '@app/shared/utils/json-stat'
 import { type ReactNode, useCallback, useMemo, useState } from 'react'
 import { TableToolbar } from './table-toolbar'
 
@@ -13,8 +13,8 @@ export const DatasetTable = (props: Props) => {
   const { t } = useTranslation()
   const { getCountryCode } = useCountries()
   const { valuesByCol } = props.data
-  const [rowKey, setRowKey] = useState<string>(valuesByCol[DEFAULT_ROW_KEY] ? DEFAULT_ROW_KEY : '')
-  const [colKey, setColKey] = useState<string>(valuesByCol[DEFAULT_COL_KEY] ? DEFAULT_COL_KEY : '')
+  const [rowKey, setRowKey] = useState<string>(valuesByCol[EUROSTAT_ROW_KEY] ? EUROSTAT_ROW_KEY : '')
+  const [colKey, setColKey] = useState<string>(valuesByCol[EUROSTAT_COL_KEY] ? EUROSTAT_COL_KEY : '')
   const getFilterByCol = () => {
     return Object.keys(valuesByCol).reduce((acc, key) => ({ ...acc, [key]: valuesByCol[key][0] || null }), {})
   }
@@ -23,10 +23,10 @@ export const DatasetTable = (props: Props) => {
     return {
       ...props.data,
       cols: props.data.cols
-        .filter((col) => col.key === rowKey || col.key === colKey || col.key === VALUE_KEY)
+        .filter((col) => col.key === rowKey || col.key === colKey || col.key === JSON_STAT_VALUE_KEY)
         .map((col) => ({
           ...col,
-          label: col.key === VALUE_KEY ? t('dataViz.label.colValue') : col.label,
+          label: col.key === JSON_STAT_VALUE_KEY ? t('dataViz.label.colValue') : col.label,
         })),
     }
   }, [rowKey, colKey, filterByCol])
