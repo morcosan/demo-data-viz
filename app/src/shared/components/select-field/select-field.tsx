@@ -18,84 +18,21 @@ export interface SelectFieldProps {
 export const SelectField = (props: SelectFieldProps) => {
   const { t } = useTranslation()
 
-  const cssRoot = css`
-    --input-height-sm: var(--ds-spacing-field-h-sm);
-
-    & .mantine-Input-section {
-      justify-content: end;
-    }
-
-    & [data-combined-clear-section] {
-      gap: 0 !important;
-      padding: 0 !important;
-    }
-
-    & .mantine-Select-input {
-      cursor: default;
-      border: 1px solid var(--ds-color-border-default);
-      background-color: var(--ds-color-bg-field);
-      padding-right: var(--ds-spacing-sm-6);
-      padding-left: var(--ds-spacing-xs-4);
-      pointer-events: auto;
-      color: var(--ds-color-text-default);
-      text-overflow: ellipsis;
-
-      &:focus {
-        border: 1px solid var(--ds-color-border-active);
-      }
-
-      &::placeholder {
-        color: var(--ds-color-text-placeholder);
-      }
-    }
-
-    & .mantine-InputClearButton-root {
-      cursor: pointer;
-      border-radius: var(--ds-radius-full);
-      background-color: transparent !important;
-      color: var(--ds-color-text-subtle);
-
-      &:hover {
-        background-color: var(--ds-color-hover-text-default) !important;
-      }
-    }
-  `
-
-  const cssDropdown = css`
-    z-index: var(--ds-z-index-dropdown) !important;
-    box-shadow: var(--ds-shadow-md);
-    border: 1px solid var(--ds-color-border-subtle);
-    background-color: var(--ds-color-bg-menu);
-    padding: var(--ds-spacing-xs-1);
-    overflow: auto;
-
-    & .mantine-Select-option {
-      position: relative;
-      color: var(--ds-color-text-default);
-
-      &:hover:not([data-combobox-disabled]) {
-        background: var(--ds-color-hover-text-default);
-      }
-
-      &[data-combobox-selected] {
-        background: var(--ds-color-secondary-button-bg) !important;
-        color: var(--ds-color-secondary-button-text) !important;
-      }
-
-      & svg {
-        opacity: 1;
-      }
-    }
-  `
-
   const getSelectProps = (css: Function): MantineSelectProps => ({
+    data: props.options,
+    defaultValue: props.value,
+    placeholder: props.placeholder,
+    clearable: props.clearable,
+    onChange: props.onChange,
+    allowDeselect: false,
     withScrollArea: false,
     comboboxProps: {
       offset: 2,
       middlewares: {
         size: {
           apply({ availableHeight, elements }) {
-            elements.floating.style.maxHeight = `min(${availableHeight}px, 300px)`
+            elements.floating.style.maxHeight = `min(${availableHeight}px, 400px)`
+            elements.floating.style.minHeight = '200px'
           },
         },
       },
@@ -109,16 +46,81 @@ export const SelectField = (props: SelectFieldProps) => {
       `,
     },
     clearButtonProps: { title: t('core.action.clearSelection') },
-    allowDeselect: false,
-    placeholder: props.placeholder,
-    clearable: props.clearable,
   })
 
-  return (
-    <ClassNames>
-      {({ css }) => (
-        <Select {...getSelectProps(css)} data={props.options} defaultValue={props.value} onChange={props.onChange} />
-      )}
-    </ClassNames>
-  )
+  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} />}</ClassNames>
 }
+
+/************************************************************************************
+ * CSS
+ */
+
+const cssRoot = css`
+  --input-height-sm: var(--ds-spacing-field-h-sm);
+
+  & .mantine-Input-section {
+    justify-content: end;
+  }
+
+  & [data-combined-clear-section] {
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+
+  & .mantine-Select-input {
+    cursor: default;
+    border: 1px solid var(--ds-color-border-default);
+    background-color: var(--ds-color-bg-field);
+    padding-right: var(--ds-spacing-sm-6);
+    padding-left: var(--ds-spacing-xs-4);
+    pointer-events: auto;
+    color: var(--ds-color-text-default);
+    text-overflow: ellipsis;
+
+    &:focus {
+      border: 1px solid var(--ds-color-border-active);
+    }
+
+    &::placeholder {
+      color: var(--ds-color-text-placeholder);
+    }
+  }
+
+  & .mantine-InputClearButton-root {
+    cursor: pointer;
+    border-radius: var(--ds-radius-full);
+    background-color: transparent !important;
+    color: var(--ds-color-text-subtle);
+
+    &:hover {
+      background-color: var(--ds-color-hover-text-default) !important;
+    }
+  }
+`
+
+const cssDropdown = css`
+  z-index: var(--ds-z-index-dropdown) !important;
+  box-shadow: var(--ds-shadow-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-bg-menu);
+  padding: var(--ds-spacing-xs-1);
+  overflow: auto;
+
+  & .mantine-Select-option {
+    position: relative;
+    color: var(--ds-color-text-default);
+
+    &:hover:not([data-combobox-disabled]) {
+      background: var(--ds-color-hover-text-default);
+    }
+
+    &[data-combobox-selected] {
+      background: var(--ds-color-secondary-button-bg) !important;
+      color: var(--ds-color-secondary-button-text) !important;
+    }
+
+    & svg {
+      opacity: 1;
+    }
+  }
+`
