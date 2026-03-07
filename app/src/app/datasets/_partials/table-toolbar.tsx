@@ -1,8 +1,8 @@
-import { SelectField, type SelectOption, Tooltip } from '@app-components'
+import { SelectField, type SelectOption, type SelectValue, Tooltip } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { FiltersModal } from '@app/app/datasets/_partials/filters-modal'
 import { FilterSvg } from '@app/shared/assets'
-import { DEFAULT_COL_KEY, DEFAULT_ROW_KEY, type JsonStatData } from '@app/shared/utils/json-stat'
+import { type JsonStatData } from '@app/shared/utils/json-stat'
 import { CloseSvg } from 'ds/src/assets/icons'
 import { Button } from 'ds/src/components/button/button'
 import { IconButton } from 'ds/src/components/icon-button/icon-button'
@@ -11,6 +11,12 @@ import { memo, useCallback, useMemo, useState } from 'react'
 
 interface Props {
   data: JsonStatData
+  rowKey: string
+  colKey: string
+  filterByCol: Record<string, SelectValue>
+  onChangeRowKey: (value: string) => void
+  onChangeColKey: (value: string) => void
+  onChangeFilter: (key: string, value: SelectValue) => void
 }
 
 export const TableToolbar = (props: Props) => {
@@ -19,8 +25,6 @@ export const TableToolbar = (props: Props) => {
   const isMdOrLarger = isViewportMinXL || isViewportMD
   const { valuesByCol, cols } = props.data
   const [openedFilters, setOpenedFilters] = useState(false)
-  const [rowKey, setRowKey] = useState<string>(valuesByCol[DEFAULT_ROW_KEY] ? DEFAULT_ROW_KEY : '')
-  const [colKey, setColKey] = useState<string>(valuesByCol[DEFAULT_COL_KEY] ? DEFAULT_COL_KEY : '')
   const colKeys = useMemo(() => [...Object.keys(valuesByCol), ''], [valuesByCol])
   const options = useMemo(
     (): SelectOption[] =>
@@ -31,25 +35,25 @@ export const TableToolbar = (props: Props) => {
     [colKeys],
   )
   const rowOptions: SelectOption[] = useMemo(
-    () => options.map((option) => ({ ...option, disabled: Boolean(option.value && option.value === colKey) })),
-    [options, colKey],
+    () => options.map((option) => ({ ...option, disabled: Boolean(option.value && option.value === props.colKey) })),
+    [options, props.colKey],
   )
   const colOptions: SelectOption[] = useMemo(
-    () => options.map((option) => ({ ...option, disabled: Boolean(option.value && option.value === rowKey) })),
-    [options, rowKey],
+    () => options.map((option) => ({ ...option, disabled: Boolean(option.value && option.value === props.rowKey) })),
+    [options, props.rowKey],
   )
-  const filterCount = rowKey ? options.length - 3 : 0
+  const filterCount = props.rowKey ? options.length - 3 : 0
 
-  const handleChangeRow = useCallback((value: string | null) => setRowKey(value || ''), [])
-  const handleChangeCol = useCallback((value: string | null) => setColKey(value || ''), [])
+  const handleChangeRow = useCallback((value: string | null) => props.onChangeRowKey(value || ''), [])
+  const handleChangeCol = useCallback((value: string | null) => props.onChangeColKey(value || ''), [])
 
   return (
     <div className="gap-xs-2 flex flex-1 items-center justify-between xl:flex-initial">
       <RowColMemo
         rowOptions={rowOptions}
         colOptions={colOptions}
-        rowKey={rowKey}
-        colKey={colKey}
+        rowKey={props.rowKey}
+        colKey={props.colKey}
         handleChangeRow={handleChangeRow}
         handleChangeCol={handleChangeCol}
       />
@@ -75,9 +79,10 @@ export const TableToolbar = (props: Props) => {
       <FiltersModal
         opened={openedFilters}
         data={props.data}
-        colKeys={colKeys}
-        colKey={colKey}
-        rowKey={rowKey}
+        colKey={props.colKey}
+        rowKey={props.rowKey}
+        filterByCol={props.filterByCol}
+        onChangeFilter={props.onChangeFilter}
         onClose={() => setOpenedFilters(false)}
       />
     </div>

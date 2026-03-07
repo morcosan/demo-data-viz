@@ -1,18 +1,17 @@
 'use client'
 
 import { QueryKey, useQuery } from '@app-api'
-import { DataTable, EmptyState, LayoutPane, LoadingSpinner, StatsCard, TextHighlight } from '@app-components'
-import { useCountries, useTranslation } from '@app-i18n'
-import { type TableRowValue } from '@app/shared/types/table'
+import { EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
+import { useTranslation } from '@app-i18n'
+import { DatasetTable } from '@app/app/datasets/_partials/dataset-table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { convertJsonStatToTable, type JsonStatData } from '@app/shared/utils/json-stat/index'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { DatasetModal } from '../_partials/dataset-modal'
-import { TableToolbar } from '../_partials/table-toolbar'
 import { useFullscreen } from '../_partials/use-fullscreen'
 import { type Dataset, type ViewedDatasets } from '../_types'
 
@@ -23,7 +22,6 @@ interface Props extends ReactProps {
 export const Preview = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
-  const { getCountryCode } = useCountries()
   const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
@@ -62,17 +60,6 @@ export const Preview = (props: Props) => {
   useEffect(() => {
     dataset && saveViewedDataset(dataset)
   }, [dataset])
-
-  const cellFn = (value: TableRowValue, query: string): ReactNode => {
-    const text = String(value ?? '')
-    const flag = getCountryCode(text)
-    return (
-      <>
-        {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        <TextHighlight text={text} query={query} />
-      </>
-    )
-  }
 
   if (loading || !tableData || !dataset) {
     return (
@@ -148,12 +135,7 @@ export const Preview = (props: Props) => {
         </div>
 
         {/* TABLE */}
-        <DataTable
-          data={tableData}
-          cellFn={cellFn}
-          toolbar={<TableToolbar data={tableData} />}
-          className="min-h-0 flex-1"
-        />
+        <DatasetTable data={tableData} className="min-h-0 flex-1" />
 
         {/* MODAL */}
         <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
