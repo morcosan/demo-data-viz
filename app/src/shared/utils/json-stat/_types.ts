@@ -48,5 +48,9 @@ const JsonStatSchema = z.object({
   ]),
 }) satisfies z.ZodType<JsonStat>
 
-export { JsonStatSchema }
+const DEFAULT_COL_KEY = 'time'
+const DEFAULT_ROW_KEY = 'geo'
+const VALUE_KEY = 'value'
+
+export { DEFAULT_COL_KEY, DEFAULT_ROW_KEY, JsonStatSchema, VALUE_KEY }
 export type { JsonStat, JsonStatConst, JsonStatData }

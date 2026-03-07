@@ -51,6 +51,7 @@
       "viewDetails": "View details"
     },
     "label": {
+      "colValue": "Value",
       "dataSize": "Data size",
       "dataTableSearch": "Data table search",
       "datasetDetails": "Dataset details",

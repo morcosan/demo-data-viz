@@ -1,9 +1,6 @@
 import { mapJsonStatData } from './_map-data'
 import { type JsonStat, type JsonStatData } from './_types'
 
-const DEFAULT_COL_KEY = 'time'
-const DEFAULT_ROW_KEY = 'geo'
-
 const convertJsonStatToTable = async (jsonStatStr: string): Promise<JsonStatData> => {
   // const timer = startTimer('convertJsonStatToTable')
   const jsonStat = JSON.parse(jsonStatStr) as JsonStat
@@ -19,4 +16,4 @@ const convertJsonStatToTable = async (jsonStatStr: string): Promise<JsonStatData
 
 export { mapJsonStatConstants } from './_map-constants'
 export * from './_types'
-export { convertJsonStatToTable, DEFAULT_COL_KEY, DEFAULT_ROW_KEY }
+export { convertJsonStatToTable }

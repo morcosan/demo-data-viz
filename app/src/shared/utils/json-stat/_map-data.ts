@@ -1,6 +1,6 @@
-import type { TableCol, TableRow } from '@app/shared/types/table'
+import { type TableCol, type TableRow } from '@app/shared/types/table'
 import { mapJsonStatConstants } from './_map-constants'
-import type { JsonStat, JsonStatData } from './_types'
+import { type JsonStat, type JsonStatData, VALUE_KEY } from './_types'
 
 const mapJsonStatData = (jsonStat: JsonStat): JsonStatData => {
   const { id, size, dimension, value } = jsonStat
@@ -26,7 +26,7 @@ const mapJsonStatData = (jsonStat: JsonStat): JsonStatData => {
         key: dimId,
         label: dimension[dimId]?.label || dimId,
       })),
-    { key: 'value', label: 'Value' },
+    { key: VALUE_KEY, label: '' },
   ]
 
   // Pre-build inverted index: dimId -> array of category codes by position
