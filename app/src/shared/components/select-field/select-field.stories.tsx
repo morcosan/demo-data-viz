@@ -13,9 +13,11 @@ const meta: Meta = {
           disabled: loremFalse(),
         }),
       ),
-      value: null,
+      value: '0',
+      clearable: false,
     },
     events: ['onChange'],
+    clearDefaults: ['options', 'value'],
   }),
 }
 

@@ -30,7 +30,7 @@ type ArgsConfig<C> = {
   props?: Defaults<C>
   events?: PropKeys<C>
   inlineRadios?: PropKeys<C>
-  noDefaults?: PropKeys<C>
+  clearDefaults?: PropKeys<C>
   hasMethods?: boolean
 }
 
@@ -49,8 +49,9 @@ const defineArgType = ({ control, header, value }: ControlParam): InputType => (
   },
 })
 
-const defineArgs = <C>({ slots, props, events, hasMethods, noDefaults, inlineRadios }: ArgsConfig<C>) => {
+const defineArgs = <C>({ slots, props, events, hasMethods, clearDefaults, inlineRadios }: ArgsConfig<C>) => {
   const argTypes: ArgTypes = {}
+  const clearDefaultsKeys = [...(clearDefaults || []), 'id', 'className', 'style']
 
   Object.keys(slots || {}).forEach(
     (key: string) => (argTypes[key] = defineArgType({ header: 'Slots', control: 'text' })),
@@ -60,7 +61,7 @@ const defineArgs = <C>({ slots, props, events, hasMethods, noDefaults, inlineRad
     argTypes[key] = defineArgType({
       header: 'Props',
       control: inlineRadios?.includes(cKey) ? 'inline-radio' : undefined,
-      value: noDefaults?.includes(cKey) ? undefined : value,
+      value: clearDefaultsKeys.includes(cKey) ? undefined : value,
     })
   })
   events?.forEach((key: keyof JsxProps<C>) => (argTypes[key as string] = defineArgType({ header: 'Events' })))

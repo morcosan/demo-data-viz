@@ -36,7 +36,6 @@ const meta: Meta = {
     },
     events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
     inlineRadios: ['variant', 'size'],
-    noDefaults: ['id'],
     hasMethods: true,
   }),
 }

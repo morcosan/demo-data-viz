@@ -1,5 +1,5 @@
 import { HocComposer, RoutingService } from '@ds/core'
-import { getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig } from '@ds/docs/core'
+import { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig } from '@ds/docs/core'
 import { type Preview } from '@storybook/nextjs-vite'
 import { initClientI18n } from '../src/core/i18n/i18n-client'
 import { I18nProvider } from '../src/core/i18n/i18n-provider'
@@ -44,3 +44,4 @@ const preview: Preview = {
 }
 
 export default preview
+export { argTypesEnhancers }
