@@ -33,16 +33,14 @@ export const Preview = (props: Props) => {
     queryFn: () => EurostatApi.fetchDataset(idParam),
     enabled: Boolean(idParam),
   })
+  const valueLabel = t('dataViz.label.colValue')
   const [tableData, tableLoading, tableError] = useQuery<JsonStatData>({
     queryKey: [QueryKey.JSON_STAT_TABLE, idParam, dataset?.updatedAt],
     queryFn: async () => {
       const data = await convertJsonStatToTable(dataset!.jsonStatStr)
       return {
         ...data,
-        cols: data.cols.map((col) => ({
-          ...col,
-          label: col.key === JSON_STAT_VALUE_KEY ? t('dataViz.label.colValue') : col.label,
-        })),
+        cols: data.cols.map((col) => ({ ...col, label: col.key === JSON_STAT_VALUE_KEY ? valueLabel : col.label })),
       }
     },
     enabled: Boolean(dataset),

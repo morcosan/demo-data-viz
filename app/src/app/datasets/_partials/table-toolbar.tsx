@@ -42,7 +42,7 @@ export const TableToolbar = (props: Props) => {
     () => options.map((option) => ({ ...option, disabled: Boolean(option.value && option.value === props.rowKey) })),
     [options, props.rowKey],
   )
-  const filterCount = props.rowKey ? options.length - 3 : 0
+  const filterCount = props.rowKey ? options.length - (props.colKey ? 3 : 2) : 0
 
   const handleChangeRow = useCallback((value: string | null) => props.onChangeRowKey(value || ''), [])
   const handleChangeCol = useCallback((value: string | null) => props.onChangeColKey(value || ''), [])

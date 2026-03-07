@@ -15,5 +15,6 @@ const convertJsonStatToTable = async (jsonStatStr: string): Promise<JsonStatData
 }
 
 export { mapJsonStatConstants } from './_map-constants'
+export { mapJsonStatFilters } from './_map-filters'
 export * from './_types'
 export { convertJsonStatToTable }
