@@ -1,13 +1,10 @@
 import { useTranslation } from '@app-i18n'
+import { SelectField, type SelectOption } from '@app/shared/components/select-field/select-field'
 import { DEFAULT_COL_KEY, DEFAULT_ROW_KEY, type JsonStatData } from '@app/shared/utils/json-stat'
-import { type ComboboxItem, Select, type SelectProps, Tooltip } from '@mantine/core'
-import '@mantine/core/styles/CloseButton.css'
-import '@mantine/core/styles/Combobox.css'
-import '@mantine/core/styles/Popover.css'
+import { Tooltip } from '@mantine/core'
 import '@mantine/core/styles/Tooltip.css'
 import { CloseSvg } from 'ds/src/assets/icons'
 import { useState } from 'react'
-import './styles.css'
 
 interface Props {
   data: JsonStatData
@@ -23,31 +20,14 @@ export const DatasetToolbar = (props: Props) => {
     value: key,
     label: key === '' ? t('core.label.none') : (cols.find((col) => col.key === key)?.label ?? key),
   }))
-  const rowOptions: ComboboxItem[] = options.map((option) => ({
+  const rowOptions: SelectOption[] = options.map((option) => ({
     ...option,
     disabled: Boolean(option.value && option.value === colKey),
   }))
-  const colOptions: ComboboxItem[] = options.map((option) => ({
+  const colOptions: SelectOption[] = options.map((option) => ({
     ...option,
     disabled: Boolean(option.value && option.value === rowKey),
   }))
-
-  const selectProps: SelectProps = {
-    comboboxProps: { offset: 2 },
-    classNames: {
-      wrapper: 'app-select-field',
-      input: 'app-select-field--input',
-      dropdown: 'app-select-field--dropdown',
-      option: 'app-select-field--option',
-    },
-    clearButtonProps: {
-      title: t('core.action.clearSelection'),
-      className: 'app-select-field--clear',
-    },
-    withScrollArea: false,
-    allowDeselect: false,
-    clearable: false,
-  }
 
   const handleChangeRow = (value: string | null) => setRowKey(value || '')
   const handleChangeCol = (value: string | null) => setColKey(value || '')
@@ -60,7 +40,7 @@ export const DatasetToolbar = (props: Props) => {
         zIndex="var(--ds-z-index-tooltip)"
         events={{ hover: true, focus: true, touch: true }}
       >
-        <Select {...selectProps} data={rowOptions} defaultValue={rowKey} onChange={handleChangeRow} />
+        <SelectField options={rowOptions} value={rowKey} onChange={handleChangeRow} />
       </Tooltip>
 
       <CloseSvg className="h-xs-4 mx-xs-2 text-color-text-placeholder" />
@@ -71,7 +51,7 @@ export const DatasetToolbar = (props: Props) => {
         zIndex="var(--ds-z-index-tooltip)"
         events={{ hover: true, focus: true, touch: true }}
       >
-        <Select {...selectProps} data={colOptions} defaultValue={colKey} onChange={handleChangeCol} />
+        <SelectField options={colOptions} value={colKey} onChange={handleChangeCol} />
       </Tooltip>
     </div>
   )

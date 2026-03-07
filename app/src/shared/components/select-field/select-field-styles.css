@@ -1,4 +1,4 @@
-.app-select-field {
+.select-field {
   --input-height-sm: var(--ds-spacing-field-h-sm);
 
   & .mantine-Input-section {
@@ -11,7 +11,7 @@
   }
 }
 
-.app-select-field--input {
+.select-field--input {
   cursor: default;
   border: 1px solid var(--ds-color-border-default);
   background-color: var(--ds-color-bg-field);
@@ -30,7 +30,7 @@
   }
 }
 
-.app-select-field--clear {
+.select-field--clear {
   cursor: pointer;
   border-radius: var(--ds-radius-full);
   background-color: transparent !important;
@@ -41,7 +41,7 @@
   }
 }
 
-.app-select-field--dropdown {
+.select-field--dropdown {
   z-index: var(--ds-z-index-dropdown) !important;
   box-shadow: var(--ds-shadow-md);
   border: 1px solid var(--ds-color-border-subtle);
@@ -49,7 +49,7 @@
   padding: var(--ds-spacing-xs-1);
 }
 
-.app-select-field--option {
+.select-field--option {
   position: relative;
   color: var(--ds-color-text-default);
 
