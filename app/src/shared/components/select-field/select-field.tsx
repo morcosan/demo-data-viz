@@ -1,3 +1,5 @@
+'use client'
+
 import { useTranslation } from '@app-i18n'
 import { ClassNames, css } from '@emotion/react'
 import { Select, type ComboboxItem, type SelectProps as MantineSelectProps } from '@mantine/core'
