@@ -1,12 +1,12 @@
 import { defineMeta, loremArray, loremFalse, loremFullName } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { SelectField, type SelectOption } from './select-field'
+import { SelectField, type SelectFieldProps, type SelectOption } from './select-field'
 
 const meta: Meta = {
   title: 'Components / SelectField',
   ...defineMeta(SelectField, {
     props: {
-      options: loremArray(1, 20).map(
+      options: loremArray(10, 20).map(
         (_, index): SelectOption => ({
           value: String(index),
           label: loremFullName(),
@@ -14,6 +14,7 @@ const meta: Meta = {
         }),
       ),
       value: '0',
+      placeholder: '',
       clearable: false,
     },
     events: ['onChange'],
@@ -25,5 +26,17 @@ const Default: StoryObj<typeof SelectField> = {
   tags: ['controls', 'autodocs'],
 }
 
+const Examples: StoryObj<typeof SelectField> = {
+  tags: ['controls'],
+  render: function Story(props: SelectFieldProps) {
+    return (
+      <div className="p-sm-0 flex min-h-0 flex-1 flex-col justify-between">
+        <SelectField {...props} />
+        <SelectField {...props} />
+      </div>
+    )
+  },
+}
+
 export default meta
-export { Default }
+export { Default, Examples }
