@@ -59,7 +59,7 @@
       "datasetSearch": "Dataset search",
       "datasets": "Datasets",
       "filtersButton": "Filters ({count})",
-      "filtersTitle": "Active filters",
+      "filtersTitle": "Table filters",
       "lastUpdate": "Last update",
       "source": "Source",
       "tableCols": "Table columns",

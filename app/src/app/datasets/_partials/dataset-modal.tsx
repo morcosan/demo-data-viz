@@ -24,7 +24,8 @@ export const DatasetModal = (props: Props) => {
   )
   const groupClass = cx(
     // Group
-    'py-xs-7 gap-x-xs-9 grid grid-cols-1 items-center sm:grid-cols-[30%_minmax(0,1fr)]',
+    'grid grid-cols-1 sm:grid-cols-[30%_minmax(0,1fr)]',
+    'py-xs-7 gap-x-xs-9 items-center',
     'border-color-border-subtle border-b last:border-0',
     // Items
     '[&>dt]:text-size-sm [&>dt]:text-color-text-subtle [&>dd]:font-weight-lg',

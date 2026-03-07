@@ -84,7 +84,7 @@ export const DataTable = (props: Props) => {
       )}
       style={props.style}
     >
-      <div className="m-xs-2 flex flex-wrap items-center justify-between">
+      <div className="m-xs-2 gap-y-xs-2 flex flex-wrap items-center justify-between">
         {props.toolbar}
 
         <TextField

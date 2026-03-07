@@ -8,10 +8,11 @@ import '@mantine/core/styles/Combobox.css'
 import '@mantine/core/styles/Popover.css'
 
 export type SelectOption = ComboboxItem
+export type SelectValue = string | null
 
 export interface SelectFieldProps {
   options: SelectOption[]
-  value: string | null
+  value: SelectValue
   placeholder?: string
   clearable?: boolean
   onChange?: (value: string | null) => void
