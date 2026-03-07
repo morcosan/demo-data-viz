@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { DatasetModal } from '../_partials/dataset-modal'
-import { DatasetToolbar } from '../_partials/dataset-toolbar'
+import { TableToolbar } from '../_partials/table-toolbar'
 import { useFullscreen } from '../_partials/use-fullscreen'
 import { type Dataset, type ViewedDatasets } from '../_types'
 
@@ -151,7 +151,7 @@ export const Preview = (props: Props) => {
         <DataTable
           data={tableData}
           cellFn={cellFn}
-          toolbar={<DatasetToolbar data={tableData} />}
+          toolbar={<TableToolbar data={tableData} />}
           className="min-h-0 flex-1"
         />
 

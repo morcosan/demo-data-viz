@@ -13,7 +13,7 @@ interface Props {
   data: JsonStatData
 }
 
-export const DatasetToolbar = (props: Props) => {
+export const TableToolbar = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinXL, isViewportMD } = useViewportService()
   const isMdOrLarger = isViewportMinXL || isViewportMD
@@ -38,6 +38,7 @@ export const DatasetToolbar = (props: Props) => {
     () => options.map((option) => ({ ...option, disabled: Boolean(option.value && option.value === rowKey) })),
     [options, rowKey],
   )
+  const filterCount = rowKey ? options.length - 3 : 0
 
   const handleChangeRow = useCallback((value: string | null) => setRowKey(value || ''), [])
   const handleChangeCol = useCallback((value: string | null) => setColKey(value || ''), [])
@@ -53,21 +54,22 @@ export const DatasetToolbar = (props: Props) => {
         handleChangeCol={handleChangeCol}
       />
 
-      {isMdOrLarger ? (
-        <Button variant="text-default" size="sm" onClick={() => setOpenedFilters(true)}>
-          <FilterSvg className="h-xs-7 mr-xs-1" /> {t('dataViz.label.filtersButton', { count: options.length - 2 })}
-        </Button>
-      ) : (
-        <IconButton
-          tooltip={t('dataViz.label.filtersButton', { count: options.length - 2 })}
-          variant="text-default"
-          size="sm"
-          className="ml-auto"
-          onClick={() => setOpenedFilters(true)}
-        >
-          <FilterSvg className="h-xs-7" />
-        </IconButton>
-      )}
+      {filterCount > 0 &&
+        (isMdOrLarger ? (
+          <Button variant="text-default" size="sm" onClick={() => setOpenedFilters(true)}>
+            <FilterSvg className="h-xs-7 mr-xs-1" /> {t('dataViz.label.filtersButton', { count: filterCount })}
+          </Button>
+        ) : (
+          <IconButton
+            tooltip={t('dataViz.label.filtersButton', { count: filterCount })}
+            variant="text-default"
+            size="sm"
+            className="ml-auto"
+            onClick={() => setOpenedFilters(true)}
+          >
+            <FilterSvg className="h-xs-7" />
+          </IconButton>
+        ))}
 
       {/* MODAL */}
       <FiltersModal
@@ -97,15 +99,17 @@ interface RowColProps {
 
 const RowColMemo = memo((props: RowColProps) => {
   const { t } = useTranslation()
+  const wrapperClass = cx('xl:min-w-lg-0 max-w-lg-7 flex-1')
+
   return (
     <div className="flex flex-1 items-center">
-      <Tooltip label={t('dataViz.label.tableRows')} className="xl:min-w-lg-0 max-w-lg-7 flex-1">
+      <Tooltip label={t('dataViz.label.tableRows')} className={wrapperClass}>
         <SelectField options={props.rowOptions} value={props.rowKey} onChange={props.handleChangeRow} />
       </Tooltip>
 
       <CloseSvg className="h-xs-4 mx-xs-2 text-color-text-placeholder" />
 
-      <Tooltip label={t('dataViz.label.tableCols')} className="xl:min-w-lg-0 max-w-lg-7 flex-1">
+      <Tooltip label={t('dataViz.label.tableCols')} className={wrapperClass}>
         <SelectField options={props.colOptions} value={props.colKey} onChange={props.handleChangeCol} />
       </Tooltip>
     </div>
