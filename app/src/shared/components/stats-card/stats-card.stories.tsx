@@ -13,6 +13,7 @@ const meta: Meta = {
       type: 'default',
     },
     events: ['onClick'],
+    clearDefaults: ['label'],
   }),
 }
 

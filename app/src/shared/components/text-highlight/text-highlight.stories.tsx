@@ -10,6 +10,7 @@ const meta: Meta = {
       query: 'ipsum dolor',
       className: '',
     },
+    clearDefaults: ['text', 'query'],
   }),
 }
 

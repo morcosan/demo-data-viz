@@ -1,4 +1,4 @@
-import { type TableCol } from '@app/shared/utils/json-stat'
+import { type TableCol } from '@app/shared/types/table'
 import { defineMeta, loremArray, loremInt, loremText } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { DataTable } from './data-table'
@@ -21,12 +21,12 @@ const meta: Meta = {
         rows: loremArray(100).map(() => {
           return Object.fromEntries(cols.map((col: TableCol) => [col.key, loremText(3)]))
         }),
-        consts: [],
       },
       cellFn: undefined,
       className: '',
       style: { height: '600px' },
     },
+    clearDefaults: ['data'],
   }),
 }
 
