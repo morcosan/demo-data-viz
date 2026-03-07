@@ -5,7 +5,7 @@ import { EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-componen
 import { useTranslation } from '@app-i18n'
 import { DatasetTable } from '@app/app/datasets/_partials/dataset-table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
-import { convertJsonStatToTable, type JsonStatData } from '@app/shared/utils/json-stat/index'
+import { convertJsonStatToTable, JSON_STAT_VALUE_KEY, type JsonStatData } from '@app/shared/utils/json-stat/index'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
@@ -35,7 +35,16 @@ export const Preview = (props: Props) => {
   })
   const [tableData, tableLoading, tableError] = useQuery<JsonStatData>({
     queryKey: [QueryKey.JSON_STAT_TABLE, idParam, dataset?.updatedAt],
-    queryFn: () => convertJsonStatToTable(dataset!.jsonStatStr),
+    queryFn: async () => {
+      const data = await convertJsonStatToTable(dataset!.jsonStatStr)
+      return {
+        ...data,
+        cols: data.cols.map((col) => ({
+          ...col,
+          label: col.key === JSON_STAT_VALUE_KEY ? t('dataViz.label.colValue') : col.label,
+        })),
+      }
+    },
     enabled: Boolean(dataset),
   })
   const loading = datasetLoading || tableLoading || prevIdParam !== idParam

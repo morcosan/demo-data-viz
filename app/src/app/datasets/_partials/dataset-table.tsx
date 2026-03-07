@@ -1,6 +1,6 @@
 import { DataTable, type SelectValue, TextHighlight } from '@app-components'
-import { useCountries, useTranslation } from '@app-i18n'
-import { type TableRowValue } from '@app/shared/types/table'
+import { useCountries } from '@app-i18n'
+import { type TableData, type TableRowValue } from '@app/shared/types/table'
 import { EUROSTAT_COL_KEY, EUROSTAT_ROW_KEY, JSON_STAT_VALUE_KEY, type JsonStatData } from '@app/shared/utils/json-stat'
 import { type ReactNode, useCallback, useMemo, useState } from 'react'
 import { TableToolbar } from './table-toolbar'
@@ -10,7 +10,6 @@ interface Props extends ReactProps {
 }
 
 export const DatasetTable = (props: Props) => {
-  const { t } = useTranslation()
   const { getCountryCode } = useCountries()
   const { valuesByCol } = props.data
   const [rowKey, setRowKey] = useState<string>(valuesByCol[EUROSTAT_ROW_KEY] ? EUROSTAT_ROW_KEY : '')
@@ -19,15 +18,13 @@ export const DatasetTable = (props: Props) => {
     return Object.keys(valuesByCol).reduce((acc, key) => ({ ...acc, [key]: valuesByCol[key][0] || null }), {})
   }
   const [filterByCol, setFilterByCol] = useState<Record<string, SelectValue>>(getFilterByCol())
-  const tableData = useMemo(() => {
+  const tableData = useMemo((): TableData => {
+    const filters = rowKey ? Object.entries(filterByCol).filter(([key]) => key !== rowKey && key !== colKey) : []
     return {
-      ...props.data,
-      cols: props.data.cols
-        .filter((col) => col.key === rowKey || col.key === colKey || col.key === JSON_STAT_VALUE_KEY)
-        .map((col) => ({
-          ...col,
-          label: col.key === JSON_STAT_VALUE_KEY ? t('dataViz.label.colValue') : col.label,
-        })),
+      cols: props.data.cols.filter(
+        (col) => !rowKey || col.key === rowKey || col.key === colKey || col.key === JSON_STAT_VALUE_KEY,
+      ),
+      rows: props.data.rows.filter((row) => filters.every(([key, value]) => String(row[key]) === value)),
     }
   }, [rowKey, colKey, filterByCol])
 
