@@ -39,9 +39,10 @@ export const SelectField = (props: SelectFieldProps) => {
         },
       },
     },
+    className: 'a11y-outline-proxy',
     classNames: {
       root: css`
-        ${cssRoot.styles}
+        ${cssField.styles}
       `,
       dropdown: css`
         ${cssDropdown.styles}
@@ -57,8 +58,12 @@ export const SelectField = (props: SelectFieldProps) => {
  * CSS
  */
 
-const cssRoot = css`
-  --input-height-sm: var(--ds-spacing-field-h-sm);
+const cssField = css`
+  border-radius: var(--ds-radius-sm);
+
+  & .mantine-Input-wrapper {
+    --input-height-sm: var(--ds-spacing-field-h-sm);
+  }
 
   & .mantine-Input-section {
     justify-content: end;
@@ -72,6 +77,7 @@ const cssRoot = css`
   & .mantine-Select-input {
     cursor: default;
     border: 1px solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-sm);
     background-color: var(--ds-color-bg-field);
     padding-right: var(--ds-spacing-sm-6);
     padding-left: var(--ds-spacing-xs-4);

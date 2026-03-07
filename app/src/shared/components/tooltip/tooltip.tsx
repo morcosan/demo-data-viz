@@ -20,7 +20,7 @@ export const Tooltip = (props: TooltipProps) => {
           backgroundColor: 'var(--ds-color-bg-menu)',
           boxShadow: 'var(--ds-shadow-sm)',
           border: '1px solid var(--ds-color-border-default)',
-          padding: 'var(--ds-spacing-xs-2) var(--ds-spacing-xs-4)',
+          padding: 'var(--ds-spacing-xs-1) var(--ds-spacing-xs-4)',
         },
       }}
       events={{ hover: true, focus: true, touch: true }}
