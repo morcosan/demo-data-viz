@@ -23,7 +23,7 @@ export const SelectField = (props: SelectFieldProps) => {
 
   const getSelectProps = (css: Function): MantineSelectProps => ({
     data: props.options,
-    defaultValue: props.value,
+    value: props.value,
     placeholder: props.placeholder,
     clearable: props.clearable,
     onChange: props.onChange,
@@ -56,7 +56,7 @@ export const SelectField = (props: SelectFieldProps) => {
   return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} />}</ClassNames>
 }
 
-/************************************************************************************
+/**********************************************************************************************************************
  * CSS
  */
 

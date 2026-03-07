@@ -8,7 +8,6 @@ import '@app/globals'
 import { LOG } from '@app/shared/utils/debugging'
 import '@app/styles'
 import { A11yService, ConfigService, HocComposer, ThemeService, ViewportService } from '@ds/core'
-import { StrictMode } from 'react'
 import { RouterProvider } from './router/router-provider'
 
 if (typeof window !== 'undefined') {
@@ -19,7 +18,7 @@ initClientI18n()
 
 const hoc = HocComposer.hoc
 const providers = [
-  hoc(StrictMode, {}),
+  // hoc(StrictMode, {}),
   hoc(ConfigService, {}),
   hoc(A11yService, {}),
   hoc(ViewportService, {}),
