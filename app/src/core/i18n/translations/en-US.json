@@ -51,7 +51,6 @@
       "viewDetails": "View details"
     },
     "label": {
-      "colsFilter": "Columns filter",
       "dataSize": "Data size",
       "dataTableSearch": "Data table search",
       "datasetDetails": "Dataset details",
@@ -59,9 +58,12 @@
       "datasetResults": "{total} datasets",
       "datasetSearch": "Dataset search",
       "datasets": "Datasets",
+      "filtersButton": "Filters ({count})",
+      "filtersTitle": "Active filters",
       "lastUpdate": "Last update",
-      "rowsFilter": "Rows filter",
-      "source": "Source"
+      "source": "Source",
+      "tableCols": "Table columns",
+      "tableRows": "Table rows"
     },
     "header": {
       "constants": "Coverage",
