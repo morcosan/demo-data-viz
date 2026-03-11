@@ -11,7 +11,7 @@ const enforceDistImports: Rule.RuleModule = {
   create: (context: Rule.RuleContext) => ({
     ImportDeclaration: (node: ImportDeclaration) => {
       const path = String(node.source.value)
-      const isDsImport = path.includes('../ds/') // `@ds/` import is valid due to `ds/dist/` alias
+      const isDsImport = path.startsWith('ds/') || path.includes('../ds/')
 
       if (!isDsImport) return
 
@@ -24,8 +24,8 @@ const enforceDistImports: Rule.RuleModule = {
           : isScriptsImport
             ? `${relativePrefix}ds/dist/scripts/`
             : isDocsImport
-              ? '@ds/docs/core.ts'
-              : '@ds/core.ts'
+              ? '@ds/docs/core'
+              : '@ds/core'
       const isValid = path.startsWith(validPath)
 
       if (!isValid) {

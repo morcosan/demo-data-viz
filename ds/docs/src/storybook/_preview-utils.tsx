@@ -39,11 +39,12 @@ interface PreviewDocs {
   }
   container: ({ children, context }: DocsContainerProps) => ReactNode
 }
-interface StoryContext<C = any> {
+interface StoryContext<C = any, A = any> {
   globals: GlobalDefaults
   tags: string[]
   viewMode: 'docs' | 'story'
   args: C
+  argTypes: Record<string, A>
   children?: ReactNode
 }
 interface DocsContainerProps {

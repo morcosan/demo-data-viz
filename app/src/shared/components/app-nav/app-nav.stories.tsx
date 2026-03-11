@@ -18,6 +18,7 @@ const meta: Meta<typeof AppNav> = {
       desktopMaxWidth: 'var(--ds-spacing-lg-5)',
       cookieKeyPinned: 'app-nav--pinned-sidebar',
     },
+    clearDefaults: ['mobileHeight', 'desktopMinWidth', 'desktopMaxWidth', 'cookieKeyPinned'],
   }),
 
   render: function Story(props: AppNavProps) {
