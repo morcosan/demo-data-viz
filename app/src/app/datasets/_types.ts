@@ -1,9 +1,9 @@
-import type { TableConst } from '@app/shared/utils/json-stat'
+import type { JsonStatConst } from '@app/shared/utils/json-stat'
 
 export interface Dataset extends BaseDataset {
   jsonStatStr: string
   updatedAt: string
-  constants: TableConst[]
+  constants: JsonStatConst[]
 }
 
 export interface BaseDataset {

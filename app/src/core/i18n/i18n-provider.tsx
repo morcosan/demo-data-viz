@@ -65,8 +65,18 @@ const I18nProvider = ({ children }: ReactProps) => {
 const useCountries = () => {
   const { i18n } = useTranslation()
 
-  const getCountryCode = (countryName: string) => {
-    return countries.getAlpha2Code(countryName, i18n.language.split('-')[0])?.toLowerCase()
+  const getCountryCode = (query: string) => {
+    const lang = i18n.language.split('-')[0]
+    const code = countries.getAlpha2Code(query, lang)
+    if (code) return code.toLowerCase()
+
+    // Bug: getAlpha2Code is working for countries like "Moldova"
+    const lcQuery = query.toLowerCase()
+    const match = Object.entries(countries.getNames(lang)).find(
+      ([, value]) => value.toLowerCase().includes(lcQuery) || lcQuery.includes(value.toLowerCase()),
+    )
+
+    return match ? match[0].toLowerCase() : null
   }
 
   return { getCountryCode }

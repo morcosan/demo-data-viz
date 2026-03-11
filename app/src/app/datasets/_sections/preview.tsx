@@ -1,27 +1,33 @@
 'use client'
 
 import { QueryKey, useQuery } from '@app-api'
-import { DataTable, EmptyState, LayoutPane, LoadingSpinner, StatsCard, TextHighlight } from '@app-components'
-import { useCountries, useTranslation } from '@app-i18n'
+import { EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
+import { useTranslation } from '@app-i18n'
+import type { TableCol } from '@app/shared/types/table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
-import { convertJsonStatToTable, type TableData, type TableRowValue } from '@app/shared/utils/json-stat'
+import {
+  convertJsonStatToTable,
+  EurostatConfig,
+  JSON_STAT_VALUE_KEY,
+  type JsonStatData,
+} from '@app/shared/utils/json-stat'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
+import { DatasetModal } from '../_partials/dataset-modal'
+import { DatasetTable } from '../_partials/dataset-table'
+import { useFullscreen } from '../_partials/use-fullscreen'
 import { type Dataset, type ViewedDatasets } from '../_types'
-import { DatasetModal } from './dataset-modal'
-import { useFullscreen } from './use-fullscreen'
 
 interface Props extends ReactProps {
   onClickBack: () => void
 }
 
-export const DatasetPreview = (props: Props) => {
+export const Preview = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
-  const { getCountryCode } = useCountries()
   const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
@@ -33,9 +39,17 @@ export const DatasetPreview = (props: Props) => {
     queryFn: () => EurostatApi.fetchDataset(idParam),
     enabled: Boolean(idParam),
   })
-  const [tableData, tableLoading, tableError] = useQuery<TableData>({
+  const getColLabel = (col: TableCol) => {
+    if (col.key === JSON_STAT_VALUE_KEY) return t('core.label.value')
+    if (col.key === EurostatConfig.GEO_KEY) return t('dataViz.label.eurostatGeo')
+    return col.label
+  }
+  const [tableData, tableLoading, tableError] = useQuery<JsonStatData>({
     queryKey: [QueryKey.JSON_STAT_TABLE, idParam, dataset?.updatedAt],
-    queryFn: () => convertJsonStatToTable(dataset!.jsonStatStr),
+    queryFn: async () => {
+      const data = await convertJsonStatToTable(dataset!.jsonStatStr)
+      return { ...data, cols: data.cols.map((col) => ({ ...col, label: getColLabel(col) })) }
+    },
     enabled: Boolean(dataset),
   })
   const loading = datasetLoading || tableLoading || prevIdParam !== idParam
@@ -60,17 +74,6 @@ export const DatasetPreview = (props: Props) => {
   useEffect(() => {
     dataset && saveViewedDataset(dataset)
   }, [dataset])
-
-  const cellFn = (value: TableRowValue, query: string): ReactNode => {
-    const text = String(value ?? '')
-    const flag = getCountryCode(text)
-    return (
-      <>
-        {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        <TextHighlight text={text} query={query} />
-      </>
-    )
-  }
 
   if (loading || !tableData || !dataset) {
     return (
@@ -112,7 +115,7 @@ export const DatasetPreview = (props: Props) => {
           <div className="gap-xs-2 ml-auto flex">
             {isViewportMinXL || isViewportMD ? (
               <Button variant="text-default" size="sm" onClick={() => setOpenedDetails(true)}>
-                <PreviewSvg className="h-xs-8 mr-xs-3" />
+                <PreviewSvg className="h-xs-8 mr-xs-2" />
                 {t('dataViz.action.viewDetails')}
               </Button>
             ) : (
@@ -133,20 +136,20 @@ export const DatasetPreview = (props: Props) => {
 
         {/* CARDS */}
         <div className="gap-xs-5 my-xs-7 flex flex-wrap">
-          <StatsCard label={t('dataViz.label.dataSize')}>
+          <StatsCard label={t('core.label.dataSize')}>
             {formatNumber(dataset.stats?.colsCount)} x {formatNumber(dataset.stats?.rowsCount)}
           </StatsCard>
 
-          <StatsCard label={t('dataViz.label.lastUpdate')}>{formatDate(dataset.updatedAt)}</StatsCard>
+          <StatsCard label={t('core.label.lastUpdate')}>{formatDate(dataset.updatedAt)}</StatsCard>
 
-          <StatsCard label={t('dataViz.label.source')}>
+          <StatsCard label={t('core.label.source')}>
             {dataset.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
             <span className="ml-xs-0">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
           </StatsCard>
         </div>
 
         {/* TABLE */}
-        <DataTable data={tableData} cellFn={cellFn} className="min-h-0 flex-1" />
+        <DatasetTable data={tableData} className="min-h-0 flex-1" />
 
         {/* MODAL */}
         <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />

@@ -8,6 +8,7 @@
     "action": {
       "back": "Back",
       "clearSearch": "Clear search",
+      "clearSelection": "Clear selection",
       "closeMenu": "Close menu",
       "collapseView": "Collapse view",
       "expandView": "Expand view",
@@ -19,17 +20,23 @@
     "label": {
       "appStorybook": "App Storybook",
       "appTitle": "Demo Data Viz",
+      "dataSize": "Data size",
+      "datasetId": "Dataset ID",
       "dsStorybook": "Design System",
+      "empty": "Empty",
       "githubRepo": "GitHub Repo",
+      "lastUpdate": "Last update",
       "navigationBar": "Navigation bar",
       "navigationMenu": "Navigation menu",
       "openMenu": "Open menu",
       "preferences": "Preferences",
       "settings": "Settings",
+      "source": "Source",
       "theme": "Theme",
       "themeDark": "Dark",
       "themeLight": "Light",
-      "unexpectedError": "Unexpected error"
+      "unexpectedError": "Unexpected error",
+      "value": "Value"
     },
     "placeholder": {
       "search": "Search..."
@@ -49,19 +56,22 @@
       "viewDetails": "View details"
     },
     "label": {
-      "dataSize": "Data size",
       "dataTableSearch": "Data table search",
       "datasetDetails": "Dataset details",
-      "datasetId": "Dataset ID",
       "datasetResults": "{total} datasets",
       "datasetSearch": "Dataset search",
-      "datasets": "Datasets",
-      "lastUpdate": "Last update",
-      "source": "Source"
-    },
-    "header": {
-      "constants": "Coverage",
-      "metadata": "Metadata"
+      "datasetsTitle": "Datasets",
+      "emptyOptionForIndex": "-- No filters --",
+      "emptyOptionForPivot": "-- No split --",
+      "eurostatGeo": "Geopolitical entity",
+      "fieldLabelForIndex": "Filter by",
+      "fieldLabelForPivot": "Split by",
+      "filtersButton": "Filters ({count})",
+      "filtersTitle": "Table filters",
+      "headerConstants": "Coverage",
+      "headerMainFilters": "Data display",
+      "headerMetadata": "Metadata",
+      "headerOtherFilters": "Active filters ({count})"
     },
     "error": {
       "fetchDataset": "Failed to load dataset",

@@ -1,6 +1,6 @@
-import type { JsonStat, TableConst } from './_types'
+import type { JsonStat, JsonStatConst } from './_types'
 
-const extractConstantsFromJsonStat = (jsonStat: JsonStat): TableConst[] => {
+const mapJsonStatConstants = (jsonStat: JsonStat): JsonStatConst[] => {
   const { id, size, dimension, value } = jsonStat
 
   const totalRows = Array.isArray(value) ? value.length : size.reduce((acc, s) => acc * s, 1)
@@ -13,7 +13,7 @@ const extractConstantsFromJsonStat = (jsonStat: JsonStat): TableConst[] => {
     acc *= size[j]
   }
 
-  const result: TableConst[] = []
+  const result: JsonStatConst[] = []
 
   for (let j = 0; j < id.length; j++) {
     const dimId = id[j]
@@ -49,4 +49,4 @@ const extractConstantsFromJsonStat = (jsonStat: JsonStat): TableConst[] => {
   return result
 }
 
-export { extractConstantsFromJsonStat }
+export { mapJsonStatConstants }

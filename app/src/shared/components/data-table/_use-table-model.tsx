@@ -1,5 +1,43 @@
-import type { Cell, Column, ColumnDef, Row, RowModel, Table } from '@tanstack/react-table'
-import { getFilteredRowModel, getSortedRowModel } from '@tanstack/react-table'
+import type { TableCol, TableRow } from '@app/shared/types/table'
+import type { Cell, CellContext, Column, ColumnDef, Row, RowModel, Table } from '@tanstack/react-table'
+import { getFilteredRowModel, getSortedRowModel, type SortingState, useReactTable } from '@tanstack/react-table'
+import { type ReactNode, useMemo, useState } from 'react'
+
+interface Props {
+  cols: TableCol[]
+  rows: TableRow[]
+  filter: string
+  cellRenderer: (info: CellContext<TableRow, unknown>) => ReactNode
+}
+
+const useTableModel = (props: Props) => {
+  const [sorting, setSorting] = useState<SortingState>([])
+
+  const columns = useMemo((): ColumnDef<TableRow>[] => {
+    return props.cols.map((col) => ({
+      accessorKey: col.key,
+      header: col.label,
+      size: col.size,
+      cell: props.cellRenderer,
+    }))
+  }, [props.cols, props.cellRenderer])
+
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const table = useReactTable({
+    columns,
+    data: props.rows,
+    state: { sorting, globalFilter: props.filter },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  })
+
+  return {
+    tableCols: table.getHeaderGroups()[0].headers,
+    tableRows: table.getRowModel().rows,
+  }
+}
 
 /**
  * Generated with Claude 4.6
@@ -31,7 +69,7 @@ const getCoreRowModel = () => {
           id: String(index),
           index,
           original: rowData,
-          getValue: <TValue>(columnId: string) => rowData[columnId] as TValue,
+          getValue: <TValue,>(columnId: string) => rowData[columnId] as TValue,
           getVisibleCells: () => cellCache.getCells(),
           _getAllCellsByColumnId: () => cellCache.getCellsById(),
         } as Row<TData>
@@ -61,8 +99,8 @@ const buildCells = (table: Table<TData>, row: Row<TData>, rowData: TData, index:
     cellsById = {}
 
     for (const column of table.getVisibleLeafColumns() as TColumn[]) {
-      const getValue = <TValue>() => rowData[column.id] as TValue
-      const renderValue = <TValue>() => rowData[column.id] as TValue
+      const getValue = <TValue,>() => rowData[column.id] as TValue
+      const renderValue = <TValue,>() => rowData[column.id] as TValue
       const cell = {
         id: `${index}_${column.id}`,
         column,
@@ -83,8 +121,4 @@ const buildCells = (table: Table<TData>, row: Row<TData>, rowData: TData, index:
   }
 }
 
-const coreRowModel = getCoreRowModel()
-const sortedRowModel = getSortedRowModel()
-const filteredRowModel = getFilteredRowModel()
-
-export { coreRowModel, filteredRowModel, sortedRowModel }
+export { useTableModel }
