@@ -17,6 +17,26 @@ import {
   type StoryContext,
 } from './_preview-utils'
 
+type ArgType = {
+  type?: {
+    name?: string
+    value?: { name: string; value?: string }[]
+  }
+  control?: { type: string }
+}
+const argTypesEnhancers = [
+  ({ argTypes }: StoryContext<any, ArgType>) => {
+    // Force all props of type string to be displayed as single line textarea
+    Object.keys(argTypes).forEach((key: string) => {
+      const type = argTypes[key].type
+      if (type?.name === 'union' && type.value?.some((t: any) => t.name === 'string')) {
+        argTypes[key].control = { type: 'text' }
+      }
+    })
+    return argTypes
+  },
+]
+
 const toolbarConfig = {
   globalTypes: {
     colorTheme: {
@@ -114,5 +134,5 @@ const TRANSLATIONS: Record<string, string> = {
 }
 const mockTranslate = (key: string) => TRANSLATIONS[key] || key
 
-export { getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig }
+export { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig }
 export type { GlobalConfig, GlobalDefaults, GlobalTypes, StoryContext }

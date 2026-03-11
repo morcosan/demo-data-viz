@@ -13,6 +13,7 @@ const meta: Meta<typeof NavMenu> = {
       className: 'w-lg-7 bg-color-bg-card',
     },
     events: ['onTogglePopup'],
+    clearDefaults: ['closeMenu'],
   }),
 
   render: function Story(props: NavMenuProps) {

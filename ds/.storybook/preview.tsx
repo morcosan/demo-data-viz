@@ -1,5 +1,12 @@
 import { HocComposer, I18nService, RoutingService } from '@ds/core'
-import { getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig } from '@ds/docs/core'
+import {
+  argTypesEnhancers,
+  getDocsConfig,
+  getStoryConfig,
+  mockNavigate,
+  mockTranslate,
+  toolbarConfig,
+} from '@ds/docs/core'
 import { type Preview } from '@storybook/react-vite'
 import './styles.css'
 
@@ -36,3 +43,4 @@ const preview: Preview = {
 }
 
 export default preview
+export { argTypesEnhancers }
