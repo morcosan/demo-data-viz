@@ -11,14 +11,14 @@ import { debounce } from 'lodash'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
+import { DatasetItem } from '../_partials/dataset-item'
 import { type BaseDataset, type ViewedDatasets } from '../_types'
-import { DatasetItem } from './dataset-item'
 
 interface Props extends ReactProps {
   onClickDataset?: () => void
 }
 
-export const DatasetListing = (props: Props) => {
+export const Listing = (props: Props) => {
   const { t } = useTranslation()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
@@ -45,9 +45,9 @@ export const DatasetListing = (props: Props) => {
 
   const itemHeight = parseInt(TOKENS__SPACING['md-2'].$value)
   const gapSize = parseInt(TOKENS__SPACING['xs-1'].$value)
-  const { vItems, vTotalSize, vScrollerRef } = useVirtualScroll({
-    count: datasets.length,
-    itemSize: itemHeight + gapSize,
+  const { vRowItems, vTotalHeight, vScrollerRef } = useVirtualScroll({
+    rowCount: datasets.length,
+    itemHeight: itemHeight + gapSize,
   })
 
   const handleSearchChange = useMemo(() => debounce((value: string) => setSearchKeyword(value), 300), [])
@@ -91,8 +91,8 @@ export const DatasetListing = (props: Props) => {
         </div>
       ) : (
         <div ref={vScrollerRef} className="px-scrollbar-w py-a11y-scrollbar flex-1 overflow-y-auto">
-          <ul className="-mb-xs-1 relative" style={{ height: vTotalSize }}>
-            {vItems.map((vItem: VirtualItem) => (
+          <ul className="-mb-xs-1 relative" style={{ height: vTotalHeight }}>
+            {vRowItems.map((vItem: VirtualItem) => (
               <DatasetItem
                 key={datasets[vItem.index].id}
                 dataset={datasets[vItem.index]}

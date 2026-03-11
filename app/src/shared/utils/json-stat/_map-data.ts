@@ -1,20 +1,21 @@
-import type { JsonStat, TableCol, TableData, TableRow } from './_types'
-import { extractConstantsFromJsonStat } from './_utils'
+import { type TableCol, type TableRow } from '../../types/table'
+import { mapJsonStatConstants } from './_map-constants'
+import { JSON_STAT_VALUE_KEY, type JsonStat, type JsonStatCell, type JsonStatData } from './_types'
 
-const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
+const mapJsonStatData = (jsonStat: JsonStat): JsonStatData => {
   const { id, size, dimension, value } = jsonStat
   const rows: TableRow[] = []
   const indexedValues = Array.isArray(value)
     ? value.map((v, idx) => [idx, v] as const)
     : (() => {
-        const result = [] // Object.entries and Object.keys are too slow for large datasets
+        const result = []
         for (const key in value) {
           result.push([Number(key), value[key]] as const)
         }
         return result
       })()
   const totalRows = indexedValues.length
-  const consts = extractConstantsFromJsonStat(jsonStat)
+  const consts = mapJsonStatConstants(jsonStat)
   const constKeys = consts.map((c) => c.key)
 
   // Build headers from dimension labels plus value column
@@ -25,7 +26,7 @@ const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
         key: dimId,
         label: dimension[dimId]?.label || dimId,
       })),
-    { key: 'value', label: 'Value' },
+    { key: JSON_STAT_VALUE_KEY, label: '' },
   ]
 
   // Pre-build inverted index: dimId -> array of category codes by position
@@ -53,8 +54,10 @@ const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
       // Find the category code at this index
       const categoryCode = dimCodes[j][dimIndex] || ''
 
-      // Use the label as the value
-      row[dimId] = dimension[dimId].category.label[categoryCode] || categoryCode
+      // Use the label as the value, unless it's a constant
+      if (!constKeys.includes(dimId)) {
+        row[dimId] = dimension[dimId].category.label[categoryCode] || categoryCode
+      }
     }
 
     // Add the value
@@ -63,7 +66,18 @@ const mapJsonStatToTable = (jsonStat: JsonStat): TableData => {
     rows.push(row)
   }
 
-  return { cols, rows, consts }
+  // Build cellsByCol
+  const cellsByCol: Record<string, JsonStatCell[]> = Object.fromEntries(
+    id
+      .map((dimId: string) => {
+        const { index, label } = dimension[dimId].category
+        const cells = Object.keys(index).map((code) => ({ code, value: label[code] ?? code }))
+        return [dimId, cells] as const
+      })
+      .filter(([, cells]) => cells.length > 1),
+  )
+
+  return { cols, rows, consts, cellsByCol }
 }
 
-export { mapJsonStatToTable }
+export { mapJsonStatData }
