@@ -70,10 +70,10 @@ const useCountries = () => {
     const code = countries.getAlpha2Code(query, lang)
     if (code) return code.toLowerCase()
 
-    // Bug: getAlpha2Code is working for countries like "Moldova"
+    // Bug: getAlpha2Code is not working for countries like "Moldova" or "Kosovo*"
     const lcQuery = query.toLowerCase()
     const match = Object.entries(countries.getNames(lang)).find(
-      ([, value]) => value.toLowerCase().includes(lcQuery) || lcQuery.includes(value.toLowerCase()),
+      ([, value]) => value.toLowerCase().startsWith(lcQuery) || lcQuery.startsWith(value.toLowerCase()),
     )
 
     return match ? match[0].toLowerCase() : null

@@ -1,16 +1,15 @@
 import type { TableCol, TableData, TableRow } from '../../types/table'
 import { JSON_STAT_VALUE_KEY } from './_types'
 
-type FilterValue = string | number | null
 type PivotConfig = {
   indexColKey: string
   pivotColKey: string
-  filterByCol: Record<string, FilterValue>
+  filterByCol: Record<string, string>
 }
 
 const pivotJsonStatTable = (data: TableData, { indexColKey, pivotColKey, filterByCol }: PivotConfig): TableData => {
   const filterEntries = indexColKey
-    ? Object.entries(filterByCol).filter(([key]) => key !== indexColKey && key !== pivotColKey)
+    ? Object.entries(filterByCol).filter(([key, value]) => value !== '' && key !== indexColKey && key !== pivotColKey)
     : []
   const filteredRows = indexColKey
     ? data.rows.filter((row) => filterEntries.every(([key, value]) => String(row[key]) === value))

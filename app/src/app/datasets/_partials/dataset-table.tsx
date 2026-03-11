@@ -32,7 +32,7 @@ export const DatasetTable = (props: Props) => {
 
   useEffect(() => {
     initTableStore(props.data)
-  }, [])
+  }, [props.data])
 
   return (
     <DataTable

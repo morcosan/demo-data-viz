@@ -30,7 +30,9 @@ export const DatasetModal = (props: Props) => {
           <dt>{t('core.label.source')}</dt>
           <dd>
             {dataset.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
-            <span className="ml-xs-1">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
+            <span className="ml-xs-1">
+              {dataset.source === 'eurostat' ? t('dataViz.label.eurostat') : t('core.label.unknown')}
+            </span>
           </dd>
         </div>
         <div>

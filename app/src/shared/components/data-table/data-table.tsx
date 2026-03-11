@@ -22,7 +22,7 @@ export const DataTable = (props: Props) => {
   const { t } = useTranslation()
   const [searchKeyword, setSearchKeyword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const rootRef = useRef<HTMLTableSectionElement | null>(null)
+  const rootRef = useRef<HTMLDivElement | null>(null)
   const headerRef = useRef<HTMLTableSectionElement | null>(null)
 
   const cellClass = cx('px-xs-6 py-xs-2 text-size-sm border-color-border-subtle truncate')
@@ -138,7 +138,9 @@ export const DataTable = (props: Props) => {
         <table className="min-w-full table-fixed border-collapse" style={{ width: vTotalWidth }}>
           <thead ref={headerRef} className="z-sticky bg-color-bg-card shadow-below-sm sticky top-0">
             <tr>
+              {/* SPACER */}
               <th style={{ width: vSpaceOnLeft, padding: 0 }} />
+              {/* CONTENT */}
               {vColItems.map((vCol) => {
                 const header = tableCols[vCol.index]
                 const sort = header.column.getIsSorted()
@@ -174,13 +176,14 @@ export const DataTable = (props: Props) => {
                   </th>
                 )
               })}
+              {/* SPACER */}
               <th style={{ width: vSpaceOnRight, padding: 0 }} />
             </tr>
           </thead>
           <tbody>
             {isLoading || props.loading ? (
               <tr>
-                <td colSpan={vColItems.length} className="relative">
+                <td colSpan={vColItems.length + 2} className="relative">
                   <div className="flex-center min-h-lg-0 sticky left-0 flex w-full" style={spinnerStyle}>
                     <LoadingSpinner />
                   </div>
@@ -194,9 +197,12 @@ export const DataTable = (props: Props) => {
                     <td style={{ height: vSpaceOnTop }} />
                   </tr>
                 )}
+                {/* CONTENT */}
                 {vRowItems.map((vItem: VirtualItem) => (
                   <tr key={tableRows[vItem.index].id}>
+                    {/* SPACER */}
                     <td style={{ width: vSpaceOnLeft, padding: 0 }} />
+                    {/* CONTENT */}
                     {vColItems.map((vCol) => {
                       const cell = tableRows[vItem.index].getVisibleCells()[vCol.index]
                       return (
@@ -210,6 +216,7 @@ export const DataTable = (props: Props) => {
                         </td>
                       )
                     })}
+                    {/* SPACER */}
                     <td style={{ width: vSpaceOnRight, padding: 0 }} />
                   </tr>
                 ))}

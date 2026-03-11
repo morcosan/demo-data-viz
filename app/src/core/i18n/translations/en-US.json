@@ -36,6 +36,7 @@
       "themeDark": "Dark",
       "themeLight": "Light",
       "unexpectedError": "Unexpected error",
+      "unknown": "Unknown",
       "value": "Value"
     },
     "placeholder": {
@@ -63,6 +64,7 @@
       "datasetsTitle": "Datasets",
       "emptyOptionForIndex": "-- No filters --",
       "emptyOptionForPivot": "-- No split --",
+      "eurostat": "Eurostat",
       "eurostatGeo": "Geopolitical entity",
       "fieldLabelForIndex": "Filter by",
       "fieldLabelForPivot": "Split by",
