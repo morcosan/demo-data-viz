@@ -17,6 +17,7 @@ interface JsonStat {
   value: (number | null)[] | Record<string, number>
 }
 interface JsonStatData extends TableData {
+  source: 'eurostat'
   consts: JsonStatConst[]
   cellsByCol: Record<string, JsonStatCell[]>
 }
@@ -59,6 +60,7 @@ const EurostatConfig = {
     partner: 'WRL_REST',
   },
   GEO_KEY: 'geo',
+  TIME_KEY: 'time',
 } as const
 const JSON_STAT_VALUE_KEY = 'value'
 

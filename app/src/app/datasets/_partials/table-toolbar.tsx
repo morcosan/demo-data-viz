@@ -14,12 +14,13 @@ interface Props {
 export const TableToolbar = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinXL, isViewportMD } = useViewportService()
-  const { indexColKey, pivotColKey } = useTableStore()
+  const indexColKey = useTableStore((s) => s.indexColKey)
+  const pivotColKey = useTableStore((s) => s.pivotColKey)
   const { cellsByCol, cols } = props.data
   const isMdOrLarger = isViewportMinXL || isViewportMD
   const [openedModal, setOpenedModal] = useState(false)
   const colKeys = useMemo(() => [...Object.keys(cellsByCol), ''], [cellsByCol])
-  const filterCount = indexColKey ? colKeys.length - (pivotColKey ? 3 : 2) : 0
+  const filterCount = (indexColKey ? colKeys.length - (pivotColKey ? 3 : 2) : 0) + (pivotColKey ? 1 : 0)
   const getColLabel = useCallback((key: string) => cols.find((col) => col.key === key)?.label || key, [cols])
 
   const indexOptions = useMemo((): SelectOption[] => {
@@ -44,11 +45,11 @@ export const TableToolbar = (props: Props) => {
 
       {isMdOrLarger ? (
         <Button variant="text-default" size="sm" onClick={() => setOpenedModal(true)}>
-          <FilterSvg className="h-xs-7 mr-xs-1" /> {t('dataViz.label.filtersButton', { count: filterCount })}
+          <FilterSvg className="h-xs-7 mr-xs-1" /> {t('dataViz.label.filtersModalButton', { count: filterCount })}
         </Button>
       ) : (
         <IconButton
-          tooltip={t('dataViz.label.filtersButton', { count: filterCount })}
+          tooltip={t('dataViz.label.filtersModalButton', { count: filterCount })}
           variant="text-default"
           size="sm"
           className="ml-auto"
@@ -90,13 +91,13 @@ const IndexPivotMemo = memo(function IndexPivotMemo(props: RowColProps) {
   return (
     <div className="flex flex-1 items-center">
       <Tooltip label={t('dataViz.label.fieldLabelForIndex')} className={wrapperClass}>
-        <SelectField options={props.indexOptions} value={indexColKey} onChange={setIndexColKey} />
+        <SelectField id="index-col" options={props.indexOptions} value={indexColKey} onChange={setIndexColKey} />
       </Tooltip>
 
       <CloseSvg className="h-xs-4 mx-xs-2 text-color-text-placeholder" />
 
       <Tooltip label={t('dataViz.label.fieldLabelForPivot')} className={wrapperClass}>
-        <SelectField options={props.pivotOptions} value={pivotColKey} onChange={setPivotColKey} />
+        <SelectField id="pivot-col" options={props.pivotOptions} value={pivotColKey} onChange={setPivotColKey} />
       </Tooltip>
     </div>
   )

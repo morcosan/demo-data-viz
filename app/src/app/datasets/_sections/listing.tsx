@@ -64,14 +64,16 @@ export const Listing = (props: Props) => {
           ariaLabel={t('dataViz.label.datasetSearch')}
           prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
           suffix={
-            <IconButton
-              tooltip={t('core.action.clearSearch')}
-              variant="text-subtle"
-              size="xs"
-              onClick={() => setSearchKeyword('')}
-            >
-              <CloseSvg className="h-xs-7" />
-            </IconButton>
+            searchKeyword && (
+              <IconButton
+                tooltip={t('core.action.clearSearch')}
+                variant="text-subtle"
+                size="xs"
+                onClick={() => setSearchKeyword('')}
+              >
+                <CloseSvg className="h-xs-7" />
+              </IconButton>
+            )
           }
           onChange={handleSearchChange}
         />
