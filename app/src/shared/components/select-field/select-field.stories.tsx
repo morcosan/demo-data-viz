@@ -6,6 +6,7 @@ const meta: Meta = {
   title: 'Components / SelectField',
   ...defineMeta(SelectField, {
     props: {
+      id: 'example-id',
       options: loremArray(10, 20).map(
         (_, index): SelectOption => ({
           value: String(index),
@@ -17,7 +18,7 @@ const meta: Meta = {
       placeholder: '',
       clearable: false,
       className: '',
-      style: '',
+      style: {},
     },
     events: ['onChange'],
     clearDefaults: ['options', 'value'],

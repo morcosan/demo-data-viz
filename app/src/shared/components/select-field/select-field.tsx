@@ -11,6 +11,7 @@ export type SelectOption = ComboboxItem
 export type SelectValue = string | null
 
 export interface SelectFieldProps extends ReactProps {
+  id: string
   options: SelectOption[]
   value: SelectValue
   placeholder?: string
@@ -22,6 +23,7 @@ export const SelectField = (props: SelectFieldProps) => {
   const { t } = useTranslation()
 
   const getSelectProps = (css: Function): MantineSelectProps => ({
+    id: props.id,
     data: props.options,
     value: props.value,
     placeholder: props.placeholder,

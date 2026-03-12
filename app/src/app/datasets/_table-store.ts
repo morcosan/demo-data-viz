@@ -5,18 +5,24 @@ interface TableStore {
   indexColKey: string
   pivotColKey: string
   filterByCol: Record<string, string>
-  initTableStore: (data: JsonStatData) => void
-  setIndexColKey: (key: string | null) => void
-  setPivotColKey: (key: string | null) => void
+  colQuery: string[]
+  initTableStore: (data: JsonStatData) => Promise<void>
+  resetColQuery: (data: JsonStatData) => Promise<void>
+  setIndexColKey: (value: string | null) => void
+  setPivotColKey: (value: string | null) => void
   setFilterByCol: (value: string | null, key: string) => void
+  setColQuery: (value: string[]) => void
 }
 
 export const useTableStore = create<TableStore>((set) => ({
   indexColKey: '',
   pivotColKey: '',
   filterByCol: {},
+  colQuery: [],
 
-  initTableStore: (data: JsonStatData) => {
+  initTableStore: async (data: JsonStatData) => {
+    if (data.source !== 'eurostat') return
+
     const { DEFAULT_ROW_KEY, DEFAULT_COL_KEY, DEFAULT_FILTERS } = EurostatConfig
     const colKeys = Object.keys(data.cellsByCol)
 
@@ -36,9 +42,19 @@ export const useTableStore = create<TableStore>((set) => ({
     })
   },
 
+  resetColQuery: async (data: JsonStatData) => {
+    if (data.source !== 'eurostat') return
+
+    const currentYear = new Date().getFullYear()
+    const timeQuery = [String(currentYear - 1), String(currentYear)]
+
+    set((state) => ({ colQuery: state.pivotColKey === EurostatConfig.TIME_KEY ? timeQuery : [] }))
+  },
+
   setIndexColKey: (value: string | null) => set({ indexColKey: value || '' }),
   setPivotColKey: (value: string | null) => set({ pivotColKey: value || '' }),
   setFilterByCol: (value: string | null, key: string) => {
     set((state) => ({ filterByCol: { ...state.filterByCol, [key]: value || '' } }))
   },
+  setColQuery: (value: string[]) => set({ colQuery: value }),
 }))

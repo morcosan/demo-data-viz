@@ -54,9 +54,11 @@
   },
   "dataViz": {
     "action": {
+      "clearColumnQuery": "Clear column query",
       "viewDetails": "View details"
     },
     "label": {
+      "columnQuery": "Column query",
       "dataTableSearch": "Data table search",
       "datasetDetails": "Dataset details",
       "datasetResults": "{total} datasets",
@@ -68,12 +70,15 @@
       "eurostatGeo": "Geopolitical entity",
       "fieldLabelForIndex": "Filter by",
       "fieldLabelForPivot": "Split by",
-      "filtersButton": "Filters ({count})",
-      "filtersTitle": "Table filters",
+      "filtersModalButton": "Filters ({count})",
+      "filtersModalTitle": "Table config & filters",
       "headerConstants": "Coverage",
-      "headerMainFilters": "Data display",
-      "headerMetadata": "Metadata",
-      "headerOtherFilters": "Active filters ({count})"
+      "headerFiltersModal1": "Table config",
+      "headerFiltersModal2": "Filters ({count})",
+      "headerMetadata": "Metadata"
+    },
+    "notice": {
+      "columnQuery": "You can use ' OR ' operator to query multiple values"
     },
     "error": {
       "fetchDataset": "Failed to load dataset",

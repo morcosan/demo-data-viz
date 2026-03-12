@@ -77,7 +77,7 @@ const mapJsonStatData = (jsonStat: JsonStat): JsonStatData => {
       .filter(([, cells]) => cells.length > 1),
   )
 
-  return { cols, rows, consts, cellsByCol }
+  return { cols, rows, consts, cellsByCol, source: 'eurostat' }
 }
 
 export { mapJsonStatData }
