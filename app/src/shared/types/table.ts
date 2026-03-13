@@ -4,6 +4,7 @@ export type TableCol = {
   key: string
   label: string
   size?: number
+  pivoted?: boolean
 }
 export type TableData = {
   cols: TableCol[]

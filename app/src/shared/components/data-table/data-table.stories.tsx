@@ -24,6 +24,7 @@ const meta: Meta = {
       },
       cellFn: undefined,
       loading: false,
+      sticky: false,
       className: '',
       style: { height: '600px' },
     },

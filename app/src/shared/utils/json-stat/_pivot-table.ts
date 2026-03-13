@@ -37,7 +37,7 @@ const pivotJsonStatTable = (data: TableData, { indexColKey, pivotColKey, filterB
     const isNoPivotCol = (col: TableCol) => col.key !== JSON_STAT_VALUE_KEY && col.key !== pivotColKey
     const indexCols = data.cols.filter((col) => isIndexCol(col) && isNoPivotCol(col))
     const pivotValues = [...new Set(data.rows.map((row) => String(row[pivotColKey])))]
-    const pivotCols = pivotValues.map((value) => ({ key: value, label: value }))
+    const pivotCols = pivotValues.map((value): TableCol => ({ key: value, label: value, pivoted: true }))
     finalCols = [...indexCols, ...pivotCols]
     finalRows = [...rowMap.values()]
   } else {
