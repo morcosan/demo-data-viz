@@ -23,8 +23,8 @@ export const DatasetTable = (props: Props) => {
     [props.data, indexColKey, pivotColKey, filterByCol],
   )
   const isColVisible = useCallback(
-    (col: TableCol) => col.key === indexColKey || colQuery.some((keyword) => col.label.toLowerCase().includes(keyword)),
-    [indexColKey, colQuery],
+    (col: TableCol) => !col.pivoted || colQuery.some((keyword) => col.label.toLowerCase().includes(keyword)),
+    [colQuery],
   )
   const visibleData = useMemo(() => {
     return pivotColKey && colQuery.length
@@ -38,7 +38,7 @@ export const DatasetTable = (props: Props) => {
     return (
       <>
         {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        <TextHighlight text={text} query={query} />
+        {query.trim() ? <TextHighlight text={text} query={query} /> : text}
       </>
     )
   }
@@ -50,6 +50,7 @@ export const DatasetTable = (props: Props) => {
   return (
     <DataTable
       data={visibleData}
+      sticky={Boolean(indexColKey && pivotColKey)}
       cellFn={cellFn}
       toolbar={<TableToolbar data={props.data} />}
       className={props.className}

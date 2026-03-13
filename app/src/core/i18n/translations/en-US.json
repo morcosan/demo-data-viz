@@ -23,7 +23,6 @@
       "dataSize": "Data size",
       "datasetId": "Dataset ID",
       "dsStorybook": "Design System",
-      "empty": "Empty",
       "githubRepo": "GitHub Repo",
       "lastUpdate": "Last update",
       "navigationBar": "Navigation bar",
@@ -58,12 +57,13 @@
       "viewDetails": "View details"
     },
     "label": {
-      "columnQuery": "Column query",
+      "columnQuery": "Split column query",
       "dataTableSearch": "Data table search",
       "datasetDetails": "Dataset details",
       "datasetResults": "{total} datasets",
       "datasetSearch": "Dataset search",
       "datasetsTitle": "Datasets",
+      "emptyCell": "-",
       "emptyOptionForIndex": "-- No filters --",
       "emptyOptionForPivot": "-- No split --",
       "eurostat": "Eurostat",

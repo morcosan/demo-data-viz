@@ -5,10 +5,12 @@ import { useTranslation } from '@app-i18n'
 import { type TableCol, type TableData, type TableRow, type TableRowValue } from '@app/shared/types/table'
 import { computeTextWidth } from '@app/shared/utils/formatting'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { CloseSvg, IconButton, SearchSvg, SortAscSvg, SortDescSvg, SortNoneSvg, TextField, wait } from '@ds/core'
-import { type CellContext, flexRender } from '@tanstack/react-table'
-import { debounce } from 'lodash'
+import { wait } from '@ds/core'
+import { type CellContext } from '@tanstack/react-table'
 import { type CSSProperties, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ColCell } from './_partials/col-cell'
+import { RowCell } from './_partials/row-cell'
+import { Toolbar } from './_partials/toolbar'
 import { useTableModel } from './_use-table-model'
 
 interface Props extends ReactProps {
@@ -16,18 +18,15 @@ interface Props extends ReactProps {
   cellFn?: (value: TableRowValue, query: string) => ReactNode
   toolbar?: ReactNode
   loading?: boolean
+  sticky?: boolean
 }
 
 export const DataTable = (props: Props) => {
   const { t } = useTranslation()
-  const [searchKeyword, setSearchKeyword] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
   const headerRef = useRef<HTMLTableSectionElement | null>(null)
-
-  const cellClass = cx('px-xs-6 py-xs-2 text-size-sm border-color-border-subtle truncate')
-  const headerClass = cx('font-weight-lg', cellClass)
-  const rowClass = cx('border-b', cellClass)
 
   const computeColSize = useCallback(
     (col: TableCol): number => {
@@ -57,39 +56,41 @@ export const DataTable = (props: Props) => {
   const cellRenderer = useCallback(
     (info: CellContext<TableRow, unknown>) => {
       const value = info.getValue() as TableRowValue
-      const cell = cellFn ? cellFn(value, searchKeyword) : value
+      const content = cellFn ? cellFn(value, searchQuery) : value
       return !value && value !== 0 ? (
-        <span className="text-size-xs text-color-text-placeholder italic">{t('core.label.empty')}</span>
-      ) : !searchKeyword.trim() || typeof cell !== 'string' ? (
-        cell
+        <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
+      ) : !searchQuery.trim() || typeof content !== 'string' ? (
+        content
       ) : (
-        <TextHighlight text={String(cell ?? '')} query={searchKeyword} />
+        <TextHighlight text={String(content ?? '')} query={searchQuery} />
       )
     },
-    [cellFn, searchKeyword, t],
+    [cellFn, searchQuery, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,
     rows: props.data.rows,
-    filter: searchKeyword,
+    filter: searchQuery,
     cellRenderer,
   })
 
-  const virtualScroll = useVirtualScroll({
+  const virtualizer = useVirtualScroll({
     rowCount: tableRows.length,
     colCount: tableCols.length,
     itemHeight: 50,
     itemWidth: (index) => tableCols[index].column.getSize(),
   })
-  const { vRowItems, vColItems, vTotalWidth, vScrollerRef, vColItemRef } = virtualScroll
-  const { vSpaceOnTop, vSpaceOnBottom, vSpaceOnLeft, vSpaceOnRight } = virtualScroll
+  const { vRowItems, vColItems, vTotalWidth, vScrollerRef } = virtualizer
+  const { vSpaceOnTop, vSpaceOnBottom, vSpaceOnRight } = virtualizer
+  const stickyColWidth = tableCols[0]?.column.getSize() ?? 0
+  const vSpaceOnLeft = props.sticky
+    ? virtualizer.vSpaceOnLeft - (vColItems[0]?.index === 0 ? 0 : stickyColWidth)
+    : virtualizer.vSpaceOnLeft
 
   const spinnerStyle: CSSProperties = {
     width: rootRef.current?.clientWidth || 0,
     height: (vScrollerRef.current?.clientHeight || 0) - (headerRef.current?.clientHeight || 0),
   }
-
-  const handleSearchChange = useMemo(() => debounce((value: string) => setSearchKeyword(value), 300), [])
 
   useEffect(() => {
     if (vScrollerRef.current) {
@@ -109,75 +110,26 @@ export const DataTable = (props: Props) => {
       )}
       style={props.style}
     >
-      <div className="m-xs-2 gap-xs-2 flex flex-wrap items-center justify-between">
-        {props.toolbar}
+      {/* TOOLBAR */}
+      <Toolbar toolbar={props.toolbar} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-        <TextField
-          value={searchKeyword}
-          id="dataset-search"
-          className="lg:max-w-lg-9 w-full"
-          size="sm"
-          placeholder={t('core.placeholder.search')}
-          ariaLabel={t('dataViz.label.dataTableSearch')}
-          prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
-          suffix={
-            searchKeyword && (
-              <IconButton
-                tooltip={t('core.action.clearSearch')}
-                variant="text-subtle"
-                size="xs"
-                onClick={() => setSearchKeyword('')}
-              >
-                <CloseSvg className="h-xs-7" />
-              </IconButton>
-            )
-          }
-          onChange={handleSearchChange}
-        />
-      </div>
-
+      {/* TABLE */}
       <div ref={vScrollerRef} className="border-color-border-subtle min-h-0 flex-1 overflow-auto border-t">
-        <table className="min-w-full table-fixed border-collapse" style={{ width: vTotalWidth }}>
+        <table className="min-w-full border-collapse" style={{ width: vTotalWidth }}>
           <thead ref={headerRef} className="z-sticky bg-color-bg-card shadow-below-sm sticky top-0">
             <tr>
+              {/* STICKY */}
+              {props.sticky && tableCols.length > 0 && (
+                <ColCell key={tableCols[0].id} cell={tableCols[0]} width={stickyColWidth} sticky />
+              )}
               {/* SPACER */}
               <th style={{ width: vSpaceOnLeft, padding: 0 }} />
               {/* CONTENT */}
-              {vColItems.map((vCol) => {
-                const header = tableCols[vCol.index]
-                const sort = header.column.getIsSorted()
-                return (
-                  <th
-                    key={header.id}
-                    ref={vColItemRef}
-                    data-index={vCol.index}
-                    title={header.column.columnDef.header as string}
-                    className={headerClass}
-                    style={{ width: vCol.size }}
-                  >
-                    {header.isPlaceholder ? null : (
-                      <div className="gap-xs-1 flex items-center">
-                        <span className="truncate">
-                          {flexRender(header.column.columnDef.header, header.getContext())}
-                        </span>
-                        {header.column.getCanSort() && (
-                          <IconButton
-                            tooltip={t('core.action.sort')}
-                            variant={sort ? 'solid-secondary' : 'text-default'}
-                            size="sm"
-                            className="rounded-full! before:rounded-full! after:rounded-full!"
-                            onClick={header.column.getToggleSortingHandler()}
-                          >
-                            {sort === 'asc' && <SortAscSvg className="h-xs-8" />}
-                            {sort === 'desc' && <SortDescSvg className="h-xs-8" />}
-                            {sort === false && <SortNoneSvg className="h-xs-6 text-color-text-subtle" />}
-                          </IconButton>
-                        )}
-                      </div>
-                    )}
-                  </th>
-                )
-              })}
+              {vColItems
+                .filter((vCol) => vCol.index !== 0 || !props.sticky)
+                .map((vCol: VirtualItem) => (
+                  <ColCell key={tableCols[vCol.index].id} cell={tableCols[vCol.index]} width={vCol.size} />
+                ))}
               {/* SPACER */}
               <th style={{ width: vSpaceOnRight, padding: 0 }} />
             </tr>
@@ -200,28 +152,33 @@ export const DataTable = (props: Props) => {
                   </tr>
                 )}
                 {/* CONTENT */}
-                {vRowItems.map((vItem: VirtualItem) => (
-                  <tr key={tableRows[vItem.index].id}>
-                    {/* SPACER */}
-                    <td style={{ width: vSpaceOnLeft, padding: 0 }} />
-                    {/* CONTENT */}
-                    {vColItems.map((vCol) => {
-                      const cell = tableRows[vItem.index].getVisibleCells()[vCol.index]
-                      return (
-                        <td
-                          key={cell.id}
-                          title={cell.getValue() as string}
-                          className={rowClass}
-                          style={{ height: vItem.size, width: vCol.size }}
-                        >
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
-                      )
-                    })}
-                    {/* SPACER */}
-                    <td style={{ width: vSpaceOnRight, padding: 0 }} />
-                  </tr>
-                ))}
+                {vRowItems.map((vItem: VirtualItem) => {
+                  const cells = tableRows[vItem.index].getVisibleCells()
+                  if (!cells) return null
+                  return (
+                    <tr key={tableRows[vItem.index].id}>
+                      {/* STICKY */}
+                      {props.sticky && cells.length > 0 && (
+                        <RowCell cell={cells[0]} width={stickyColWidth} height={vItem.size} sticky />
+                      )}
+                      {/* SPACER */}
+                      <td style={{ width: vSpaceOnLeft, padding: 0 }} />
+                      {/* CONTENT */}
+                      {vColItems
+                        .filter((vCol) => vCol.index !== 0 || !props.sticky)
+                        .map((vCol: VirtualItem) => (
+                          <RowCell
+                            key={cells[vCol.index].id}
+                            cell={cells[vCol.index]}
+                            width={vCol.size}
+                            height={vItem.size}
+                          />
+                        ))}
+                      {/* SPACER */}
+                      <td style={{ width: vSpaceOnRight, padding: 0 }} />
+                    </tr>
+                  )
+                })}
                 {/* SPACER */}
                 {vRowItems.length > 0 && (
                   <tr>
