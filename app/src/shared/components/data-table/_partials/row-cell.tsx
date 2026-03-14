@@ -16,7 +16,7 @@ export const RowCell = (props: Props) => {
     props.sticky && 'border-r',
   )
   const innerClass = cx('absolute-center-y px-xs-6 flex h-full w-full items-center', isNumeric && 'justify-end')
-  const textClass = cx('text-size-sm line-clamp-2', isNumeric && 'pr-xs-5')
+  const textClass = cx('text-size-sm line-clamp-2', isNumeric && 'pr-xs-6')
 
   return (
     <td
