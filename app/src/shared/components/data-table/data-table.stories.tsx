@@ -1,5 +1,14 @@
 import { type TableCol } from '@app/shared/types/table'
-import { defineMeta, loremArray, loremInt, loremText } from '@ds/docs/core'
+import {
+  defineMeta,
+  loremArray,
+  loremBool,
+  loremFalse,
+  loremFloat,
+  loremInt,
+  loremText,
+  loremTrue,
+} from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { DataTable } from './data-table'
 
@@ -7,7 +16,9 @@ const cols: TableCol[] = loremArray(4, 50).map((_, index: number) => ({
   key: String(index),
   label: `Header ${index + 1}`,
   size: loremInt(100, 200),
+  type: loremBool() ? 'any' : loremBool() ? 'int' : 'float',
 }))
+const MIN_MAX = 1_000_000_000
 
 const meta: Meta = {
   title: 'Components / DataTable',
@@ -19,7 +30,24 @@ const meta: Meta = {
       data: {
         cols,
         rows: loremArray(100).map(() => {
-          return Object.fromEntries(cols.map((col: TableCol) => [col.key, loremText(3)]))
+          return Object.fromEntries(
+            cols.map((col: TableCol) => [
+              col.key,
+              loremTrue()
+                ? col.type === 'int' || col.type === 'float'
+                  ? loremFalse()
+                    ? 0
+                    : loremBool()
+                      ? loremInt(-MIN_MAX, MIN_MAX)
+                      : loremFloat(-MIN_MAX, MIN_MAX)
+                  : loremFalse()
+                    ? loremBool()
+                      ? loremInt(-MIN_MAX, MIN_MAX)
+                      : loremFloat(-MIN_MAX, MIN_MAX)
+                    : loremText(3)
+                : '',
+            ]),
+          )
         }),
       },
       cellFn: undefined,

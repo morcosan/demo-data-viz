@@ -1,7 +1,12 @@
 import i18n from 'i18next'
 
-const formatNumber = (value?: number): string => {
-  return value?.toLocaleString(i18n.language, { maximumFractionDigits: 2 }) || ''
+const formatNumber = (value?: number, decimals?: number): string => {
+  return value !== undefined
+    ? value.toLocaleString(i18n.language, {
+        minimumFractionDigits: decimals || 0,
+        maximumFractionDigits: 2,
+      })
+    : ''
 }
 
 const formatDate = (value?: string | Date): string => {

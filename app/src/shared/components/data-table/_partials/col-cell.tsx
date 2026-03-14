@@ -1,10 +1,11 @@
 import { useTranslation } from '@app-i18n'
-import { type TableRow } from '@app/shared/types/table'
+import { type TableCol, type TableRow } from '@app/shared/types/table'
 import { IconButton, SortAscSvg, SortDescSvg, SortNoneSvg } from '@ds/core'
 import { flexRender, type Header } from '@tanstack/react-table'
 
 interface Props {
   cell: Header<TableRow, unknown>
+  col: TableCol
   width: number
   sticky?: boolean
 }
@@ -13,11 +14,13 @@ export const ColCell = (props: Props) => {
   const { t } = useTranslation()
   const sort = props.cell.column.getIsSorted()
 
+  const isNumeric = props.col.type === 'int' || props.col.type === 'float'
   const cellClass = cx(
     'px-xs-6 py-xs-2 gap-xs-1 flex h-full items-center',
     'bg-color-bg-card',
     'text-size-sm font-weight-lg truncate',
     props.sticky && 'border-color-border-subtle border-r',
+    isNumeric && 'justify-end',
   )
 
   return (

@@ -22,11 +22,12 @@ const mapJsonStatData = (jsonStat: JsonStat): JsonStatData => {
   const cols: TableCol[] = [
     ...id
       .filter((dimId) => !constKeys.includes(dimId))
-      .map((dimId) => ({
+      .map<TableCol>((dimId) => ({
         key: dimId,
         label: dimension[dimId]?.label || dimId,
+        type: 'any',
       })),
-    { key: JSON_STAT_VALUE_KEY, label: '' },
+    { key: JSON_STAT_VALUE_KEY, label: '', type: 'float' },
   ]
 
   // Pre-build inverted index: dimId -> array of category codes by position

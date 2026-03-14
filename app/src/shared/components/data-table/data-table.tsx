@@ -2,12 +2,12 @@
 
 import { LoadingSpinner, TextHighlight } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { type TableCol, type TableData, type TableRow, type TableRowValue } from '@app/shared/types/table'
-import { computeTextWidth } from '@app/shared/utils/formatting'
+import { type TableCell, type TableCol, type TableData, type TableRow } from '@app/shared/types/table'
+import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
 import { wait } from '@ds/core'
 import { type CellContext } from '@tanstack/react-table'
-import { type CSSProperties, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { ColCell } from './_partials/col-cell'
 import { RowCell } from './_partials/row-cell'
 import { Toolbar } from './_partials/toolbar'
@@ -15,7 +15,7 @@ import { useTableModel } from './_use-table-model'
 
 interface Props extends ReactProps {
   data: TableData
-  cellFn?: (value: TableRowValue, query: string) => ReactNode
+  cellFn?: (value: string, query: string) => ReactNode
   toolbar?: ReactNode
   loading?: boolean
   sticky?: boolean
@@ -35,6 +35,7 @@ export const DataTable = (props: Props) => {
       const FONT_SIZE = 14 // sm
       const SORT_BUTTON_WIDTH = 32 // button-h-sm
       const SORT_BUTTON_MARGIN = 6 // xs-2
+      const EXTRA_PADDING = 24 // sm-0
       const CELL_PADDING = 14 * 2 // xs-6
       const SAMPLE_SIZE = 100
 
@@ -42,9 +43,10 @@ export const DataTable = (props: Props) => {
       const headerSize = computeTextWidth(col.label, FONT_SIZE)
       const rowSizes = rows.map((row) => computeTextWidth(String(row[col.key] ?? ''), FONT_SIZE))
       const avgRowSize = rowSizes.length ? rowSizes.reduce((sum, size) => sum + size, 0) / rowSizes.length : 0
-      const totalSize = Math.max(headerSize, avgRowSize) + CELL_PADDING + SORT_BUTTON_WIDTH + SORT_BUTTON_MARGIN
+      const totalSize = Math.max(headerSize, avgRowSize)
+      const padding = CELL_PADDING + SORT_BUTTON_WIDTH + SORT_BUTTON_MARGIN + EXTRA_PADDING
 
-      return Math.min(MAX_COL_SIZE, Math.max(MIN_COL_SIZE, Math.round(totalSize)))
+      return Math.min(MAX_COL_SIZE, Math.max(MIN_COL_SIZE, Math.round(totalSize + padding)))
     },
     [props.data.rows],
   )
@@ -53,25 +55,28 @@ export const DataTable = (props: Props) => {
     [props.data.cols, computeColSize],
   )
   const { cellFn } = props
-  const cellRenderer = useCallback(
-    (info: CellContext<TableRow, unknown>) => {
-      const value = info.getValue() as TableRowValue
-      const content = cellFn ? cellFn(value, searchQuery) : value
-      return !value && value !== 0 ? (
-        <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
-      ) : !searchQuery.trim() || typeof content !== 'string' ? (
-        content
-      ) : (
-        <TextHighlight text={String(content ?? '')} query={searchQuery} />
-      )
+  const renderCell = useCallback(
+    (info: CellContext<TableRow, TableCell>) => {
+      const value = info.getValue()
+      if (value === '') return <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
+
+      const colType = columns[info.column.getIndex()].type
+      const isNumeric = colType === 'float' || colType === 'int'
+      const decimals = colType === 'float' ? 2 : 0
+      const numValue = colType === 'float' ? parseFloat(String(value)) : parseInt(String(value))
+      const strValue = isNumeric && !isNaN(numValue) ? formatNumber(numValue, decimals) : String(value)
+      const query = searchQuery.trim()
+
+      if (cellFn) return cellFn(strValue, query)
+      return query ? <TextHighlight text={strValue} query={query} /> : strValue
     },
-    [cellFn, searchQuery, t],
+    [columns, cellFn, searchQuery, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,
     rows: props.data.rows,
     filter: searchQuery,
-    cellRenderer,
+    cellFn: renderCell,
   })
 
   const virtualizer = useVirtualScroll({
@@ -120,7 +125,7 @@ export const DataTable = (props: Props) => {
             <tr>
               {/* STICKY */}
               {props.sticky && tableCols.length > 0 && (
-                <ColCell key={tableCols[0].id} cell={tableCols[0]} width={stickyColWidth} sticky />
+                <ColCell key={tableCols[0].id} cell={tableCols[0]} col={columns[0]} width={stickyColWidth} sticky />
               )}
               {/* SPACER */}
               <th style={{ width: vSpaceOnLeft, padding: 0 }} />
@@ -128,7 +133,12 @@ export const DataTable = (props: Props) => {
               {vColItems
                 .filter((vCol) => vCol.index !== 0 || !props.sticky)
                 .map((vCol: VirtualItem) => (
-                  <ColCell key={tableCols[vCol.index].id} cell={tableCols[vCol.index]} width={vCol.size} />
+                  <ColCell
+                    key={tableCols[vCol.index].id}
+                    cell={tableCols[vCol.index]}
+                    col={columns[vCol.index]}
+                    width={vCol.size}
+                  />
                 ))}
               {/* SPACER */}
               <th style={{ width: vSpaceOnRight, padding: 0 }} />
@@ -159,7 +169,7 @@ export const DataTable = (props: Props) => {
                     <tr key={tableRows[vItem.index].id}>
                       {/* STICKY */}
                       {props.sticky && cells.length > 0 && (
-                        <RowCell cell={cells[0]} width={stickyColWidth} height={vItem.size} sticky />
+                        <RowCell cell={cells[0]} col={columns[0]} width={stickyColWidth} height={vItem.size} sticky />
                       )}
                       {/* SPACER */}
                       <td style={{ width: vSpaceOnLeft, padding: 0 }} />
@@ -170,6 +180,7 @@ export const DataTable = (props: Props) => {
                           <RowCell
                             key={cells[vCol.index].id}
                             cell={cells[vCol.index]}
+                            col={columns[vCol.index]}
                             width={vCol.size}
                             height={vItem.size}
                           />

@@ -1,4 +1,4 @@
-import type { TableData, TableRowValue } from '@app/shared/types/table'
+import type { TableCell, TableData } from '@app/shared/types/table'
 import { z } from 'zod'
 
 interface JsonStat {
@@ -24,11 +24,11 @@ interface JsonStatData extends TableData {
 interface JsonStatConst {
   key: string
   label: string
-  value: TableRowValue
+  value: TableCell
 }
 interface JsonStatCell {
   code: string
-  value: TableRowValue
+  value: TableCell
 }
 
 const JsonStatSchema = z.object({
