@@ -13,5 +13,5 @@
       "@ds/*": ["./dist/*"]
     }
   },
-  "include": ["src/**/*", "docs/**/*", ".storybook/preview.tsx"]
+  "include": ["src/**/*", "docs/**/*", ".storybook/preview/**/*"]
 }

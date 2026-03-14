@@ -8,5 +8,6 @@
     "lib": ["ESNext"],
     "types": ["node"]
   },
-  "include": ["vite.config.ts", "eslint.config.ts", ".storybook/**/*.ts", "dist/scripts/**/*"]
+  "include": ["vite.config.ts", "eslint.config.ts", ".storybook/**/*.ts", "scripts/**/*"],
+  "exclude": [".storybook/preview/**/*", ".storybook/preview/vitest.setup.ts"]
 }

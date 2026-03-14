@@ -14,7 +14,7 @@
     "sb--build": "storybook build -o out-sb",
     "sb--serve": "vite preview --outDir out-sb --port 6006",
     "sb--test": "vitest --project=storybook",
-    "lint": "eslint .",
+    "lint-all": "eslint . && tsc -b --noEmit",
     "clear-cache": "rmdir /s /q .next"
   },
   "dependencies": {

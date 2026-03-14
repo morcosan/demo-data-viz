@@ -1,2 +1,2 @@
-@import 'tailwindcss';
+@import '@ds/docs/styles';
 @config './tailwind.config.ts';

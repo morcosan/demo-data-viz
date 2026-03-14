@@ -8,6 +8,6 @@
     "lib": ["ESNext"],
     "types": ["node"]
   },
-  "include": ["next.config.ts", "eslint.config.ts", "vitest.config.ts", ".storybook/**/*.ts", "scripts/**/*.ts"],
-  "exclude": [".storybook/preview.types.d.ts"]
+  "include": ["next.config.ts", "eslint.config.ts", "vitest.config.ts", ".storybook/**/*", "scripts/**/*.ts"],
+  "exclude": [".storybook/preview/**/*"]
 }
