@@ -8,7 +8,7 @@ import {
   toolbarConfig,
 } from '@ds/docs/core'
 import { type Preview } from '@storybook/react-vite'
-import './styles.css'
+import './styles/tailwind.css'
 
 LOG('BUILD_NUMBER:', ENV__BUILD_NUMBER)
 LOG('DS_VERSION:', ENV__DS_VERSION)

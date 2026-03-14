@@ -13,6 +13,7 @@ const dsPath = path.join(dirname, '../../ds/dist')
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.@(mdx|stories.@(js|jsx|mjs|ts|tsx))'], // Must be a single regex
+  previewAnnotations: (entry = []) => [...entry, path.resolve(dirname, './preview/preview.tsx')],
   addons: [
     '@storybook/addon-vitest',
     '@storybook/addon-a11y',

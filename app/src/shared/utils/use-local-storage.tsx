@@ -58,7 +58,6 @@ function useLocalStorage<T>(key: string, onError?: ErrorFn) {
     // Query state
     data: query.data,
     isLoading: query.isLoading,
-    isError: query.isError,
     error: query.error,
 
     // Mutations
