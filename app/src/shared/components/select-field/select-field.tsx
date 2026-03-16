@@ -133,6 +133,7 @@ const cssDropdown = css`
 
     & svg {
       opacity: 1;
+      margin-top: -2px;
     }
   }
 `

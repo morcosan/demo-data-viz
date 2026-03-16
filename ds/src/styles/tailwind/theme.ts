@@ -20,6 +20,7 @@ export const tailwindTheme = {
   borderRadius: createTokens(TOKENS.RADIUS, CSS_PREFIX.RADIUS, ''),
   boxShadow: createTokens(TOKENS.SHADOW, CSS_PREFIX.SHADOW, ''),
   colors: createTokens(TOKENS.COLOR, CSS_PREFIX.COLOR, 'color-'),
+  fontFamily: createTokens(TOKENS.FONT_FAMILY, CSS_PREFIX.FONT_FAMILY, 'family-'),
   fontSize: createTokens(TOKENS.FONT_SIZE, CSS_PREFIX.FONT_SIZE, 'size-'),
   fontWeight: createTokens(TOKENS.FONT_WEIGHT, CSS_PREFIX.FONT_WEIGHT, 'weight-'),
   lineHeight: createTokens(TOKENS.LINE_HEIGHT, CSS_PREFIX.LINE_HEIGHT, ''),

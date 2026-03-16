@@ -132,13 +132,13 @@ code.docs {
   border: 1px solid var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-xs);
   background-color: var(--ds-color-bg-coding);
-  padding: var(--ds-spacing-xs-0) var(--ds-spacing-xs-2) var(--ds-spacing-xs-0);
+  padding: 1px var(--ds-spacing-xs-2);
   width: fit-content;
   color: unset;
   font-weight: var(--ds-font-weight-md);
-  font-size: var(--ds-font-size-sm);
+  font-size: var(--ds-font-size-sm-mono);
   line-height: unset;
-  font-family: var(--default-mono-font-family);
+  font-family: var(--ds-font-family-mono);
   white-space: nowrap;
   word-break: break-word;
 }

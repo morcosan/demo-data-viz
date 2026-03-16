@@ -4,12 +4,12 @@ declare global {
     version: string
     date: string | null
     changes: {
-      breakages?: string[]
-      deprecations?: string[]
+      breaking?: string[]
+      deprecated?: string[]
       tokens?: string[]
       components?: string[]
       services?: string[]
-      utilities?: string[]
+      utils?: string[]
       assets?: string[]
       docs?: string[]
     }

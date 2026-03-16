@@ -8,4 +8,10 @@
   --ds-font-size-lg: 1.25rem; /* 20px */
   --ds-font-size-xl: 1.5rem; /* 24px */
   --ds-font-size-xxl: 2rem; /* 32px */
+  --ds-font-size-xs-mono: 0.6875rem; /* 11px */
+  --ds-font-size-sm-mono: 0.8125rem; /* 13px */
+  --ds-font-size-md-mono: 0.9375rem; /* 15px */
+  --ds-font-size-lg-mono: 1.1875rem; /* 19px */
+  --ds-font-size-xl-mono: 1.4375rem; /* 23px */
+  --ds-font-size-xxl-mono: 1.9375rem; /* 31px */
 }

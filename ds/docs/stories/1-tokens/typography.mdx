@@ -1,6 +1,53 @@
-import { CSS_PREFIX, TOKENS__FONT_SIZE, TOKENS__FONT_WEIGHT, TOKENS__LINE_HEIGHT } from '@ds/core'
+import { CSS_PREFIX, TOKENS } from '@ds/core'
 import { DocsTokenCoding } from '@ds/docs/core'
 import { Meta } from '@storybook/addon-docs/blocks'
+
+export const SAMPLE_TEXT = `The quick brown fox jumps over the lazy dog 0123456789 !@#$%&*().,;:?'"`
+
+export const FontFamily = () => (
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th className="w-full">Sample</th>
+        <th>Coding</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS.FONT_FAMILY).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <code className="block whitespace-pre!">{token.$value.split(',').join('\n')}</code>
+          </td>
+          <td style={{ fontFamily: `var(${CSS_PREFIX.FONT_FAMILY}${name})` }}>
+            {name === 'sans' ? (
+              <>
+                <div>{SAMPLE_TEXT}</div>
+                <div className="italic">{SAMPLE_TEXT}</div>
+              </>
+            ) : (
+              SAMPLE_TEXT
+            )}
+          </td>
+          <td>
+            <DocsTokenCoding
+              tsVar={`$fontFamily['${name}']`}
+              tsSize="w-lg-1"
+              twVars={[`font-family-${name}`]}
+              twSize="w-lg-1"
+              cssVar={`${CSS_PREFIX.FONT_FAMILY}${name}`}
+              cssSize="w-lg-3"
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
 
 export const FontSize = () => (
   <table className="docs">
@@ -8,14 +55,15 @@ export const FontSize = () => (
       <tr>
         <th>Token</th>
         <th>Value</th>
-        <th className="w-full">Value (px)</th>
+        <th className="whitespace-nowrap">Value (px)</th>
+        <th className="w-full">Sample</th>
         <th>Coding</th>
       </tr>
     </thead>
     <tbody>
-      {Object.entries(TOKENS__FONT_SIZE).map(([name, token]) => (
+      {Object.entries(TOKENS.FONT_SIZE).map(([name, token]) => (
         <tr key={name}>
-          <td style={{ fontSize: `var(${CSS_PREFIX.FONT_SIZE}${name})` }}>
+          <td>
             <pre>{name}</pre>
           </td>
           <td>
@@ -24,14 +72,22 @@ export const FontSize = () => (
           <td>
             <code>{Number(token.$value.replace('rem', '')) * 16}px</code>
           </td>
+          <td
+            style={{
+              fontSize: `var(${CSS_PREFIX.FONT_SIZE}${name})`,
+              fontFamily: `var(${CSS_PREFIX.FONT_FAMILY}${name.includes('-mono') ? 'mono' : 'sans'})`,
+            }}
+          >
+            {SAMPLE_TEXT}
+          </td>
           <td>
             <DocsTokenCoding
               tsVar={`$fontSize['${name}']`}
-              tsSize="w-lg-2"
+              tsSize="w-lg-1"
               twVars={[`text-size-${name}`]}
               twSize="w-lg-1"
               cssVar={`${CSS_PREFIX.FONT_SIZE}${name}`}
-              cssSize="w-lg-4"
+              cssSize="w-lg-3"
             />
           </td>
         </tr>
@@ -45,27 +101,32 @@ export const FontWeight = () => (
     <thead>
       <tr>
         <th>Token</th>
-        <th className="w-full">Value</th>
+        <th>Value</th>
+        <th className="w-full">Sample</th>
         <th>Coding</th>
       </tr>
     </thead>
     <tbody>
-      {Object.entries(TOKENS__FONT_WEIGHT).map(([name, token]) => (
+      {Object.entries(TOKENS.FONT_WEIGHT).map(([name, token]) => (
         <tr key={name}>
-          <td style={{ fontWeight: `var(${CSS_PREFIX.FONT_WEIGHT}${name})` }}>
+          <td>
             <pre>{name}</pre>
           </td>
           <td>
             <code>{token.$value}</code>
           </td>
+          <td style={{ fontWeight: `var(${CSS_PREFIX.FONT_WEIGHT}${name})` }}>
+            <div className="font-family-sans">{SAMPLE_TEXT}</div>
+            <div className="font-family-mono">{SAMPLE_TEXT}</div>
+          </td>
           <td>
             <DocsTokenCoding
               tsVar={`$fontWeight['${name}']`}
-              tsSize="w-lg-2"
+              tsSize="w-lg-1"
               twVars={[`font-weight-${name}`]}
               twSize="w-lg-1"
               cssVar={`${CSS_PREFIX.FONT_WEIGHT}${name}`}
-              cssSize="w-lg-4"
+              cssSize="w-lg-3"
             />
           </td>
         </tr>
@@ -79,27 +140,31 @@ export const LineHeight = () => (
     <thead>
       <tr>
         <th>Token</th>
-        <th className="w-full">Value</th>
+        <th>Value</th>
+        <th className="w-full">Sample</th>
         <th>Coding</th>
       </tr>
     </thead>
     <tbody>
-      {Object.entries(TOKENS__LINE_HEIGHT).map(([name, token]) => (
+      {Object.entries(TOKENS.LINE_HEIGHT).map(([name, token]) => (
         <tr key={name}>
-          <td style={{ lineHeight: `var(${CSS_PREFIX.LINE_HEIGHT}${name})` }}>
-            <pre className="border-color-primary-page-text border">{name}</pre>
+          <td>
+            <pre>{name}</pre>
           </td>
           <td>
             <code>{token.$value}</code>
           </td>
+          <td style={{ lineHeight: `var(${CSS_PREFIX.LINE_HEIGHT}${name})` }}>
+            <div className="border-color-primary-page-text border">{SAMPLE_TEXT}</div>
+          </td>
           <td>
             <DocsTokenCoding
               tsVar={`$lineHeight['${name}']`}
-              tsSize="w-lg-2"
+              tsSize="w-lg-1"
               twVars={[`leading-${name}`]}
               twSize="w-lg-1"
               cssVar={`${CSS_PREFIX.LINE_HEIGHT}${name}`}
-              cssSize="w-lg-4"
+              cssSize="w-lg-3"
             />
           </td>
         </tr>
@@ -111,6 +176,10 @@ export const LineHeight = () => (
 <Meta title="Design tokens / Typography" />
 
 # Typography tokens
+
+## Font family
+
+<FontFamily />
 
 ## Font size
 
