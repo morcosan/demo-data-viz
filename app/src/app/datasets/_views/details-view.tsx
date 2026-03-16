@@ -25,7 +25,7 @@ interface Props extends ReactProps {
   onClickBack: () => void
 }
 
-export const Preview = (props: Props) => {
+export const DetailsView = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')

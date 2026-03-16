@@ -20,4 +20,4 @@ export interface DatasetStats {
 
 export type ViewedDatasets = Record<string, DatasetStats>
 
-export type MobileView = 'listing' | 'preview'
+export type MobileView = 'listing' | 'details'

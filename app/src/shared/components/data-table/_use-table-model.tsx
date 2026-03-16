@@ -1,4 +1,4 @@
-import type { TableCol, TableRow } from '@app/shared/types/table'
+import type { TableCell, TableCol, TableRow } from '@app/shared/types/table'
 import type { Cell, CellContext, Column, ColumnDef, Row, RowModel, Table } from '@tanstack/react-table'
 import { getFilteredRowModel, getSortedRowModel, type SortingState, useReactTable } from '@tanstack/react-table'
 import { type ReactNode, useMemo, useState } from 'react'
@@ -7,7 +7,7 @@ interface Props {
   cols: TableCol[]
   rows: TableRow[]
   filter: string
-  cellRenderer: (info: CellContext<TableRow, unknown>) => ReactNode
+  cellFn: (info: CellContext<TableRow, TableCell>) => ReactNode
 }
 
 const useTableModel = (props: Props) => {
@@ -18,15 +18,16 @@ const useTableModel = (props: Props) => {
       accessorKey: col.key,
       header: col.label,
       size: col.size,
-      cell: props.cellRenderer,
+      cell: props.cellFn,
     }))
-  }, [props.cols, props.cellRenderer])
+  }, [props.cols, props.cellFn])
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     columns,
     data: props.rows,
     state: { sorting, globalFilter: props.filter },
+    getColumnCanGlobalFilter: () => true,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
