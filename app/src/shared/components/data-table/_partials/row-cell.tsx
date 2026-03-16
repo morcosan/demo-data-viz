@@ -1,20 +1,22 @@
-import { type TableRow } from '@app/shared/types/table'
+import { type TableCell, type TableCol, type TableRow } from '@app/shared/types/table'
 import { type Cell, flexRender } from '@tanstack/react-table'
 
 interface Props {
-  cell: Cell<TableRow, unknown>
+  cell: Cell<TableRow, TableCell>
+  col: TableCol
   width: number
   height: number
   sticky?: boolean
 }
 
 export const RowCell = (props: Props) => {
+  const isNumeric = props.col.type === 'int' || props.col.type === 'float'
   const cellClass = cx(
     'bg-color-bg-card border-color-border-subtle relative h-full border-b',
     props.sticky && 'border-r',
   )
-  const innerClass = cx('absolute-center-y px-xs-6 flex h-full items-center')
-  const textClass = cx('text-size-sm line-clamp-2')
+  const innerClass = cx('absolute-center-y px-xs-6 flex h-full w-full items-center', isNumeric && 'justify-end')
+  const textClass = cx('line-clamp-2', isNumeric ? 'pr-xs-6 font-family-mono text-size-sm-mono' : 'text-size-sm')
 
   return (
     <td

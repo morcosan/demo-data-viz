@@ -1,6 +1,6 @@
 import { DataTable, TextHighlight } from '@app-components'
 import { useCountries } from '@app-i18n'
-import { type TableCol, type TableRowValue } from '@app/shared/types/table'
+import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
 import { type ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { useTableStore } from '../_table-store'
@@ -32,13 +32,12 @@ export const DatasetTable = (props: Props) => {
       : pivotedData
   }, [pivotedData, pivotColKey, colQuery, isColVisible])
 
-  const cellFn = (value: TableRowValue, query: string): ReactNode => {
-    const text = String(value ?? '')
-    const flag = getCountryCode(text)
+  const cellFn = (value: string, query: string): ReactNode => {
+    const flag = getCountryCode(value)
     return (
       <>
         {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        {query.trim() ? <TextHighlight text={text} query={query} /> : text}
+        {query ? <TextHighlight text={value} query={query} /> : value}
       </>
     )
   }

@@ -3,9 +3,9 @@
 import { ErrorBoundary } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { Suspense, useState } from 'react'
-import { Listing } from './_sections/listing'
-import { Preview } from './_sections/preview'
 import { type MobileView } from './_types'
+import { DetailsView } from './_views/details-view'
+import { ListingView } from './_views/listing-view'
 
 export default function DatasetsPage() {
   const { t } = useTranslation()
@@ -21,15 +21,15 @@ export default function DatasetsPage() {
           {t('dataViz.label.datasetsTitle')}
         </h1>
         <Suspense fallback={null}>
-          <Listing className="min-h-0 flex-1" onClickDataset={() => setMobileView('preview')} />
+          <ListingView className="min-h-0 flex-1" onClickDataset={() => setMobileView('details')} />
         </Suspense>
       </div>
 
       {/* RIGHT SIDE */}
-      <div className={cx('min-w-0 flex-1', mobileView === 'preview' ? 'flex' : 'hidden lg:flex')}>
+      <div className={cx('min-w-0 flex-1', mobileView === 'details' ? 'flex' : 'hidden lg:flex')}>
         <Suspense fallback={null}>
           <ErrorBoundary>
-            <Preview onClickBack={handleBackClick} />
+            <DetailsView onClickBack={handleBackClick} />
           </ErrorBoundary>
         </Suspense>
       </div>
