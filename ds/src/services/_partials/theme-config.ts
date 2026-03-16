@@ -4,6 +4,7 @@ interface ThemeTokens {
   $blur: Record<keyof typeof TOKENS.BLUR, string>
   $breakpoint: Record<keyof typeof TOKENS.BREAKPOINT, string>
   $color: Record<keyof typeof TOKENS.COLOR, string>
+  $fontFamily: Record<keyof typeof TOKENS.FONT_FAMILY, string>
   $fontSize: Record<keyof typeof TOKENS.FONT_SIZE, string>
   $fontWeight: Record<keyof typeof TOKENS.FONT_WEIGHT, string>
   $lineHeight: Record<keyof typeof TOKENS.LINE_HEIGHT, string>
@@ -29,6 +30,7 @@ const createTokens = (theme: ColorTheme): ThemeTokens => {
     $blur: mapTokens(TOKENS.BLUR, CSS_PREFIX.BLUR, theme),
     $breakpoint: mapTokens(TOKENS.BREAKPOINT, CSS_PREFIX.BREAKPOINT, theme),
     $color: mapTokens(TOKENS.COLOR, CSS_PREFIX.COLOR, theme),
+    $fontFamily: mapTokens(TOKENS.FONT_FAMILY, CSS_PREFIX.FONT_FAMILY, theme),
     $fontSize: mapTokens(TOKENS.FONT_SIZE, CSS_PREFIX.FONT_SIZE, theme),
     $fontWeight: mapTokens(TOKENS.FONT_WEIGHT, CSS_PREFIX.FONT_WEIGHT, theme),
     $lineHeight: mapTokens(TOKENS.LINE_HEIGHT, CSS_PREFIX.LINE_HEIGHT, theme),

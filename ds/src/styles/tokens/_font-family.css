@@ -1,0 +1,34 @@
+/* Font family tokens */
+
+:host,
+:root {
+  --ds-font-family-sans: 'Source Sans 3', sans-serif;
+  --ds-font-family-mono: 'Source Code Pro', monospace;
+}
+
+@font-face {
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  src: url('../../assets/fonts/source-sans-3-variable.woff2') format('woff2-variations');
+  font-family: 'Source Sans 3';
+  font-display: swap;
+}
+
+@font-face {
+  font-style: italic;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  src: url('../../assets/fonts/source-sans-3-italic-variable.woff2') format('woff2-variations');
+  font-family: 'Source Sans 3';
+  font-display: swap;
+}
+
+@font-face {
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  src: url('../../assets/fonts/source-code-pro-variable.woff2') format('woff2-variations');
+  font-family: 'Source Code Pro';
+  font-display: swap;
+}

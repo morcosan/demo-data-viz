@@ -21,17 +21,17 @@ export const ChangelogContent = () => (
         className="bg-color-bg-card px-sm-0 py-xs-9 mt-sm-2 border-color-border-subtle rounded-lg border"
       >
         <h2 className="mt-0!">
-          {entry.version} <span className="ml-xs-2 text-size-xs font-weight-sm">- {entry.date || 'Latest'}</span>
+          {entry.version} <span className="ml-xs-2 text-size-xs font-weight-sm">&ndash; {entry.date || 'Latest'}</span>
         </h2>
-        <div className="gap-y-xs-2 gap-x-sm-0 grid grid-cols-1 md:grid-cols-[max-content_1fr]">
-          {entry.changes.breakages?.length ? BulletList('💥 Breaking changes:', entry.changes.breakages) : ''}
-          {entry.changes.deprecations?.length ? BulletList('💀 Deprecations:', entry.changes.deprecations) : ''}
+        <div className="gap-y-xs-3 gap-x-sm-0 grid grid-cols-1 md:grid-cols-[var(--ds-spacing-lg-0)_1fr]">
+          {entry.changes.breaking?.length ? BulletList('💥 Breaking:', entry.changes.breaking) : ''}
+          {entry.changes.deprecated?.length ? BulletList('💀 Deprecated:', entry.changes.deprecated) : ''}
           {entry.changes.tokens?.length ? BulletList('🎨 Design tokens:', entry.changes.tokens) : ''}
           {entry.changes.components?.length ? BulletList('🧩 Components:', entry.changes.components) : ''}
           {entry.changes.services?.length ? BulletList('🧱 Services:', entry.changes.services) : ''}
-          {entry.changes.utilities?.length ? BulletList('🛠️ Utilities:', entry.changes.utilities) : ''}
+          {entry.changes.utils?.length ? BulletList('🛠️ Utilities:', entry.changes.utils) : ''}
           {entry.changes.assets?.length ? BulletList('🖼️ Assets:', entry.changes.assets) : ''}
-          {entry.changes.docs?.length ? BulletList('📚 Documentation:', entry.changes.docs) : ''}
+          {entry.changes.docs?.length ? BulletList('📚 Docs:', entry.changes.docs) : ''}
         </div>
       </div>
     ))}

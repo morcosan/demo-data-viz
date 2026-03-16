@@ -3,6 +3,7 @@ import { getTokenValue } from './__utils'
 import { TOKENS__BLUR } from './_blur'
 import { TOKENS__BREAKPOINT } from './_breakpoint'
 import { TOKENS__COLOR } from './_color'
+import { TOKENS__FONT_FAMILY } from './_font-family'
 import { TOKENS__FONT_SIZE } from './_font-size'
 import { TOKENS__FONT_WEIGHT } from './_font-weight'
 import { TOKENS__LINE_HEIGHT } from './_line-height'
@@ -14,6 +15,7 @@ import { TOKENS__Z_INDEX } from './_z-index'
 type Blur = keyof typeof TOKENS__BLUR
 type Breakpoint = keyof typeof TOKENS__BREAKPOINT
 type Color = keyof typeof TOKENS__COLOR
+type FontFamily = keyof typeof TOKENS__FONT_FAMILY
 type FontSize = keyof typeof TOKENS__FONT_SIZE
 type FontWeight = keyof typeof TOKENS__FONT_WEIGHT
 type LineHeight = keyof typeof TOKENS__LINE_HEIGHT
@@ -29,6 +31,7 @@ const gTV = getTokenValue
 const getTokenValue_BLUR = (k: Blur, cs?: CT) => gTV<Blur, string>(TOKENS__BLUR, k, cs)
 const getTokenValue_BREAKPOINT = (k: Breakpoint, cs?: CT) => gTV<Breakpoint, string>(TOKENS__BREAKPOINT, k, cs)
 const getTokenValue_COLOR = (k: Color, cs?: CT) => gTV<Color, string>(TOKENS__COLOR, k, cs)
+const getTokenValue_FONT_FAMILY = (k: FontFamily, cs?: CT) => gTV<FontFamily, string>(TOKENS__FONT_FAMILY, k, cs)
 const getTokenValue_FONT_SIZE = (k: FontSize, cs?: CT) => gTV<FontSize, string>(TOKENS__FONT_SIZE, k, cs)
 const getTokenValue_FONT_WEIGHT = (k: FontWeight, cs?: CT) => gTV<FontWeight, number>(TOKENS__FONT_WEIGHT, k, cs)
 const getTokenValue_LINE_HEIGHT = (k: LineHeight, cs?: CT) => gTV<LineHeight, number>(TOKENS__LINE_HEIGHT, k, cs)
@@ -41,6 +44,7 @@ const CSS_PREFIX = {
   BLUR: '--ds-blur-',
   BREAKPOINT: '--ds-breakpoint-',
   COLOR: '--ds-color-',
+  FONT_FAMILY: '--ds-font-family-',
   FONT_SIZE: '--ds-font-size-',
   FONT_WEIGHT: '--ds-font-weight-',
   LINE_HEIGHT: '--ds-line-height-',
@@ -54,6 +58,7 @@ const TOKENS = {
   BLUR: TOKENS__BLUR,
   BREAKPOINT: TOKENS__BREAKPOINT,
   COLOR: TOKENS__COLOR,
+  FONT_FAMILY: TOKENS__FONT_FAMILY,
   FONT_SIZE: TOKENS__FONT_SIZE,
   FONT_WEIGHT: TOKENS__FONT_WEIGHT,
   LINE_HEIGHT: TOKENS__LINE_HEIGHT,
@@ -70,6 +75,7 @@ export {
   getTokenValue_BLUR,
   getTokenValue_BREAKPOINT,
   getTokenValue_COLOR,
+  getTokenValue_FONT_FAMILY,
   getTokenValue_FONT_SIZE,
   getTokenValue_FONT_WEIGHT,
   getTokenValue_LINE_HEIGHT,
@@ -81,6 +87,7 @@ export {
   TOKENS__BLUR,
   TOKENS__BREAKPOINT,
   TOKENS__COLOR,
+  TOKENS__FONT_FAMILY,
   TOKENS__FONT_SIZE,
   TOKENS__FONT_WEIGHT,
   TOKENS__LINE_HEIGHT,

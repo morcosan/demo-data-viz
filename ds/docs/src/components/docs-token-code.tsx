@@ -45,8 +45,8 @@ export const DocsTokenCode = ({ iconSvg, value, size, loading }: Props) => {
     <div className={cx('h-sm-4 relative', size || 'w-md-8')}>
       <button type="button" className={buttonClass} onClick={handleClick}>
         <code className="gap-xs-2 bg-color-bg-card! pointer-events-none flex w-full! items-center border-0!">
-          <span className="h-xs-6 mt-px ml-px block">{iconSvg}</span>
-          <span className="line-clamp-1">{value}</span>
+          <span className="h-xs-6 block">{iconSvg}</span>
+          <span className="text-size-xs line-clamp-1">{value}</span>
         </code>
 
         {Boolean(copied) && <div className={copiedClass}>Copied</div>}
