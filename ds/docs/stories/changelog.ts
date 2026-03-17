@@ -1,7 +1,14 @@
 export const changelog: ChangelogItem[] = [
   {
-    version: 'v0.3.0',
+    version: 'v0.3.1',
     date: null,
+    changes: {
+      components: ['Fix text alignment inside `Button` component'],
+    },
+  },
+  {
+    version: 'v0.3.0',
+    date: '16-03-2026',
     changes: {
       tokens: [
         'Added font-family tokens for sans-serif and monospace',
