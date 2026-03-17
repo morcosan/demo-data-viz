@@ -81,7 +81,19 @@ export const Button = (rawProps: ButtonProps) => {
     },
     '.mantine-Button-loader': { lineHeight: 1 },
     '.mantine-Button-inner': { transform: 'unset' },
-    '.mantine-Button-label': cssBaseChildren,
+    '.mantine-Button-label': {
+      ...cssBaseChildren,
+      paddingTop: (() => {
+        // The text inside doesn't look centered with the new font
+        if (!isVItem) {
+          if (props.size === 'xs') return '1px'
+          if (props.size === 'sm') return '4px'
+          if (props.size === 'md') return '1px'
+          if (props.size === 'lg') return '2px'
+        }
+        return ''
+      })(),
+    },
   }
 
   const bindings = {
