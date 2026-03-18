@@ -19,21 +19,20 @@ export const DatasetTable = (props: Props) => {
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
   const filterByCol = useTableStore((s) => s.filterByCol)
-  const colQuery = useTableStore((s) => s.colQuery)
+  const pivotQuery = useTableStore((s) => s.pivotQuery)
   const initTableStore = useTableStore((s) => s.initTableStore)
-  const resetColQuery = useTableStore((s) => s.resetColQuery)
 
   const pivotedData = useMemo(
     () => pivotJsonStatTable(props.data, { indexKey, pivotKey, filterByCol }),
     [props.data, indexKey, pivotKey, filterByCol],
   )
   const isColVisible = useCallback(
-    (col: TableCol) => !col.pivoted || colQuery.some((keyword) => col.label.toLowerCase().includes(keyword)),
-    [colQuery],
+    (col: TableCol) => !col.pivoted || pivotQuery.some((keyword) => col.label.toLowerCase().includes(keyword)),
+    [pivotQuery],
   )
   const visibleData = useMemo(() => {
-    return pivotKey && colQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
-  }, [pivotedData, pivotKey, colQuery, isColVisible])
+    return pivotKey && pivotQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
+  }, [pivotedData, pivotKey, pivotQuery, isColVisible])
 
   const cellFn = (value: string, query: string): ReactNode => {
     const flag = getCountryCode(value)
@@ -53,7 +52,6 @@ export const DatasetTable = (props: Props) => {
     // Reset all filters when reopening the same dataset
     if (!searchParams.has(UrlKey.INDEX_KEY)) {
       initTableStore(props.data)
-      resetColQuery(props.data)
     }
   }, [searchParams])
 
