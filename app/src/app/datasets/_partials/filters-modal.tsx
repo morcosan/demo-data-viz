@@ -19,20 +19,20 @@ interface Props {
 export const FiltersModal = (props: Props) => {
   const { t } = useTranslation()
   const { cellsByCol, cols } = props.data
-  const indexColKey = useTableStore((s) => s.indexColKey)
-  const pivotColKey = useTableStore((s) => s.pivotColKey)
+  const indexKey = useTableStore((s) => s.indexKey)
+  const pivotKey = useTableStore((s) => s.pivotKey)
   const filterByCol = useTableStore((s) => s.filterByCol)
-  const setIndexColKey = useTableStore((s) => s.setIndexColKey)
-  const setPivotColKey = useTableStore((s) => s.setPivotColKey)
+  const setIndexKey = useTableStore((s) => s.setIndexKey)
+  const setPivotKey = useTableStore((s) => s.setPivotKey)
   const setFilterByCol = useTableStore((s) => s.setFilterByCol)
   const resetColQuery = useTableStore((s) => s.resetColQuery)
   const colQueryRef = useRef<ColQueryRef>(null)
 
   const colKeys = useMemo(() => {
-    return indexColKey
-      ? Object.keys(cellsByCol).filter((key) => key !== indexColKey && key !== pivotColKey && cellsByCol[key])
+    return indexKey
+      ? Object.keys(cellsByCol).filter((key) => key !== indexKey && key !== pivotKey && cellsByCol[key])
       : []
-  }, [indexColKey, pivotColKey, cellsByCol])
+  }, [indexKey, pivotKey, cellsByCol])
 
   const filterCols = useMemo(
     () => colKeys.map((key) => cols.find((col) => col.key === key)).filter(Boolean) as TableCol[],
@@ -44,7 +44,7 @@ export const FiltersModal = (props: Props) => {
       (acc, key) => ({
         ...acc,
         [key]: cellsByCol[key].map((cell) => ({
-          value: String(cell.value),
+          value: String(cell.code),
           label: String(cell.value),
         })),
       }),
@@ -54,7 +54,7 @@ export const FiltersModal = (props: Props) => {
 
   useEffect(() => {
     resetColQuery(props.data).then(() => colQueryRef.current?.reset())
-  }, [props.data, pivotColKey])
+  }, [props.data, pivotKey])
 
   useEffect(() => {
     colQueryRef.current?.reset()
@@ -74,23 +74,23 @@ export const FiltersModal = (props: Props) => {
           id="filter-index-col"
           colKey=""
           colLabel={t('dataViz.label.fieldLabelForIndex')}
-          value={indexColKey}
+          value={indexKey}
           options={props.indexOptions}
-          onChange={setIndexColKey}
+          onChange={setIndexKey}
         />
         <SettingMemo
           id="filter-pivot-col"
           colKey=""
           colLabel={t('dataViz.label.fieldLabelForPivot')}
-          value={pivotColKey}
+          value={pivotKey}
           options={props.pivotOptions}
-          onChange={setPivotColKey}
+          onChange={setPivotKey}
         />
       </SettingList>
 
       {/* SECTION 2 */}
       <SettingList
-        header={t('dataViz.label.headerFiltersModal2', { count: filterCols.length + (pivotColKey ? 1 : 0) })}
+        header={t('dataViz.label.headerFiltersModal2', { count: filterCols.length + (pivotKey ? 1 : 0) })}
         className="mt-sm-7"
       >
         <ColQueryMemo ref={colQueryRef} />
@@ -147,7 +147,7 @@ interface ColQueryRef {
 const ColQueryMemo = memo(
   forwardRef<ColQueryRef>(function ColQueryMemo(_, ref) {
     const { t } = useTranslation()
-    const pivotColKey = useTableStore((s) => s.pivotColKey)
+    const pivotKey = useTableStore((s) => s.pivotKey)
     const colQuery = useTableStore((s) => s.colQuery)
     const setColQuery = useTableStore((s) => s.setColQuery)
     const [colQueryText, setColQueryText] = useState('')
@@ -173,7 +173,7 @@ const ColQueryMemo = memo(
       reset: resetColQueryText,
     }))
 
-    if (!pivotColKey) return null
+    if (!pivotKey) return null
     return (
       <div>
         <dt>

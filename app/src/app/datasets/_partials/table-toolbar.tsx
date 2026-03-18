@@ -14,30 +14,30 @@ interface Props {
 export const TableToolbar = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinXL, isViewportMD } = useViewportService()
-  const indexColKey = useTableStore((s) => s.indexColKey)
-  const pivotColKey = useTableStore((s) => s.pivotColKey)
+  const indexKey = useTableStore((s) => s.indexKey)
+  const pivotKey = useTableStore((s) => s.pivotKey)
   const { cellsByCol, cols } = props.data
   const isMdOrLarger = isViewportMinXL || isViewportMD
   const [openedModal, setOpenedModal] = useState(false)
   const colKeys = useMemo(() => [...Object.keys(cellsByCol), ''], [cellsByCol])
-  const filterCount = (indexColKey ? colKeys.length - (pivotColKey ? 3 : 2) : 0) + (pivotColKey ? 1 : 0)
+  const filterCount = (indexKey ? colKeys.length - (pivotKey ? 3 : 2) : 0) + (pivotKey ? 1 : 0)
   const getColLabel = useCallback((key: string) => cols.find((col) => col.key === key)?.label || key, [cols])
 
   const indexOptions = useMemo((): SelectOption[] => {
     return colKeys.map((key) => ({
       value: key,
       label: key ? getColLabel(key) : t('dataViz.label.emptyOptionForIndex'),
-      disabled: Boolean(key && key === pivotColKey),
+      disabled: Boolean(key && key === pivotKey),
     }))
-  }, [colKeys, pivotColKey, t, getColLabel])
+  }, [colKeys, pivotKey, t, getColLabel])
 
   const pivotOptions = useMemo((): SelectOption[] => {
     return colKeys.map((key) => ({
       value: key,
       label: key ? getColLabel(key) : t('dataViz.label.emptyOptionForPivot'),
-      disabled: Boolean(key && key === indexColKey),
+      disabled: Boolean(key && key === indexKey),
     }))
-  }, [colKeys, indexColKey, t, getColLabel])
+  }, [colKeys, indexKey, t, getColLabel])
 
   return (
     <div className="gap-xs-2 flex w-full items-center justify-between lg:w-fit">
@@ -83,22 +83,22 @@ interface RowColProps {
 
 const IndexPivotMemo = memo(function IndexPivotMemo(props: RowColProps) {
   const { t } = useTranslation()
-  const indexColKey = useTableStore((s) => s.indexColKey)
-  const pivotColKey = useTableStore((s) => s.pivotColKey)
-  const setIndexColKey = useTableStore((s) => s.setIndexColKey)
-  const setPivotColKey = useTableStore((s) => s.setPivotColKey)
+  const indexKey = useTableStore((s) => s.indexKey)
+  const pivotKey = useTableStore((s) => s.pivotKey)
+  const setIndexKey = useTableStore((s) => s.setIndexKey)
+  const setPivotKey = useTableStore((s) => s.setPivotKey)
   const wrapperClass = cx('xl:min-w-lg-0 max-w-lg-7 flex-1')
 
   return (
     <div className="flex flex-1 items-center">
       <Tooltip label={t('dataViz.label.fieldLabelForIndex')} className={wrapperClass}>
-        <SelectField id="index-col" options={props.indexOptions} value={indexColKey} onChange={setIndexColKey} />
+        <SelectField id="index-col" options={props.indexOptions} value={indexKey} onChange={setIndexKey} />
       </Tooltip>
 
       <CloseSvg className="h-xs-4 mx-xs-2 text-color-text-placeholder" />
 
       <Tooltip label={t('dataViz.label.fieldLabelForPivot')} className={wrapperClass}>
-        <SelectField id="pivot-col" options={props.pivotOptions} value={pivotColKey} onChange={setPivotColKey} />
+        <SelectField id="pivot-col" options={props.pivotOptions} value={pivotKey} onChange={setPivotKey} />
       </Tooltip>
     </div>
   )

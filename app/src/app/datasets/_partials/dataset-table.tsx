@@ -1,9 +1,12 @@
+'use client'
+
 import { DataTable, TextHighlight } from '@app-components'
 import { useCountries } from '@app-i18n'
 import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
+import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useCallback, useEffect, useMemo } from 'react'
-import { useTableStore } from '../_table-store'
+import { UrlKey, useTableStore } from '../_table-store'
 import { TableToolbar } from './table-toolbar'
 
 interface Props extends ReactProps {
@@ -12,25 +15,25 @@ interface Props extends ReactProps {
 
 export const DatasetTable = (props: Props) => {
   const { getCountryCode } = useCountries()
-  const indexColKey = useTableStore((s) => s.indexColKey)
-  const pivotColKey = useTableStore((s) => s.pivotColKey)
+  const searchParams = useSearchParams()
+  const indexKey = useTableStore((s) => s.indexKey)
+  const pivotKey = useTableStore((s) => s.pivotKey)
   const filterByCol = useTableStore((s) => s.filterByCol)
   const colQuery = useTableStore((s) => s.colQuery)
   const initTableStore = useTableStore((s) => s.initTableStore)
+  const resetColQuery = useTableStore((s) => s.resetColQuery)
 
   const pivotedData = useMemo(
-    () => pivotJsonStatTable(props.data, { indexColKey, pivotColKey, filterByCol }),
-    [props.data, indexColKey, pivotColKey, filterByCol],
+    () => pivotJsonStatTable(props.data, { indexKey, pivotKey, filterByCol }),
+    [props.data, indexKey, pivotKey, filterByCol],
   )
   const isColVisible = useCallback(
     (col: TableCol) => !col.pivoted || colQuery.some((keyword) => col.label.toLowerCase().includes(keyword)),
     [colQuery],
   )
   const visibleData = useMemo(() => {
-    return pivotColKey && colQuery.length
-      ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) }
-      : pivotedData
-  }, [pivotedData, pivotColKey, colQuery, isColVisible])
+    return pivotKey && colQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
+  }, [pivotedData, pivotKey, colQuery, isColVisible])
 
   const cellFn = (value: string, query: string): ReactNode => {
     const flag = getCountryCode(value)
@@ -46,10 +49,18 @@ export const DatasetTable = (props: Props) => {
     initTableStore(props.data)
   }, [props.data])
 
+  useEffect(() => {
+    // Reset all filters when reopening the same dataset
+    if (!searchParams.has(UrlKey.INDEX_KEY)) {
+      initTableStore(props.data)
+      resetColQuery(props.data)
+    }
+  }, [searchParams])
+
   return (
     <DataTable
       data={visibleData}
-      sticky={Boolean(indexColKey && pivotColKey)}
+      sticky={Boolean(indexKey && pivotKey)}
       cellFn={cellFn}
       toolbar={<TableToolbar data={props.data} />}
       className={props.className}
