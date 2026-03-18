@@ -148,16 +148,16 @@ const ColQueryMemo = memo(
   forwardRef<ColQueryRef>(function ColQueryMemo(_, ref) {
     const { t } = useTranslation()
     const pivotKey = useTableStore((s) => s.pivotKey)
-    const colQuery = useTableStore((s) => s.colQuery)
-    const setColQuery = useTableStore((s) => s.setColQuery)
+    const pivotQuery = useTableStore((s) => s.pivotQuery)
+    const setPivotQuery = useTableStore((s) => s.setPivotQuery)
     const [colQueryText, setColQueryText] = useState('')
 
     const resetColQueryText = () => {
-      setColQueryText(colQuery.join(' OR '))
+      setColQueryText(pivotQuery.join(' OR '))
     }
     const handleColQueryChange = debounce((value: string) => {
       setColQueryText(value)
-      setColQuery(
+      setPivotQuery(
         value
           .split(' OR ')
           .map((v) => v.trim().toLowerCase())
@@ -166,7 +166,7 @@ const ColQueryMemo = memo(
     }, 300)
     const handleColQueryClear = () => {
       setColQueryText('')
-      setColQuery([])
+      setPivotQuery([])
     }
 
     useImperativeHandle(ref, () => ({

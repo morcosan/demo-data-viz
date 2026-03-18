@@ -1,21 +1,27 @@
 const getUrlParams = (): URLSearchParams => new URLSearchParams(window.location.search)
 
-const getUrlParam = <T extends string | string[]>(key: string): T | null => {
+const getUrlParam = (key: string): string | null => getUrlParams().get(key)
+const getUrlParamArray = (key: string): string[] | null => {
   const value = getUrlParams().get(key)
   if (value === null) return null
-  if (value.includes(',')) return value.split(',') as T
-  return value as T
+  if (value === '') return []
+  return value.split(',')
 }
 
 const setUrlParam = (key: string, value: string | string[]) => {
   const params = getUrlParams()
-  const isEmpty = Array.isArray(value) ? !value.length : value === null
-  if (isEmpty) {
-    params.delete(key)
+  if (Array.isArray(value) && !value.length) {
+    params.set(key, '')
   } else {
     params.set(key, Array.isArray(value) ? value.join(',') : value)
   }
   window.history.replaceState(null, '', `${window.location.pathname}?${params}`)
 }
 
-export { getUrlParam, getUrlParams, setUrlParam }
+const deleteUrlParam = (key: string) => {
+  const params = getUrlParams()
+  params.delete(key)
+  window.history.replaceState(null, '', `${window.location.pathname}?${params}`)
+}
+
+export { deleteUrlParam, getUrlParam, getUrlParamArray, getUrlParams, setUrlParam }
