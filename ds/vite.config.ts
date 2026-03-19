@@ -13,6 +13,7 @@ export default defineConfig({
   plugins: [react({ jsxImportSource: '@emotion/react' }), svgr({ include: '**/*.svgr' })],
 
   resolve: {
+    // Must use "postcss-url": { url: "rebase" } to resolve URLs relative to CSS files
     alias: {
       '@ds': path.resolve(dirname, './dist'),
     },
