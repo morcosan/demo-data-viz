@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { queryElementsWithTabIndex } from '../../utilities/internal/html-utils'
 import { Keyboard, wait } from '../../utilities/various-utils'
 import { ANIM_TIME, type ModalProps } from './_types'
@@ -40,28 +40,36 @@ export const useEvents = (props: ModalProps) => {
     triggerRef.current?.focus()
   }
 
-  const handleWindowKeyDown = (event: KeyboardEvent) => {
-    if (!isVisible || !isLastStackIndex(stackIndex)) return
-    if (event.key !== Keyboard.ESCAPE) return
-    if (props.noDismiss) return
-    event.stopPropagation()
-    props.onClose?.()
-  }
+  const handleWindowKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (!isVisible || !isLastStackIndex(stackIndex)) return
+      if (event.key !== Keyboard.ESCAPE) return
+      if (props.noDismiss) return
+      event.stopPropagation()
+      props.onClose?.()
+    },
+    [isVisible, stackIndex, props.onClose, props.noDismiss],
+  )
 
-  const handleWindowFocusIn = (event: FocusEvent) => {
-    const target = event.target as HTMLElement
+  const handleWindowFocusIn = useCallback(
+    (event: FocusEvent) => {
+      const target = event.target as HTMLElement
 
-    if (!isVisible || !isLastStackIndex(stackIndex)) return
-    if (!target || !modalRef.current) return
-    if (modalRef.current.contains(target)) return
+      if (!isVisible || !isLastStackIndex(stackIndex)) return
+      if (!target || !modalRef.current) return
+      if (modalRef.current.contains(target)) return
 
-    const targets = queryElementsWithTabIndex(modalRef.current)
-    const firstTarget = targets[0]
-    const lastTarget = targets[targets.length - 1]
+      const targets = queryElementsWithTabIndex(modalRef.current)
+      if (!targets.length) return
 
-    if (target === focusTrap1Ref.current) lastTarget.focus()
-    if (target === focusTrap2Ref.current) firstTarget.focus()
-  }
+      const firstTarget = targets[0]
+      const lastTarget = targets[targets.length - 1]
+
+      if (target === focusTrap1Ref.current) lastTarget.focus()
+      if (target === focusTrap2Ref.current) firstTarget.focus()
+    },
+    [isVisible, stackIndex],
+  )
 
   useEffect(() => {
     if (isVisible) {
@@ -72,7 +80,7 @@ export const useEvents = (props: ModalProps) => {
       window.removeEventListener('focusin', handleWindowFocusIn)
       window.removeEventListener('keydown', handleWindowKeyDown)
     }
-  }, [isVisible, props.noDismiss, props.noClose])
+  }, [isVisible, handleWindowFocusIn, handleWindowKeyDown])
 
   useEffect(() => {
     computeStackIndex()

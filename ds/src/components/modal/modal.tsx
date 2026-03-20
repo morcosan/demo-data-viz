@@ -1,5 +1,6 @@
 'use client'
 
+import { useId } from 'react'
 import { CloseSvg } from '../../assets/icons'
 import { useI18nService } from '../../services/i18n-service'
 import { useDefaults } from '../../utilities/react-utils'
@@ -18,6 +19,7 @@ export const Modal = (rawProps: ModalProps) => {
     height: 'fit',
   })
   const { translate } = useI18nService()
+  const modalId = useId()
   const { focusTrap1Ref, focusTrap2Ref, isVisible, modalRef, stackIndex } = useEvents(props)
   const { cssModal, cssActions, cssModalBody, cssFooter, cssTitle, cssOverlay, cssRoot, tokens } = useStyles(
     props,
@@ -31,12 +33,14 @@ export const Modal = (rawProps: ModalProps) => {
       <div css={cssOverlay} onClick={() => !props.noDismiss && props.onClose?.()} />
 
       {/* FOCUS TRAP */}
-      <div ref={focusTrap1Ref} tabIndex={0} />
+      <div ref={focusTrap1Ref} tabIndex={0} aria-hidden="true" />
 
       {/* MODAL */}
-      <section ref={modalRef} role="dialog" tabIndex={-1} css={cssModal}>
+      <section ref={modalRef} role="dialog" aria-modal="true" aria-labelledby={modalId} tabIndex={-1} css={cssModal}>
         {/* TITLE */}
-        <h1 css={cssTitle}>{props.title}</h1>
+        <h1 id={modalId} css={cssTitle}>
+          {props.title}
+        </h1>
 
         {/* CLOSE BUTTON */}
         {!props.noClose && (
@@ -70,7 +74,7 @@ export const Modal = (rawProps: ModalProps) => {
       </section>
 
       {/* FOCUS TRAP */}
-      <div ref={focusTrap2Ref} tabIndex={0} />
+      <div ref={focusTrap2Ref} tabIndex={0} aria-hidden="true" />
     </div>
   )
 }

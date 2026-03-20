@@ -45,7 +45,7 @@ const useRefHandle = <T,>(ref: Ref<T> | undefined, nodeRef: NodeRef, handle: Par
       )
       return nodeRef.current as T
     },
-    deps,
+    deps || [],
   )
 }
 

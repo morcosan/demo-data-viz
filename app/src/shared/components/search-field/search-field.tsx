@@ -3,7 +3,7 @@
 import { useTranslation } from '@app-i18n'
 import { CloseSvg, IconButton, SearchSvg, TextField } from '@ds/core'
 import { debounce } from 'lodash'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Tooltip } from '../tooltip/tooltip'
 
 export interface SearchFieldProps extends ReactProps {
@@ -18,15 +18,17 @@ export const SearchField = (props: SearchFieldProps) => {
   const { t } = useTranslation()
   const { onChange } = props
   const [query, setQuery] = useState(props.value)
+  const debouncedRef = useRef<ReturnType<typeof debounce> | null>(null)
 
-  const changeQuery = useCallback(
-    (value: string) => {
-      setQuery(value)
-      onChange(value)
-    },
-    [onChange],
-  )
-  const handleQueryChange = useMemo(() => debounce(changeQuery, 300), [changeQuery])
+  const handleQueryChange = useCallback((value: string) => {
+    setQuery(value)
+    debouncedRef.current?.(value)
+  }, [])
+
+  useEffect(() => {
+    debouncedRef.current = debounce(onChange, 300)
+    return () => debouncedRef.current?.cancel()
+  }, [onChange])
 
   useEffect(() => {
     setQuery(props.value)
