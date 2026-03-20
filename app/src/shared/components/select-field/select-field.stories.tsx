@@ -31,14 +31,13 @@ const Default: StoryObj<typeof SelectField> = {
 
 const Examples: StoryObj<typeof SelectField> = {
   tags: ['controls'],
-  render: function Story(props: SelectFieldProps) {
-    return (
-      <div className="p-sm-0 flex min-h-0 flex-1 flex-col justify-between">
-        <SelectField {...props} />
-        <SelectField {...props} />
-      </div>
-    )
-  },
+
+  render: (props: SelectFieldProps) => (
+    <div className="p-sm-0 flex min-h-0 flex-1 flex-col justify-between">
+      <SelectField {...props} />
+      <SelectField {...props} />
+    </div>
+  ),
 }
 
 export default meta

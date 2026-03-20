@@ -4,16 +4,21 @@ import { DocsCanvas } from './docs-canvas'
 interface Props extends ReactProps {
   title?: string | ReactNode
   type?: 'default' | 'component' | 'autodocs' | 'mdx'
+  shortcuts?: StoryShortcut[]
 }
 
-export const DocsPage = ({ title, type, children }: Props) => {
+export const DocsPage = ({ title, type, shortcuts, children }: Props) => {
   if (type === 'autodocs') {
-    return <DocsCanvas className="flex-center min-h-lg-7 relative flex-col">{children}</DocsCanvas>
+    return (
+      <DocsCanvas shortcuts={shortcuts} className="flex-center min-h-lg-7 relative flex-col">
+        {children}
+      </DocsCanvas>
+    )
   }
   if (type === 'component') {
     return (
       <div className="px-sm-0 py-sm-2 flex min-h-screen flex-col">
-        <DocsCanvas className="flex-1" extended>
+        <DocsCanvas shortcuts={shortcuts} className="flex-1" extended>
           {children}
         </DocsCanvas>
       </div>

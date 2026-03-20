@@ -23,29 +23,28 @@ const Default: StoryObj<typeof StatsCard> = {
 
 const Examples: StoryObj<typeof StatsCard> = {
   tags: ['controls'],
-  render: function Story(props: StatsCardProps) {
-    return (
-      <div className="gap-lg-0 p-sm-0 flex w-full flex-col">
-        <div className="gap-xs-5 flex flex-wrap">
-          <StatsCard {...props} />
-          <StatsCard {...props} />
-          <StatsCard {...props} />
-          <StatsCard {...props} />
-          <StatsCard type="button" className="ml-auto">
-            View details
-          </StatsCard>
-        </div>
 
-        <div className="gap-xs-5 flex w-full flex-col">
-          <StatsCard {...props} />
-          <StatsCard {...props} />
-          <StatsCard {...props} />
-          <StatsCard {...props} />
-          <StatsCard {...props} />
-        </div>
+  render: (props: StatsCardProps) => (
+    <div className="gap-lg-0 p-sm-0 flex w-full flex-col">
+      <div className="gap-xs-5 flex flex-wrap">
+        <StatsCard {...props} />
+        <StatsCard {...props} />
+        <StatsCard {...props} />
+        <StatsCard {...props} />
+        <StatsCard type="button" className="ml-auto">
+          View details
+        </StatsCard>
       </div>
-    )
-  },
+
+      <div className="gap-xs-5 flex w-full flex-col">
+        <StatsCard {...props} />
+        <StatsCard {...props} />
+        <StatsCard {...props} />
+        <StatsCard {...props} />
+        <StatsCard {...props} />
+      </div>
+    </div>
+  ),
 }
 
 export default meta

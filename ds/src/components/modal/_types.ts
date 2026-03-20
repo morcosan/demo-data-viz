@@ -30,7 +30,7 @@ export interface ModalProps {
 	 - It also increases the background contrast
 	 */
   noDismiss?: boolean
-  /** Flag for hiding all close buttons and disabling `onClose` event */
+  /** Flag for hiding all close buttons */
   noClose?: boolean
   /** Flag for hiding the footer */
   noFooter?: boolean
@@ -44,4 +44,9 @@ export interface ModalProps {
   onClose?: () => void
   /** Event emitted when modal is closed (after the transition animation) */
   onClosed?: () => void
+}
+
+export const ANIM_TIME = {
+  SHOW: 300, // ms
+  HIDE: 150, // ms
 }

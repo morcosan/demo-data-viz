@@ -1,9 +1,26 @@
 export const changelog: ChangelogItem[] = [
   {
-    version: 'v0.3.1',
-    date: null,
+    version: 'v0.4.0',
+    date: '20-03-2026',
     changes: {
-      components: ['Fix text alignment inside `Button` component'],
+      breaking: ['Renamed ref interface for `TextField` component'],
+      components: [
+        'Refactored all components using custom implementation',
+        'Fixed text alignment inside `TextField` component',
+      ],
+      utils: ['Added `ref?: Ref<T>` to global `ReactProps` interface', 'Added `useRefHandle` utility hook'],
+      docs: [
+        'Improved story config utilities and styles',
+        'Added shortcuts config for Storybook stories with `StoryShortcut` global type',
+        'Added `DocsTooltip` component',
+      ],
+    },
+  },
+  {
+    version: 'v0.3.1',
+    date: '17-03-2026',
+    changes: {
+      components: ['Fixed text alignment inside `Button` component'],
     },
   },
   {

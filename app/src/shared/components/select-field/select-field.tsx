@@ -10,7 +10,7 @@ import '@mantine/core/styles/Popover.css'
 export type SelectOption = ComboboxItem
 export type SelectValue = string | null
 
-export interface SelectFieldProps extends ReactProps {
+export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
   id: string
   options: SelectOption[]
   value: SelectValue
@@ -55,7 +55,7 @@ export const SelectField = (props: SelectFieldProps) => {
     clearButtonProps: { title: t('core.action.clearSelection') },
   })
 
-  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} />}</ClassNames>
+  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} ref={props.ref} />}</ClassNames>
 }
 
 /**********************************************************************************************************************
@@ -112,15 +112,15 @@ const cssField = css`
 
 const cssDropdown = css`
   z-index: var(--ds-z-index-dropdown) !important;
-  box-shadow: var(--ds-shadow-md);
-  border: 1px solid var(--ds-color-border-subtle);
-  background-color: var(--ds-color-bg-menu);
-  padding: var(--ds-spacing-xs-1);
-  overflow: auto;
+  box-shadow: var(--ds-shadow-md) !important;
+  border: 1px solid var(--ds-color-border-subtle) !important;
+  background-color: var(--ds-color-bg-menu) !important;
+  padding: var(--ds-spacing-xs-1) !important;
+  overflow: auto !important;
 
   & .mantine-Select-option {
-    position: relative;
-    color: var(--ds-color-text-default);
+    position: relative !important;
+    color: var(--ds-color-text-default) !important;
 
     &:hover:not([data-combobox-disabled]) {
       background: var(--ds-color-hover-text-default);
@@ -132,8 +132,8 @@ const cssDropdown = css`
     }
 
     & svg {
-      opacity: 1;
-      margin-top: -2px;
+      opacity: 1 !important;
+      margin-top: -2px !important;
     }
   }
 `

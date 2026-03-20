@@ -22,6 +22,7 @@ export * from '../../docs/src/components/docs-page'
 export * from '../../docs/src/components/docs-token-code'
 export * from '../../docs/src/components/docs-token-coding'
 export * from '../../docs/src/components/docs-token-theme-grid'
+export * from '../../docs/src/components/docs-tooltip'
 
 /**
  * Utilities

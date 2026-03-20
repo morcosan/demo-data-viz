@@ -1,5 +1,5 @@
 import { type CSSProperties, type ReactNode } from 'react'
-import { type LinkType } from '../_partials/types'
+import { type LinkType } from '../_shared/types'
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type ButtonVariant =

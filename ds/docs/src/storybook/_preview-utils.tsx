@@ -46,6 +46,7 @@ interface StoryContext<C = any, A = any> {
   args: C
   argTypes: Record<string, A>
   children?: ReactNode
+  parameters: Record<string, any>
 }
 interface DocsContainerProps {
   children: ReactNode

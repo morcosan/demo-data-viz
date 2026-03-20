@@ -4,7 +4,7 @@ import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData } from '@app/shared/utils/json-stat'
 import { CloseSvg, IconButton, Modal, TextField } from '@ds/core'
 import { debounce } from 'lodash'
-import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { memo, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { useTableStore } from '../_table-store'
 import { SettingList } from './setting-list'
 
@@ -26,7 +26,7 @@ export const FiltersModal = (props: Props) => {
   const setPivotKey = useTableStore((s) => s.setPivotKey)
   const setFilterByCol = useTableStore((s) => s.setFilterByCol)
   const resetColQuery = useTableStore((s) => s.resetColQuery)
-  const colQueryRef = useRef<ColQueryRef>(null)
+  const colQueryRef = useRef<ColQueryHandle>(null)
 
   const colKeys = useMemo(() => {
     return indexKey
@@ -141,70 +141,68 @@ const SettingMemo = memo(function SettingMemo(props: SettingProps) {
   )
 })
 
-interface ColQueryRef {
+interface ColQueryHandle {
   reset: () => void
 }
-const ColQueryMemo = memo(
-  forwardRef<ColQueryRef>(function ColQueryMemo(_, ref) {
-    const { t } = useTranslation()
-    const pivotKey = useTableStore((s) => s.pivotKey)
-    const pivotQuery = useTableStore((s) => s.pivotQuery)
-    const setPivotQuery = useTableStore((s) => s.setPivotQuery)
-    const [colQueryText, setColQueryText] = useState('')
+const ColQueryMemo = memo(function ColQueryMemo(props: ReactProps<ColQueryHandle>) {
+  const { t } = useTranslation()
+  const pivotKey = useTableStore((s) => s.pivotKey)
+  const pivotQuery = useTableStore((s) => s.pivotQuery)
+  const setPivotQuery = useTableStore((s) => s.setPivotQuery)
+  const [colQueryText, setColQueryText] = useState('')
 
-    const resetColQueryText = () => {
-      setColQueryText(pivotQuery.join(' OR '))
-    }
-    const handleColQueryChange = debounce((value: string) => {
-      setColQueryText(value)
-      setPivotQuery(
-        value
-          .split(' OR ')
-          .map((v) => v.trim().toLowerCase())
-          .filter(Boolean),
-      )
-    }, 300)
-    const handleColQueryClear = () => {
-      setColQueryText('')
-      setPivotQuery([])
-    }
-
-    useImperativeHandle(ref, () => ({
-      reset: resetColQueryText,
-    }))
-
-    if (!pivotKey) return null
-    return (
-      <div>
-        <dt>
-          <label htmlFor="filter-col-query">{t('dataViz.label.columnQuery')}</label>
-        </dt>
-        <dd>
-          <TextField
-            value={colQueryText}
-            id="filter-col-query"
-            size="sm"
-            ariaLabel={t('dataViz.label.columnQuery')}
-            suffix={
-              colQueryText && (
-                <IconButton
-                  tooltip={t('dataViz.action.clearColumnQuery')}
-                  variant="text-subtle"
-                  size="xs"
-                  onClick={handleColQueryClear}
-                >
-                  <CloseSvg className="h-xs-7" />
-                </IconButton>
-              )
-            }
-            onChange={handleColQueryChange}
-            onBlur={resetColQueryText}
-          />
-          <div className="text-size-xs text-color-text-subtle px-xs-1 pt-xs-0 font-weight-sm italic">
-            {t('dataViz.notice.columnQuery')}
-          </div>
-        </dd>
-      </div>
+  const resetColQueryText = () => {
+    setColQueryText(pivotQuery.join(' OR '))
+  }
+  const handleColQueryChange = debounce((value: string) => {
+    setColQueryText(value)
+    setPivotQuery(
+      value
+        .split(' OR ')
+        .map((v) => v.trim().toLowerCase())
+        .filter(Boolean),
     )
-  }),
-)
+  }, 300)
+  const handleColQueryClear = () => {
+    setColQueryText('')
+    setPivotQuery([])
+  }
+
+  useImperativeHandle(props.ref, () => ({
+    reset: resetColQueryText,
+  }))
+
+  if (!pivotKey) return null
+  return (
+    <div>
+      <dt>
+        <label htmlFor="filter-col-query">{t('dataViz.label.columnQuery')}</label>
+      </dt>
+      <dd>
+        <TextField
+          value={colQueryText}
+          id="filter-col-query"
+          size="sm"
+          ariaLabel={t('dataViz.label.columnQuery')}
+          suffix={
+            colQueryText && (
+              <IconButton
+                tooltip={t('dataViz.action.clearColumnQuery')}
+                variant="text-subtle"
+                size="xs"
+                onClick={handleColQueryClear}
+              >
+                <CloseSvg className="h-xs-7" />
+              </IconButton>
+            )
+          }
+          onChange={handleColQueryChange}
+          onBlur={resetColQueryText}
+        />
+        <div className="text-size-xs text-color-text-subtle px-xs-1 pt-xs-0 font-weight-sm italic">
+          {t('dataViz.notice.columnQuery')}
+        </div>
+      </dd>
+    </div>
+  )
+})

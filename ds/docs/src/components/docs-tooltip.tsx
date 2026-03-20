@@ -5,7 +5,7 @@ export interface TooltipProps extends ReactProps {
   label: string
 }
 
-export const Tooltip = (props: TooltipProps) => {
+export const DocsTooltip = (props: TooltipProps) => {
   return (
     <MantineTooltip
       label={props.label}

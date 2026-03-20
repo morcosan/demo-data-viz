@@ -1,4 +1,6 @@
-import { type ReactNode, useMemo } from 'react'
+'use client'
+
+import { type ReactNode, type Ref, type RefObject, useImperativeHandle, useMemo } from 'react'
 
 interface HOC<C = any> {
   comp: C
@@ -28,5 +30,24 @@ const useDefaults = <P extends Record<string, any>>(rawProps: P, defaults: Parti
   }, [rawProps, defaults, truthy])
 }
 
+type NodeRef = RefObject<HTMLElement | null>
+
+const useRefHandle = <T,>(ref: Ref<T> | undefined, nodeRef: NodeRef, handle: Partial<T>, deps?: unknown[]) => {
+  useImperativeHandle(
+    ref,
+    () => {
+      if (!nodeRef.current) return null as unknown as T
+      Object.defineProperties(
+        nodeRef.current,
+        Object.fromEntries(
+          Object.entries(handle).map(([key, value]) => [key, { value, configurable: true, writable: true }]),
+        ),
+      )
+      return nodeRef.current as T
+    },
+    deps || [],
+  )
+}
+
 // eslint-disable-next-line react-refresh/only-export-components
-export { HocComposer, useDefaults, type HOC }
+export { HocComposer, useDefaults, useRefHandle, type HOC }

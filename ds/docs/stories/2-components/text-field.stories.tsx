@@ -2,13 +2,18 @@ import {
   IconButton,
   type IconButtonSize,
   type IconButtonVariant,
+  Keyboard,
   SendSvg,
   TextField,
+  type TextFieldHandle,
+  type TextFieldProps,
   type TextFieldSize,
 } from '@ds/core'
 import { defineMeta, DocsPage } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
+import { createRef } from 'react'
 
+const storyRef = createRef<TextFieldHandle | null>()
 const meta: Meta = {
   title: 'Components / Text Field',
   ...defineMeta(TextField, {
@@ -31,12 +36,35 @@ const meta: Meta = {
       readonly: false,
       disabled: false,
       invalid: false,
-      className: '',
+      className: 'max-w-xl-0',
       style: {},
     },
     events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
     inlineRadios: ['variant', 'size'],
     hasMethods: true,
+    shortcuts: [
+      {
+        keys: [Keyboard.ALT, Keyboard.DIGIT_1],
+        label: `setValue('test')`,
+        fn: () => storyRef.current?.setValue('test'),
+      },
+      {
+        keys: [Keyboard.ALT, Keyboard.DIGIT_2],
+        label: `getValue()`,
+        fn: () => alert(storyRef.current?.getValue()),
+      },
+      {
+        keys: [Keyboard.ALT, Keyboard.DIGIT_3],
+        label: `focus()`,
+        fn: () => storyRef.current?.focus(),
+      },
+      {
+        keys: [Keyboard.ALT, Keyboard.DIGIT_4],
+        label: `blur()`,
+        fn: () => storyRef.current?.blur(),
+      },
+    ],
+    render: (props: TextFieldProps) => <TextField {...props} ref={storyRef} />,
   }),
 }
 

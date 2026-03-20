@@ -1,14 +1,12 @@
 'use client'
 
-import { type Ref, useImperativeHandle, useRef } from 'react'
+import { useImperativeHandle, useRef } from 'react'
 
-interface Props extends ReactProps {
-  ref?: Ref<{
-    getBoundingClientRect: () => DOMRect | undefined
-  }>
+interface Handle {
+  getBoundingClientRect: () => DOMRect | undefined
 }
 
-export const LayoutPane = (props: Props) => {
+export const LayoutPane = (props: ReactProps<Handle>) => {
   const innerRef = useRef<HTMLDivElement>(null)
 
   useImperativeHandle(props.ref, () => ({
