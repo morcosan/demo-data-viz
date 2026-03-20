@@ -1,13 +1,12 @@
 'use client'
 
 import { QueryKey, useQuery } from '@app-api'
-import { EmptyState, LayoutPane, LoadingSpinner } from '@app-components'
+import { EmptyState, LayoutPane, LoadingSpinner, SearchField } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app/shared/utils/formatting'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { CloseSvg, IconButton, SearchSvg, TextField, TOKENS__SPACING } from '@ds/core'
-import { debounce } from 'lodash'
+import { TOKENS__SPACING } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
@@ -23,7 +22,7 @@ export const ListingView = (props: Props) => {
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id')
-  const [searchKeyword, setSearchKeyword] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
   const { data, isLoading, error } = useQuery<BaseDataset[]>({
     queryKey: [QueryKey.EUROSTAT_DATASETS],
     queryFn: EurostatApi.fetchDatasets,
@@ -32,7 +31,7 @@ export const ListingView = (props: Props) => {
 
   const datasets = useMemo((): BaseDataset[] => {
     const viewedStats = storage.data || {}
-    const keyword = searchKeyword.trim().toLowerCase()
+    const keyword = searchQuery.trim().toLowerCase()
     const filtered = keyword
       ? allDatasets.filter((dataset: BaseDataset) => dataset.title?.toLowerCase().includes(keyword))
       : allDatasets
@@ -41,7 +40,7 @@ export const ListingView = (props: Props) => {
       ...dataset,
       stats: viewedStats[dataset.id] || dataset.stats,
     }))
-  }, [allDatasets, searchKeyword, storage.data])
+  }, [allDatasets, searchQuery, storage.data])
 
   const itemHeight = parseInt(TOKENS__SPACING['md-2'].$value)
   const gapSize = parseInt(TOKENS__SPACING['xs-1'].$value)
@@ -50,32 +49,15 @@ export const ListingView = (props: Props) => {
     itemHeight: itemHeight + gapSize,
   })
 
-  const handleSearchChange = useMemo(() => debounce((value: string) => setSearchKeyword(value), 300), [])
-
   return (
     <LayoutPane className={cx('flex flex-col', props.className)}>
       <div className="shadow-below-sm z-sticky p-scrollbar-w relative">
-        <TextField
-          value={searchKeyword}
-          disabled={isLoading}
+        <SearchField
           id="dataset-search"
-          size="sm"
-          placeholder={t('core.placeholder.search')}
-          ariaLabel={t('dataViz.label.datasetSearch')}
-          prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
-          suffix={
-            searchKeyword && (
-              <IconButton
-                tooltip={t('core.action.clearSearch')}
-                variant="text-subtle"
-                size="xs"
-                onClick={() => setSearchKeyword('')}
-              >
-                <CloseSvg className="h-xs-7" />
-              </IconButton>
-            )
-          }
-          onChange={handleSearchChange}
+          value={searchQuery}
+          disabled={isLoading}
+          label={t('dataViz.label.datasetSearch')}
+          onChange={setSearchQuery}
         />
 
         <div className="text-size-xs mt-xs-1 ml-xs-0 -mb-xs-1">
@@ -98,7 +80,7 @@ export const ListingView = (props: Props) => {
               <DatasetItem
                 key={datasets[vItem.index].id}
                 dataset={datasets[vItem.index]}
-                keyword={searchKeyword}
+                keyword={searchQuery}
                 height={itemHeight}
                 selected={idParam === datasets[vItem.index].id}
                 className="absolute top-0 left-0 w-full"

@@ -1,7 +1,9 @@
 import { type CSSObject } from '@emotion/react'
+import { Loader } from '@mantine/core'
+import '@mantine/core/styles/Loader.css'
 import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
-import type { LinkType } from './types'
+import { type LinkType } from './types'
 import { useClickable } from './use-clickable'
 
 export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
@@ -53,7 +55,7 @@ interface BaseButtonProps {
 
 export const useBaseButton = (props: BaseButtonProps) => {
   const { $color, $spacing } = useThemeService()
-  const { bindings, isNoop, isPressed } = useClickable(props)
+  const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
 
   const isVDanger = VARIANTS_DANGER.includes(props.variant)
   const isVDefault = VARIANTS_DEFAULT.includes(props.variant)
@@ -143,7 +145,9 @@ export const useBaseButton = (props: BaseButtonProps) => {
 
   const cssBaseButton: CSSObject = {
     position: 'relative',
-    display: 'inline-block',
+    display: 'inline-flex',
+    alignItems: 'center',
+    lineHeight: 1,
     height: baseTokens.size,
     minHeight: baseTokens.size,
     border: `1px solid ${baseTokens.borderColor}`,
@@ -169,20 +173,19 @@ export const useBaseButton = (props: BaseButtonProps) => {
     '&::after': { backgroundColor: `${baseTokens.pressBgColor} !important` },
     '&:hover::after, &:focus::after': { backgroundColor: baseTokens.hoverBgColor },
   }
-  const cssBaseChildren: CSSObject = {
+  const cssChildren: CSSObject = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: isVItem ? 'unset' : 'center',
     width: '100%',
-    height: '100%',
     opacity: props.loading ? 0 : 1,
     pointerEvents: 'none',
     userSelect: 'none',
     textAlign: isVItem ? 'left' : 'center',
   }
 
-  const baseBindings = {
-    ...bindings,
+  const bindings = {
+    ...clickableBindings,
     title: props.tooltip,
     className: props.className,
     style: props.style,
@@ -190,19 +193,44 @@ export const useBaseButton = (props: BaseButtonProps) => {
     css: cssBaseButton,
   }
 
-  const fixButtonAttrs = (elem: HTMLButtonElement | null) => {
-    elem?.removeAttribute('disabled')
-    // This style should not be added
-    elem?.style.removeProperty('--button-color')
-    // These classes have too much specificity and create conflicts
-    elem?.classList.forEach((c) => c.startsWith('m_') && elem?.classList.remove(c))
+  const spinnerSize = (() => {
+    if (props.size === 'xs') return $spacing['xs-5']
+    if (props.size === 'sm') return $spacing['xs-7']
+    if (props.size === 'md') return $spacing['xs-9']
+    if (props.size === 'lg') return $spacing['sm-0']
+    return ''
+  })()
+  const cssSpinner: CSSObject = {
+    position: 'absolute',
+    inset: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    pointerEvents: 'none',
+    userSelect: 'none',
+  }
+  const cssSpinnerIcon: CSSObject = {
+    '--loader-size': `${spinnerSize} !important`,
+    '--loader-color': `${isVSolid ? $color['text-inverse'] : $color['text-subtle']} !important`,
   }
 
+  const content = (
+    <>
+      <span css={cssChildren}>{props.children}</span>
+
+      {Boolean(props.loading) && (
+        <span css={cssSpinner}>
+          <Loader css={cssSpinnerIcon} />
+        </span>
+      )}
+    </>
+  )
+
   return {
-    baseBindings,
     baseTokens,
+    bindings,
+    content,
     cssBaseButton,
-    cssBaseChildren,
     isNoop,
     isPressed,
     isVDanger,
@@ -214,6 +242,5 @@ export const useBaseButton = (props: BaseButtonProps) => {
     isVSolid,
     isVSubtle,
     isVText,
-    fixButtonAttrs,
   }
 }

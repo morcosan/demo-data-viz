@@ -10,22 +10,21 @@ const meta: Meta = {
     },
     props: {
       label: 'Tooltip',
-      inline: false,
     },
     clearDefaults: ['label'],
-  }),
-  // @ts-expect-error: TS bug
-  render: function Story(props: TooltipProps) {
-    return (
+
+    render: (props: TooltipProps) => (
       <Tooltip {...props}>
-        {props.children || (
+        {props.children ? (
+          <div dangerouslySetInnerHTML={{ __html: props.children || '' }} />
+        ) : (
           <div className="border" tabIndex={0}>
             Content with tooltip
           </div>
         )}
       </Tooltip>
-    )
-  },
+    ),
+  }),
 }
 
 const Default: StoryObj<typeof Tooltip> = {

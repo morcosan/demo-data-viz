@@ -6,6 +6,7 @@ import type {
   KeyboardEvent,
   MouseEvent,
   ReactNode,
+  Ref,
 } from 'react'
 
 declare module 'react' {
@@ -24,7 +25,8 @@ declare global {
   type ReactKeyboardEvent = KeyboardEvent
   type ReactMouseEvent = MouseEvent
 
-  interface ReactProps {
+  interface ReactProps<T = any> {
+    ref?: Ref<T>
     id?: string
     className?: string
     style?: CSSProperties

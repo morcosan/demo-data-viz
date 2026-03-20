@@ -88,16 +88,16 @@ export interface TextFieldProps {
    * Methods
    */
   /**
-   * Reference object for imperative methods
+   * Reference object with imperative methods
    * @param setValue(value:string):void 	- Sets the current value of `<input>` or `<textarea>` element
    * @param getValue():string 						- Returns the current value of `<input>` or `<textarea>` element
    * @param focus():void 									- Triggers focus on the `<input>` or `<textarea>` element
    * @param blur():void 									- Triggers blur on the `<input>` or `<textarea>` element
    */
-  ref?: Ref<TextFieldRef>
+  ref?: Ref<TextFieldHandle>
 }
 
-export interface TextFieldRef {
+export interface TextFieldHandle extends HTMLDivElement {
   setValue(value: string): void
   getValue(): string
   focus(): void

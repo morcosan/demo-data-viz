@@ -6,6 +6,9 @@ const baseConfig: Config[] = [
     rules: {
       'max-lines': ['error', 300],
 
+      'react/prop-types': 'off', // Useless for TypeScript
+      'react/no-unknown-property': ['error', { ignore: ['css'] }], // Allow Emotion
+
       'react-hooks/exhaustive-deps': 'off', // Bug: This rule is broken, it gives false positives all the time
       'react-hooks/refs': 'off', // Bug: This rule is broken, it gives false positives all the time
       'react-hooks/set-state-in-effect': 'off', // TODO: fix this issue

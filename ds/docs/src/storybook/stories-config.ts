@@ -1,3 +1,4 @@
+import { type ReactElement } from 'react'
 import { type ArgTypes, type InputType } from 'storybook/internal/types'
 import { fn } from 'storybook/test'
 
@@ -32,6 +33,8 @@ type ArgsConfig<C> = {
   inlineRadios?: PropKeys<C>
   clearDefaults?: PropKeys<C>
   hasMethods?: boolean
+  shortcuts?: StoryShortcut[]
+  render?: (props: any) => ReactElement
 }
 
 type ControlParam = {
@@ -49,7 +52,8 @@ const defineArgType = ({ control, header, value }: ControlParam): InputType => (
   },
 })
 
-const defineArgs = <C>({ slots, props, events, hasMethods, clearDefaults, inlineRadios }: ArgsConfig<C>) => {
+const defineArgs = <C>(args: ArgsConfig<C>) => {
+  const { slots, props, events, hasMethods, clearDefaults, inlineRadios, shortcuts, render } = args
   const argTypes: ArgTypes = {}
   const clearDefaultsKeys = [...(clearDefaults || []), 'id', 'className', 'style']
 
@@ -74,6 +78,8 @@ const defineArgs = <C>({ slots, props, events, hasMethods, clearDefaults, inline
       ...(props || {}),
       ...events?.reduce((acc, event) => ({ ...acc, [event]: fn() }), {}),
     },
+    parameters: { shortcuts },
+    render,
   }
 }
 

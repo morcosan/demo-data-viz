@@ -9,12 +9,12 @@ const meta: Meta = {
       children: 'throw new Error("Custom error example")',
     },
   }),
-  render: function Story(props: ReactProps) {
+
+  render: (props: ReactProps) => {
     const ThrowError = () => {
       eval(props.children as string)
       return null
     }
-
     return (
       <ErrorBoundary>
         <ThrowError />

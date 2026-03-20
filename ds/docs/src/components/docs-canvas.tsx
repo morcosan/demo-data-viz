@@ -1,34 +1,49 @@
 import { useA11yService } from '@ds/core'
-import { useRef } from 'react'
+import { type ModifierKey, useEffect, useRef } from 'react'
 import { useDocsCanvasService } from '../services/docs-canvas-service'
+import { DocsTooltip } from './docs-tooltip'
 
 interface Props extends ReactProps {
   extended?: boolean
+  shortcuts?: StoryShortcut[]
 }
 
-export const DocsCanvas = ({ children, className, extended }: Props) => {
+export const DocsCanvas = (props: Props) => {
   const { canvasBgClass } = useDocsCanvasService()
   const { forceA11yMode } = useA11yService()
   const input1Ref = useRef<HTMLInputElement>(null)
   const input2Ref = useRef<HTMLInputElement>(null)
+  const shortcuts = props.shortcuts || []
 
-  const baseClass = cx('border-color-border-default rounded-md border', canvasBgClass, className)
-
+  const rootClass = cx('border-color-border-default rounded-md border', canvasBgClass, props.className)
   const focusClass = cx(
     'w-md-3 bg-color-bg-page py-xs-0 absolute right-0',
     'text-size-xs text-color-text-subtle text-center',
   )
+  const shortcutClass = cx('absolute left-0 cursor-default', 'text-size-xs text-color-text-subtle text-center')
+  const shortcutTooltip = shortcuts.map((item) => `${item.keys.join(' + ')} — ${item.label}`).join('\n')
 
   const handleInputFocus = (event: ReactFocusEvent) => {
     forceA11yMode('default')
-
     // Remove selection
     const input = event.target as HTMLInputElement
     input.selectionEnd = input.selectionStart
   }
 
-  return extended ? (
-    <div className={cx(baseClass, 'flex-center min-h-lg-9 relative flex-col')}>
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const match = shortcuts.find((shortcut) =>
+        shortcut.keys.every((key) => e.key === key || e.getModifierState(key as ModifierKey)),
+      )
+      match?.fn()
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [shortcuts])
+
+  return props.extended ? (
+    <div className={cx(rootClass, 'flex-center min-h-lg-9 relative flex-col')}>
       <label htmlFor="kf-1" className="sr-only">
         Keyboard focus 1
       </label>
@@ -44,7 +59,15 @@ export const DocsCanvas = ({ children, className, extended }: Props) => {
         className={cx(focusClass, 'top-[-23px]')}
         onFocus={handleInputFocus}
       />
-      {children}
+
+      {props.children}
+
+      {shortcuts.length > 0 && (
+        <DocsTooltip label={shortcutTooltip}>
+          <div className={cx(shortcutClass, 'bottom-[-23px]')}>Shortcuts</div>
+        </DocsTooltip>
+      )}
+
       <input
         ref={input2Ref}
         id="kf-2"
@@ -55,6 +78,6 @@ export const DocsCanvas = ({ children, className, extended }: Props) => {
       <div tabIndex={0} className="opacity-0" onFocus={() => input1Ref.current?.focus()} />
     </div>
   ) : (
-    <div className={baseClass}>{children}</div>
+    <div className={rootClass}>{props.children}</div>
   )
 }

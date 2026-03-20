@@ -1,16 +1,13 @@
 'use client'
 
-import { type CSSObject } from '@emotion/react'
-import { TextInput as MantineInput, Textarea as MantineTextarea, type TextareaProps } from '@mantine/core'
 import '@mantine/core/styles/Input.css'
-import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { useThemeService } from '../../services/theme-service'
-import { CSS__ABSOLUTE_OVERLAY, CSS_A11Y_OUTLINE_PROXY } from '../../utilities/internal/css-utils'
-import { useDefaults } from '../../utilities/react-utils'
+import { useCallback, useEffect, useRef } from 'react'
+import { useDefaults, useRefHandle } from '../../utilities/react-utils'
 import { Keyboard } from '../../utilities/various-utils'
-import { type InputElement, type TextFieldProps, type TextFieldRef } from './_types'
+import { type InputElement, type TextFieldProps } from './_types'
+import { useStyles } from './_use-styles'
 
-export type { TextFieldProps, TextFieldRef, TextFieldSize, TextFieldVariant } from './_types'
+export type { TextFieldHandle, TextFieldProps, TextFieldSize, TextFieldVariant } from './_types'
 
 /** Basic text and textarea field component */
 export const TextField = (rawProps: TextFieldProps) => {
@@ -18,138 +15,82 @@ export const TextField = (rawProps: TextFieldProps) => {
     variant: 'default',
     size: 'md',
   })
-  const { onSubmit, onChange: onChangeProp } = props
-  const { $fontSize, $color, $lineHeight, $spacing, $radius } = useThemeService()
-  const [value, setValue] = useState(props.value)
-  const inputRef = useRef<InputElement>(null)
-  const isNoop = props.disabled || props.readonly
-  const ifNotNoop = (css: CSSObject) => (isNoop ? {} : css)
+  const { onSubmit, onChange } = props
+  const inputRef = useRef<InputElement | null>(null)
+  const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const isNoop = Boolean(props.disabled || props.readonly)
+  const { cssInput, cssPrefix, cssRoot, cssSuffix } = useStyles(props, isNoop)
 
-  const tokens = {
-    minHeight: (() => {
-      if (props.size === 'sm') return $spacing['field-h-sm']
-      if (props.size === 'md') return $spacing['field-h-md']
-      if (props.size === 'lg') return $spacing['field-h-lg']
-      if (props.size === 'xl') return $spacing['field-h-xl']
-      return ''
-    })(),
-    buttonPadding: (() => {
-      if (props.size === 'sm') return `calc((${$spacing['field-h-sm']} - ${$spacing['button-h-xs']}) / 2)`
-      if (props.size === 'md') return `calc((${$spacing['field-h-md']} - ${$spacing['button-h-sm']}) / 2)`
-      if (props.size === 'lg') return `calc((${$spacing['field-h-lg']} - ${$spacing['button-h-sm']}) / 2)`
-      if (props.size === 'xl') return `calc((${$spacing['field-h-xl']} - ${$spacing['button-h-md']}) / 2)`
-      return ''
-    })(),
-    textPaddingX: (() => {
-      if (props.size === 'sm') return $spacing['xs-4']
-      if (props.size === 'md') return $spacing['xs-5']
-      if (props.size === 'lg') return $spacing['xs-7']
-      if (props.size === 'xl') return $spacing['xs-8']
-      return ''
-    })(),
-    textPaddingY: (() => {
-      if (props.size === 'sm') return $spacing['xs-2']
-      if (props.size === 'md') return $spacing['xs-3']
-      if (props.size === 'lg') return $spacing['xs-5']
-      if (props.size === 'xl') return $spacing['xs-7']
-      return ''
-    })(),
-    borderRadius: (() => {
-      if (props.size === 'sm') return $radius['sm']
-      if (props.size === 'md') return $radius['sm']
-      if (props.size === 'lg') return $radius['md']
-      if (props.size === 'xl') return $radius['md']
-      return ''
-    })(),
-    borderColor: props.invalid
-      ? $color['danger-page-text']
-      : props.readonly
-        ? $color['border-subtle']
-        : $color['border-default'],
-    borderColorHover: props.invalid ? $color['danger-page-text'] : $color['border-hover'],
-    borderColorActive: (() => {
-      if (props.invalid) return $color['danger-page-text']
-      if (props.variant === 'default') return $color['border-active']
-      if (props.variant === 'primary') return $color['primary-page-text']
-      if (props.variant === 'secondary') return $color['secondary-page-text']
-      return ''
-    })(),
-  }
+  const handleKeyDown = useCallback(
+    (event: ReactKeyboardEvent) => event.key === Keyboard.ENTER && onSubmit?.(event),
+    [onSubmit],
+  )
 
-  const cssRoot: CSSObject = {
-    ...CSS_A11Y_OUTLINE_PROXY,
-    position: 'relative',
-    zIndex: 0,
-    display: 'inline-flex',
-    alignItems: 'stretch',
-    height: props.multiline ? 'unset' : tokens.minHeight,
-    minHeight: tokens.minHeight,
-    borderRadius: tokens.borderRadius,
-    color: $color['text-placeholder'],
+  const updateInputHeight = useCallback(() => {
+    const elem = inputRef.current
 
-    '&::before': {
-      ...CSS__ABSOLUTE_OVERLAY,
-      content: `''`,
-      zIndex: -1,
-      borderWidth: '1px',
-      borderColor: tokens.borderColor,
-      borderRadius: tokens.borderRadius,
-      background: props.readonly ? 'transparent' : $color['bg-field'],
-      opacity: props.disabled ? 0.4 : 1,
+    if (elem && props.multiline) {
+      // Must set 'auto' to calculate real height
+      elem.style.height = 'auto'
+      // Calculate real height
+      let height = elem.scrollHeight
+
+      if (props.maxRows) {
+        const minRows = props.minRows || 1
+        const maxRows = props.maxRows > minRows ? props.maxRows : minRows
+        const style = window.getComputedStyle(elem)
+        const lineHeight = parseFloat(style.lineHeight)
+        const paddingY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+        const maxHeight = lineHeight * maxRows + paddingY
+        const minHeight = lineHeight + paddingY
+        height = Math.min(Math.max(height, minHeight), maxHeight)
+      }
+
+      // Set real height
+      elem.style.height = height + 'px'
+    }
+  }, [props.multiline, props.maxRows, props.minRows])
+
+  const handleChange = useCallback(
+    (event: ReactChangeEvent<InputElement>) => {
+      onChange?.(event.target.value, event)
+      updateInputHeight()
     },
+    [props.minRows, props.maxRows, onChange, updateInputHeight],
+  )
 
-    ...ifNotNoop({
-      '&:hover::before': { borderColor: tokens.borderColorHover },
+  useEffect(() => {
+    if (props.multiline && inputRef.current) {
+      inputRef.current.rows = props.minRows || 1
+      updateInputHeight()
+    }
+  }, [props.minRows, props.maxRows, props.multiline, updateInputHeight])
 
-      '&:has(input:focus), &:has(textarea:focus)': {
-        color: $color['text-default'],
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = props.value || ''
+      updateInputHeight()
+    }
+  }, [props.value, updateInputHeight])
 
-        '&::before, &:hover::before': {
-          borderWidth: '2px',
-          borderColor: tokens.borderColorActive,
-        },
+  useRefHandle(
+    props.ref,
+    wrapperRef,
+    {
+      getValue: () => inputRef.current?.value || '',
+      setValue: (value: string) => {
+        inputRef.current && (inputRef.current.value = value || '')
+        updateInputHeight()
       },
-    }),
-  }
-  const cssInput: CSSObject = {
-    '--ds-spacing-scrollbar-w': $spacing['xs-1'],
-    width: '100%',
-    height: '100%',
-    minHeight: '100%',
-    maxHeight: '100%',
-    padding: `${tokens.textPaddingY} ${tokens.textPaddingX}`,
-    borderRadius: tokens.borderRadius,
-    background: 'transparent',
-    color: $color['text-default'],
-    lineHeight: $lineHeight['md'],
-    fontSize: props.size === 'sm' ? $fontSize['sm'] : $fontSize['md'],
-    opacity: props.disabled ? 0.4 : 1,
-    resize: 'none',
-
-    '&:focus-visible': {
-      outline: 'none',
+      focus: () => inputRef.current?.focus(),
+      blur: () => inputRef.current?.blur(),
     },
-    '&::placeholder': {
-      color: $color['text-placeholder'],
-      opacity: 1,
-    },
-  }
-  const cssPrefix: CSSObject = {
-    display: 'flex',
-    alignItems: 'center',
-    minHeight: '100%',
-    padding: tokens.buttonPadding,
-    paddingRight: 0,
-  }
-  const cssSuffix: CSSObject = {
-    display: 'flex',
-    alignItems: 'center',
-    minHeight: '100%',
-    padding: tokens.buttonPadding,
-    paddingLeft: 0,
-  }
+    [updateInputHeight],
+  )
 
-  const inputBindings = {
+  const bindings = {
+    ref: inputRef,
+    id: props.id,
     maxLength: props.maxLength || undefined,
     placeholder: props.placeholder,
     'aria-label': props.ariaLabel,
@@ -157,76 +98,20 @@ export const TextField = (rawProps: TextFieldProps) => {
     'aria-invalid': props.invalid,
     'aria-disabled': props.disabled,
     readOnly: isNoop,
-  }
-
-  const cssMantine: CSSObject = {
-    '.mantine-Input-wrapper': {
-      ...cssRoot,
-      width: '100%',
-      height: props.multiline ? '100%' : tokens.minHeight,
-    },
-    '.mantine-Input-input': {
-      ...cssInput,
-      border: 'unset',
-    },
-    '.mantine-Input-section': {
-      position: 'unset',
-      width: 'unset',
-      color: 'unset',
-    },
-    '.mantine-Input-section[data-position="left"]': cssPrefix,
-    '.mantine-Input-section[data-position="right"]': cssSuffix,
-  }
-
-  const handleKeyDown = useCallback(
-    (event: ReactKeyboardEvent) => event.key === Keyboard.ENTER && onSubmit?.(event),
-    [onSubmit],
-  )
-
-  const handleChange = useCallback(
-    (event: ReactChangeEvent<InputElement>) => {
-      setValue(event.target.value)
-      onChangeProp?.(event.target.value, event)
-    },
-    [onChangeProp],
-  )
-
-  useEffect(() => {
-    setValue(props.value)
-  }, [props.value])
-
-  const methods: TextFieldRef = {
-    setValue: (value: string) => inputRef.current && (inputRef.current.value = value || ''),
-    getValue: () => inputRef.current?.value || '',
-    focus: () => inputRef.current?.focus(),
-    blur: () => inputRef.current?.blur(),
-  }
-  useImperativeHandle(props.ref, () => ({
-    ...methods,
-    setValue: (value: string) => setValue(value),
-    getValue: () => value || '',
-  }))
-
-  const bindings = {
-    ...inputBindings,
-    ref: inputRef,
-    id: props.id,
-    value: value,
-    leftSection: props.prefix,
-    rightSection: props.suffix,
-    className: props.className,
-    css: cssMantine,
+    css: cssInput,
     onFocus: props.onFocus,
     onBlur: props.onBlur,
-    onChange: handleChange,
     onKeyDown: handleKeyDown,
-  }
-  const bindingsForTextArea: TextareaProps = {
-    ...bindings,
-    autosize: true,
-    minRows: props.minRows,
-    maxRows: props.maxRows || undefined,
+    onChange: handleChange,
   }
 
-  return props.multiline ? <MantineTextarea {...bindingsForTextArea} /> : <MantineInput {...bindings} />
+  return (
+    <div ref={wrapperRef} css={cssRoot} className={props.className} style={props.style}>
+      {Boolean(props.prefix) && <div css={cssPrefix}>{props.prefix}</div>}
+
+      {props.multiline ? <textarea rows={props.minRows} {...bindings} /> : <input type="text" {...bindings} />}
+
+      {Boolean(props.suffix) && <div css={cssSuffix}>{props.suffix}</div>}
+    </div>
+  )
 }

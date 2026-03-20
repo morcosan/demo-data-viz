@@ -72,10 +72,10 @@ const toolbarConfig = {
 const getStoryConfig = (providers: HOC[]) => {
   return {
     decorators: [
-      (Story: ComponentType, { globals, tags, viewMode }: StoryContext) => (
+      (Story: ComponentType, { globals, tags, viewMode, parameters }: StoryContext) => (
         <HocComposer hocs={computeServices(providers, globals)}>
           {tags.includes('autodocs') || tags.includes('controls') ? (
-            <DocsPage type={viewMode === 'docs' ? 'autodocs' : 'component'}>
+            <DocsPage type={viewMode === 'docs' ? 'autodocs' : 'component'} shortcuts={parameters.shortcuts}>
               <Story />
             </DocsPage>
           ) : (

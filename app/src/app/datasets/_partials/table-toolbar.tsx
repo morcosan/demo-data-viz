@@ -45,7 +45,7 @@ export const TableToolbar = (props: Props) => {
 
       {isMdOrLarger ? (
         <Button variant="text-default" size="sm" onClick={() => setOpenedModal(true)}>
-          <FilterSvg className="h-xs-7 -mt-xs-1 mr-xs-1" />
+          <FilterSvg className="h-xs-7 -mt-xs-0 mr-xs-1" />
           {t('dataViz.label.filtersModalButton', { count: filterCount })}
         </Button>
       ) : (
