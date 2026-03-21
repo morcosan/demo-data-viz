@@ -9,14 +9,13 @@ import { type CellContext } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { ColCell } from './_partials/col-cell'
 import { RowCell } from './_partials/row-cell'
-import { Toolbar } from './_partials/toolbar'
 import { computeColSize, formatCellValue } from './_partials/utils'
 import { useTableModel } from './_use-table-model'
 
 interface Props extends ReactProps {
   data: TableData
+  query?: string
   cellFn?: (value: string, query: string) => ReactNode
-  toolbar?: ReactNode
   loading?: boolean
   sticky?: boolean
 }
@@ -24,10 +23,10 @@ interface Props extends ReactProps {
 export const DataTable = (props: Props) => {
   const { t } = useTranslation()
   const { cellFn } = props
-  const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
   const headerRef = useRef<HTMLTableSectionElement | null>(null)
+  const filterQuery = props.query || ''
 
   const columns = useMemo(
     () => props.data.cols.map((col) => ({ ...col, size: computeColSize(col, props.data.rows) })),
@@ -38,17 +37,17 @@ export const DataTable = (props: Props) => {
       const value = info.getValue() ?? ''
       if (value === '') return <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
 
-      const query = searchQuery.trim()
+      const query = filterQuery.trim()
       const strValue = formatCellValue(value, columns[info.column.getIndex()])
 
       return cellFn ? cellFn(strValue, query) : query ? <TextHighlight text={strValue} query={query} /> : strValue
     },
-    [columns, cellFn, searchQuery, t],
+    [columns, cellFn, filterQuery, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,
     rows: props.data.rows,
-    filter: searchQuery,
+    filter: filterQuery,
     cellFn: renderCell,
   })
 
@@ -80,19 +79,8 @@ export const DataTable = (props: Props) => {
   }, [props.data])
 
   return (
-    <div
-      ref={rootRef}
-      className={cx(
-        'bg-color-bg-card border-color-border-subtle flex max-w-full flex-col rounded-md border',
-        props.className,
-      )}
-      style={props.style}
-    >
-      {/* TOOLBAR */}
-      <Toolbar toolbar={props.toolbar} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
-      {/* TABLE */}
-      <div ref={vScrollerRef} className="border-color-border-subtle min-h-0 flex-1 overflow-auto border-t">
+    <div ref={rootRef} className={cx('bg-color-bg-card max-w-full', props.className)} style={props.style}>
+      <div ref={vScrollerRef} className="h-full overflow-auto">
         <table className="min-w-full border-collapse" style={{ width: vTotalWidth }}>
           <thead ref={headerRef} className="z-sticky bg-color-bg-card shadow-below-sm sticky top-0">
             <tr>

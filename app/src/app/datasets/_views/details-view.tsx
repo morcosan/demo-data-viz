@@ -3,6 +3,7 @@
 import { QueryKey, useQuery } from '@app-api'
 import { EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
 import { useTranslation } from '@app-i18n'
+import { ViewToggle } from '@app/app/datasets/_partials/view-toggle'
 import type { TableCol } from '@app/shared/types/table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import {
@@ -14,12 +15,12 @@ import {
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
-import { DatasetModal } from '../_partials/dataset-modal'
-import { DatasetTable } from '../_partials/dataset-table'
+import { DetailsModal } from '../_modals/details-modal'
+import { DatasetPane, type DatasetPaneProps } from '../_partials/dataset-pane'
 import { useFullscreen } from '../_partials/use-fullscreen'
-import { type Dataset, type ViewedDatasets } from '../_types'
+import { type Dataset, type DataView, type ViewedDatasets } from '../_types'
 
 interface Props extends ReactProps {
   onClickBack: () => void
@@ -34,6 +35,7 @@ export const DetailsView = (props: Props) => {
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
+  const [datasetView, setDatasetView] = useState<DataView>('table')
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -146,14 +148,24 @@ export const DetailsView = (props: Props) => {
             {dataset.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
             <span className="ml-xs-0">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
           </StatsCard>
+
+          <ViewToggle view={datasetView} setDatasetView={setDatasetView} />
         </div>
 
         {/* TABLE */}
-        <DatasetTable data={tableData} className="min-h-0 flex-1" />
+        <DatasetPaneMemo data={tableData} view={datasetView} className="min-h-0 flex-1" />
 
         {/* MODAL */}
-        <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
+        <DetailsModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
       </LayoutPane>
     </div>
   )
 }
+
+/**********************************************************************************************************************
+ * Memo
+ */
+
+const DatasetPaneMemo = memo(function DatasetPaneMemo(props: DatasetPaneProps) {
+  return <DatasetPane data={props.data} view={props.view} className="min-h-0 flex-1" />
+})

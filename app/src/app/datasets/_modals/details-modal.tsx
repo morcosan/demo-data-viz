@@ -2,8 +2,8 @@ import { useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { type JsonStatConst } from '@app/shared/utils/json-stat/index'
 import { Modal } from '@ds/core'
+import { SettingList } from '../_partials/setting-list'
 import { type Dataset } from '../_types'
-import { SettingList } from './setting-list'
 
 interface Props {
   opened: boolean
@@ -11,7 +11,7 @@ interface Props {
   onClose?: () => void
 }
 
-export const DatasetModal = (props: Props) => {
+export const DetailsModal = (props: Props) => {
   const { t } = useTranslation()
   const { dataset } = props
 

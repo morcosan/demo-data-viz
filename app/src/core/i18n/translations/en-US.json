@@ -58,10 +58,10 @@
     },
     "label": {
       "columnQuery": "Split column query",
-      "dataTableSearch": "Data table search",
+      "dataTableSearch": "Filter dataset rows",
       "datasetDetails": "Dataset details",
       "datasetResults": "{total} datasets",
-      "datasetSearch": "Dataset search",
+      "datasetSearch": "Find datasets by title",
       "datasetsTitle": "Datasets",
       "emptyCell": "-",
       "emptyOptionForIndex": "-- No filters --",
@@ -75,7 +75,10 @@
       "headerConstants": "Coverage",
       "headerFiltersModal1": "Table config",
       "headerFiltersModal2": "Filters ({count})",
-      "headerMetadata": "Metadata"
+      "headerMetadata": "Metadata",
+      "viewChart": "Chart",
+      "viewMap": "Map",
+      "viewTable": "Table"
     },
     "notice": {
       "columnQuery": "You can use ' OR ' operator to query multiple values"
@@ -83,7 +86,8 @@
     "error": {
       "fetchDataset": "Failed to load dataset",
       "fetchDatasets": "Failed to load datasets",
-      "noDatasetSelected": "Select a dataset!"
+      "noDatasetSelected": "Select a dataset!",
+      "noIndexColumn": "You must select a column to filter by"
     }
   }
 }

@@ -1,26 +1,28 @@
 'use client'
 
-import { DataTable, TextHighlight } from '@app-components'
-import { useCountries } from '@app-i18n'
 import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { UrlKey, useTableStore } from '../_table-store'
-import { TableToolbar } from './table-toolbar'
+import { type DataView } from '../_types'
+import { ChartView } from './data-views/chart-view'
+import { TableView } from './data-views/table-view'
+import { DatasetToolbar } from './dataset-toolbar'
 
-interface Props extends ReactProps {
+export interface DatasetPaneProps extends ReactProps {
   data: JsonStatData
+  view: DataView
 }
 
-export const DatasetTable = (props: Props) => {
-  const { getCountryCode } = useCountries()
+export const DatasetPane = (props: DatasetPaneProps) => {
   const searchParams = useSearchParams()
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
   const filterByCol = useTableStore((s) => s.filterByCol)
   const pivotQuery = useTableStore((s) => s.pivotQuery)
   const initTableStore = useTableStore((s) => s.initTableStore)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const pivotedData = useMemo(
     () => pivotJsonStatTable(props.data, { indexKey, pivotKey, filterByCol }),
@@ -34,16 +36,6 @@ export const DatasetTable = (props: Props) => {
     return pivotKey && pivotQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
   }, [pivotedData, pivotKey, pivotQuery, isColVisible])
 
-  const cellFn = (value: string, query: string): ReactNode => {
-    const flag = getCountryCode(value)
-    return (
-      <>
-        {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        {query ? <TextHighlight text={value} query={query} /> : value}
-      </>
-    )
-  }
-
   useEffect(() => {
     initTableStore(props.data)
   }, [props.data])
@@ -56,12 +48,17 @@ export const DatasetTable = (props: Props) => {
   }, [searchParams])
 
   return (
-    <DataTable
-      data={visibleData}
-      sticky={Boolean(indexKey && pivotKey)}
-      cellFn={cellFn}
-      toolbar={<TableToolbar data={props.data} />}
-      className={props.className}
-    />
+    <div
+      className={cx(
+        'bg-color-bg-card border-color-border-subtle flex max-w-full flex-col rounded-md border',
+        props.className,
+      )}
+    >
+      <DatasetToolbar data={props.data} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+      {props.view === 'table' && <TableView data={visibleData} query={searchQuery} className="min-h-0 flex-1" />}
+      {props.view === 'chart' && <ChartView data={visibleData} query={searchQuery} className="min-h-0 flex-1" />}
+      {props.view === 'map' && <div>TODO</div>}
+    </div>
   )
 }

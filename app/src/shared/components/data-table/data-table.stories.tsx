@@ -23,9 +23,6 @@ const MIN_MAX = 1_000_000_000
 const meta: Meta = {
   title: 'Components / DataTable',
   ...defineMeta(DataTable, {
-    slots: {
-      toolbar: 'Toolbar slot',
-    },
     props: {
       data: {
         cols,
@@ -50,6 +47,7 @@ const meta: Meta = {
           )
         }),
       },
+      query: '',
       cellFn: undefined,
       loading: false,
       sticky: false,

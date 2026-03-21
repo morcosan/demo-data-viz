@@ -21,3 +21,4 @@ export interface DatasetStats {
 export type ViewedDatasets = Record<string, DatasetStats>
 
 export type MobileView = 'listing' | 'details'
+export type DataView = 'table' | 'chart' | 'map'

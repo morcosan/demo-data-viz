@@ -5,8 +5,8 @@ import { type JsonStatData } from '@app/shared/utils/json-stat'
 import { CloseSvg, IconButton, Modal, TextField } from '@ds/core'
 import { debounce } from 'lodash'
 import { memo, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { SettingList } from '../_partials/setting-list'
 import { useTableStore } from '../_table-store'
-import { SettingList } from './setting-list'
 
 interface Props {
   opened: boolean
