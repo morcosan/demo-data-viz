@@ -36,7 +36,7 @@ const meta: Meta = {
       readonly: false,
       disabled: false,
       invalid: false,
-      className: 'max-w-lg-9',
+      className: '',
       style: {},
     },
     events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],

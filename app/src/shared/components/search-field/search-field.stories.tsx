@@ -9,7 +9,7 @@ const meta: Meta = {
       id: 'example-id',
       value: '',
       label: 'Search label',
-      className: 'max-w-lg-9',
+      className: '',
       style: {},
     },
     events: ['onChange'],
