@@ -17,16 +17,16 @@ import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait 
 import { useSearchParams } from 'next/navigation'
 import { memo, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
+import { useFullscreen } from '../_hooks/use-fullscreen'
 import { DetailsModal } from '../_modals/details-modal'
-import { DatasetPane, type DatasetPaneProps } from '../_partials/dataset-pane'
-import { useFullscreen } from '../_partials/use-fullscreen'
+import { DataPane, type DatasetPaneProps } from '../_partials/data-pane'
 import { type Dataset, type DataView, type ViewedDatasets } from '../_types'
 
 interface Props extends ReactProps {
   onClickBack: () => void
 }
 
-export const DetailsView = (props: Props) => {
+export const DetailsPanel = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
@@ -167,5 +167,5 @@ export const DetailsView = (props: Props) => {
  */
 
 const DatasetPaneMemo = memo(function DatasetPaneMemo(props: DatasetPaneProps) {
-  return <DatasetPane data={props.data} view={props.view} className="min-h-0 flex-1" />
+  return <DataPane data={props.data} view={props.view} className="min-h-0 flex-1" />
 })

@@ -17,7 +17,7 @@ interface Props extends ReactProps {
   onClickDataset?: () => void
 }
 
-export const ListingView = (props: Props) => {
+export const ListingPanel = (props: Props) => {
   const { t } = useTranslation()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()

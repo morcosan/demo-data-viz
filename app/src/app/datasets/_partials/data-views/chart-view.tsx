@@ -3,7 +3,7 @@ import { useCountries, useTranslation } from '@app-i18n'
 import { type TableData } from '@app/shared/types/table'
 import { Button } from '@ds/core'
 import { type ReactNode, useEffect, useState } from 'react'
-import { useTableStore } from '../../_table-store'
+import { useTableStore } from '../../_hooks/use-table-store'
 
 interface Props extends ReactProps {
   data: TableData

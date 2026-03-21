@@ -2,7 +2,7 @@ import { DataTable, TextHighlight } from '@app-components'
 import { useCountries } from '@app-i18n'
 import { type TableData } from '@app/shared/types/table'
 import { type ReactNode } from 'react'
-import { useTableStore } from '../../_table-store'
+import { useTableStore } from '../../_hooks/use-table-store'
 
 interface Props extends ReactProps {
   data: TableData

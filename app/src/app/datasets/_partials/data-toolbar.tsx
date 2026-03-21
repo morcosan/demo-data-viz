@@ -4,8 +4,8 @@ import { FilterSvg } from '@app/shared/assets'
 import { type JsonStatData } from '@app/shared/utils/json-stat'
 import { Button, CloseSvg, IconButton, useViewportService } from '@ds/core'
 import { memo, useCallback, useMemo, useState } from 'react'
+import { useTableStore } from '../_hooks/use-table-store'
 import { FiltersModal } from '../_modals/filters-modal'
-import { useTableStore } from '../_table-store'
 
 interface Props {
   data: JsonStatData
@@ -13,7 +13,7 @@ interface Props {
   setSearchQuery: (value: string) => void
 }
 
-export const DatasetToolbar = (props: Props) => {
+export const DataToolbar = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinXL, isViewportMD } = useViewportService()
   const indexKey = useTableStore((s) => s.indexKey)
@@ -51,22 +51,22 @@ export const DatasetToolbar = (props: Props) => {
       <div className="gap-xs-2 flex w-full items-center justify-between lg:w-fit">
         <IndexPivotMemo indexOptions={indexOptions} pivotOptions={pivotOptions} />
 
-      {isMdOrLarger ? (
-        <Button variant="text-default" size="sm" onClick={() => setOpenedModal(true)}>
-          <FilterSvg className="h-xs-7 -mt-xs-0 mr-xs-1" />
-          {t('dataViz.label.filtersModalButton', { count: filterCount })}
-        </Button>
-      ) : (
-        <IconButton
-          tooltip={t('dataViz.label.filtersModalButton', { count: filterCount })}
-          variant="text-default"
-          size="sm"
-          className="ml-auto"
-          onClick={() => setOpenedModal(true)}
-        >
-          <FilterSvg className="h-xs-7" />
-        </IconButton>
-      )}
+        {isMdOrLarger ? (
+          <Button variant="text-default" size="sm" onClick={() => setOpenedModal(true)}>
+            <FilterSvg className="h-xs-7 -mt-xs-0 mr-xs-1" />
+            {t('dataViz.label.filtersModalButton', { count: filterCount })}
+          </Button>
+        ) : (
+          <IconButton
+            tooltip={t('dataViz.label.filtersModalButton', { count: filterCount })}
+            variant="text-default"
+            size="sm"
+            className="ml-auto"
+            onClick={() => setOpenedModal(true)}
+          >
+            <FilterSvg className="h-xs-7" />
+          </IconButton>
+        )}
       </div>
 
       <SearchField

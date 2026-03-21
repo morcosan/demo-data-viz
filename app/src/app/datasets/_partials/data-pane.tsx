@@ -4,18 +4,18 @@ import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
 import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { UrlKey, useTableStore } from '../_table-store'
+import { UrlKey, useTableStore } from '../_hooks/use-table-store'
 import { type DataView } from '../_types'
+import { DataToolbar } from './data-toolbar'
 import { ChartView } from './data-views/chart-view'
 import { TableView } from './data-views/table-view'
-import { DatasetToolbar } from './dataset-toolbar'
 
 export interface DatasetPaneProps extends ReactProps {
   data: JsonStatData
   view: DataView
 }
 
-export const DatasetPane = (props: DatasetPaneProps) => {
+export const DataPane = (props: DatasetPaneProps) => {
   const searchParams = useSearchParams()
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
@@ -54,7 +54,7 @@ export const DatasetPane = (props: DatasetPaneProps) => {
         props.className,
       )}
     >
-      <DatasetToolbar data={props.data} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <DataToolbar data={props.data} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {props.view === 'table' && <TableView data={visibleData} query={searchQuery} className="min-h-0 flex-1" />}
       {props.view === 'chart' && <ChartView data={visibleData} query={searchQuery} className="min-h-0 flex-1" />}

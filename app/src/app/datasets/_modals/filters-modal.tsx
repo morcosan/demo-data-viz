@@ -5,8 +5,8 @@ import { type JsonStatData } from '@app/shared/utils/json-stat'
 import { CloseSvg, IconButton, Modal, TextField } from '@ds/core'
 import { debounce } from 'lodash'
 import { memo, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
-import { SettingList } from '../_partials/setting-list'
-import { useTableStore } from '../_table-store'
+import { useTableStore } from '../_hooks/use-table-store'
+import { SettingSection } from '../_partials/setting-section'
 
 interface Props {
   opened: boolean
@@ -69,7 +69,7 @@ export const FiltersModal = (props: Props) => {
       onClose={props.onClose}
     >
       {/* SECTION 1 */}
-      <SettingList header={t('dataViz.label.headerFiltersModal1')}>
+      <SettingSection header={t('dataViz.label.headerFiltersModal1')}>
         <SettingMemo
           id="filter-index-col"
           colKey=""
@@ -86,10 +86,10 @@ export const FiltersModal = (props: Props) => {
           options={props.pivotOptions}
           onChange={setPivotKey}
         />
-      </SettingList>
+      </SettingSection>
 
       {/* SECTION 2 */}
-      <SettingList
+      <SettingSection
         header={t('dataViz.label.headerFiltersModal2', { count: filterCols.length + (pivotKey ? 1 : 0) })}
         className="mt-sm-7"
       >
@@ -106,7 +106,7 @@ export const FiltersModal = (props: Props) => {
             onChange={setFilterByCol}
           />
         ))}
-      </SettingList>
+      </SettingSection>
     </Modal>
   )
 }
