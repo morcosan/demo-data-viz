@@ -2,7 +2,7 @@ import { useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { type JsonStatConst } from '@app/shared/utils/json-stat/index'
 import { Modal } from '@ds/core'
-import { SettingSection } from '../_partials/setting-section'
+import { SettingSection } from '../_components/setting-section'
 import { type Dataset } from '../_types'
 
 interface Props {

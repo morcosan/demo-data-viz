@@ -3,7 +3,7 @@
 import { QueryKey, useQuery } from '@app-api'
 import { EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { ViewToggle } from '@app/app/datasets/_partials/view-toggle'
+import { ViewToggle } from '@app/app/datasets/_components/view-toggle'
 import type { TableCol } from '@app/shared/types/table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import {
@@ -17,16 +17,16 @@ import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait 
 import { useSearchParams } from 'next/navigation'
 import { memo, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
+import { DataPane, type DatasetPaneProps } from '../_components/data-pane'
 import { useFullscreen } from '../_hooks/use-fullscreen'
 import { DetailsModal } from '../_modals/details-modal'
-import { DataPane, type DatasetPaneProps } from '../_partials/data-pane'
 import { type Dataset, type DataView, type ViewedDatasets } from '../_types'
 
 interface Props extends ReactProps {
   onClickBack: () => void
 }
 
-export const DetailsPanel = (props: Props) => {
+export const DetailsSection = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
