@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { CartesianTickItem } from 'recharts/types/util/types'
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
   x?: number
   y?: number
   payload?: CartesianTickItem
+  labelFn?: (value: string) => ReactNode
 }
 
 export const Label = (props: Props) => {
@@ -14,7 +16,9 @@ export const Label = (props: Props) => {
 
   return (
     <foreignObject x={0} y={posY} width={props.width} height={props.height}>
-      <div className="pl-xs-5 pr-xs-2 flex h-full w-full items-center overflow-hidden">{label}</div>
+      <div className="pl-xs-5 pr-xs-2 flex h-full w-full items-center overflow-hidden">
+        {props.labelFn?.(label) || label}
+      </div>
     </foreignObject>
   )
 }
