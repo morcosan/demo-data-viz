@@ -16,7 +16,13 @@ export const Label = (props: Props) => {
 
   return (
     <foreignObject x={0} y={posY} width={props.width} height={props.height}>
-      <div className="pl-xs-5 pr-xs-2 flex h-full w-full items-center overflow-hidden">
+      <div
+        className={cx(
+          'pl-xs-5 pr-xs-2 overflow-hidden',
+          'flex h-full w-full items-center justify-end',
+          'text-size-sm leading-sm text-right',
+        )}
+      >
         {props.labelFn?.(label) || label}
       </div>
     </foreignObject>
