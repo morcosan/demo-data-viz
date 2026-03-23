@@ -1,37 +1,43 @@
 import { TOKENS__SPACING } from '@ds/core'
-import { Bar, CartesianGrid, BarChart as ReBarChart, Tooltip, XAxis, YAxis } from 'recharts'
-
-export interface ChartEntry {
-  name: string
-  value: number
-}
+import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis } from 'recharts'
+import { Label } from './_partials/label'
 
 interface Props extends ReactProps {
-  entries: ChartEntry[]
+  entries: object[]
+  labelKey: string
+  valueKeys: string[]
 }
 
 export const BarChart = (props: Props) => {
-  const barHeight = parseFloat(TOKENS__SPACING['sm-1'].$value)
-  const gapHeight = parseFloat(TOKENS__SPACING['xs-9'].$value)
-  const chartHeight = props.entries.length * (barHeight + gapHeight) + 5 * gapHeight
-
-  log(barHeight, gapHeight, chartHeight)
+  const labelSize = parseFloat(TOKENS__SPACING['md-5'].$value)
+  const barSize = parseFloat(TOKENS__SPACING['sm-1'].$value)
+  const barGap = parseFloat(TOKENS__SPACING['xs-1'].$value)
+  const groupGap = parseFloat(TOKENS__SPACING['xs-9'].$value)
+  const xAxisHeight = 30
+  const groupSize = props.valueKeys.length * (barSize + barGap) - barGap
+  const padding = 2 * groupSize
+  const totalHeight = props.entries.length * (groupSize + groupGap) - groupGap + padding + xAxisHeight
 
   return (
     <div className={cx('bg-color-bg-card w-full overflow-y-auto', props.className)} style={props.style}>
-      <ReBarChart
-        data={props.entries}
-        layout="vertical"
-        width="100%"
-        height={chartHeight}
-        barCategoryGap={0}
-        responsive
-      >
-        <CartesianGrid strokeDasharray="3 3" />
+      <ReBarChart data={props.entries} layout="vertical" width="100%" height={totalHeight} barGap={barGap} responsive>
+        {/* BARS */}
+        {props.valueKeys.map((key) => (
+          <Bar key={key} dataKey={key} fill="var(--ds-color-primary-card-text)" barSize={barSize}>
+            <LabelList dataKey={key} position="insideRight" />
+          </Bar>
+        ))}
+
+        {/* AXIS */}
         <XAxis type="number" />
-        <YAxis type="category" dataKey="name" />
+        <YAxis
+          type="category"
+          dataKey={props.labelKey}
+          width={labelSize}
+          tick={<Label width={labelSize} height={groupSize} />}
+        />
+
         <Tooltip />
-        <Bar dataKey="value" fill="var(--ds-color-primary-card-text)" barSize={barHeight} />
       </ReBarChart>
     </div>
   )

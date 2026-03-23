@@ -1,16 +1,18 @@
 import { defineMeta, loremArray, loremInt, loremLastName } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { BarChart, type ChartEntry } from './bar-chart'
+import { BarChart } from './bar-chart'
 
 const meta: Meta = {
   title: 'Components / BarChart',
   ...defineMeta(BarChart, {
     props: {
-      entries: loremArray(50, 50).map((): ChartEntry => ({ name: loremLastName(), value: loremInt(10, 100) })),
-      className: 'h-xl-0',
-      style: {},
+      entries: loremArray(50, 50).map(() => ({ label: loremLastName(), v1: loremInt(10, 100), v2: loremInt(10, 100) })),
+      labelKey: 'label',
+      valueKeys: ['v1', 'v2'],
+      className: '',
+      style: { height: '500px' },
     },
-    clearDefaults: ['entries'],
+    clearDefaults: ['entries', 'labelKey', 'valueKeys'],
   }),
 }
 
