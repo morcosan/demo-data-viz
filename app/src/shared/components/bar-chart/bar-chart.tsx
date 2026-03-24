@@ -17,8 +17,8 @@ export const BarChart = (props: BarChartProps) => {
   const { entries } = props.data
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
-  const barCursorRef = useRef<SVGRectElement | null>(null)
-  const barInfoRef = useRef<SVGRectElement | null>(null)
+  const barCursorRef = useRef<Element | null>(null)
+  const barInfoRef = useRef<Element | null>(null)
   const hasGroups = props.valueKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
