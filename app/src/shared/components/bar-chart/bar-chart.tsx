@@ -1,3 +1,4 @@
+import { BarCursor } from '@app/shared/components/bar-chart/_partials/bar-cursor'
 import { TOKENS } from '@ds/core'
 import { type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis, type RenderableText } from 'recharts'
@@ -16,20 +17,32 @@ export const BarChart = (props: BarChartProps) => {
   const hasGroups = props.valueKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
+  const barPadding = parseFloat(TOKENS.SPACING['xs-2'].$value)
   const barSize = parseFloat(TOKENS.SPACING[hasGroups ? 'sm-0' : 'sm-1'].$value)
   const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
   const groupGap = parseFloat(TOKENS.SPACING[hasGroups ? 'xs-9' : 'xs-4'].$value)
   const groupSize = props.valueKeys.length * (barSize + barGap) - barGap
-  const padding = 2 * groupSize
+  const padding = 2 * groupGap
   const totalHeight = entries.length * (groupSize + groupGap) - groupGap + padding + xAxisHeight
   const labelWidth = parseFloat(TOKENS.SPACING['md-5'].$value)
   const labelHeight = groupSize + groupGap
-
+  const propParam = {} as any
   const barValueFn = (key: string, value: RenderableText) => (hasGroups ? `${key}: ${value}` : value)
 
   return (
-    <div className={cx('bg-color-bg-card w-full overflow-y-auto px-3', props.className)} style={props.style}>
-      <ReBarChart data={entries} layout="vertical" width="100%" height={totalHeight} barGap={barGap} responsive>
+    <div
+      className={cx('bg-color-bg-card a11y-outline-proxy p-xs-1 w-full overflow-y-auto', props.className)}
+      style={props.style}
+    >
+      <ReBarChart
+        data={entries}
+        layout="vertical"
+        width="100%"
+        height={totalHeight}
+        barGap={barGap}
+        margin={{ top: 0, right: barPadding, bottom: 0, left: 0 }}
+        responsive
+      >
         {/* BARS */}
         {props.valueKeys.map((key) => (
           <Bar
@@ -55,11 +68,14 @@ export const BarChart = (props: BarChartProps) => {
           type="category"
           dataKey={props.labelKey}
           width={labelWidth}
-          tick={<BarLabel width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
+          tick={<BarLabel {...propParam} width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
         />
 
         {/* TOOLTIP */}
-        <Tooltip cursor={{ fill: 'var(--ds-color-hover-text-default)' }} content={BarInfo} />
+        <Tooltip
+          cursor={<BarCursor {...propParam} padding={barPadding} radius={barRadius} />}
+          content={<BarInfo {...propParam} />}
+        />
       </ReBarChart>
     </div>
   )

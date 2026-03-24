@@ -4,14 +4,14 @@ import type { CartesianTickItem } from 'recharts/types/util/types'
 interface Props {
   width: number
   height: number
-  x?: number
-  y?: number
-  payload?: CartesianTickItem
+  x: number
+  y: number
+  payload: CartesianTickItem
   labelFn?: (value: string) => ReactNode
 }
 
 export const BarLabel = (props: Props) => {
-  const posY = (props.y || 0) - props.height / 2
+  const posY = props.y - props.height / 2
   const label = props.payload?.value
 
   return (
