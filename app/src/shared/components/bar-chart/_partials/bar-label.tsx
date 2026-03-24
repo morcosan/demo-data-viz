@@ -10,7 +10,7 @@ interface Props {
   labelFn?: (value: string) => ReactNode
 }
 
-export const Label = (props: Props) => {
+export const BarLabel = (props: Props) => {
   const posY = (props.y || 0) - props.height / 2
   const label = props.payload?.value
 

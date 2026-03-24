@@ -1,7 +1,8 @@
 import { TOKENS } from '@ds/core'
 import { type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis, type RenderableText } from 'recharts'
-import { Label } from './_partials/label'
+import { BarInfo } from './_partials/bar-info'
+import { BarLabel } from './_partials/bar-label'
 
 export interface BarChartProps extends ReactProps {
   data: { entries: object[] } // Data wrapper required due to Storybook limitations
@@ -27,7 +28,7 @@ export const BarChart = (props: BarChartProps) => {
   const barValueFn = (key: string, value: RenderableText) => (hasGroups ? `${key}: ${value}` : value)
 
   return (
-    <div className={cx('bg-color-bg-card w-full overflow-y-auto', props.className)} style={props.style}>
+    <div className={cx('bg-color-bg-card w-full overflow-y-auto px-3', props.className)} style={props.style}>
       <ReBarChart data={entries} layout="vertical" width="100%" height={totalHeight} barGap={barGap} responsive>
         {/* BARS */}
         {props.valueKeys.map((key) => (
@@ -36,7 +37,7 @@ export const BarChart = (props: BarChartProps) => {
             dataKey={key}
             barSize={barSize}
             radius={[0, barRadius, barRadius, 0]}
-            className="fill-color-border-active"
+            className="fill-color-chart-default hover:fill-color-chart-hover"
           >
             <LabelList
               dataKey={key}
@@ -54,10 +55,11 @@ export const BarChart = (props: BarChartProps) => {
           type="category"
           dataKey={props.labelKey}
           width={labelWidth}
-          tick={<Label width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
+          tick={<BarLabel width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
         />
 
-        <Tooltip />
+        {/* TOOLTIP */}
+        <Tooltip cursor={false} content={BarInfo} />
       </ReBarChart>
     </div>
   )
