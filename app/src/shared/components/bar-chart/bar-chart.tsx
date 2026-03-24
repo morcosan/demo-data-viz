@@ -1,5 +1,5 @@
 import { BarCursor } from '@app/shared/components/bar-chart/_partials/bar-cursor'
-import { TOKENS } from '@ds/core'
+import { Keyboard, TOKENS } from '@ds/core'
 import { type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis, type RenderableText } from 'recharts'
 import { BarInfo } from './_partials/bar-info'
@@ -29,10 +29,26 @@ export const BarChart = (props: BarChartProps) => {
   const propParam = {} as any
   const barValueFn = (key: string, value: RenderableText) => (hasGroups ? `${key}: ${value}` : value)
 
+  // Swap left/right arrows for tab navigation
+  const handleKeyDown = (event: ReactKeyboardEvent) => {
+    if (!event.isTrusted) return
+    if (![Keyboard.ARROW_RIGHT, Keyboard.ARROW_LEFT].includes(event.key)) return
+    event.stopPropagation()
+    document.activeElement?.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        ...event.nativeEvent,
+        key: event.key === Keyboard.ARROW_RIGHT ? Keyboard.ARROW_LEFT : Keyboard.ARROW_RIGHT,
+        bubbles: true,
+        cancelable: true,
+      }),
+    )
+  }
+
   return (
     <div
       className={cx('bg-color-bg-card a11y-outline-proxy p-xs-1 w-full overflow-y-auto', props.className)}
       style={props.style}
+      onKeyDownCapture={handleKeyDown}
     >
       <ReBarChart
         data={entries}
@@ -41,6 +57,7 @@ export const BarChart = (props: BarChartProps) => {
         height={totalHeight}
         barGap={barGap}
         margin={{ top: 0, right: barPadding, bottom: 0, left: 0 }}
+        className="[&_g]:outline-none [&_svg]:outline-none"
         responsive
       >
         {/* BARS */}
