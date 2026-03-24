@@ -14,7 +14,7 @@ export interface BarChartProps extends ReactProps {
 export const BarChart = (props: BarChartProps) => {
   const { entries } = props.data
   const hasGroups = props.valueKeys.length > 1
-  const barRadius = parseFloat(TOKENS.RADIUS['md'].$value)
+  const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
   const barSize = parseFloat(TOKENS.SPACING[hasGroups ? 'sm-0' : 'sm-1'].$value)
   const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
@@ -59,7 +59,7 @@ export const BarChart = (props: BarChartProps) => {
         />
 
         {/* TOOLTIP */}
-        <Tooltip cursor={false} content={BarInfo} />
+        <Tooltip cursor={{ fill: 'var(--ds-color-hover-text-default)' }} content={BarInfo} />
       </ReBarChart>
     </div>
   )
