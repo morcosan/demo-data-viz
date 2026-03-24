@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import type { TooltipContentProps } from 'recharts'
 
-interface Props extends TooltipContentProps {
+interface Props extends TooltipContentProps, ReactProps {
   labelFn?: (value: string) => ReactNode
 }
 
@@ -13,6 +13,7 @@ export const BarInfo = (props: Props) => {
 
   return (
     <div
+      ref={props.ref}
       className={cx(
         'px-xs-4 py-xs-3 min-w-md-5 rounded-xs',
         'bg-color-bg-card border-color-border-shadow border shadow-sm',

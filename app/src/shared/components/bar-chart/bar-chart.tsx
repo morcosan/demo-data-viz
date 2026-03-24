@@ -1,5 +1,6 @@
 import { Keyboard, TOKENS } from '@ds/core'
-import { useState, type ReactNode } from 'react'
+import { debounce } from 'lodash'
+import { useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis, type RenderableText } from 'recharts'
 import { BarCursor } from './_partials/bar-cursor'
 import { BarInfo } from './_partials/bar-info'
@@ -16,6 +17,8 @@ export const BarChart = (props: BarChartProps) => {
   const { entries } = props.data
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
+  const barCursorRef = useRef<SVGRectElement | null>(null)
+  const barInfoRef = useRef<SVGRectElement | null>(null)
   const hasGroups = props.valueKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
@@ -31,6 +34,13 @@ export const BarChart = (props: BarChartProps) => {
   const propParam = {} as any
   const barValueFn = (key: string, value: RenderableText) => (hasGroups ? `${key}: ${value}` : value)
 
+  const scrollToView = useMemo(() => {
+    return debounce(() => {
+      barCursorRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      barInfoRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    }, 300)
+  }, [])
+
   // Swap left/right arrows for tab navigation
   const handleKeyDown = (event: ReactKeyboardEvent) => {
     if (!event.isTrusted) return
@@ -44,6 +54,7 @@ export const BarChart = (props: BarChartProps) => {
         cancelable: true,
       }),
     )
+    scrollToView()
   }
 
   return (
@@ -53,6 +64,8 @@ export const BarChart = (props: BarChartProps) => {
       onKeyDownCapture={handleKeyDown}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <ReBarChart
         data={entries}
@@ -63,8 +76,6 @@ export const BarChart = (props: BarChartProps) => {
         margin={{ top: 0, right: barPadding, bottom: 0, left: 0 }}
         className="[&_g]:outline-none [&_svg]:outline-none"
         responsive
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         {/* BARS */}
         {props.valueKeys.map((key) => (
@@ -96,9 +107,9 @@ export const BarChart = (props: BarChartProps) => {
 
         {/* TOOLTIP */}
         <Tooltip
-          active={isHovered || isFocused ? undefined : false}
-          cursor={<BarCursor {...propParam} padding={barPadding} radius={barRadius} />}
-          content={<BarInfo {...propParam} labelFn={props.labelFn} />}
+          active={isFocused ? undefined : isHovered ? undefined : false}
+          cursor={<BarCursor {...propParam} ref={barCursorRef} padding={barPadding} radius={barRadius} />}
+          content={<BarInfo {...propParam} ref={barInfoRef} labelFn={props.labelFn} />}
         />
       </ReBarChart>
     </div>

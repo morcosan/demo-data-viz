@@ -1,4 +1,4 @@
-interface Props {
+interface Props extends ReactProps {
   x: number
   y: number
   width: number
@@ -10,6 +10,7 @@ interface Props {
 export const BarCursor = (props: Props) => {
   return (
     <rect
+      ref={props.ref}
       x={0}
       y={props.y}
       width={props.width + props.x + props.padding}
