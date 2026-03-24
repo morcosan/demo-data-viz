@@ -1,8 +1,14 @@
+import type { ReactNode } from 'react'
 import type { TooltipContentProps } from 'recharts'
 
-export const BarInfo = (props: TooltipContentProps) => {
+interface Props extends TooltipContentProps {
+  labelFn?: (value: string) => ReactNode
+}
+
+export const BarInfo = (props: Props) => {
   if (!props.active || !props.payload?.length) return null
 
+  const label = String(props.label)
   const tdClass = cx('px-xs-2 pt-px')
 
   return (
@@ -13,7 +19,7 @@ export const BarInfo = (props: TooltipContentProps) => {
         'text-size-sm',
       )}
     >
-      <div className="font-weight-lg mb-xs-1">{props.label}</div>
+      <div className="font-weight-lg mb-xs-1">{props.labelFn?.(label) || label}</div>
 
       <table className="w-full">
         <tbody>

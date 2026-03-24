@@ -74,7 +74,7 @@ export const BarChart = (props: BarChartProps) => {
         {/* TOOLTIP */}
         <Tooltip
           cursor={<BarCursor {...propParam} padding={barPadding} radius={barRadius} />}
-          content={<BarInfo {...propParam} />}
+          content={<BarInfo {...propParam} labelFn={props.labelFn} />}
         />
       </ReBarChart>
     </div>
