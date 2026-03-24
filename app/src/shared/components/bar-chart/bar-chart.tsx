@@ -50,7 +50,7 @@ export const BarChart = (props: BarChartProps) => {
             dataKey={key}
             barSize={barSize}
             radius={[0, barRadius, barRadius, 0]}
-            className="fill-color-chart-default hover:fill-color-chart-hover"
+            className="fill-color-chart-bar-default hover:fill-color-chart-bar-hover"
           >
             <LabelList
               dataKey={key}
