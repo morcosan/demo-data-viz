@@ -156,7 +156,7 @@
   --ds-color-modal-overlay-strong: var(--ds-color-black-alpha-9);
 
   --ds-color-chart-bar-default: var(--ds-color-grey-12);
-  --ds-color-chart-bar-hover: var(--ds-color-grey-11);
+  --ds-color-chart-bar-hover: var(--ds-color-grey-14);
 }
 
 [data-color-theme='dark'] {
@@ -228,5 +228,5 @@
   --ds-color-modal-overlay-strong: var(--ds-color-black-alpha-10);
 
   --ds-color-chart-bar-default: var(--ds-color-grey-10);
-  --ds-color-chart-bar-hover: var(--ds-color-grey-9);
+  --ds-color-chart-bar-hover: var(--ds-color-grey-8);
 }

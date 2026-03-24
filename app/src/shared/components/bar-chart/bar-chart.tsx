@@ -1,7 +1,7 @@
-import { BarCursor } from '@app/shared/components/bar-chart/_partials/bar-cursor'
 import { Keyboard, TOKENS } from '@ds/core'
-import { type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis, type RenderableText } from 'recharts'
+import { BarCursor } from './_partials/bar-cursor'
 import { BarInfo } from './_partials/bar-info'
 import { BarLabel } from './_partials/bar-label'
 
@@ -14,6 +14,8 @@ export interface BarChartProps extends ReactProps {
 
 export const BarChart = (props: BarChartProps) => {
   const { entries } = props.data
+  const [isHovered, setIsHovered] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
   const hasGroups = props.valueKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
@@ -49,6 +51,8 @@ export const BarChart = (props: BarChartProps) => {
       className={cx('bg-color-bg-card a11y-outline-proxy p-xs-1 w-full overflow-y-auto', props.className)}
       style={props.style}
       onKeyDownCapture={handleKeyDown}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     >
       <ReBarChart
         data={entries}
@@ -59,6 +63,8 @@ export const BarChart = (props: BarChartProps) => {
         margin={{ top: 0, right: barPadding, bottom: 0, left: 0 }}
         className="[&_g]:outline-none [&_svg]:outline-none"
         responsive
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {/* BARS */}
         {props.valueKeys.map((key) => (
@@ -73,7 +79,7 @@ export const BarChart = (props: BarChartProps) => {
               dataKey={key}
               position="insideRight"
               offset={8}
-              className="text-size-sm fill-color-text-inverse"
+              className="text-size-sm fill-color-text-inverse pointer-events-none"
               formatter={(value) => barValueFn(key, value)}
             />
           </Bar>
@@ -90,6 +96,7 @@ export const BarChart = (props: BarChartProps) => {
 
         {/* TOOLTIP */}
         <Tooltip
+          active={isHovered || isFocused ? undefined : false}
           cursor={<BarCursor {...propParam} padding={barPadding} radius={barRadius} />}
           content={<BarInfo {...propParam} labelFn={props.labelFn} />}
         />
