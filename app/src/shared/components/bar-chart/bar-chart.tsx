@@ -1,5 +1,5 @@
-import { formatNumber } from '@app/shared/utils/formatting'
-import { Keyboard, TOKENS } from '@ds/core'
+import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
+import { Keyboard, TOKENS, useThemeService } from '@ds/core'
 import { debounce } from 'lodash'
 import { useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis } from 'recharts'
@@ -17,6 +17,7 @@ export interface BarChartProps extends ReactProps {
 }
 
 export const BarChart = (props: BarChartProps) => {
+  const { $fontSize } = useThemeService()
   const { entries } = props.data
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -27,7 +28,10 @@ export const BarChart = (props: BarChartProps) => {
   const hasGroups = barKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
-  const barPadding = parseFloat(TOKENS.SPACING['xs-2'].$value)
+  const FONT_SIZE = 12
+  const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
+  const barPadding = computeTextWidth(formatNumber(maxEntryValue), FONT_SIZE)
+  log(formatNumber(maxEntryValue), barPadding)
   const barSize = parseFloat(TOKENS.SPACING[hasGroups ? 'sm-0' : 'sm-1'].$value)
   const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
   const groupGap = parseFloat(TOKENS.SPACING[hasGroups ? 'xs-9' : 'xs-4'].$value)
@@ -94,7 +98,7 @@ export const BarChart = (props: BarChartProps) => {
             <LabelList
               dataKey={key}
               position="right"
-              offset={8}
+              offset={4}
               className="text-size-xs fill-color-text-default"
               formatter={(value) => formatNumber(value as number)}
             />
@@ -102,12 +106,13 @@ export const BarChart = (props: BarChartProps) => {
         ))}
 
         {/* AXIS */}
-        <XAxis type="number" />
+        <XAxis type="number" tick={{ fontSize: $fontSize['sm'] }} tickFormatter={(value) => formatNumber(value)} />
         <YAxis
           type="category"
           dataKey={props.labelKey}
           width={labelWidth}
           tick={<EntryLabel {...propParam} width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
+          tickLine={false}
         />
 
         {/* TOOLTIP */}
