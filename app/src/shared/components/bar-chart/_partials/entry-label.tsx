@@ -10,7 +10,7 @@ interface Props {
   labelFn?: (value: string) => ReactNode
 }
 
-export const BarLabel = (props: Props) => {
+export const EntryLabel = (props: Props) => {
   const posY = props.y - props.height / 2
   const label = props.payload?.value
 
@@ -18,7 +18,7 @@ export const BarLabel = (props: Props) => {
     <foreignObject x={0} y={posY} width={props.width} height={props.height}>
       <div
         className={cx(
-          'pl-xs-5 pr-xs-2 overflow-hidden',
+          'pl-xs-5 pr-xs-4 overflow-hidden',
           'flex h-full w-full items-center justify-end',
           'text-size-sm leading-sm text-right',
         )}

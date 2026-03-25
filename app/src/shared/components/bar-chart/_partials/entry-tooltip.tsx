@@ -1,3 +1,4 @@
+import { formatNumber } from '@app/shared/utils/formatting'
 import type { ReactNode } from 'react'
 import type { TooltipContentProps } from 'recharts'
 
@@ -7,10 +8,11 @@ interface Props extends TooltipContentProps, ReactProps {
   labelFn?: (value: string) => ReactNode
 }
 
-export const BarInfo = (props: Props) => {
+export const EntryTooltip = (props: Props) => {
   // This component will rerender on mousemove, due to bad recharts implementation
 
   const label = props.label ? String(props.label) : ''
+  const title = props.labelFn?.(label) || label
   const tdClass = cx('px-xs-2 pt-px')
 
   return (
@@ -24,14 +26,18 @@ export const BarInfo = (props: Props) => {
         !props.visible && 'hidden',
       )}
     >
-      <div className="font-weight-lg mb-xs-1">{props.labelFn?.(label) || label}</div>
+      <div className="font-weight-lg mb-xs-1" aria-label={`${title},`}>
+        {title}
+      </div>
 
       <table className="w-full">
         <tbody>
           {props.payload.map((bar, index) => (
             <tr key={String(bar.dataKey) + index}>
               <td className={tdClass}>{props.barLabels[bar.name || '']}:</td>
-              <td className={tdClass}>{bar.value}</td>
+              <td className={tdClass} aria-label={`${formatNumber(bar.value as number)},`}>
+                {formatNumber(bar.value as number)}
+              </td>
             </tr>
           ))}
         </tbody>

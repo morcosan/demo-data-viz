@@ -1,10 +1,11 @@
+import { formatNumber } from '@app/shared/utils/formatting'
 import { Keyboard, TOKENS } from '@ds/core'
 import { debounce } from 'lodash'
 import { useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis } from 'recharts'
-import { BarCursor } from './_partials/bar-cursor'
-import { BarInfo } from './_partials/bar-info'
-import { BarLabel } from './_partials/bar-label'
+import { EntryHover } from './_partials/entry-hover'
+import { EntryLabel } from './_partials/entry-label'
+import { EntryTooltip } from './_partials/entry-tooltip'
 
 export type BarChartEntry = Record<string, number | string>
 
@@ -19,8 +20,8 @@ export const BarChart = (props: BarChartProps) => {
   const { entries } = props.data
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
-  const barCursorRef = useRef<Element | null>(null)
-  const barInfoRef = useRef<Element | null>(null)
+  const hoverRef = useRef<Element | null>(null)
+  const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
   const barKeys = Object.keys(props.barLabels)
   const hasGroups = barKeys.length > 1
@@ -39,8 +40,8 @@ export const BarChart = (props: BarChartProps) => {
 
   const scrollToView = useMemo(() => {
     return debounce(() => {
-      barCursorRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-      barInfoRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      hoverRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      tooltipRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     }, 300)
   }, [])
 
@@ -92,15 +93,10 @@ export const BarChart = (props: BarChartProps) => {
           >
             <LabelList
               dataKey={key}
-              position="insideLeft"
-              className="text-size-xs fill-color-text-inverse pointer-events-none max-w-1/2 truncate"
-              formatter={() => props.barLabels[key]}
-            />
-            <LabelList
-              dataKey={key}
-              position="insideRight"
+              position="right"
               offset={8}
-              className="text-size-sm fill-color-text-inverse pointer-events-none"
+              className="text-size-xs fill-color-text-default"
+              formatter={(value) => formatNumber(value as number)}
             />
           </Bar>
         ))}
@@ -111,18 +107,18 @@ export const BarChart = (props: BarChartProps) => {
           type="category"
           dataKey={props.labelKey}
           width={labelWidth}
-          tick={<BarLabel {...propParam} width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
+          tick={<EntryLabel {...propParam} width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
         />
 
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={<BarCursor {...propParam} ref={barCursorRef} padding={barPadding} radius={barRadius} />}
+          cursor={<EntryHover {...propParam} ref={hoverRef} padding={barPadding} radius={barRadius} />}
           content={
-            <BarInfo
+            <EntryTooltip
               {...propParam}
               visible={isFocused || isHovered}
-              ref={barInfoRef}
+              ref={tooltipRef}
               id={tooltipId}
               barLabels={props.barLabels}
               labelFn={props.labelFn}

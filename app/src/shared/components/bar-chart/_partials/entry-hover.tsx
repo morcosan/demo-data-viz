@@ -7,7 +7,7 @@ interface Props extends ReactProps {
   radius: number
 }
 
-export const BarCursor = (props: Props) => {
+export const EntryHover = (props: Props) => {
   return (
     <rect
       ref={props.ref}

@@ -10,9 +10,9 @@ const meta: Meta = {
         entries: loremArray(50, 50).map(
           (): BarChartEntry => ({
             label: loremLastName(),
-            v1: loremInt(10, 100),
-            v2: loremInt(10, 100),
-            v3: loremInt(10, 100),
+            v1: loremInt(0, 100_000_000),
+            v2: loremInt(0, 100_000_000),
+            v3: loremInt(0, 100_000_000),
           }),
         ),
       },
