@@ -1,15 +1,17 @@
 import { Keyboard, TOKENS } from '@ds/core'
 import { debounce } from 'lodash'
 import { useId, useMemo, useRef, useState, type ReactNode } from 'react'
-import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis, type RenderableText } from 'recharts'
+import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { BarCursor } from './_partials/bar-cursor'
 import { BarInfo } from './_partials/bar-info'
 import { BarLabel } from './_partials/bar-label'
 
+export type BarChartEntry = Record<string, number | string>
+
 export interface BarChartProps extends ReactProps {
-  data: { entries: object[] } // Data wrapper required due to Storybook limitations
+  data: { entries: BarChartEntry[] } // Data wrapper required due to Storybook limitations
+  barLabels: Record<string, string>
   labelKey: string
-  valueKeys: string[]
   labelFn?: (value: string) => ReactNode
 }
 
@@ -20,20 +22,20 @@ export const BarChart = (props: BarChartProps) => {
   const barCursorRef = useRef<Element | null>(null)
   const barInfoRef = useRef<Element | null>(null)
   const tooltipId = useId()
-  const hasGroups = props.valueKeys.length > 1
+  const barKeys = Object.keys(props.barLabels)
+  const hasGroups = barKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
   const barPadding = parseFloat(TOKENS.SPACING['xs-2'].$value)
   const barSize = parseFloat(TOKENS.SPACING[hasGroups ? 'sm-0' : 'sm-1'].$value)
   const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
   const groupGap = parseFloat(TOKENS.SPACING[hasGroups ? 'xs-9' : 'xs-4'].$value)
-  const groupSize = props.valueKeys.length * (barSize + barGap) - barGap
+  const groupSize = barKeys.length * (barSize + barGap) - barGap
   const padding = 2 * groupGap
   const totalHeight = entries.length * (groupSize + groupGap) - groupGap + padding + xAxisHeight
   const labelWidth = parseFloat(TOKENS.SPACING['md-5'].$value)
   const labelHeight = groupSize + groupGap
   const propParam = {} as any
-  const barValueFn = (key: string, value: RenderableText) => (hasGroups ? `${key}: ${value}` : value)
 
   const scrollToView = useMemo(() => {
     return debounce(() => {
@@ -80,7 +82,7 @@ export const BarChart = (props: BarChartProps) => {
         responsive
       >
         {/* BARS */}
-        {props.valueKeys.map((key) => (
+        {barKeys.map((key) => (
           <Bar
             key={key}
             dataKey={key}
@@ -90,10 +92,15 @@ export const BarChart = (props: BarChartProps) => {
           >
             <LabelList
               dataKey={key}
+              position="insideLeft"
+              className="text-size-xs fill-color-text-inverse pointer-events-none max-w-1/2 truncate"
+              formatter={() => props.barLabels[key]}
+            />
+            <LabelList
+              dataKey={key}
               position="insideRight"
               offset={8}
               className="text-size-sm fill-color-text-inverse pointer-events-none"
-              formatter={(value) => barValueFn(key, value)}
             />
           </Bar>
         ))}
@@ -117,6 +124,7 @@ export const BarChart = (props: BarChartProps) => {
               visible={isFocused || isHovered}
               ref={barInfoRef}
               id={tooltipId}
+              barLabels={props.barLabels}
               labelFn={props.labelFn}
             />
           }

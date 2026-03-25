@@ -3,6 +3,7 @@ import type { TooltipContentProps } from 'recharts'
 
 interface Props extends TooltipContentProps, ReactProps {
   visible: boolean
+  barLabels: Record<string, string>
   labelFn?: (value: string) => ReactNode
 }
 
@@ -27,10 +28,10 @@ export const BarInfo = (props: Props) => {
 
       <table className="w-full">
         <tbody>
-          {props.payload.map((entry, index) => (
-            <tr key={String(entry.dataKey) + index}>
-              <td className={tdClass}>{entry.name}:</td>
-              <td className={tdClass}>{entry.value}</td>
+          {props.payload.map((bar, index) => (
+            <tr key={String(bar.dataKey) + index}>
+              <td className={tdClass}>{props.barLabels[bar.name || '']}:</td>
+              <td className={tdClass}>{bar.value}</td>
             </tr>
           ))}
         </tbody>
