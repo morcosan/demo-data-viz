@@ -1,6 +1,6 @@
 import { Keyboard, TOKENS } from '@ds/core'
 import { debounce } from 'lodash'
-import { useMemo, useRef, useState, type ReactNode } from 'react'
+import { useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis, type RenderableText } from 'recharts'
 import { BarCursor } from './_partials/bar-cursor'
 import { BarInfo } from './_partials/bar-info'
@@ -19,6 +19,7 @@ export const BarChart = (props: BarChartProps) => {
   const [isFocused, setIsFocused] = useState(false)
   const barCursorRef = useRef<Element | null>(null)
   const barInfoRef = useRef<Element | null>(null)
+  const tooltipId = useId()
   const hasGroups = props.valueKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30
@@ -73,6 +74,7 @@ export const BarChart = (props: BarChartProps) => {
         width="100%"
         height={totalHeight}
         barGap={barGap}
+        aria-describedby={tooltipId} // Default a11y for recharts sucks
         margin={{ top: 0, right: barPadding, bottom: 0, left: 0 }}
         className="[&_g]:outline-none [&_svg]:outline-none"
         responsive
@@ -107,9 +109,17 @@ export const BarChart = (props: BarChartProps) => {
 
         {/* TOOLTIP */}
         <Tooltip
-          active={isFocused ? undefined : isHovered ? undefined : false}
+          active={true} // Always render content
           cursor={<BarCursor {...propParam} ref={barCursorRef} padding={barPadding} radius={barRadius} />}
-          content={<BarInfo {...propParam} ref={barInfoRef} labelFn={props.labelFn} />}
+          content={
+            <BarInfo
+              {...propParam}
+              visible={isFocused || isHovered}
+              ref={barInfoRef}
+              id={tooltipId}
+              labelFn={props.labelFn}
+            />
+          }
         />
       </ReBarChart>
     </div>
