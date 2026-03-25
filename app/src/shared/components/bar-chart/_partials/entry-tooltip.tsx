@@ -1,5 +1,5 @@
 import { formatNumber } from '@app/shared/utils/formatting'
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import type { TooltipContentProps } from 'recharts'
 
 interface Props extends TooltipContentProps, ReactProps {
@@ -13,7 +13,7 @@ export const EntryTooltip = (props: Props) => {
 
   const label = props.label ? String(props.label) : ''
   const title = props.labelFn?.(label) || label
-  const tdClass = cx('px-xs-2 pt-px')
+  const tdClass = cx('pt-px')
 
   return (
     <div
@@ -30,18 +30,16 @@ export const EntryTooltip = (props: Props) => {
         {title}
       </div>
 
-      <table className="w-full">
-        <tbody>
-          {props.payload.map((bar, index) => (
-            <tr key={String(bar.dataKey) + index}>
-              <td className={tdClass}>{props.barLabels[bar.name || '']}:</td>
-              <td className={tdClass} aria-label={`${formatNumber(bar.value as number)},`}>
-                {formatNumber(bar.value as number)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="gap-xs-2 grid w-full grid-cols-[auto_1fr]">
+        {props.payload.map((bar, index) => (
+          <Fragment key={String(bar.dataKey) + index}>
+            <div className="pt-px">{props.barLabels[bar.name || '']}:</div>
+            <div className="pt-px" aria-label={`${formatNumber(bar.value as number)},`}>
+              {formatNumber(bar.value as number)}
+            </div>
+          </Fragment>
+        ))}
+      </div>
     </div>
   )
 }

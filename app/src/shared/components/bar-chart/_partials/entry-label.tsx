@@ -7,7 +7,8 @@ interface Props {
   x: number
   y: number
   payload: CartesianTickItem
-  labelFn?: (value: string) => ReactNode
+  labelFn?: (value: string, query: string) => ReactNode
+  query?: string
 }
 
 export const EntryLabel = (props: Props) => {
@@ -16,14 +17,10 @@ export const EntryLabel = (props: Props) => {
 
   return (
     <foreignObject x={0} y={posY} width={props.width} height={props.height}>
-      <div
-        className={cx(
-          'pl-xs-5 pr-xs-4 overflow-hidden',
-          'flex h-full w-full items-center justify-end',
-          'text-size-sm leading-sm text-right',
-        )}
-      >
-        {props.labelFn?.(label) || label}
+      <div className="pl-xs-5 pr-xs-4 flex h-full w-full items-center justify-end overflow-hidden">
+        <div className="text-size-sm line-clamp-2 text-right leading-1">
+          {props.labelFn?.(label, props.query || '') || label}
+        </div>
       </div>
     </foreignObject>
   )

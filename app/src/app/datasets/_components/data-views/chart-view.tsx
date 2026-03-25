@@ -1,8 +1,10 @@
-import { TextHighlight } from '@app-components'
+'use client'
+
+import { BarChart, type BarChartData, TextHighlight } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
 import { type TableData } from '@app/shared/types/table'
-import { Button } from '@ds/core'
-import { type ReactNode, useEffect, useState } from 'react'
+import { Button, TOKENS } from '@ds/core'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import { useTableStore } from '../../_hooks/use-table-store'
 
 interface Props extends ReactProps {
@@ -14,38 +16,48 @@ export const ChartView = (props: Props) => {
   const { t } = useTranslation()
   const { getCountryCode } = useCountries()
   const indexKey = useTableStore((s) => s.indexKey)
-  const pivotKey = useTableStore((s) => s.pivotKey)
-  const [xAxisKey, setXAxisKey] = useState('')
+  const [colKey, setColKey] = useState('')
+  const barCols = props.data.cols.filter((col) => col.key !== indexKey)
+  const chartData = useMemo((): BarChartData => ({ entries: props.data.rows }), [props.data])
+  const barLabels = useMemo((): Record<string, string> => ({ [colKey]: colKey }), [colKey])
 
-  const xAxisCols = props.data.cols.filter((col) => col.key !== indexKey)
-
-  const cellFn = (value: string, query: string): ReactNode => {
+  const labelFn = (value: string, query: string): ReactNode => {
     const flag = getCountryCode(value)
-    return (
-      <>
+    const text = query ? <TextHighlight text={value} query={query} /> : value
+    return flag ? (
+      <div className="flex items-center">
         {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        {query ? <TextHighlight text={value} query={query} /> : value}
-      </>
+        {text}
+      </div>
+    ) : (
+      <span title={value}>{text}</span>
     )
   }
 
   useEffect(() => {
-    setXAxisKey(xAxisCols[0].key)
+    setColKey(barCols[0].key)
   }, [props.data, indexKey])
 
   return indexKey ? (
     <div className={cx('p-xs-9 flex', props.className)}>
       {/* CHART */}
-      <div className="flex-1">Chart</div>
+      <BarChart
+        data={chartData}
+        barLabels={barLabels}
+        labelKey={indexKey}
+        labelFn={labelFn}
+        labelWidth={parseFloat(TOKENS.SPACING['lg-1'].$value)}
+        className="mr-sm-0 h-full flex-1"
+      />
 
       {/* COLUMNS */}
       <ul className="gap-xs-1 flex flex-col">
-        {xAxisCols.map((col) => (
+        {barCols.map((col) => (
           <li key={col.key}>
             <Button
-              variant={col.key === xAxisKey ? 'item-solid-secondary' : 'item-text-default'}
+              variant={col.key === colKey ? 'item-solid-secondary' : 'item-text-default'}
               className="border-color-border-default! w-full border"
-              onClick={() => setXAxisKey(col.key)}
+              onClick={() => setColKey(col.key)}
             >
               {col.label}
             </Button>

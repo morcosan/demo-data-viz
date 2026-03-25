@@ -1,3 +1,5 @@
+'use client'
+
 import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
 import { Keyboard, TOKENS, useThemeService } from '@ds/core'
 import { debounce } from 'lodash'
@@ -8,12 +10,15 @@ import { EntryLabel } from './_partials/entry-label'
 import { EntryTooltip } from './_partials/entry-tooltip'
 
 export type BarChartEntry = Record<string, number | string>
+export type BarChartData = { entries: BarChartEntry[] } // Data wrapper required due to Storybook limitations
 
 export interface BarChartProps extends ReactProps {
-  data: { entries: BarChartEntry[] } // Data wrapper required due to Storybook limitations
+  data: BarChartData
   barLabels: Record<string, string>
   labelKey: string
-  labelFn?: (value: string) => ReactNode
+  labelFn?: (value: string, query: string) => ReactNode
+  labelWidth?: number
+  query?: string
 }
 
 export const BarChart = (props: BarChartProps) => {
@@ -31,14 +36,13 @@ export const BarChart = (props: BarChartProps) => {
   const FONT_SIZE = 12
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const barPadding = computeTextWidth(formatNumber(maxEntryValue), FONT_SIZE)
-  log(formatNumber(maxEntryValue), barPadding)
   const barSize = parseFloat(TOKENS.SPACING[hasGroups ? 'sm-0' : 'sm-1'].$value)
   const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
   const groupGap = parseFloat(TOKENS.SPACING[hasGroups ? 'xs-9' : 'xs-4'].$value)
   const groupSize = barKeys.length * (barSize + barGap) - barGap
   const padding = 2 * groupGap
   const totalHeight = entries.length * (groupSize + groupGap) - groupGap + padding + xAxisHeight
-  const labelWidth = parseFloat(TOKENS.SPACING['md-5'].$value)
+  const labelWidth = props.labelWidth || parseFloat(TOKENS.SPACING['md-5'].$value)
   const labelHeight = groupSize + groupGap
   const propParam = {} as any
 
@@ -111,7 +115,15 @@ export const BarChart = (props: BarChartProps) => {
           type="category"
           dataKey={props.labelKey}
           width={labelWidth}
-          tick={<EntryLabel {...propParam} width={labelWidth} height={labelHeight} labelFn={props.labelFn} />}
+          tick={
+            <EntryLabel
+              {...propParam}
+              width={labelWidth}
+              height={labelHeight}
+              labelFn={props.labelFn}
+              query={props.query}
+            />
+          }
           tickLine={false}
         />
 
