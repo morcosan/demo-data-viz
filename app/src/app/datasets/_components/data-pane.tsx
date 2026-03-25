@@ -1,9 +1,11 @@
 'use client'
 
+import { TextHighlight } from '@app-components'
+import { useCountries } from '@app-i18n'
 import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
 import { useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { UrlKey, useTableStore } from '../_hooks/use-table-store'
 import { type DataView } from '../_types'
 import { DataToolbar } from './data-toolbar'
@@ -16,6 +18,7 @@ export interface DatasetPaneProps extends ReactProps {
 }
 
 export const DataPane = (props: DatasetPaneProps) => {
+  const { getCountryCode } = useCountries()
   const searchParams = useSearchParams()
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
@@ -35,6 +38,19 @@ export const DataPane = (props: DatasetPaneProps) => {
   const visibleData = useMemo(() => {
     return pivotKey && pivotQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
   }, [pivotedData, pivotKey, pivotQuery, isColVisible])
+
+  const cellFn = (value: string, query: string): ReactNode => {
+    const flag = getCountryCode(value)
+    const text = query ? <TextHighlight text={value} query={query} /> : value
+    return flag ? (
+      <div className="flex items-center leading-1">
+        {flag && <span className={`fi fi-${flag} mr-xs-2 mb-xs-0 shadow-xs`} />}
+        {text}
+      </div>
+    ) : (
+      <span title={value}>{text}</span>
+    )
+  }
 
   useEffect(() => {
     initTableStore(props.data)
@@ -56,8 +72,12 @@ export const DataPane = (props: DatasetPaneProps) => {
     >
       <DataToolbar data={props.data} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-      {props.view === 'table' && <TableView data={visibleData} query={searchQuery} className="min-h-0 flex-1" />}
-      {props.view === 'chart' && <ChartView data={visibleData} query={searchQuery} className="min-h-0 flex-1" />}
+      {props.view === 'table' && (
+        <TableView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1" />
+      )}
+      {props.view === 'chart' && (
+        <ChartView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1" />
+      )}
       {props.view === 'map' && <div>TODO</div>}
     </div>
   )

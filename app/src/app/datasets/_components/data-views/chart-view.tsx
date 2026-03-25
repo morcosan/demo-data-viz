@@ -1,7 +1,7 @@
 'use client'
 
-import { BarChart, type BarChartData, TextHighlight } from '@app-components'
-import { useCountries, useTranslation } from '@app-i18n'
+import { BarChart, type BarChartData } from '@app-components'
+import { useTranslation } from '@app-i18n'
 import { type TableData } from '@app/shared/types/table'
 import { Button, TOKENS } from '@ds/core'
 import { type ReactNode, useEffect, useMemo, useState } from 'react'
@@ -10,29 +10,16 @@ import { useTableStore } from '../../_hooks/use-table-store'
 interface Props extends ReactProps {
   data: TableData
   query: string
+  cellFn: (value: string, query: string) => ReactNode
 }
 
 export const ChartView = (props: Props) => {
   const { t } = useTranslation()
-  const { getCountryCode } = useCountries()
   const indexKey = useTableStore((s) => s.indexKey)
   const [colKey, setColKey] = useState('')
   const barCols = props.data.cols.filter((col) => col.key !== indexKey)
   const chartData = useMemo((): BarChartData => ({ entries: props.data.rows }), [props.data])
   const barLabels = useMemo((): Record<string, string> => ({ [colKey]: colKey }), [colKey])
-
-  const labelFn = (value: string, query: string): ReactNode => {
-    const flag = getCountryCode(value)
-    const text = query ? <TextHighlight text={value} query={query} /> : value
-    return flag ? (
-      <div className="flex items-center">
-        {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        {text}
-      </div>
-    ) : (
-      <span title={value}>{text}</span>
-    )
-  }
 
   useEffect(() => {
     setColKey(barCols[0].key)
@@ -45,7 +32,7 @@ export const ChartView = (props: Props) => {
         data={chartData}
         barLabels={barLabels}
         labelKey={indexKey}
-        labelFn={labelFn}
+        labelFn={props.cellFn}
         labelWidth={parseFloat(TOKENS.SPACING['lg-1'].$value)}
         className="mr-sm-0 h-full flex-1"
       />
