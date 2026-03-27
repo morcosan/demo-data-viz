@@ -1,7 +1,7 @@
 'use client'
 
 import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
-import { Keyboard, TOKENS, useThemeService } from '@ds/core'
+import { Keyboard, TOKENS, useDefaults, useThemeService } from '@ds/core'
 import { debounce } from 'lodash'
 import { useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Tooltip, XAxis, YAxis } from 'recharts'
@@ -21,7 +21,10 @@ export interface BarChartProps extends ReactProps {
   query?: string
 }
 
-export const BarChart = (props: BarChartProps) => {
+export const BarChart = (rawProps: BarChartProps) => {
+  const props = useDefaults(rawProps, {
+    labelWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
+  })
   const { $fontSize } = useThemeService()
   const { entries } = props.data
   const [isHovered, setIsHovered] = useState(false)
@@ -32,19 +35,20 @@ export const BarChart = (props: BarChartProps) => {
   const barKeys = Object.keys(props.barLabels)
   const hasGroups = barKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
-  const xAxisHeight = 30
-  const FONT_SIZE = 12
+  const xAxisHeight = 30 // px
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
-  const barPadding = computeTextWidth(formatNumber(maxEntryValue), FONT_SIZE)
+  const barLabelGap = 4 // px
+  const barMargin = computeTextWidth(formatNumber(maxEntryValue), 12) + barLabelGap
   const barSize = parseFloat(TOKENS.SPACING[hasGroups ? 'sm-0' : 'sm-1'].$value)
   const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
   const groupGap = parseFloat(TOKENS.SPACING[hasGroups ? 'xs-9' : 'xs-4'].$value)
   const groupSize = barKeys.length * (barSize + barGap) - barGap
   const padding = 2 * groupGap
   const totalHeight = entries.length * (groupSize + groupGap) - groupGap + padding + xAxisHeight
-  const labelWidth = props.labelWidth || parseFloat(TOKENS.SPACING['md-5'].$value)
   const labelHeight = groupSize + groupGap
   const propParam = {} as any
+
+  log(barMargin)
 
   const scrollToView = useMemo(() => {
     return debounce(() => {
@@ -86,7 +90,7 @@ export const BarChart = (props: BarChartProps) => {
         height={totalHeight}
         barGap={barGap}
         aria-describedby={tooltipId} // Default a11y for recharts sucks
-        margin={{ top: 0, right: barPadding, bottom: 0, left: 0 }}
+        margin={{ top: 0, right: barMargin, bottom: 0, left: 0 }}
         className="[&_g]:outline-none [&_svg]:outline-none"
         responsive
       >
@@ -102,7 +106,7 @@ export const BarChart = (props: BarChartProps) => {
             <LabelList
               dataKey={key}
               position="right"
-              offset={4}
+              offset={barLabelGap}
               className="text-size-xs fill-color-text-default"
               formatter={(value) => formatNumber(value as number)}
             />
@@ -114,11 +118,11 @@ export const BarChart = (props: BarChartProps) => {
         <YAxis
           type="category"
           dataKey={props.labelKey}
-          width={labelWidth}
+          width={props.labelWidth}
           tick={
             <EntryLabel
               {...propParam}
-              width={labelWidth}
+              width={props.labelWidth}
               height={labelHeight}
               labelFn={props.labelFn}
               query={props.query}
@@ -130,7 +134,7 @@ export const BarChart = (props: BarChartProps) => {
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={<EntryHover {...propParam} ref={hoverRef} padding={barPadding} radius={barRadius} />}
+          cursor={<EntryHover {...propParam} ref={hoverRef} padding={barMargin} radius={barRadius} />}
           content={
             <EntryTooltip
               {...propParam}
