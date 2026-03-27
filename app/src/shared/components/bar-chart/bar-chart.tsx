@@ -33,7 +33,7 @@ export const BarChart = (rawProps: BarChartProps) => {
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
-  const anyParam = {} as any
+  const anyParams = {} as any
 
   const barKeys = Object.keys(props.barNames)
   const entries = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
@@ -56,13 +56,14 @@ export const BarChart = (rawProps: BarChartProps) => {
   const chartPadding = 2 * entryGap
   const chartHeight = entries.length * (entrySize + entryGap) - entryGap + chartPadding + xAxisHeight
 
-  const lcQuery = props.query!.trim().toLowerCase()
   const matchingIndexes = useMemo(() => {
+    const lcQuery = props.query!.trim().toLowerCase()
     return entries.reduce<number[]>((acc, entry, index) => {
       if (!lcQuery || String(entry[props.entryKey]).toLowerCase().includes(lcQuery)) acc.push(index)
       return acc
     }, [])
-  }, [lcQuery, entries, props.entryKey])
+  }, [entries, props.entryKey])
+  const getQueryClass = (index: number) => (matchingIndexes.includes(index) ? undefined : 'opacity-30')
 
   const entryLabelFn = useCallback(
     (value: string) => {
@@ -126,7 +127,7 @@ export const BarChart = (rawProps: BarChartProps) => {
                 {...shapeProps}
                 className={cx(
                   'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
-                  !matchingIndexes.includes(shapeProps.index) && 'opacity-30',
+                  getQueryClass(shapeProps.index),
                 )}
               />
             )}
@@ -139,10 +140,7 @@ export const BarChart = (rawProps: BarChartProps) => {
                   y={labelProps.y + labelProps.height / 2}
                   textAnchor={labelProps.value < 0 ? 'end' : 'start'}
                   dominantBaseline="middle"
-                  className={cx(
-                    'text-size-xs fill-color-text-default',
-                    !matchingIndexes.includes(labelProps.index) && 'opacity-30',
-                  )}
+                  className={cx('text-size-xs fill-color-text-default', getQueryClass(labelProps.index))}
                 >
                   {formatNumber(labelProps.value)}
                 </text>
@@ -163,25 +161,24 @@ export const BarChart = (rawProps: BarChartProps) => {
           type="category"
           dataKey={props.entryKey}
           width={props.entryWidth}
-          tick={
-            <EntryLabel
-              {...anyParam}
-              width={props.entryWidth}
-              height={entryHeight}
-              labelFn={entryLabelFn}
-              query={props.query}
-            />
-          }
           tickLine={false}
+          tick={(tickProps: any) => (
+            <EntryLabel
+              {...tickProps}
+              label={entryLabelFn(tickProps.payload.value) || tickProps.payload.value}
+              height={entryHeight}
+              className={getQueryClass(tickProps.index)}
+            />
+          )}
         />
 
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={<EntryHover {...anyParam} ref={hoverRef} radius={barRadius} />}
+          cursor={<EntryHover {...anyParams} ref={hoverRef} radius={barRadius} />}
           content={
             <EntryTooltip
-              {...anyParam}
+              {...anyParams}
               visible={isFocused || isHovered}
               ref={tooltipRef}
               id={tooltipId}
