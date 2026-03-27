@@ -26,13 +26,13 @@ export const BarChart = (rawProps: BarChartProps) => {
     labelWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
   })
   const { $fontSize } = useThemeService()
-  const { entries } = props.data
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
   const barKeys = Object.keys(props.barLabels)
+  const entries = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
   const hasGroups = barKeys.length > 1
   const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
   const xAxisHeight = 30 // px
