@@ -30,10 +30,10 @@ export const ChartView = (props: Props) => {
       {/* CHART */}
       <BarChart
         data={chartData}
-        barLabels={barLabels}
-        labelKey={indexKey}
-        labelFn={props.cellFn}
-        labelWidth={parseFloat(TOKENS.SPACING['lg-1'].$value)}
+        barNames={barLabels}
+        entryKey={indexKey}
+        entryFn={props.cellFn}
+        entryWidth={parseFloat(TOKENS.SPACING['lg-1'].$value)}
         className="mr-sm-0 h-full flex-1"
       />
 

@@ -26,21 +26,21 @@ const meta: Meta = {
               }),
             ),
       },
-      labelKey: 'label',
-      barLabels: {
+      barNames: {
         v1: 'Value 1',
         v2: 'Value 2',
         v3: 'Value 3',
       },
-      labelFn: `(value) => '🔥' + value` as any,
-      labelWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
+      entryKey: 'label',
+      entryFn: `(value) => '🔥' + value` as any,
+      entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
       query: '',
       className: '',
       style: { height: '500px' },
     },
-    clearDefaults: ['data', 'labelKey', 'labelFn', 'barLabels'],
+    clearDefaults: ['data', 'entryKey', 'entryFn', 'barNames'],
     render: (props: BarChartProps) => {
-      return <BarChart {...props} labelFn={props.labelFn ? eval(String(props.labelFn)) : undefined} />
+      return <BarChart {...props} entryFn={props.entryFn ? eval(String(props.entryFn)) : undefined} />
     },
   }),
 }

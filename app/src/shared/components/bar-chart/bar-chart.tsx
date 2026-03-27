@@ -14,16 +14,16 @@ export type BarChartData = { entries: BarChartEntry[] } // Data wrapper required
 
 export interface BarChartProps extends ReactProps {
   data: BarChartData
-  barLabels: Record<string, string>
-  labelKey: string
-  labelFn?: (value: string, query: string) => ReactNode
-  labelWidth?: number
+  barNames: Record<string, string>
+  entryKey: string
+  entryFn?: (value: string, query: string) => ReactNode
+  entryWidth?: number
   query?: string
 }
 
 export const BarChart = (rawProps: BarChartProps) => {
   const props = useDefaults(rawProps, {
-    labelWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
+    entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
   })
   const { $fontSize } = useThemeService()
   const [isHovered, setIsHovered] = useState(false)
@@ -31,25 +31,28 @@ export const BarChart = (rawProps: BarChartProps) => {
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
-  const barKeys = Object.keys(props.barLabels)
+  const anyParam = {} as any
+
+  const barKeys = Object.keys(props.barNames)
   const entries = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
-  const hasGroups = barKeys.length > 1
-  const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
-  const xAxisHeight = 30 // px
   const minEntryValue = Math.min(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const hasBothSides = minEntryValue < 0 && maxEntryValue > 0
+
   const barLabelGap = 4 // px
   const barMarginLeft = minEntryValue < 0 ? computeTextWidth(formatNumber(minEntryValue), 12) + barLabelGap : 0
   const barMarginRight = maxEntryValue > 0 ? computeTextWidth(formatNumber(maxEntryValue), 12) + barLabelGap : 0
-  const barSize = parseFloat(TOKENS.SPACING[hasGroups ? 'sm-0' : 'sm-1'].$value)
+  const barSize = parseFloat(TOKENS.SPACING[barKeys.length > 1 ? 'sm-0' : 'sm-1'].$value)
   const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
-  const groupGap = parseFloat(TOKENS.SPACING[hasGroups ? 'xs-9' : 'xs-4'].$value)
-  const groupSize = barKeys.length * (barSize + barGap) - barGap
-  const padding = 2 * groupGap
-  const totalHeight = entries.length * (groupSize + groupGap) - groupGap + padding + xAxisHeight
-  const labelHeight = groupSize + groupGap
-  const propParam = {} as any
+  const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
+
+  const entryGap = parseFloat(TOKENS.SPACING[barKeys.length > 1 ? 'xs-9' : 'xs-4'].$value)
+  const entrySize = barKeys.length * (barSize + barGap) - barGap
+  const entryHeight = entrySize + entryGap
+
+  const xAxisHeight = 30 // px
+  const chartPadding = 2 * entryGap
+  const chartHeight = entries.length * (entrySize + entryGap) - entryGap + chartPadding + xAxisHeight
 
   const scrollToView = useMemo(() => {
     return debounce(() => {
@@ -88,7 +91,7 @@ export const BarChart = (rawProps: BarChartProps) => {
         data={entries}
         layout="vertical"
         width="100%"
-        height={totalHeight}
+        height={chartHeight}
         barGap={barGap}
         aria-describedby={tooltipId} // Default a11y for recharts sucks
         className="[&_g]:outline-none [&_svg]:outline-none"
@@ -123,14 +126,14 @@ export const BarChart = (rawProps: BarChartProps) => {
         {hasBothSides && <ReferenceLine x={0} stroke="currentColor" strokeDasharray="3 3" />}
         <YAxis
           type="category"
-          dataKey={props.labelKey}
-          width={props.labelWidth}
+          dataKey={props.entryKey}
+          width={props.entryWidth}
           tick={
             <EntryLabel
-              {...propParam}
-              width={props.labelWidth}
-              height={labelHeight}
-              labelFn={props.labelFn}
+              {...anyParam}
+              width={props.entryWidth}
+              height={entryHeight}
+              labelFn={props.entryFn}
               query={props.query}
             />
           }
@@ -140,15 +143,15 @@ export const BarChart = (rawProps: BarChartProps) => {
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={<EntryHover {...propParam} ref={hoverRef} radius={barRadius} />}
+          cursor={<EntryHover {...anyParam} ref={hoverRef} radius={barRadius} />}
           content={
             <EntryTooltip
-              {...propParam}
+              {...anyParam}
               visible={isFocused || isHovered}
               ref={tooltipRef}
               id={tooltipId}
-              barLabels={props.barLabels}
-              labelFn={props.labelFn}
+              barNames={props.barNames}
+              titleFn={props.entryFn}
             />
           }
         />

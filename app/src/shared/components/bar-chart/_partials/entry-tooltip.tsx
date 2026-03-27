@@ -4,16 +4,14 @@ import type { TooltipContentProps } from 'recharts'
 
 interface Props extends TooltipContentProps, ReactProps {
   visible: boolean
-  barLabels: Record<string, string>
-  labelFn?: (value: string) => ReactNode
+  barNames: Record<string, string>
+  titleFn?: (value: string) => ReactNode
 }
 
+// This component will rerender on mousemove, due to bad recharts implementation
 export const EntryTooltip = (props: Props) => {
-  // This component will rerender on mousemove, due to bad recharts implementation
-
   const label = props.label ? String(props.label) : ''
-  const title = props.labelFn?.(label) || label
-  const tdClass = cx('pt-px')
+  const title = props.titleFn?.(label) || label
 
   return (
     <div
@@ -33,7 +31,7 @@ export const EntryTooltip = (props: Props) => {
       <div className="gap-xs-2 -mb-xs-0 grid w-full grid-cols-[auto_1fr]">
         {props.payload.map((bar, index) => (
           <Fragment key={String(bar.dataKey) + index}>
-            <div>{props.barLabels[bar.name || '']}:</div>
+            <div>{props.barNames[bar.name || '']}:</div>
             <div className="font-weight-lg" aria-label={`${formatNumber(bar.value as number)},`}>
               {formatNumber(bar.value as number)}
             </div>
