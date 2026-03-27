@@ -6,10 +6,11 @@ interface Props extends ReactProps {
   radius: number
   payloadIndex: string
   isMatch: (index: number | string) => string | undefined
+  visible: boolean
 }
 
 export const EntryHover = (props: Props) => {
-  if (!props.isMatch(props.payloadIndex)) return null
+  if (!props.visible || !props.isMatch(props.payloadIndex)) return null
 
   return (
     <rect

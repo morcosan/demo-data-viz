@@ -3,9 +3,9 @@ import { Fragment } from 'react'
 import type { TooltipContentProps } from 'recharts'
 
 interface Props extends TooltipContentProps, ReactProps {
-  visible: boolean
   title: string
   barNames: Record<string, string>
+  visible: boolean
 }
 
 // This component will rerender on mousemove, due to bad recharts implementation

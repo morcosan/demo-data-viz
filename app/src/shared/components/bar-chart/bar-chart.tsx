@@ -180,15 +180,23 @@ export const BarChart = (rawProps: BarChartProps) => {
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={<EntryHover {...({} as any)} ref={hoverRef} radius={barRadius} isMatch={isQueryMatch} />}
+          cursor={
+            <EntryHover
+              {...({} as any)}
+              ref={hoverRef}
+              visible={isFocused || isHovered}
+              radius={barRadius}
+              isMatch={isQueryMatch}
+            />
+          }
           content={(params: any) => {
             if (!isQueryMatch(params.activeIndex)) return null
             return (
               <EntryTooltip
                 {...params}
-                visible={isFocused || isHovered}
                 ref={tooltipRef}
                 id={tooltipId}
+                visible={isFocused || isHovered}
                 title={entryLabelFn(params.label) || params.label}
                 barNames={props.barNames}
               />
