@@ -7,7 +7,6 @@ interface Props extends ReactProps {
 }
 
 export const EntryLabel = (props: Props) => {
-  log(props.height, props.y)
   return (
     <foreignObject x={0} y={props.y - props.height / 2} width={props.width} height={props.height}>
       <div

@@ -33,7 +33,6 @@ export const BarChart = (rawProps: BarChartProps) => {
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
-  const anyParams = {} as any
 
   const barKeys = Object.keys(props.barNames)
   const entries = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
@@ -56,18 +55,23 @@ export const BarChart = (rawProps: BarChartProps) => {
   const chartPadding = 2 * entryGap
   const chartHeight = entries.length * (entrySize + entryGap) - entryGap + chartPadding + xAxisHeight
 
-  const matchingIndexes = useMemo(() => {
+  const queryIndexes = useMemo(() => {
     const lcQuery = props.query!.trim().toLowerCase()
     return entries.reduce<number[]>((acc, entry, index) => {
       if (!lcQuery || String(entry[props.entryKey]).toLowerCase().includes(lcQuery)) acc.push(index)
       return acc
     }, [])
   }, [entries, props.entryKey])
-  const getQueryClass = (index: number) => (matchingIndexes.includes(index) ? undefined : 'opacity-30')
+  const getQueryClass = (i: number | string) => (queryIndexes.includes(parseInt(String(i))) ? undefined : 'opacity-30')
+  const isQueryMatch = (i: number | string) => !getQueryClass(i)
 
   const entryLabelFn = useCallback(
-    (value: string) => {
-      return props.entryFn ? props.entryFn(value, props.query!) : <TextHighlight text={value} query={props.query!} />
+    (value?: string) => {
+      return props.entryFn ? (
+        props.entryFn(value || '', props.query!)
+      ) : (
+        <TextHighlight text={value || ''} query={props.query!} />
+      )
     },
     [props.entryFn, props.query],
   )
@@ -122,27 +126,28 @@ export const BarChart = (rawProps: BarChartProps) => {
             dataKey={key}
             barSize={barSize}
             radius={[0, barRadius, barRadius, 0]}
-            shape={(shapeProps: any) => (
+            shape={(params: any) => (
               <Rectangle
-                {...shapeProps}
+                {...params}
                 className={cx(
-                  'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
-                  getQueryClass(shapeProps.index),
+                  'fill-color-chart-bar-default',
+                  isQueryMatch(params.index) && 'hover:fill-color-chart-bar-hover',
+                  getQueryClass(params.index),
                 )}
               />
             )}
           >
             <LabelList
               dataKey={key}
-              content={(labelProps: any) => (
+              content={(params: any) => (
                 <text
-                  x={labelProps.x + labelProps.width + (labelProps.value < 0 ? -barLabelGap : barLabelGap)}
-                  y={labelProps.y + labelProps.height / 2}
-                  textAnchor={labelProps.value < 0 ? 'end' : 'start'}
+                  x={params.x + params.width + (params.value < 0 ? -barLabelGap : barLabelGap)}
+                  y={params.y + params.height / 2}
+                  textAnchor={params.value < 0 ? 'end' : 'start'}
                   dominantBaseline="middle"
-                  className={cx('text-size-xs fill-color-text-default', getQueryClass(labelProps.index))}
+                  className={cx('text-size-xs fill-color-text-default', getQueryClass(params.index))}
                 >
-                  {formatNumber(labelProps.value)}
+                  {formatNumber(params.value)}
                 </text>
               )}
             />
@@ -162,12 +167,12 @@ export const BarChart = (rawProps: BarChartProps) => {
           dataKey={props.entryKey}
           width={props.entryWidth}
           tickLine={false}
-          tick={(tickProps: any) => (
+          tick={(params: any) => (
             <EntryLabel
-              {...tickProps}
-              label={entryLabelFn(tickProps.payload.value) || tickProps.payload.value}
+              {...params}
+              label={entryLabelFn(params.payload.value) || params.payload.value}
               height={entryHeight}
-              className={getQueryClass(tickProps.index)}
+              className={getQueryClass(params.index)}
             />
           )}
         />
@@ -175,17 +180,20 @@ export const BarChart = (rawProps: BarChartProps) => {
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={<EntryHover {...anyParams} ref={hoverRef} radius={barRadius} />}
-          content={
-            <EntryTooltip
-              {...anyParams}
-              visible={isFocused || isHovered}
-              ref={tooltipRef}
-              id={tooltipId}
-              barNames={props.barNames}
-              titleFn={props.entryFn}
-            />
-          }
+          cursor={<EntryHover {...({} as any)} ref={hoverRef} radius={barRadius} isMatch={isQueryMatch} />}
+          content={(params: any) => {
+            if (!isQueryMatch(params.activeIndex)) return null
+            return (
+              <EntryTooltip
+                {...params}
+                visible={isFocused || isHovered}
+                ref={tooltipRef}
+                id={tooltipId}
+                title={entryLabelFn(params.label) || params.label}
+                barNames={props.barNames}
+              />
+            )
+          }}
         />
       </ReBarChart>
     </div>

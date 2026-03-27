@@ -4,9 +4,13 @@ interface Props extends ReactProps {
   width: number
   height: number
   radius: number
+  payloadIndex: string
+  isMatch: (index: number | string) => string | undefined
 }
 
 export const EntryHover = (props: Props) => {
+  if (!props.isMatch(props.payloadIndex)) return null
+
   return (
     <rect
       ref={props.ref}

@@ -1,18 +1,15 @@
 import { formatNumber } from '@app/shared/utils/formatting'
-import { Fragment, type ReactNode } from 'react'
+import { Fragment } from 'react'
 import type { TooltipContentProps } from 'recharts'
 
 interface Props extends TooltipContentProps, ReactProps {
   visible: boolean
+  title: string
   barNames: Record<string, string>
-  titleFn?: (value: string) => ReactNode
 }
 
 // This component will rerender on mousemove, due to bad recharts implementation
 export const EntryTooltip = (props: Props) => {
-  const label = props.label ? String(props.label) : ''
-  const title = props.titleFn?.(label) || label
-
   return (
     <div
       ref={props.ref}
@@ -24,8 +21,8 @@ export const EntryTooltip = (props: Props) => {
         !props.visible && 'hidden',
       )}
     >
-      <div className="font-weight-lg mb-xs-4" aria-label={`${title},`}>
-        {title}
+      <div className="font-weight-lg mb-xs-4" aria-label={`${props.title},`}>
+        {props.title}
       </div>
 
       <div className="gap-xs-2 -mb-xs-0 grid w-full grid-cols-[auto_1fr]">
