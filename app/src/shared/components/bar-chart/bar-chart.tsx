@@ -1,9 +1,10 @@
 'use client'
 
+import { TextHighlight } from '@app-components'
 import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
 import { Keyboard, TOKENS, useDefaults, useThemeService } from '@ds/core'
 import { debounce } from 'lodash'
-import { useId, useMemo, useRef, useState, type ReactNode } from 'react'
+import { useCallback, useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'
 import { EntryHover } from './_partials/entry-hover'
 import { EntryLabel } from './_partials/entry-label'
@@ -24,6 +25,7 @@ export interface BarChartProps extends ReactProps {
 export const BarChart = (rawProps: BarChartProps) => {
   const props = useDefaults(rawProps, {
     entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
+    query: '',
   })
   const { $fontSize } = useThemeService()
   const [isHovered, setIsHovered] = useState(false)
@@ -53,6 +55,13 @@ export const BarChart = (rawProps: BarChartProps) => {
   const xAxisHeight = 30 // px
   const chartPadding = 2 * entryGap
   const chartHeight = entries.length * (entrySize + entryGap) - entryGap + chartPadding + xAxisHeight
+
+  const entryLabelFn = useCallback(
+    (value: string) => {
+      return props.entryFn ? props.entryFn(value, props.query!) : <TextHighlight text={value} query={props.query!} />
+    },
+    [props.entryFn, props.query],
+  )
 
   const scrollToView = useMemo(() => {
     return debounce(() => {
@@ -133,7 +142,7 @@ export const BarChart = (rawProps: BarChartProps) => {
               {...anyParam}
               width={props.entryWidth}
               height={entryHeight}
-              labelFn={props.entryFn}
+              labelFn={entryLabelFn}
               query={props.query}
             />
           }

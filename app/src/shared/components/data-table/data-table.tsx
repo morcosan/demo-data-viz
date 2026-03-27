@@ -4,7 +4,7 @@ import { LoadingSpinner, TextHighlight } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { type TableCell, type TableData, type TableRow } from '@app/shared/types/table'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { wait } from '@ds/core'
+import { useDefaults, wait } from '@ds/core'
 import { type CellContext } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { ColCell } from './_partials/col-cell'
@@ -12,21 +12,21 @@ import { RowCell } from './_partials/row-cell'
 import { computeColSize, formatCellValue } from './_partials/utils'
 import { useTableModel } from './_use-table-model'
 
-interface Props extends ReactProps {
+export interface DataTableProps extends ReactProps {
   data: TableData
-  query?: string
   cellFn?: (value: string, query: string) => ReactNode
+  query?: string
   loading?: boolean
   sticky?: boolean
 }
 
-export const DataTable = (props: Props) => {
+export const DataTable = (rawProps: DataTableProps) => {
+  const props = useDefaults(rawProps, { query: '' })
   const { t } = useTranslation()
   const { cellFn } = props
   const [isLoading, setIsLoading] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
   const headerRef = useRef<HTMLTableSectionElement | null>(null)
-  const filterQuery = props.query || ''
 
   const columns = useMemo(
     () => props.data.cols.map((col) => ({ ...col, size: computeColSize(col, props.data.rows) })),
@@ -37,17 +37,17 @@ export const DataTable = (props: Props) => {
       const value = info.getValue() ?? ''
       if (value === '') return <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
 
-      const query = filterQuery.trim()
+      const query = props.query!.trim() // Need to avoid calling TextHighlight for mils of rows
       const strValue = formatCellValue(value, columns[info.column.getIndex()])
 
       return cellFn ? cellFn(strValue, query) : query ? <TextHighlight text={strValue} query={query} /> : strValue
     },
-    [columns, cellFn, filterQuery, t],
+    [columns, cellFn, props.query, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,
     rows: props.data.rows,
-    filter: filterQuery,
+    filter: props.query!,
     cellFn: renderCell,
   })
 

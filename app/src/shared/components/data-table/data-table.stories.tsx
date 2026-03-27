@@ -10,7 +10,7 @@ import {
   loremTrue,
 } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { DataTable } from './data-table'
+import { DataTable, type DataTableProps } from './data-table'
 
 const cols: TableCol[] = loremArray(4, 50).map((_, index: number) => ({
   key: String(index),
@@ -47,14 +47,17 @@ const meta: Meta = {
           )
         }),
       },
+      cellFn: '' as any,
       query: '',
-      cellFn: undefined,
       loading: false,
       sticky: false,
       className: '',
       style: { height: '600px' },
     },
-    clearDefaults: ['data'],
+    clearDefaults: ['data', 'cellFn'],
+    render: (props: DataTableProps) => {
+      return <DataTable {...props} cellFn={props.cellFn ? eval(String(props.cellFn)) : undefined} />
+    },
   }),
 }
 

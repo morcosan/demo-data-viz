@@ -32,7 +32,7 @@ const meta: Meta = {
         v3: 'Value 3',
       },
       entryKey: 'label',
-      entryFn: `(value) => '🔥' + value` as any,
+      entryFn: '' as any,
       entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
       query: '',
       className: '',
