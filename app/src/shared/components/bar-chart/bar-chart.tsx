@@ -5,7 +5,7 @@ import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
 import { Keyboard, TOKENS, useDefaults, useThemeService } from '@ds/core'
 import { debounce } from 'lodash'
 import { useCallback, useId, useMemo, useRef, useState, type ReactNode } from 'react'
-import { Bar, LabelList, BarChart as ReBarChart, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, LabelList, BarChart as ReBarChart, Rectangle, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'
 import { EntryHover } from './_partials/entry-hover'
 import { EntryLabel } from './_partials/entry-label'
 import { EntryTooltip } from './_partials/entry-tooltip'
@@ -55,6 +55,14 @@ export const BarChart = (rawProps: BarChartProps) => {
   const xAxisHeight = 30 // px
   const chartPadding = 2 * entryGap
   const chartHeight = entries.length * (entrySize + entryGap) - entryGap + chartPadding + xAxisHeight
+
+  const lcQuery = props.query!.trim().toLowerCase()
+  const matchingIndexes = useMemo(() => {
+    return entries.reduce<number[]>((acc, entry, index) => {
+      if (!lcQuery || String(entry[props.entryKey]).toLowerCase().includes(lcQuery)) acc.push(index)
+      return acc
+    }, [])
+  }, [lcQuery, entries, props.entryKey])
 
   const entryLabelFn = useCallback(
     (value: string) => {
@@ -113,14 +121,32 @@ export const BarChart = (rawProps: BarChartProps) => {
             dataKey={key}
             barSize={barSize}
             radius={[0, barRadius, barRadius, 0]}
-            className="fill-color-chart-bar-default hover:fill-color-chart-bar-hover"
+            shape={(shapeProps: any) => (
+              <Rectangle
+                {...shapeProps}
+                className={cx(
+                  'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
+                  !matchingIndexes.includes(shapeProps.index) && 'opacity-30',
+                )}
+              />
+            )}
           >
             <LabelList
               dataKey={key}
-              position="right"
-              offset={barLabelGap}
-              className="text-size-xs fill-color-text-default"
-              formatter={(value) => formatNumber(value as number)}
+              content={(labelProps: any) => (
+                <text
+                  x={labelProps.x + labelProps.width + (labelProps.value < 0 ? -barLabelGap : barLabelGap)}
+                  y={labelProps.y + labelProps.height / 2}
+                  textAnchor={labelProps.value < 0 ? 'end' : 'start'}
+                  dominantBaseline="middle"
+                  className={cx(
+                    'text-size-xs fill-color-text-default',
+                    !matchingIndexes.includes(labelProps.index) && 'opacity-30',
+                  )}
+                >
+                  {formatNumber(labelProps.value)}
+                </text>
+              )}
             />
           </Bar>
         ))}
