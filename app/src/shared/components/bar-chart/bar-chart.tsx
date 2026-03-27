@@ -80,7 +80,7 @@ export const BarChart = (rawProps: BarChartProps) => {
     return debounce(() => {
       hoverRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
       tooltipRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-    }, 300)
+    }, 200)
   }, [])
 
   // Swap left/right arrows for tab navigation
@@ -180,25 +180,17 @@ export const BarChart = (rawProps: BarChartProps) => {
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={
-            <EntryHover
-              {...({} as any)}
-              ref={hoverRef}
-              visible={isFocused || isHovered}
-              radius={barRadius}
-              isMatch={isQueryMatch}
-            />
-          }
+          cursor={<EntryHover {...({} as any)} ref={hoverRef} radius={barRadius} visible={isFocused || isHovered} />}
           content={(params: any) => {
-            if (!isQueryMatch(params.activeIndex)) return null
             return (
               <EntryTooltip
                 {...params}
                 ref={tooltipRef}
                 id={tooltipId}
-                visible={isFocused || isHovered}
-                title={entryLabelFn(params.label) || params.label}
                 barNames={props.barNames}
+                visible={isFocused || isHovered}
+                labelFn={(value) => entryLabelFn(value)}
+                className={getQueryClass(params.activeIndex)}
               />
             )
           }}
