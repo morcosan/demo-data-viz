@@ -10,6 +10,7 @@ import { EntryLabel } from './_partials/entry-label'
 import { EntryTooltip } from './_partials/entry-tooltip'
 import { Toolbar } from './_partials/toolbar'
 import { useEvents } from './_partials/use-events'
+import { useSorting } from './_partials/use-sorting'
 
 export type BarChartEntry = Record<string, number | string>
 export type BarChartData = { entries: BarChartEntry[] } // Data wrapper required due to Storybook limitations
@@ -21,6 +22,7 @@ export interface BarChartProps extends ReactProps {
   entryName: string
   entryFn?: (value: string, query: string) => ReactNode
   entryWidth?: number
+  chartSize?: 'sm' | 'md' | 'lg'
   query?: string
   toolbar?: ReactNode
 }
@@ -28,53 +30,69 @@ export interface BarChartProps extends ReactProps {
 export const BarChart = (rawProps: BarChartProps) => {
   const props = useDefaults(rawProps, {
     entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
+    chartSize: 'md',
     query: '',
   })
   const { isViewportMinSM } = useViewportService()
   const { $fontSize } = useThemeService()
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
-  const [sortKey, setSortKey] = useState<string | null>(null)
-  const [sortDir, setSortDir] = useState<'asc' | 'desc' | false>(false)
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
-  const { handleKeyDown } = useEvents(hoverRef, tooltipRef)
   const barKeys = Object.keys(props.barNames)
-
-  const entries = useMemo(() => {
-    const filtered = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
-
-    if (!sortKey || !sortDir) return filtered
-
-    return filtered.sort((a, b) => {
-      const numA = a[sortKey]
-      const numB = b[sortKey]
-      const strA = String(a[sortKey] ?? '')
-      const strB = String(b[sortKey] ?? '')
-
-      return typeof numA === 'number' && typeof numB === 'number'
-        ? sortDir === 'asc'
-          ? numA - numB
-          : numB - numA
-        : sortDir === 'asc'
-          ? strA.localeCompare(strB)
-          : strB.localeCompare(strA)
-    })
-  }, [props.data.entries, barKeys, sortKey, sortDir])
+  const { handleKeyDown } = useEvents(hoverRef, tooltipRef)
+  const { entries, sortKey, sortDir, toggleSort } = useSorting(props)
 
   const minEntryValue = Math.min(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const hasBothSides = minEntryValue < 0 && maxEntryValue > 0
 
-  const barLabelGap = 4 // px
+  const barLabelGap = (() => {
+    if (props.chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-1'].$value)
+    if (props.chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-2'].$value)
+    if (props.chartSize === 'lg') return parseFloat(TOKENS.SPACING['xs-4'].$value)
+    return 0
+  })()
   const barMarginLeft = minEntryValue < 0 ? computeTextWidth(formatNumber(minEntryValue), 12) + barLabelGap : 0
   const barMarginRight = maxEntryValue > 0 ? computeTextWidth(formatNumber(maxEntryValue), 12) + barLabelGap : 0
-  const barSize = parseFloat(TOKENS.SPACING[barKeys.length > 1 ? 'sm-0' : 'sm-1'].$value)
-  const barGap = parseFloat(TOKENS.SPACING['xs-1'].$value)
-  const barRadius = parseFloat(TOKENS.RADIUS['sm'].$value)
+  const barSize = (() => {
+    if (barKeys.length > 1) {
+      if (props.chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-9'].$value)
+      if (props.chartSize === 'md') return parseFloat(TOKENS.SPACING['sm-1'].$value)
+      if (props.chartSize === 'lg') return parseFloat(TOKENS.SPACING['sm-5'].$value)
+    } else {
+      if (props.chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-9'].$value)
+      if (props.chartSize === 'md') return parseFloat(TOKENS.SPACING['sm-1'].$value)
+      if (props.chartSize === 'lg') return parseFloat(TOKENS.SPACING['sm-5'].$value)
+    }
+    return 0
+  })()
+  const barGap = (() => {
+    if (props.chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-0'].$value)
+    if (props.chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-1'].$value)
+    if (props.chartSize === 'lg') return parseFloat(TOKENS.SPACING['xs-2'].$value)
+    return 0
+  })()
+  const barRadius = (() => {
+    if (props.chartSize === 'sm') return parseFloat(TOKENS.RADIUS['xs'].$value)
+    if (props.chartSize === 'md') return parseFloat(TOKENS.RADIUS['sm'].$value)
+    if (props.chartSize === 'lg') return parseFloat(TOKENS.RADIUS['md'].$value)
+    return 0
+  })()
 
-  const entryGap = parseFloat(TOKENS.SPACING[barKeys.length > 1 ? 'xs-9' : 'xs-4'].$value)
+  const entryGap = (() => {
+    if (barKeys.length > 1) {
+      if (props.chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-6'].$value)
+      if (props.chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-9'].$value)
+      if (props.chartSize === 'lg') return parseFloat(TOKENS.SPACING['sm-2'].$value)
+    } else {
+      if (props.chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-1'].$value)
+      if (props.chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-2'].$value)
+      if (props.chartSize === 'lg') return parseFloat(TOKENS.SPACING['xs-4'].$value)
+    }
+    return 0
+  })()
   const entrySize = barKeys.length * (barSize + barGap) - barGap
   const entryHeight = entrySize + entryGap
 
@@ -101,14 +119,6 @@ export const BarChart = (rawProps: BarChartProps) => {
     },
     [props.entryFn, props.query],
   )
-
-  const toggleSort = (key: string) => {
-    const mainDir = key === props.entryKey ? 'asc' : 'desc'
-    const secDir = key === props.entryKey ? 'desc' : 'asc'
-    const otherDir = sortDir === mainDir ? secDir : sortDir === secDir ? false : mainDir
-    setSortKey(key)
-    setSortDir(sortKey === key ? otherDir : mainDir)
-  }
 
   return (
     <div className={cx('bg-color-bg-card flex w-full flex-col', props.className)} style={props.style}>
@@ -191,6 +201,7 @@ export const BarChart = (rawProps: BarChartProps) => {
             type="category"
             dataKey={props.entryKey}
             width={props.entryWidth}
+            interval={0}
             tickLine={false}
             tickSize={0}
             tickMargin={0}
@@ -199,6 +210,7 @@ export const BarChart = (rawProps: BarChartProps) => {
                 {...params}
                 label={entryLabelFn(params.payload.value) || params.payload.value}
                 height={entryHeight}
+                chartSize={props.chartSize}
                 className={getQueryClass(params.index)}
               />
             )}

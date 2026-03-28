@@ -4,6 +4,7 @@ interface Props extends ReactProps {
   x: number
   y: number
   label: string
+  chartSize: 'sm' | 'md' | 'lg'
 }
 
 export const EntryLabel = (props: Props) => {
@@ -16,7 +17,14 @@ export const EntryLabel = (props: Props) => {
           props.className,
         )}
       >
-        <div className="text-size-sm line-clamp-2 text-right leading-1">{props.label}</div>
+        <div
+          className={cx(
+            'line-clamp-2 text-right leading-1',
+            props.chartSize === 'sm' ? 'text-size-xs' : 'text-size-sm',
+          )}
+        >
+          {props.label}
+        </div>
       </div>
     </foreignObject>
   )
