@@ -22,6 +22,7 @@ export interface BarChartProps extends ReactProps {
   entryFn?: (value: string, query: string) => ReactNode
   entryWidth?: number
   query?: string
+  toolbar?: ReactNode
 }
 
 export const BarChart = (rawProps: BarChartProps) => {
@@ -112,11 +113,13 @@ export const BarChart = (rawProps: BarChartProps) => {
   return (
     <div className={cx('bg-color-bg-card flex w-full flex-col', props.className)} style={props.style}>
       <Toolbar
+        barNames={props.barNames}
         entryKey={props.entryKey}
         entryName={props.entryName}
         entryWidth={props.entryWidth!}
         sortKey={sortKey}
         sortDir={sortDir}
+        toolbar={props.toolbar}
         className="p-xs-1"
         onSort={toggleSort}
       />

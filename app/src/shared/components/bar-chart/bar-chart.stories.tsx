@@ -36,6 +36,7 @@ const meta: Meta = {
       entryFn: '' as any,
       entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
       query: '',
+      toolbar: '',
       className: '',
       style: { height: '500px' },
     },
