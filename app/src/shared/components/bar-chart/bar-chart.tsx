@@ -1,7 +1,6 @@
 'use client'
 
 import { TextHighlight } from '@app-components'
-import { useEvents } from '@app/shared/components/bar-chart/_partials/use-events'
 import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
 import { TOKENS, useDefaults, useThemeService, useViewportService } from '@ds/core'
 import { useCallback, useId, useMemo, useRef, useState, type ReactNode } from 'react'
@@ -9,6 +8,8 @@ import { Bar, LabelList, BarChart as ReBarChart, Rectangle, ReferenceLine, Toolt
 import { EntryHover } from './_partials/entry-hover'
 import { EntryLabel } from './_partials/entry-label'
 import { EntryTooltip } from './_partials/entry-tooltip'
+import { Toolbar } from './_partials/toolbar'
+import { useEvents } from './_partials/use-events'
 
 export type BarChartEntry = Record<string, number | string>
 export type BarChartData = { entries: BarChartEntry[] } // Data wrapper required due to Storybook limitations
@@ -17,6 +18,7 @@ export interface BarChartProps extends ReactProps {
   data: BarChartData
   barNames: Record<string, string>
   entryKey: string
+  entryName: string
   entryFn?: (value: string, query: string) => ReactNode
   entryWidth?: number
   query?: string
@@ -31,6 +33,8 @@ export const BarChart = (rawProps: BarChartProps) => {
   const { $fontSize } = useThemeService()
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
+  const [sortKey, setSortKey] = useState<string | null>(null)
+  const [sortDir, setSortDir] = useState<'asc' | 'desc' | false>(false)
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
@@ -77,103 +81,127 @@ export const BarChart = (rawProps: BarChartProps) => {
     [props.entryFn, props.query],
   )
 
+  const toggleSort = (key: string) => {
+    if (sortKey === key) {
+      const dir = sortDir === 'desc' ? 'asc' : sortDir === 'asc' ? false : 'desc'
+      setSortDir(dir)
+    } else {
+      setSortKey(key)
+      setSortDir('desc')
+    }
+  }
+
   return (
-    <div
-      className={cx('bg-color-bg-card a11y-outline-proxy p-xs-1 w-full overflow-auto', props.className)}
-      style={props.style}
-      onKeyDownCapture={handleKeyDown}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <ReBarChart
-        data={entries}
-        layout="vertical"
-        width="100%"
-        height={chartHeight}
-        barGap={barGap}
-        aria-describedby={tooltipId} // Default a11y for recharts sucks
-        className="min-w-xl-2 [&_g]:outline-none [&_svg]:outline-none"
-        responsive
+    <div className={cx('bg-color-bg-card flex w-full flex-col', props.className)} style={props.style}>
+      <Toolbar
+        entryKey={props.entryKey}
+        entryName={props.entryName}
+        entryWidth={props.entryWidth!}
+        sortKey={sortKey}
+        sortDir={sortDir}
+        className="p-xs-1"
+        onSort={toggleSort}
+      />
+
+      {/* CHART */}
+      <div
+        className="a11y-outline-proxy p-xs-1 min-h-0 flex-1 overflow-auto"
+        onKeyDownCapture={handleKeyDown}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* BARS */}
-        {barKeys.map((key) => (
-          <Bar
-            key={key}
-            dataKey={key}
-            barSize={barSize}
-            radius={[0, barRadius, barRadius, 0]}
-            shape={(params: any) => (
-              <Rectangle
+        <ReBarChart
+          data={entries}
+          layout="vertical"
+          width="100%"
+          height={chartHeight}
+          barGap={barGap}
+          aria-describedby={tooltipId} // Default a11y for recharts sucks
+          className="min-w-xl-2 [&_g]:outline-none [&_svg]:outline-none"
+          responsive
+        >
+          {/* BARS */}
+          {barKeys.map((key) => (
+            <Bar
+              key={key}
+              dataKey={key}
+              barSize={barSize}
+              radius={[0, barRadius, barRadius, 0]}
+              shape={(params: any) => (
+                <Rectangle
+                  {...params}
+                  className={cx(
+                    'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
+                    getQueryClass(params.index),
+                  )}
+                />
+              )}
+            >
+              {isViewportMinSM && (
+                <LabelList
+                  dataKey={key}
+                  content={(params: any) => (
+                    <text
+                      x={params.x + params.width + (params.value < 0 ? -barLabelGap : barLabelGap)}
+                      y={params.y + params.height / 2}
+                      textAnchor={params.value < 0 ? 'end' : 'start'}
+                      dominantBaseline="middle"
+                      className={cx('text-size-xs fill-color-text-default', getQueryClass(params.index))}
+                    >
+                      {formatNumber(params.value)}
+                    </text>
+                  )}
+                />
+              )}
+            </Bar>
+          ))}
+
+          {/* AXIS */}
+          <XAxis
+            type="number"
+            padding={isViewportMinSM ? { left: barMarginLeft, right: barMarginRight } : undefined}
+            tick={{ fontSize: $fontSize['sm'] }}
+            tickFormatter={(value) => formatNumber(value)}
+          />
+          {hasBothSides && <ReferenceLine x={0} stroke="currentColor" strokeDasharray="3 3" />}
+          <YAxis
+            type="category"
+            dataKey={props.entryKey}
+            width={props.entryWidth}
+            tickLine={false}
+            tickSize={0}
+            tickMargin={0}
+            tick={(params: any) => (
+              <EntryLabel
                 {...params}
-                className={cx(
-                  'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
-                  getQueryClass(params.index),
-                )}
+                label={entryLabelFn(params.payload.value) || params.payload.value}
+                height={entryHeight}
+                className={getQueryClass(params.index)}
               />
             )}
-          >
-            {isViewportMinSM && (
-              <LabelList
-                dataKey={key}
-                content={(params: any) => (
-                  <text
-                    x={params.x + params.width + (params.value < 0 ? -barLabelGap : barLabelGap)}
-                    y={params.y + params.height / 2}
-                    textAnchor={params.value < 0 ? 'end' : 'start'}
-                    dominantBaseline="middle"
-                    className={cx('text-size-xs fill-color-text-default', getQueryClass(params.index))}
-                  >
-                    {formatNumber(params.value)}
-                  </text>
-                )}
-              />
-            )}
-          </Bar>
-        ))}
+          />
 
-        {/* AXIS */}
-        <XAxis
-          type="number"
-          padding={isViewportMinSM ? { left: barMarginLeft, right: barMarginRight } : undefined}
-          tick={{ fontSize: $fontSize['sm'] }}
-          tickFormatter={(value) => formatNumber(value)}
-        />
-        {hasBothSides && <ReferenceLine x={0} stroke="currentColor" strokeDasharray="3 3" />}
-        <YAxis
-          type="category"
-          dataKey={props.entryKey}
-          width={props.entryWidth}
-          tickLine={false}
-          tick={(params: any) => (
-            <EntryLabel
-              {...params}
-              label={entryLabelFn(params.payload.value) || params.payload.value}
-              height={entryHeight}
-              className={getQueryClass(params.index)}
-            />
-          )}
-        />
-
-        {/* TOOLTIP */}
-        <Tooltip
-          active={true} // Always render content
-          cursor={<EntryHover {...({} as any)} visible={isFocused || isHovered} ref={hoverRef} radius={barRadius} />}
-          content={(params: any) => {
-            return (
-              <EntryTooltip
-                {...params}
-                visible={isFocused || isHovered}
-                ref={tooltipRef}
-                id={tooltipId}
-                barNames={props.barNames}
-                labelFn={(value) => entryLabelFn(value)}
-              />
-            )
-          }}
-        />
-      </ReBarChart>
+          {/* TOOLTIP */}
+          <Tooltip
+            active={true} // Always render content
+            cursor={<EntryHover {...({} as any)} visible={isFocused || isHovered} ref={hoverRef} radius={barRadius} />}
+            content={(params: any) => {
+              return (
+                <EntryTooltip
+                  {...params}
+                  visible={isFocused || isHovered}
+                  ref={tooltipRef}
+                  id={tooltipId}
+                  barNames={props.barNames}
+                  labelFn={(value) => entryLabelFn(value)}
+                />
+              )
+            }}
+          />
+        </ReBarChart>
+      </div>
     </div>
   )
 }

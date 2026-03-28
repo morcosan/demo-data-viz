@@ -16,7 +16,7 @@ export const ColCell = (props: Props) => {
 
   const isNumeric = props.col.type === 'int' || props.col.type === 'float'
   const cellClass = cx(
-    'px-xs-6 py-xs-2 gap-xs-1 flex h-full items-center',
+    'px-xs-6 py-xs-2 gap-xs-0 flex h-full items-center',
     'bg-color-bg-card',
     'text-size-sm font-weight-lg truncate',
     props.sticky && 'border-color-border-subtle border-r',
@@ -34,7 +34,9 @@ export const ColCell = (props: Props) => {
       }}
     >
       <div className={cellClass}>
-        <span className="truncate">{flexRender(props.cell.column.columnDef.header, props.cell.getContext())}</span>
+        <span className="pt-xs-0 truncate">
+          {flexRender(props.cell.column.columnDef.header, props.cell.getContext())}
+        </span>
 
         {props.cell.column.getCanSort() && (
           <IconButton

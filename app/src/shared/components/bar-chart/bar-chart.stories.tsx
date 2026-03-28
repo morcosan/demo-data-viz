@@ -32,6 +32,7 @@ const meta: Meta = {
         v3: 'Value 3',
       },
       entryKey: 'label',
+      entryName: 'Entity',
       entryFn: '' as any,
       entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
       query: '',

@@ -8,10 +8,10 @@ interface Props extends ReactProps {
 
 export const EntryLabel = (props: Props) => {
   return (
-    <foreignObject x={0} y={props.y - props.height / 2} width={props.width} height={props.height}>
+    <foreignObject x={0} y={props.y - props.height / 2} width={props.x} height={props.height}>
       <div
         className={cx(
-          'pl-xs-5 pr-xs-4 h-full w-full overflow-hidden',
+          'pl-xs-5 pr-xs-5 h-full w-full overflow-hidden',
           'flex items-center justify-end',
           props.className,
         )}
