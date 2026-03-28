@@ -3,7 +3,7 @@
 import { TextHighlight } from '@app-components'
 import { useEvents } from '@app/shared/components/bar-chart/_partials/use-events'
 import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
-import { TOKENS, useDefaults, useThemeService } from '@ds/core'
+import { TOKENS, useDefaults, useThemeService, useViewportService } from '@ds/core'
 import { useCallback, useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Rectangle, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'
 import { EntryHover } from './_partials/entry-hover'
@@ -27,6 +27,7 @@ export const BarChart = (rawProps: BarChartProps) => {
     entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
     query: '',
   })
+  const { isViewportMinSM } = useViewportService()
   const { $fontSize } = useThemeService()
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -78,7 +79,7 @@ export const BarChart = (rawProps: BarChartProps) => {
 
   return (
     <div
-      className={cx('bg-color-bg-card a11y-outline-proxy p-xs-1 w-full overflow-y-auto', props.className)}
+      className={cx('bg-color-bg-card a11y-outline-proxy p-xs-1 w-full overflow-auto', props.className)}
       style={props.style}
       onKeyDownCapture={handleKeyDown}
       onFocus={() => setIsFocused(true)}
@@ -93,7 +94,7 @@ export const BarChart = (rawProps: BarChartProps) => {
         height={chartHeight}
         barGap={barGap}
         aria-describedby={tooltipId} // Default a11y for recharts sucks
-        className="[&_g]:outline-none [&_svg]:outline-none"
+        className="min-w-xl-2 [&_g]:outline-none [&_svg]:outline-none"
         responsive
       >
         {/* BARS */}
@@ -113,27 +114,29 @@ export const BarChart = (rawProps: BarChartProps) => {
               />
             )}
           >
-            <LabelList
-              dataKey={key}
-              content={(params: any) => (
-                <text
-                  x={params.x + params.width + (params.value < 0 ? -barLabelGap : barLabelGap)}
-                  y={params.y + params.height / 2}
-                  textAnchor={params.value < 0 ? 'end' : 'start'}
-                  dominantBaseline="middle"
-                  className={cx('text-size-xs fill-color-text-default', getQueryClass(params.index))}
-                >
-                  {formatNumber(params.value)}
-                </text>
-              )}
-            />
+            {isViewportMinSM && (
+              <LabelList
+                dataKey={key}
+                content={(params: any) => (
+                  <text
+                    x={params.x + params.width + (params.value < 0 ? -barLabelGap : barLabelGap)}
+                    y={params.y + params.height / 2}
+                    textAnchor={params.value < 0 ? 'end' : 'start'}
+                    dominantBaseline="middle"
+                    className={cx('text-size-xs fill-color-text-default', getQueryClass(params.index))}
+                  >
+                    {formatNumber(params.value)}
+                  </text>
+                )}
+              />
+            )}
           </Bar>
         ))}
 
         {/* AXIS */}
         <XAxis
           type="number"
-          padding={{ left: barMarginLeft, right: barMarginRight }}
+          padding={isViewportMinSM ? { left: barMarginLeft, right: barMarginRight } : undefined}
           tick={{ fontSize: $fontSize['sm'] }}
           tickFormatter={(value) => formatNumber(value)}
         />
