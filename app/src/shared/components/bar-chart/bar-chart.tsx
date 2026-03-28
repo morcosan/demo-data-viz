@@ -1,9 +1,9 @@
 'use client'
 
 import { TextHighlight } from '@app-components'
+import { useEvents } from '@app/shared/components/bar-chart/_partials/use-events'
 import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
-import { Keyboard, TOKENS, useDefaults, useThemeService } from '@ds/core'
-import { debounce } from 'lodash'
+import { TOKENS, useDefaults, useThemeService } from '@ds/core'
 import { useCallback, useId, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Bar, LabelList, BarChart as ReBarChart, Rectangle, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'
 import { EntryHover } from './_partials/entry-hover'
@@ -33,6 +33,7 @@ export const BarChart = (rawProps: BarChartProps) => {
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
+  const { handleKeyDown } = useEvents(hoverRef, tooltipRef)
 
   const barKeys = Object.keys(props.barNames)
   const entries = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
@@ -58,46 +59,22 @@ export const BarChart = (rawProps: BarChartProps) => {
   const queryIndexes = useMemo(() => {
     const lcQuery = props.query!.trim().toLowerCase()
     return entries.reduce<number[]>((acc, entry, index) => {
-      if (!lcQuery || String(entry[props.entryKey]).toLowerCase().includes(lcQuery)) acc.push(index)
-      return acc
+      return !lcQuery || String(entry[props.entryKey]).toLowerCase().includes(lcQuery) ? [...acc, index] : acc
     }, [])
-  }, [entries, props.entryKey])
-  const getQueryClass = (i: number | string) => (queryIndexes.includes(parseInt(String(i))) ? undefined : 'opacity-30')
-  const isQueryMatch = (i: number | string) => !getQueryClass(i)
+  }, [entries, props.entryKey, props.query])
+
+  const getQueryClass = (index: number | string) => {
+    const isMatch = queryIndexes.includes(parseInt(String(index)))
+    return isMatch ? undefined : 'opacity-30'
+  }
 
   const entryLabelFn = useCallback(
     (value?: string) => {
-      return props.entryFn ? (
-        props.entryFn(value || '', props.query!)
-      ) : (
-        <TextHighlight text={value || ''} query={props.query!} />
-      )
+      value = value || ''
+      return props.entryFn ? props.entryFn(value, props.query!) : <TextHighlight text={value} query={props.query!} />
     },
     [props.entryFn, props.query],
   )
-
-  const scrollToView = useMemo(() => {
-    return debounce(() => {
-      hoverRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-      tooltipRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-    }, 200)
-  }, [])
-
-  // Swap left/right arrows for tab navigation
-  const handleKeyDown = (event: ReactKeyboardEvent) => {
-    if (!event.isTrusted) return
-    if (![Keyboard.ARROW_RIGHT, Keyboard.ARROW_LEFT].includes(event.key)) return
-    event.stopPropagation()
-    document.activeElement?.dispatchEvent(
-      new KeyboardEvent('keydown', {
-        ...event.nativeEvent,
-        key: event.key === Keyboard.ARROW_RIGHT ? Keyboard.ARROW_LEFT : Keyboard.ARROW_RIGHT,
-        bubbles: true,
-        cancelable: true,
-      }),
-    )
-    scrollToView()
-  }
 
   return (
     <div
@@ -130,8 +107,7 @@ export const BarChart = (rawProps: BarChartProps) => {
               <Rectangle
                 {...params}
                 className={cx(
-                  'fill-color-chart-bar-default',
-                  isQueryMatch(params.index) && 'hover:fill-color-chart-bar-hover',
+                  'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
                   getQueryClass(params.index),
                 )}
               />
@@ -180,17 +156,16 @@ export const BarChart = (rawProps: BarChartProps) => {
         {/* TOOLTIP */}
         <Tooltip
           active={true} // Always render content
-          cursor={<EntryHover {...({} as any)} ref={hoverRef} radius={barRadius} visible={isFocused || isHovered} />}
+          cursor={<EntryHover {...({} as any)} visible={isFocused || isHovered} ref={hoverRef} radius={barRadius} />}
           content={(params: any) => {
             return (
               <EntryTooltip
                 {...params}
+                visible={isFocused || isHovered}
                 ref={tooltipRef}
                 id={tooltipId}
                 barNames={props.barNames}
-                visible={isFocused || isHovered}
                 labelFn={(value) => entryLabelFn(value)}
-                className={getQueryClass(params.activeIndex)}
               />
             )
           }}

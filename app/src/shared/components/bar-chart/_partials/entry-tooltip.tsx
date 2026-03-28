@@ -3,8 +3,8 @@ import { Fragment, type ReactNode } from 'react'
 import type { TooltipContentProps } from 'recharts'
 
 interface Props extends TooltipContentProps, ReactProps {
-  barNames: Record<string, string>
   visible: boolean
+  barNames: Record<string, string>
   labelFn: (value: string) => ReactNode
 }
 
@@ -23,11 +23,11 @@ export const EntryTooltip = (props: Props) => {
         !props.visible && 'hidden',
       )}
     >
-      <div className={cx('font-weight-lg mb-xs-4', props.className)} aria-label={`${props.label},`}>
+      <div className="font-weight-lg mb-xs-4" aria-label={`${props.label},`}>
         {title}
       </div>
 
-      <div className={cx('gap-xs-2 -mb-xs-0 grid w-full grid-cols-[auto_1fr]', props.className)}>
+      <div className="gap-xs-2 -mb-xs-0 grid w-full grid-cols-[auto_1fr]">
         {props.payload.map((bar, index) => (
           <Fragment key={String(bar.dataKey) + index}>
             <div>{props.barNames[bar.name || '']}:</div>

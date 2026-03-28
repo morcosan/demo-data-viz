@@ -1,10 +1,10 @@
 interface Props extends ReactProps {
+  visible: boolean
   x: number
   y: number
   width: number
   height: number
   radius: number
-  visible: boolean
 }
 
 export const EntryHover = (props: Props) => {
