@@ -39,6 +39,10 @@ export const DataPane = (props: DatasetPaneProps) => {
     return pivotKey && pivotQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
   }, [pivotedData, pivotKey, pivotQuery, isColVisible])
 
+  const chartData = useMemo(() => {
+    return { ...visibleData, cols: [...visibleData.cols, props.data.cols.find((col) => col.key === pivotKey)!] }
+  }, [visibleData, pivotKey, props.data])
+
   const cellFn = (value: string, query: string): ReactNode => {
     const flag = getCountryCode(value)
     const text = query ? <TextHighlight text={value} query={query} /> : value
@@ -76,7 +80,7 @@ export const DataPane = (props: DatasetPaneProps) => {
         <TableView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1" />
       )}
       {props.view === 'chart' && (
-        <ChartView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1" />
+        <ChartView data={chartData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1" />
       )}
       {props.view === 'map' && <div>TODO</div>}
     </div>

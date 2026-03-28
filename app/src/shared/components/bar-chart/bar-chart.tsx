@@ -40,8 +40,8 @@ export const BarChart = (rawProps: BarChartProps) => {
   const tooltipRef = useRef<Element | null>(null)
   const tooltipId = useId()
   const { handleKeyDown } = useEvents(hoverRef, tooltipRef)
-
   const barKeys = Object.keys(props.barNames)
+
   const entries = useMemo(() => {
     const filtered = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
 

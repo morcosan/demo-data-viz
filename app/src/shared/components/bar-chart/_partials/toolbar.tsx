@@ -17,14 +17,14 @@ export const Toolbar = (props: Props) => {
   const { t } = useTranslation()
   const barKeys = Object.keys(props.barNames)
 
-  const cellClass = cx('px-xs-5 gap-xs-0 max-w-lg-2 flex h-full items-center', 'text-size-sm font-weight-lg')
+  const cellClass = cx('px-xs-5 gap-xs-0 max-w-lg-2 flex h-full items-center')
 
   const renderCell = (key: string, name: string, className?: string, width?: number) => {
     const sort = props.sortKey === key && props.sortDir
 
     return (
-      <div className={cx(cellClass, className)} style={{ width }}>
-        <span className="pt-xs-0 truncate">{name}</span>
+      <div key={key} className={cx(cellClass, className)} style={{ width }}>
+        <span className="pt-xs truncate">{name}</span>
 
         <IconButton
           tooltip={t('core.action.sort')}
@@ -42,7 +42,14 @@ export const Toolbar = (props: Props) => {
   }
 
   return (
-    <div className={cx('z-sticky bg-color-bg-card shadow-below-sm', 'gap-x-xs-1 flex items-center', props.className)}>
+    <div
+      className={cx(
+        'z-sticky bg-color-bg-card shadow-below-sm',
+        'gap-x-xs-1 flex items-center',
+        'text-size-sm font-weight-lg',
+        props.className,
+      )}
+    >
       {renderCell(props.entryKey, props.entryName, 'ml-xs-3 justify-end px-0! mr-xs-3', props.entryWidth)}
 
       {barKeys.map((key) => renderCell(key, props.barNames[key]))}

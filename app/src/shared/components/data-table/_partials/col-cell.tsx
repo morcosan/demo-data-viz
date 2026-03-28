@@ -34,7 +34,7 @@ export const ColCell = (props: Props) => {
       }}
     >
       <div className={cellClass}>
-        <span className="pt-xs-0 truncate">
+        <span className="pt-xs truncate">
           {flexRender(props.cell.column.columnDef.header, props.cell.getContext())}
         </span>
 
