@@ -47,6 +47,7 @@ export const ChartView = (props: Props) => {
       entryName={indexCol.label}
       entryFn={props.cellFn}
       entryWidth={parseFloat(TOKENS.SPACING['lg-1'].$value)}
+      chartSize="sm"
       className={props.className}
       toolbar={
         <div className="gap-x-xs-3 ml-auto flex items-center">
