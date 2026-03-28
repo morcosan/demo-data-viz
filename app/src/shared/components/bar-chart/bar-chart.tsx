@@ -41,7 +41,27 @@ export const BarChart = (rawProps: BarChartProps) => {
   const { handleKeyDown } = useEvents(hoverRef, tooltipRef)
 
   const barKeys = Object.keys(props.barNames)
-  const entries = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
+  const entries = useMemo(() => {
+    const filtered = props.data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
+
+    if (!sortKey || !sortDir) return filtered
+
+    return filtered.sort((a, b) => {
+      const numA = a[sortKey]
+      const numB = b[sortKey]
+      const strA = String(a[sortKey] ?? '')
+      const strB = String(b[sortKey] ?? '')
+
+      return typeof numA === 'number' && typeof numB === 'number'
+        ? sortDir === 'asc'
+          ? numA - numB
+          : numB - numA
+        : sortDir === 'asc'
+          ? strA.localeCompare(strB)
+          : strB.localeCompare(strA)
+    })
+  }, [props.data.entries, barKeys, sortKey, sortDir])
+
   const minEntryValue = Math.min(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const hasBothSides = minEntryValue < 0 && maxEntryValue > 0
@@ -82,13 +102,11 @@ export const BarChart = (rawProps: BarChartProps) => {
   )
 
   const toggleSort = (key: string) => {
-    if (sortKey === key) {
-      const dir = sortDir === 'desc' ? 'asc' : sortDir === 'asc' ? false : 'desc'
-      setSortDir(dir)
-    } else {
-      setSortKey(key)
-      setSortDir('desc')
-    }
+    const mainDir = key === props.entryKey ? 'asc' : 'desc'
+    const secDir = key === props.entryKey ? 'desc' : 'asc'
+    const otherDir = sortDir === mainDir ? secDir : sortDir === secDir ? false : mainDir
+    setSortKey(key)
+    setSortDir(sortKey === key ? otherDir : mainDir)
   }
 
   return (
