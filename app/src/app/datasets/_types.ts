@@ -21,10 +21,13 @@ export interface DatasetStats {
 export type ViewedDatasets = Record<string, DatasetStats>
 
 export type MobileView = 'listing' | 'details'
+export type DataView = 'table' | 'chart' | 'map'
 
 export const UrlKey = {
   INDEX_KEY: 'indexKey',
   PIVOT_KEY: 'pivotKey',
   PIVOT_QUERY: 'pivotQuery',
+  DATA_VIEW: 'dataView',
+  DATA_QUERY: 'dataQuery',
   PREFIX: '_',
 } as const

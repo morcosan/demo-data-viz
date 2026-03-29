@@ -1,5 +1,12 @@
 export const changelog: ChangelogItem[] = [
   {
+    version: 'v0.5.0',
+    date: '29-03-2026',
+    changes: {
+      tokens: ['Added `chart-bar-*` color tokens'],
+    },
+  },
+  {
     version: 'v0.4.1',
     date: '29-03-2026',
     changes: {

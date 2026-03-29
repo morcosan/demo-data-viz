@@ -1,15 +1,20 @@
 import { useDefaults } from '@ds/core'
 
 interface Props extends ReactProps {
-  type?: 'default' | 'error'
+  type?: 'default' | 'empty' | 'error'
 }
 
 export const EmptyState = (rawProps: Props) => {
   const props = useDefaults(rawProps, { type: 'default' })
+  const emoji = (() => {
+    if (props.type === 'default') return '😉'
+    if (props.type === 'error') return '😢'
+    if (props.type === 'empty') return '🙄'
+  })()
 
   return (
     <div className={cx('gap-xs-3 p-xs-3 flex items-end', props.className)}>
-      <div className="text-size-xxl">{props.type === 'default' ? '😉' : '😢'}</div>
+      <div className="text-size-xxl">{emoji}</div>
 
       <div
         className={cx(
