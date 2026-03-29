@@ -3,7 +3,7 @@
 import { QueryKey, useQuery } from '@app-api'
 import { EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import type { TableCol } from '@app/shared/types/table'
+import { type TableCol } from '@app/shared/types/table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import {
   convertJsonStatToTable,
@@ -14,18 +14,18 @@ import {
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
-import { DatasetModal } from '../_partials/dataset-modal'
-import { DatasetTable } from '../_partials/dataset-table'
-import { useFullscreen } from '../_partials/use-fullscreen'
+import { DataPane, type DatasetPaneProps } from '../_components/data-pane'
+import { useFullscreen } from '../_hooks/use-fullscreen'
+import { DetailsModal } from '../_modals/details-modal'
 import { type Dataset, type ViewedDatasets } from '../_types'
 
 interface Props extends ReactProps {
   onClickBack: () => void
 }
 
-export const DetailsView = (props: Props) => {
+export const DetailsSection = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
@@ -149,11 +149,19 @@ export const DetailsView = (props: Props) => {
         </div>
 
         {/* TABLE */}
-        <DatasetTable data={tableData} className="min-h-0 flex-1" />
+        <DatasetPaneMemo data={tableData} className="min-h-0 flex-1" />
 
         {/* MODAL */}
-        <DatasetModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
+        <DetailsModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
       </LayoutPane>
     </div>
   )
 }
+
+/**********************************************************************************************************************
+ * Memo
+ */
+
+const DatasetPaneMemo = memo(function DatasetPaneMemo(props: DatasetPaneProps) {
+  return <DataPane data={props.data} className="min-h-0 flex-1" />
+})

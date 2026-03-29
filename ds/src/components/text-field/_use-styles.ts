@@ -62,8 +62,7 @@ export const useStyles = (props: TextFieldProps, isNoop: boolean) => {
     ...CSS_A11Y_OUTLINE_PROXY,
     position: 'relative',
     zIndex: 0,
-    display: 'inline-flex',
-    width: '100%',
+    display: 'flex',
     alignItems: 'stretch',
     height: props.multiline ? 'unset' : tokens.minHeight,
     minHeight: tokens.minHeight,
@@ -101,13 +100,7 @@ export const useStyles = (props: TextFieldProps, isNoop: boolean) => {
     minHeight: '100%',
     maxHeight: '100%',
     padding: `${tokens.textPaddingY} ${tokens.textPaddingX}`,
-    paddingTop: (() => {
-      // The text inside doesn't look centered with the new font
-      if (props.size === 'sm') return `calc(${tokens.textPaddingY} + 3px)`
-      if (props.size === 'md') return `calc(${tokens.textPaddingY} + 2px)`
-      if (props.size === 'lg') return `calc(${tokens.textPaddingY} + 2px)`
-      if (props.size === 'xl') return `calc(${tokens.textPaddingY} + 2px)`
-    })(),
+    paddingTop: `calc(${tokens.textPaddingY} + 2px)`, // The text inside doesn't look centered with the new font
     borderRadius: tokens.borderRadius,
     background: 'transparent',
     color: $color['text-default'],

@@ -62,9 +62,10 @@ const defineArgs = <C>(args: ArgsConfig<C>) => {
   )
   Object.entries(props || {}).forEach(([key, value]: [string, unknown]) => {
     const cKey = key as keyof JsxProps<C>
+    const isText = typeof value === 'string'
     argTypes[key] = defineArgType({
       header: 'Props',
-      control: inlineRadios?.includes(cKey) ? 'inline-radio' : undefined,
+      control: inlineRadios?.includes(cKey) ? 'inline-radio' : isText ? 'text' : undefined,
       value: clearDefaultsKeys.includes(cKey) ? undefined : value,
     })
   })

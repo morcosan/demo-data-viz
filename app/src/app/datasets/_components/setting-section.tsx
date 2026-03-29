@@ -2,7 +2,7 @@ interface Props extends ReactProps {
   header: string
 }
 
-export const SettingList = (props: Props) => {
+export const SettingSection = (props: Props) => {
   const headerClass = cx(
     // Header
     'mb-xs-3 pb-xs-1 relative',

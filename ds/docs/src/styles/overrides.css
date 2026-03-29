@@ -1,4 +1,5 @@
 /* Disable padding in autodocs */
+.sbdocs-preview .docs-story,
 .sbdocs-preview .docs-story > div {
   padding: 0 !important;
 }
