@@ -48,6 +48,7 @@ export const SelectField = (props: SelectFieldProps) => {
       root: css`
         ${cssField.styles}
       `,
+      input: props.clearable ? 'clearable' : undefined,
       dropdown: css`
         ${cssDropdown.styles}
       `,
@@ -83,11 +84,15 @@ const cssField = css`
     border: 1px solid var(--ds-color-border-default);
     border-radius: var(--ds-radius-sm);
     background-color: var(--ds-color-bg-field);
-    padding-right: var(--ds-spacing-sm-6);
+    padding-right: var(--ds-spacing-sm-5);
     padding-left: var(--ds-spacing-xs-4);
     pointer-events: auto;
     color: var(--ds-color-text-default);
     text-overflow: ellipsis;
+
+    &:not(.clearable) {
+      padding-right: var(--ds-spacing-xs-8);
+    }
 
     &:focus {
       border: 1px solid var(--ds-color-border-active);

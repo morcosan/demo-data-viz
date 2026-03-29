@@ -2,8 +2,8 @@ import { useTranslation } from '@app-i18n'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
 import { type JsonStatConst } from '@app/shared/utils/json-stat/index'
 import { Modal } from '@ds/core'
+import { SettingSection } from '../_components/setting-section'
 import { type Dataset } from '../_types'
-import { SettingList } from './setting-list'
 
 interface Props {
   opened: boolean
@@ -11,7 +11,7 @@ interface Props {
   onClose?: () => void
 }
 
-export const DatasetModal = (props: Props) => {
+export const DetailsModal = (props: Props) => {
   const { t } = useTranslation()
   const { dataset } = props
 
@@ -19,7 +19,7 @@ export const DatasetModal = (props: Props) => {
   return (
     <Modal opened={props.opened} title={t('dataViz.label.datasetDetails')} width="sm" noFooter onClose={props.onClose}>
       {/* METADATA */}
-      <SettingList header={t('dataViz.label.headerMetadata')}>
+      <SettingSection header={t('dataViz.label.headerMetadata')}>
         <div>
           <dt>{t('core.label.dataSize')}</dt>
           <dd>
@@ -43,18 +43,18 @@ export const DatasetModal = (props: Props) => {
           <dt>{t('core.label.datasetId')}</dt>
           <dd>{dataset.id}</dd>
         </div>
-      </SettingList>
+      </SettingSection>
 
       {/* CONSTANTS */}
       {dataset.constants.length > 0 && (
-        <SettingList header={t('dataViz.label.headerConstants')} className="mt-sm-7">
+        <SettingSection header={t('dataViz.label.headerConstants')} className="mt-sm-7">
           {dataset.constants.map((constant: JsonStatConst) => (
             <div key={constant.key}>
               <dt>{constant.label}</dt>
               <dd>{constant.value}</dd>
             </div>
           ))}
-        </SettingList>
+        </SettingSection>
       )}
     </Modal>
   )

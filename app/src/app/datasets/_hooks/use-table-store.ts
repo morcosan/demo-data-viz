@@ -1,6 +1,7 @@
 import { EurostatConfig, type JsonStatData } from '@app/shared/utils/json-stat'
 import { deleteUrlParam, getUrlParam, getUrlParamArray, setUrlParam } from '@app/shared/utils/url-query'
 import { create } from 'zustand'
+import { UrlKey } from '../_types'
 
 interface TableStore {
   indexKey: string
@@ -93,11 +94,4 @@ const computePivotQuery = (pivotKey: string) => {
   return pivotKey === EurostatConfig.TIME_KEY ? timeQuery : []
 }
 
-const UrlKey = {
-  INDEX_KEY: 'indexKey',
-  PIVOT_KEY: 'pivotKey',
-  PIVOT_QUERY: 'pivotQuery',
-  PREFIX: '_',
-} as const
-
-export { UrlKey, useTableStore }
+export { useTableStore }

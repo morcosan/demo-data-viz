@@ -1,5 +1,12 @@
 export const changelog: ChangelogItem[] = [
   {
+    version: 'v0.4.1',
+    date: '29-03-2026',
+    changes: {
+      components: ['Fixed width for `TextField` component'],
+    },
+  },
+  {
     version: 'v0.4.0',
     date: '20-03-2026',
     changes: {

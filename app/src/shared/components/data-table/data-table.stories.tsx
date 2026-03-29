@@ -10,7 +10,7 @@ import {
   loremTrue,
 } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { DataTable } from './data-table'
+import { DataTable, type DataTableProps } from './data-table'
 
 const cols: TableCol[] = loremArray(4, 50).map((_, index: number) => ({
   key: String(index),
@@ -23,9 +23,6 @@ const MIN_MAX = 1_000_000_000
 const meta: Meta = {
   title: 'Components / DataTable',
   ...defineMeta(DataTable, {
-    slots: {
-      toolbar: 'Toolbar slot',
-    },
     props: {
       data: {
         cols,
@@ -50,13 +47,17 @@ const meta: Meta = {
           )
         }),
       },
-      cellFn: undefined,
+      cellFn: '' as any,
+      query: '',
       loading: false,
       sticky: false,
       className: '',
       style: { height: '600px' },
     },
-    clearDefaults: ['data'],
+    clearDefaults: ['data', 'cellFn'],
+    render: (props: DataTableProps) => {
+      return <DataTable {...props} cellFn={props.cellFn ? eval(String(props.cellFn)) : undefined} />
+    },
   }),
 }
 

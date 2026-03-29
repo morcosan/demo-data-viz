@@ -1,7 +1,7 @@
 'use client'
 
-import { ErrorBoundary } from '@app-components'
 import { useDefaults, useViewportService } from '@ds/core'
+import { ErrorBoundary } from '../error-boundary/error-boundary'
 import { DesktopNav } from './_partials/desktop-nav'
 import { MobileNav } from './_partials/mobile-nav'
 import { type AppLogo, type NavMenu } from './types'

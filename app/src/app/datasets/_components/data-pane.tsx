@@ -1,19 +1,21 @@
 'use client'
 
-import { DataTable, TextHighlight } from '@app-components'
+import { TextHighlight } from '@app-components'
 import { useCountries } from '@app-i18n'
 import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useCallback, useEffect, useMemo } from 'react'
-import { UrlKey, useTableStore } from '../_table-store'
-import { TableToolbar } from './table-toolbar'
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { useTableStore } from '../_hooks/use-table-store'
+import { UrlKey } from '../_types'
+import { DataToolbar } from './data-toolbar'
+import { TableView } from './data-views/table-view'
 
-interface Props extends ReactProps {
+export interface DatasetPaneProps extends ReactProps {
   data: JsonStatData
 }
 
-export const DatasetTable = (props: Props) => {
+export const DataPane = (props: DatasetPaneProps) => {
   const { getCountryCode } = useCountries()
   const searchParams = useSearchParams()
   const indexKey = useTableStore((s) => s.indexKey)
@@ -21,6 +23,7 @@ export const DatasetTable = (props: Props) => {
   const filterByCol = useTableStore((s) => s.filterByCol)
   const pivotQuery = useTableStore((s) => s.pivotQuery)
   const initTableStore = useTableStore((s) => s.initTableStore)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const pivotedData = useMemo(
     () => pivotJsonStatTable(props.data, { indexKey, pivotKey, filterByCol }),
@@ -34,14 +37,22 @@ export const DatasetTable = (props: Props) => {
     return pivotKey && pivotQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
   }, [pivotedData, pivotKey, pivotQuery, isColVisible])
 
-  const cellFn = (value: string, query: string): ReactNode => {
+  const cellFn = (value: string, query: string, flip?: boolean): ReactNode => {
     const flag = getCountryCode(value)
-    return (
-      <>
-        {flag && <span className={`fi fi-${flag} mr-xs-2 shadow-xs`} />}
-        {query ? <TextHighlight text={value} query={query} /> : value}
-      </>
+    const text = query ? <TextHighlight text={value} query={query} /> : value
+    return flag ? (
+      <div className="flex items-center leading-1">
+        {flip && text}
+        {flag && <span className={cx(`fi fi-${flag} mb-xs-0 shadow-xs`, flip ? 'ml-xs-2' : 'mr-xs-2')} />}
+        {!flip && text}
+      </div>
+    ) : (
+      <span title={value}>{text}</span>
     )
+  }
+
+  const onChangeQuery = (query: string) => {
+    setSearchQuery(query)
   }
 
   useEffect(() => {
@@ -56,12 +67,15 @@ export const DatasetTable = (props: Props) => {
   }, [searchParams])
 
   return (
-    <DataTable
-      data={visibleData}
-      sticky={Boolean(indexKey && pivotKey)}
-      cellFn={cellFn}
-      toolbar={<TableToolbar data={props.data} />}
-      className={props.className}
-    />
+    <div
+      className={cx(
+        'bg-color-bg-card border-color-border-subtle flex max-w-full flex-col rounded-md border',
+        props.className,
+      )}
+    >
+      <DataToolbar data={props.data} query={searchQuery} onChangeQuery={onChangeQuery} />
+
+      <TableView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+    </div>
   )
 }
