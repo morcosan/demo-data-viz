@@ -11,15 +11,17 @@ import {
   JSON_STAT_VALUE_KEY,
   type JsonStatData,
 } from '@app/shared/utils/json-stat'
+import { getUrlParam, setUrlParam } from '@app/shared/utils/url-query'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { memo, useEffect, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { DataPane, type DatasetPaneProps } from '../_components/data-pane'
+import { ViewToggle } from '../_components/view-toggle'
 import { useFullscreen } from '../_hooks/use-fullscreen'
 import { DetailsModal } from '../_modals/details-modal'
-import { type Dataset, type ViewedDatasets } from '../_types'
+import { type Dataset, type DataView, UrlKey, type ViewedDatasets } from '../_types'
 
 interface Props extends ReactProps {
   onClickBack: () => void
@@ -28,12 +30,14 @@ interface Props extends ReactProps {
 export const DetailsSection = (props: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
+  const DATA_VIEW_VALUES = ['table', 'chart', 'map'] as const satisfies DataView[]
   const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
+  const [dataView, setDataView] = useState<DataView>('table')
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
     queryFn: () => EurostatApi.fetchDataset(idParam),
@@ -65,6 +69,17 @@ export const DetailsSection = (props: Props) => {
     })
   }
 
+  const onChangeDataView = (view: DataView) => {
+    setUrlParam(UrlKey.DATA_VIEW, view)
+    setDataView(view)
+  }
+
+  const loadDataView = () => {
+    const view = getUrlParam(UrlKey.DATA_VIEW) as DataView | null
+    const isValid = view && DATA_VIEW_VALUES.includes(view)
+    isValid ? setDataView(view) : setUrlParam(UrlKey.DATA_VIEW, dataView)
+  }
+
   useEffect(() => {
     setOpenedDetails(false)
     // Show 200ms loading when id changes to avoid UI freeze due to large data
@@ -73,6 +88,7 @@ export const DetailsSection = (props: Props) => {
 
   useEffect(() => {
     dataset && saveViewedDataset(dataset)
+    loadDataView()
   }, [dataset])
 
   if (loading || !tableData || !dataset) {
@@ -146,10 +162,12 @@ export const DetailsSection = (props: Props) => {
             {dataset.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
             <span className="ml-xs-0">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
           </StatsCard>
+
+          <ViewToggle view={dataView} onChange={onChangeDataView} />
         </div>
 
         {/* TABLE */}
-        <DatasetPaneMemo data={tableData} className="min-h-0 flex-1" />
+        <DatasetPaneMemo data={tableData} view={dataView} className="min-h-0 flex-1" />
 
         {/* MODAL */}
         <DetailsModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
@@ -163,5 +181,5 @@ export const DetailsSection = (props: Props) => {
  */
 
 const DatasetPaneMemo = memo(function DatasetPaneMemo(props: DatasetPaneProps) {
-  return <DataPane data={props.data} className="min-h-0 flex-1" />
+  return <DataPane data={props.data} view={props.view} className="min-h-0 flex-1" />
 })

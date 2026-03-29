@@ -12,6 +12,7 @@ const meta: Meta = {
       type: 'default',
       className: '',
     },
+    inlineRadios: ['type'],
   }),
 }
 

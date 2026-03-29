@@ -75,7 +75,10 @@
       "headerConstants": "Coverage",
       "headerFiltersModal1": "Table config",
       "headerFiltersModal2": "Filters ({count})",
-      "headerMetadata": "Metadata"
+      "headerMetadata": "Metadata",
+      "viewChart": "Chart",
+      "viewMap": "Map",
+      "viewTable": "Table"
     },
     "notice": {
       "columnQuery": "You can use ' OR ' operator to query multiple values"
@@ -85,7 +88,9 @@
       "fetchDatasets": "Failed to load datasets",
       "noData": "Nothing to display",
       "noDataForFilters": "Check your filters!",
-      "noDatasetSelected": "Select a dataset!"
+      "noDatasetSelected": "Select a dataset!",
+      "noIndexColumn": "Select a column to filter by!",
+      "noMapForDataset": "No map for this dataset"
     }
   }
 }

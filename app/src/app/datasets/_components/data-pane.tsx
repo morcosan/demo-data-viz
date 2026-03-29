@@ -4,15 +4,19 @@ import { TextHighlight } from '@app-components'
 import { useCountries } from '@app-i18n'
 import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
+import { getUrlParam, setUrlParam } from '@app/shared/utils/url-query'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTableStore } from '../_hooks/use-table-store'
-import { UrlKey } from '../_types'
+import { type DataView, UrlKey } from '../_types'
 import { DataToolbar } from './data-toolbar'
+import { ChartView } from './data-views/chart-view'
+import { MapView } from './data-views/map-view'
 import { TableView } from './data-views/table-view'
 
 export interface DatasetPaneProps extends ReactProps {
   data: JsonStatData
+  view: DataView
 }
 
 export const DataPane = (props: DatasetPaneProps) => {
@@ -37,6 +41,13 @@ export const DataPane = (props: DatasetPaneProps) => {
     return pivotKey && pivotQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
   }, [pivotedData, pivotKey, pivotQuery, isColVisible])
 
+  const chartData = useMemo(() => {
+    return {
+      ...visibleData,
+      cols: pivotKey ? [...visibleData.cols, props.data.cols.find((col) => col.key === pivotKey)!] : visibleData.cols,
+    }
+  }, [visibleData, pivotKey, props.data])
+
   const cellFn = (value: string, query: string, flip?: boolean): ReactNode => {
     const flag = getCountryCode(value)
     const text = query ? <TextHighlight text={value} query={query} /> : value
@@ -52,17 +63,26 @@ export const DataPane = (props: DatasetPaneProps) => {
   }
 
   const onChangeQuery = (query: string) => {
+    setUrlParam(UrlKey.DATA_QUERY, query)
+    setSearchQuery(query)
+  }
+
+  const loadSearchQuery = (fallback?: string) => {
+    const query = getUrlParam(UrlKey.DATA_QUERY)?.trim() || fallback || ''
+    setUrlParam(UrlKey.DATA_QUERY, query)
     setSearchQuery(query)
   }
 
   useEffect(() => {
     initTableStore(props.data)
+    loadSearchQuery()
   }, [props.data])
 
   useEffect(() => {
     // Reset all filters when reopening the same dataset
     if (!searchParams.has(UrlKey.INDEX_KEY)) {
       initTableStore(props.data)
+      loadSearchQuery(searchQuery)
     }
   }, [searchParams])
 
@@ -75,7 +95,15 @@ export const DataPane = (props: DatasetPaneProps) => {
     >
       <DataToolbar data={props.data} query={searchQuery} onChangeQuery={onChangeQuery} />
 
-      <TableView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+      {props.view === 'table' && (
+        <TableView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+      )}
+      {props.view === 'chart' && (
+        <ChartView data={chartData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+      )}
+      {props.view === 'map' && (
+        <MapView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+      )}
     </div>
   )
 }

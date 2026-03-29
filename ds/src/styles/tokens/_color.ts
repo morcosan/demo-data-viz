@@ -149,4 +149,7 @@ export const TOKENS__COLOR = {
 
   'modal-overlay-subtle': { $ref: { light: 'black-alpha-7', dark: 'black-alpha-6' } },
   'modal-overlay-strong': { $ref: { light: 'black-alpha-9', dark: 'black-alpha-10' } },
+
+  'chart-bar-default': { $ref: { light: 'grey-12', dark: 'grey-10' } },
+  'chart-bar-hover': { $ref: { light: 'grey-14', dark: 'grey-8' } },
 } as const satisfies DesignTokenGroup<string>

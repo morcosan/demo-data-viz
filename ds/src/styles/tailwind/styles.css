@@ -1,5 +1,20 @@
 @import 'tailwindcss';
 
+/* Disable defaults in v4 */
+@theme {
+  --blur-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --color-*: initial;
+  --font-family-*: initial;
+  --font-size-*: initial;
+  --font-weight-*: initial;
+  --leading-*: initial;
+  --breakpoint-*: initial;
+  --spacing-*: initial;
+  --z-index-*: initial;
+}
+
 @layer utilities {
   .flex-center {
     display: flex;
