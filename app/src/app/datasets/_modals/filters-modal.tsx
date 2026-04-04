@@ -156,15 +156,17 @@ const PivotQueryMemo = memo(function PivotQueryMemo(props: ReactProps<PivotQuery
     setQuery(pivotQueries.join(QueryOperator.JOIN))
   }
 
-  const handleQueryChange = debounce((value: string) => {
-    setQuery(value)
-    setPivotQueries(
-      value
-        .split(QueryOperator.SPLIT)
-        .map((v) => v.trim().toLowerCase())
-        .filter(Boolean),
-    )
-  }, 300)
+  const handleQueryChange = useMemo(() => {
+    return debounce((value: string) => {
+      setQuery(value)
+      setPivotQueries(
+        value
+          .split(QueryOperator.SPLIT)
+          .map((v) => v.trim().toLowerCase())
+          .filter(Boolean),
+      )
+    }, 300)
+  }, [])
 
   const handleQueryClear = () => {
     setQuery('')
