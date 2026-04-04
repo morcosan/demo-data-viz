@@ -20,9 +20,11 @@ interface Props extends BarChartProps {
 export const ChartCanvas = (props: Props) => {
   const { entries, barKeys } = props
   const { isViewportMinSM } = useViewportService()
-  const { $fontSize } = useThemeService()
+  const { $color, $fontSize } = useThemeService()
   const tooltipId = useId()
   const isTooltipVisible = props.isFocused || props.isHovered
+
+  const axisColor = $color['text-placeholder']
 
   const minEntryValue = Math.min(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
@@ -81,11 +83,13 @@ export const ChartCanvas = (props: Props) => {
   const chartHeight = entries.length * (entrySize + entryGap) - entryGap + chartPadding + xAxisHeight
 
   const queryIndexes = useMemo(() => {
-    const lcQuery = props.query!.trim().toLowerCase()
+    const lcQueries = props.queries?.map((q) => q.trim().toLowerCase()).filter(Boolean) ?? []
     return entries.reduce<number[]>((acc, entry, index) => {
-      return !lcQuery || String(entry[props.entryKey]).toLowerCase().includes(lcQuery) ? [...acc, index] : acc
+      const entryValue = String(entry[props.entryKey]).toLowerCase()
+      const matches = lcQueries.length === 0 || lcQueries.some((query) => entryValue.includes(query))
+      return matches ? [...acc, index] : acc
     }, [])
-  }, [entries, props.entryKey, props.query])
+  }, [entries, props.entryKey, props.queries])
 
   const getQueryClass = (index: number | string) => {
     const isMatch = queryIndexes.includes(parseInt(String(index)))
@@ -95,9 +99,12 @@ export const ChartCanvas = (props: Props) => {
   const entryLabelFn = useCallback(
     (value?: string) => {
       value = value || ''
-      return props.entryFn ? props.entryFn(value, props.query!) : <TextHighlight text={value} query={props.query!} />
+      const lcValue = value.toLowerCase()
+      const query = props.queries?.find((query) => lcValue.includes(query.toLowerCase())) || ''
+
+      return props.entryFn ? props.entryFn(value, query) : <TextHighlight text={value} query={query} />
     },
-    [props.entryFn, props.query],
+    [props.entryFn, props.queries],
   )
 
   return (
@@ -151,14 +158,17 @@ export const ChartCanvas = (props: Props) => {
       <XAxis
         type="number"
         padding={isViewportMinSM ? { left: barMarginLeft, right: barMarginRight } : undefined}
-        tick={{ fontSize: $fontSize['sm'] }}
+        axisLine={{ stroke: axisColor }}
+        tickLine={{ stroke: axisColor }}
+        tick={{ fontSize: $fontSize['sm'], fill: axisColor }}
         tickFormatter={(value) => formatNumber(value)}
       />
-      {hasBothSides && <ReferenceLine x={0} stroke="currentColor" strokeDasharray="3 3" />}
+      {hasBothSides && <ReferenceLine x={0} stroke={axisColor} strokeDasharray="3 3" />}
       <YAxis
         type="category"
         dataKey={props.entryKey}
         width={props.entryWidth}
+        axisLine={{ stroke: axisColor }}
         interval={0}
         tickLine={false}
         tickSize={0}

@@ -53,12 +53,12 @@
   },
   "dataViz": {
     "action": {
-      "clearColumnQuery": "Clear column query",
+      "clearQuery": "Clear query",
+      "searchData": "Find data (use '{operator}' to query multiple values)",
       "viewDetails": "View details"
     },
     "label": {
-      "columnQuery": "Split column query",
-      "dataTableSearch": "Filter dataset rows",
+      "pivotQuery": "Split column query",
       "datasetDetails": "Dataset details",
       "datasetResults": "{total} datasets",
       "datasetSearch": "Find datasets by title",
@@ -81,7 +81,7 @@
       "viewTable": "Table"
     },
     "notice": {
-      "columnQuery": "You can use ' OR ' operator to query multiple values"
+      "pivotQuery": "You can use '{operator}' operator to query multiple values"
     },
     "error": {
       "fetchDataset": "Failed to load dataset",

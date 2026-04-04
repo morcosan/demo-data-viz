@@ -5,7 +5,7 @@ import { type ReactNode } from 'react'
 
 interface Props extends ReactProps {
   data: TableData
-  query: string
+  queries: string[]
   cellFn: (value: string, query: string) => ReactNode
 }
 

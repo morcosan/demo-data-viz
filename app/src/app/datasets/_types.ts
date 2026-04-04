@@ -26,8 +26,8 @@ export type DataView = 'table' | 'chart' | 'map'
 export const UrlKey = {
   INDEX_KEY: 'indexKey',
   PIVOT_KEY: 'pivotKey',
-  PIVOT_QUERY: 'pivotQuery',
+  PIVOT_QUERIES: 'pivotQueries',
   DATA_VIEW: 'dataView',
-  DATA_QUERY: 'dataQuery',
+  DATA_QUERIES: 'dataQueries',
   PREFIX: '_',
 } as const

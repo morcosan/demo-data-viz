@@ -48,7 +48,7 @@ const meta: Meta = {
         }),
       },
       cellFn: '' as any,
-      query: '',
+      queries: [],
       loading: false,
       sticky: false,
       className: '',

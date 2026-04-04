@@ -5,7 +5,7 @@ import { useTableStore } from '../../_hooks/use-table-store'
 
 interface Props extends ReactProps {
   data: TableData
-  query: string
+  queries: string[]
   cellFn: (value: string, query: string) => ReactNode
 }
 
@@ -16,7 +16,7 @@ export const TableView = (props: Props) => {
   return (
     <DataTable
       data={props.data}
-      query={props.query}
+      queries={props.queries}
       cellFn={props.cellFn}
       sticky={Boolean(indexKey && pivotKey)}
       className={props.className}

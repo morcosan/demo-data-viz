@@ -9,7 +9,7 @@ import { useTableStore } from '../../_hooks/use-table-store'
 
 interface Props extends ReactProps {
   data: TableData
-  query: string
+  queries: string[]
   cellFn: (value: string, query: string, flip?: boolean) => ReactNode
 }
 
@@ -19,10 +19,11 @@ export const ChartView = (props: Props) => {
   const pivotKey = useTableStore((s) => s.pivotKey)
   const [colKey, setColKey] = useState<string | null>(null)
   const VALUE_KEY = 'value'
+  const VALUE_LABEL = t('core.label.value')
   const indexCol = props.data.cols.find((col) => col.key === indexKey)
   const pivotCol = props.data.cols.find((col) => col.key === pivotKey)
   const barCols = props.data.cols.filter((col) => col.key !== indexKey && col.key !== pivotKey)
-  const barNames = { [VALUE_KEY]: pivotCol ? pivotCol.label : t('core.label.value') }
+  const barNames = { [VALUE_KEY]: VALUE_LABEL }
   const chartData = useMemo(
     (): BarChartData => ({
       entries: props.data.rows.map((row) => ({
@@ -62,11 +63,11 @@ export const ChartView = (props: Props) => {
       chartSize="sm"
       sortKey={VALUE_KEY}
       sortDir="desc"
-      query={props.query}
+      queries={props.queries}
       toolbar={
         <div className="gap-x-xs-3 min-w-md-7 flex flex-1 items-center justify-end">
           <label htmlFor="chart-col-key" className="pt-xs-0">
-            {barNames[VALUE_KEY]}:
+            {pivotCol ? pivotCol.label : VALUE_LABEL}:
           </label>
           <SelectField id="chart-col-key" options={colOptions} value={colKey} onChange={setColKey} />
         </div>
