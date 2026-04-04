@@ -4,7 +4,7 @@ import { useTranslation } from '@app-i18n'
 import { type TableCell, type TableData, type TableRow } from '@app/shared/types/table'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
 import { useDefaults, wait } from '@ds/core'
-import { type CellContext } from '@tanstack/react-table'
+import { type Cell, type CellContext } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { EmptyState } from '../empty-state/empty-state'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
@@ -17,13 +17,13 @@ import { computeColSize, formatCellValue } from './_partials/utils'
 export interface DataTableProps extends ReactProps {
   data: TableData
   cellFn?: (value: string, query: string) => ReactNode
-  query?: string
+  queries?: string[]
   loading?: boolean
   sticky?: boolean
 }
 
 export const DataTable = (rawProps: DataTableProps) => {
-  const props = useDefaults(rawProps, { query: '' })
+  const props = useDefaults(rawProps, { queries: [] })
   const { t } = useTranslation()
   const { cellFn } = props
   const [isLoading, setIsLoading] = useState(false)
@@ -39,17 +39,18 @@ export const DataTable = (rawProps: DataTableProps) => {
       const value = info.getValue() ?? ''
       if (value === '') return <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
 
-      const query = props.query!.trim() // Need to avoid calling TextHighlight for mils of rows
       const strValue = formatCellValue(value, columns[info.column.getIndex()])
+      const lcQueries = props.queries!.map((query) => query.trim().toLowerCase()).filter(Boolean)
+      const query = lcQueries.find((lcQuery) => strValue.toLowerCase().includes(lcQuery)) || ''
 
       return cellFn ? cellFn(strValue, query) : query ? <TextHighlight text={strValue} query={query} /> : strValue
     },
-    [columns, cellFn, props.query, t],
+    [columns, cellFn, props.queries, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,
     rows: props.data.rows,
-    filter: props.query!,
+    queries: props.queries!,
     cellFn: renderCell,
   })
 
@@ -134,7 +135,7 @@ export const DataTable = (rawProps: DataTableProps) => {
                 )}
                 {/* CONTENT */}
                 {vRowItems.map((vItem: VirtualItem) => {
-                  const cells = tableRows[vItem.index].getVisibleCells()
+                  const cells = tableRows[vItem.index].getVisibleCells() as Cell<TableRow, TableCell>[]
                   if (!cells) return null
                   return (
                     <tr key={tableRows[vItem.index].id}>

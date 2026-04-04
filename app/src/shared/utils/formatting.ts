@@ -1,5 +1,10 @@
 import i18n from 'i18next'
 
+const QueryOperator = {
+  SPLIT: '|',
+  JOIN: ' | ',
+} as const
+
 const formatNumber = (value?: number, decimals?: number): string => {
   return value !== undefined
     ? value.toLocaleString(i18n.language, {
@@ -55,4 +60,4 @@ const MONO_WIDTH_BY_CHAR = ((): Record<string, number> => {
   return { default: parseFloat(ctx.measureText('a').width.toFixed(1)) }
 })()
 
-export { computeTextWidth, formatDate, formatNumber }
+export { QueryOperator, computeTextWidth, formatDate, formatNumber }

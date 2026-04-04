@@ -1,16 +1,17 @@
 import { SearchField, SelectField, type SelectOption, Tooltip } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { FilterSvg } from '@app/shared/assets'
+import { QueryOperator } from '@app/shared/utils/formatting'
 import { type JsonStatData } from '@app/shared/utils/json-stat'
 import { Button, CloseSvg, IconButton, useViewportService } from '@ds/core'
-import { memo, useCallback, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTableStore } from '../_hooks/use-table-store'
 import { FiltersModal } from '../_modals/filters-modal'
 
 interface Props {
   data: JsonStatData
-  query: string
-  onChangeQuery: (value: string) => void
+  queries: string[]
+  onChangeQueries: (value: string[]) => void
 }
 
 export const DataToolbar = (props: Props) => {
@@ -24,6 +25,8 @@ export const DataToolbar = (props: Props) => {
   const colKeys = useMemo(() => [...Object.keys(cellsByCol), ''], [cellsByCol])
   const filterCount = (indexKey ? colKeys.length - (pivotKey ? 3 : 2) : 0) + (pivotKey ? 1 : 0)
   const getColLabel = useCallback((key: string) => cols.find((col) => col.key === key)?.label || key, [cols])
+  const [query, setQuery] = useState('')
+  const isQueryDirty = useRef(false)
 
   const indexOptions = useMemo((): SelectOption[] => {
     return colKeys.map((key) => ({
@@ -40,6 +43,28 @@ export const DataToolbar = (props: Props) => {
       disabled: Boolean(key && key === indexKey),
     }))
   }, [colKeys, indexKey, t, getColLabel])
+
+  const handleQueryChange = (value: string) => {
+    isQueryDirty.current = true
+    setQuery(value)
+    props.onChangeQueries(
+      value
+        .split(QueryOperator.SPLIT)
+        .map((v) => v.trim().toLowerCase())
+        .filter(Boolean),
+    )
+  }
+
+  const resetQuery = () => {
+    isQueryDirty.current = false
+    setQuery(props.queries.join(QueryOperator.JOIN))
+  }
+
+  useEffect(() => {
+    if (!isQueryDirty.current) {
+      setQuery(props.queries.join(QueryOperator.JOIN))
+    }
+  }, [props.queries])
 
   return (
     <div
@@ -71,10 +96,11 @@ export const DataToolbar = (props: Props) => {
 
       <SearchField
         id="dataset-search"
-        value={props.query}
-        label={t('dataViz.label.dataTableSearch')}
+        value={query}
+        label={t('dataViz.action.searchData', { operator: QueryOperator.JOIN })}
         className="lg:max-w-lg-9 w-full"
-        onChange={props.onChangeQuery}
+        onChange={handleQueryChange}
+        onBlur={resetQuery}
       />
 
       {/* MODAL */}

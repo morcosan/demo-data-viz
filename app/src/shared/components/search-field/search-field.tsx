@@ -12,6 +12,7 @@ export interface SearchFieldProps extends ReactProps {
   label: string
   disabled?: boolean
   onChange: (value: string) => void
+  onBlur?: () => void
 }
 
 export const SearchField = (props: SearchFieldProps) => {
@@ -59,6 +60,7 @@ export const SearchField = (props: SearchFieldProps) => {
         className={props.className}
         style={props.style}
         onChange={handleQueryChange}
+        onBlur={props.onBlur}
       />
     </Tooltip>
   )

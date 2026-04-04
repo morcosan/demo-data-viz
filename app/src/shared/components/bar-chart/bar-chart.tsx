@@ -17,7 +17,7 @@ export const BarChart = (rawProps: BarChartProps) => {
   const props = useDefaults(rawProps, {
     entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
     chartSize: 'md',
-    query: '',
+    queries: [],
   })
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
@@ -74,7 +74,7 @@ export const BarChart = (rawProps: BarChartProps) => {
           />
         ) : (
           <div className="flex-center flex h-full">
-            <EmptyState type="empty">{t('dataViz.error.noData')}</EmptyState>
+            <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>
           </div>
         )}
       </div>

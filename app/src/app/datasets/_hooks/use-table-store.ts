@@ -4,22 +4,24 @@ import { create } from 'zustand'
 import { UrlKey } from '../_types'
 
 interface TableStore {
+  ready: boolean
   indexKey: string
   pivotKey: string
-  pivotQuery: string[]
+  pivotQueries: string[]
   filterByCol: Record<string, string>
   initTableStore: (data: JsonStatData) => Promise<void>
-  resetColQuery: (data: JsonStatData) => Promise<void>
+  resetPivotQueries: (data: JsonStatData) => Promise<void>
   setIndexKey: (value: string | null) => void
   setPivotKey: (value: string | null) => void
-  setPivotQuery: (value: string[]) => void
+  setPivotQueries: (value: string[]) => void
   setFilterByCol: (value: string | null, key: string) => void
 }
 
 const useTableStore = create<TableStore>((set) => ({
+  ready: false,
   indexKey: '',
   pivotKey: '',
-  pivotQuery: [],
+  pivotQueries: [],
   filterByCol: {},
 
   initTableStore: async (data: JsonStatData) => {
@@ -34,7 +36,7 @@ const useTableStore = create<TableStore>((set) => ({
     indexKey = indexKey !== null && (indexKey === '' || data.cellsByCol[indexKey]) ? indexKey : defaultIndexKey
     pivotKey = pivotKey !== null && (pivotKey === '' || data.cellsByCol[pivotKey]) ? pivotKey : defaultPivotKey
 
-    const pivotQuery = getUrlParamArray(UrlKey.PIVOT_QUERY) || computePivotQuery(pivotKey)
+    const pivotQueries = getUrlParamArray(UrlKey.PIVOT_QUERIES) || computePivotQueries(pivotKey)
 
     const getDefaultFilter = (key: string) => {
       const defaultCode = DEFAULT_FILTERS[key as keyof typeof DEFAULT_FILTERS]
@@ -54,18 +56,19 @@ const useTableStore = create<TableStore>((set) => ({
 
     setUrlParam(UrlKey.INDEX_KEY, indexKey)
     setUrlParam(UrlKey.PIVOT_KEY, pivotKey)
-    setUrlParam(UrlKey.PIVOT_QUERY, pivotQuery)
+    setUrlParam(UrlKey.PIVOT_QUERIES, pivotQueries)
     Object.entries(filterByCol).forEach(([key, value]) => setUrlParam(UrlKey.PREFIX + key, value))
-    set({ indexKey, pivotKey, pivotQuery, filterByCol })
+    set({ indexKey, pivotKey, pivotQueries, filterByCol, ready: true })
   },
 
-  resetColQuery: async (data: JsonStatData) => {
+  resetPivotQueries: async (data: JsonStatData) => {
     if (data.source !== 'eurostat') return
 
     set((state) => {
-      const pivotQuery = getUrlParamArray(UrlKey.PIVOT_QUERY) || computePivotQuery(state.pivotKey)
-      setUrlParam(UrlKey.PIVOT_QUERY, pivotQuery)
-      return { pivotQuery }
+      if (!state.ready) return {}
+      const pivotQueries = getUrlParamArray(UrlKey.PIVOT_QUERIES) || computePivotQueries(state.pivotKey)
+      setUrlParam(UrlKey.PIVOT_QUERIES, pivotQueries)
+      return { pivotQueries }
     })
   },
 
@@ -75,12 +78,12 @@ const useTableStore = create<TableStore>((set) => ({
   },
   setPivotKey: (value: string | null) => {
     setUrlParam(UrlKey.PIVOT_KEY, value || '')
-    deleteUrlParam(UrlKey.PIVOT_QUERY) // Recompute query when changing pivot key
+    deleteUrlParam(UrlKey.PIVOT_QUERIES) // Recompute queries when changing pivot key
     set({ pivotKey: value || '' })
   },
-  setPivotQuery: (value: string[]) => {
-    setUrlParam(UrlKey.PIVOT_QUERY, value)
-    set({ pivotQuery: value })
+  setPivotQueries: (value: string[]) => {
+    setUrlParam(UrlKey.PIVOT_QUERIES, value)
+    set({ pivotQueries: value })
   },
   setFilterByCol: (value: string | null, key: string) => {
     setUrlParam(UrlKey.PREFIX + key, value || '')
@@ -88,7 +91,7 @@ const useTableStore = create<TableStore>((set) => ({
   },
 }))
 
-const computePivotQuery = (pivotKey: string) => {
+const computePivotQueries = (pivotKey: string) => {
   const currentYear = new Date().getFullYear()
   const timeQuery = [String(currentYear - 1), String(currentYear)]
   return pivotKey === EurostatConfig.TIME_KEY ? timeQuery : []

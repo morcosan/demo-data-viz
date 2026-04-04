@@ -11,7 +11,7 @@ export interface BarChartProps extends ReactProps {
   entryFn?: (value: string, query: string) => ReactNode
   entryWidth?: number
   chartSize?: 'sm' | 'md' | 'lg'
-  query?: string
+  queries?: string[]
   sortKey?: string
   sortDir?: 'asc' | 'desc'
   loading?: boolean

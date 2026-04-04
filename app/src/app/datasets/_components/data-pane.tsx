@@ -4,7 +4,7 @@ import { TextHighlight } from '@app-components'
 import { useCountries } from '@app-i18n'
 import { type TableCol } from '@app/shared/types/table'
 import { type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
-import { getUrlParam, setUrlParam } from '@app/shared/utils/url-query'
+import { getUrlParamArray, setUrlParam } from '@app/shared/utils/url-query'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTableStore } from '../_hooks/use-table-store'
@@ -25,21 +25,23 @@ export const DataPane = (props: DatasetPaneProps) => {
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
   const filterByCol = useTableStore((s) => s.filterByCol)
-  const pivotQuery = useTableStore((s) => s.pivotQuery)
+  const pivotQueries = useTableStore((s) => s.pivotQueries)
   const initTableStore = useTableStore((s) => s.initTableStore)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [queries, setQueries] = useState<string[]>([])
 
   const pivotedData = useMemo(
     () => pivotJsonStatTable(props.data, { indexKey, pivotKey, filterByCol }),
     [props.data, indexKey, pivotKey, filterByCol],
   )
   const isColVisible = useCallback(
-    (col: TableCol) => !col.pivoted || pivotQuery.some((keyword) => col.label.toLowerCase().includes(keyword)),
-    [pivotQuery],
+    (col: TableCol) => !col.pivoted || pivotQueries.some((keyword) => col.label.toLowerCase().includes(keyword)),
+    [pivotQueries],
   )
   const visibleData = useMemo(() => {
-    return pivotKey && pivotQuery.length ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) } : pivotedData
-  }, [pivotedData, pivotKey, pivotQuery, isColVisible])
+    return pivotKey && pivotQueries.length
+      ? { ...pivotedData, cols: pivotedData.cols.filter(isColVisible) }
+      : pivotedData
+  }, [pivotedData, pivotKey, pivotQueries, isColVisible])
 
   const chartData = useMemo(() => {
     return {
@@ -62,27 +64,27 @@ export const DataPane = (props: DatasetPaneProps) => {
     )
   }
 
-  const onChangeQuery = (query: string) => {
-    setUrlParam(UrlKey.DATA_QUERY, query)
-    setSearchQuery(query)
+  const onChangeQueries = (value: string[]) => {
+    setUrlParam(UrlKey.DATA_QUERIES, value)
+    setQueries(value)
   }
 
-  const loadSearchQuery = (fallback?: string) => {
-    const query = getUrlParam(UrlKey.DATA_QUERY)?.trim() || fallback || ''
-    setUrlParam(UrlKey.DATA_QUERY, query)
-    setSearchQuery(query)
+  const loadDataQueries = (fallback?: string[]) => {
+    const queries = getUrlParamArray(UrlKey.DATA_QUERIES) || fallback || []
+    setUrlParam(UrlKey.DATA_QUERIES, queries)
+    setQueries(queries)
   }
 
   useEffect(() => {
     initTableStore(props.data)
-    loadSearchQuery()
+    loadDataQueries()
   }, [props.data])
 
   useEffect(() => {
     // Reset all filters when reopening the same dataset
     if (!searchParams.has(UrlKey.INDEX_KEY)) {
       initTableStore(props.data)
-      loadSearchQuery(searchQuery)
+      loadDataQueries(queries)
     }
   }, [searchParams])
 
@@ -93,16 +95,16 @@ export const DataPane = (props: DatasetPaneProps) => {
         props.className,
       )}
     >
-      <DataToolbar data={props.data} query={searchQuery} onChangeQuery={onChangeQuery} />
+      <DataToolbar data={props.data} queries={queries} onChangeQueries={onChangeQueries} />
 
       {props.view === 'table' && (
-        <TableView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+        <TableView data={visibleData} queries={queries} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
       )}
       {props.view === 'chart' && (
-        <ChartView data={chartData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+        <ChartView data={chartData} queries={queries} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
       )}
       {props.view === 'map' && (
-        <MapView data={visibleData} query={searchQuery} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
+        <MapView data={visibleData} queries={queries} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
       )}
     </div>
   )

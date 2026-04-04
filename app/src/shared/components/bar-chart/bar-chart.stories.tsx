@@ -36,7 +36,7 @@ const meta: Meta = {
       entryFn: '' as any,
       entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
       chartSize: 'md',
-      query: '',
+      queries: [],
       sortKey: '',
       sortDir: undefined,
       loading: false,

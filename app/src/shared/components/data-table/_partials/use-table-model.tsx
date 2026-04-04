@@ -6,7 +6,7 @@ import { type ReactNode, useMemo, useState } from 'react'
 interface Props {
   cols: TableCol[]
   rows: TableRow[]
-  filter: string
+  queries: string[]
   cellFn: (info: CellContext<TableRow, TableCell>) => ReactNode
 }
 
@@ -22,12 +22,22 @@ const useTableModel = (props: Props) => {
     }))
   }, [props.cols, props.cellFn])
 
+  const lcQueries = useMemo(
+    () => props.queries.map((query) => query.trim().toLowerCase()).filter(Boolean),
+    [props.queries],
+  )
+
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     columns,
     data: props.rows,
-    state: { sorting, globalFilter: props.filter },
+    state: { sorting, globalFilter: lcQueries },
     getColumnCanGlobalFilter: () => true,
+    globalFilterFn: (row: Row<TableRow>, columnId: string, lcQueries: string[]) => {
+      if (!lcQueries?.length) return true
+      const cellValue = String(row.getValue(columnId) ?? '').toLowerCase()
+      return lcQueries.some((query) => cellValue.includes(query))
+    },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
