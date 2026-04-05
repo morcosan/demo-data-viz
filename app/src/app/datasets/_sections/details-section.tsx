@@ -131,7 +131,7 @@ export const DetailsSection = (props: Props) => {
           <div className="gap-xs-2 ml-auto flex">
             {isViewportMinXL || isViewportMD ? (
               <Button variant="text-default" size="sm" onClick={() => setOpenedDetails(true)}>
-                <PreviewSvg className="h-xs-8 mr-xs-2 -mt-xs-0" />
+                <PreviewSvg className="h-xs-8 mr-xs-2" />
                 {t('dataViz.action.viewDetails')}
               </Button>
             ) : (

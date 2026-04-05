@@ -54,9 +54,9 @@ export const DataPane = (props: DatasetPaneProps) => {
     const flag = getCountryCode(value)
     const text = query ? <TextHighlight text={value} query={query} /> : value
     return flag ? (
-      <div className="flex items-center leading-1">
+      <div className="flex items-center">
         {flip && text}
-        {flag && <span className={cx(`fi fi-${flag} mb-xs-0 shadow-xs`, flip ? 'ml-xs-2' : 'mr-xs-2')} />}
+        {flag && <span className={cx(`fi fi-${flag} shadow-xs`, flip ? 'ml-xs-2' : 'mr-xs-2')} />}
         {!flip && text}
       </div>
     ) : (

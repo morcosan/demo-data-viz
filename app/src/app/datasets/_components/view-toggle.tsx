@@ -23,7 +23,7 @@ export const ViewToggle = (props: Props) => {
         size="sm"
         onClick={() => props.onChange('table')}
       >
-        <TableSvg className="h-xs-6 mr-xs-1 -mt-xs-1" />
+        <TableSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewTable')}
       </Button>
       <Button
@@ -31,7 +31,7 @@ export const ViewToggle = (props: Props) => {
         size="sm"
         onClick={() => props.onChange('chart')}
       >
-        <ChartSvg className="h-xs-6 mr-xs-1 -mt-xs-1" />
+        <ChartSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewChart')}
       </Button>
       <Button
@@ -39,7 +39,7 @@ export const ViewToggle = (props: Props) => {
         size="sm"
         onClick={() => props.onChange('map')}
       >
-        <MapSvg className="h-xs-6 mr-xs-1 -mt-xs-1" />
+        <MapSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewMap')}
       </Button>
     </div>

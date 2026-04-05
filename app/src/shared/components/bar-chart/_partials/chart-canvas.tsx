@@ -143,7 +143,7 @@ export const ChartCanvas = (props: Props) => {
                   x={params.x + params.width + (params.value < 0 ? -barLabelGap : barLabelGap)}
                   y={params.y + params.height / 2}
                   textAnchor={params.value < 0 ? 'end' : 'start'}
-                  dominantBaseline="middle"
+                  dominantBaseline="central"
                   className={cx('text-size-xs fill-color-text-default', getQueryClass(params.index))}
                 >
                   {formatNumber(params.value)}
