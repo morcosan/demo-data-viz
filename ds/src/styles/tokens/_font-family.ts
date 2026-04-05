@@ -1,6 +1,6 @@
 import type { DesignTokenGroup } from './__types'
 
 export const TOKENS__FONT_FAMILY = {
-  sans: { $value: "'Source Sans 3', sans-serif" },
-  mono: { $value: "'Source Code Pro', monospace" },
+  sans: { $value: "'Geist', sans-serif" },
+  mono: { $value: "'Geist Mono', monospace" },
 } as const satisfies DesignTokenGroup<string>

@@ -18,10 +18,7 @@ export const EntryLabel = (props: Props) => {
         )}
       >
         <div
-          className={cx(
-            'text-right leading-1',
-            props.chartSize === 'sm' ? 'text-size-xs truncate' : 'text-size-sm line-clamp-2',
-          )}
+          className={cx('text-right', props.chartSize === 'sm' ? 'text-size-xs truncate' : 'text-size-sm line-clamp-2')}
         >
           {props.label}
         </div>

@@ -100,7 +100,6 @@ export const useStyles = (props: TextFieldProps, isNoop: boolean) => {
     minHeight: '100%',
     maxHeight: '100%',
     padding: `${tokens.textPaddingY} ${tokens.textPaddingX}`,
-    paddingTop: `calc(${tokens.textPaddingY} + 2px)`, // The text inside doesn't look centered with the new font
     borderRadius: tokens.borderRadius,
     background: 'transparent',
     color: $color['text-default'],

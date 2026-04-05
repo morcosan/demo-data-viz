@@ -66,9 +66,7 @@ export const ChartView = (props: Props) => {
       queries={props.queries}
       toolbar={
         <div className="gap-x-xs-3 min-w-md-7 flex flex-1 items-center justify-end">
-          <label htmlFor="chart-col-key" className="pt-xs-0">
-            {pivotCol ? pivotCol.label : VALUE_LABEL}:
-          </label>
+          <label htmlFor="chart-col-key">{pivotCol ? pivotCol.label : VALUE_LABEL}:</label>
           <SelectField id="chart-col-key" options={colOptions} value={colKey} onChange={setColKey} />
         </div>
       }

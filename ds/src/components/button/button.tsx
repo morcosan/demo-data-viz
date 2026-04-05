@@ -45,16 +45,6 @@ export const Button = (rawProps: ButtonProps) => {
     ...cssBaseButton,
     minWidth: 'unset',
     padding: `0 ${tokens.paddingX}`,
-    paddingTop: (() => {
-      // The text inside doesn't look centered with the new font
-      if (!isVItem) {
-        if (props.size === 'xs') return '2px'
-        if (props.size === 'sm') return '2px'
-        if (props.size === 'md') return '2px'
-        if (props.size === 'lg') return '2px'
-      }
-      return ''
-    })(),
     borderRadius: tokens.borderRadius,
     fontSize: tokens.fontSize,
     fontWeight: tokens.fontWeight,

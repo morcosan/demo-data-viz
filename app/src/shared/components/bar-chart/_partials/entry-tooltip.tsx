@@ -17,7 +17,7 @@ export const EntryTooltip = (props: Props) => {
       ref={props.ref}
       id={props.id}
       className={cx(
-        'px-xs-4 py-xs-4 min-w-md-9 rounded-xs',
+        'px-xs-5 py-xs-3 min-w-md-9 rounded-xs',
         'bg-color-bg-card border-color-border-shadow border shadow-sm',
         'text-size-sm',
         !props.visible && 'hidden',
@@ -27,7 +27,7 @@ export const EntryTooltip = (props: Props) => {
         {title}
       </div>
 
-      <div className="gap-xs-2 -mb-xs-0 grid w-full grid-cols-[auto_1fr]">
+      <div className="gap-xs-2 grid w-full grid-cols-[auto_1fr]">
         {props.payload.map((bar, index) => (
           <Fragment key={String(bar.dataKey) + index}>
             <div>{props.barNames[bar.name || '']}:</div>

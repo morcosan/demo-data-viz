@@ -1,5 +1,14 @@
 export const changelog: ChangelogItem[] = [
   {
+    version: 'v0.6.0',
+    date: '05-04-2026',
+    changes: {
+      tokens: ['Added `Geist` font files and updated font-family tokens'],
+      components: ['Adjusted text alignment inside components'],
+      services: ['Updated default font-family for Mantine config'],
+    },
+  },
+  {
     version: 'v0.5.0',
     date: '29-03-2026',
     changes: {
