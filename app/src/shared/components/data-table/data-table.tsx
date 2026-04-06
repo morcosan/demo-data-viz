@@ -3,7 +3,7 @@
 import { useTranslation } from '@app-i18n'
 import { type TableCell, type TableData, type TableRow } from '@app/shared/types/table'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { useDefaults, wait } from '@ds/core'
+import { wait } from '@ds/core'
 import { type Cell, type CellContext } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { EmptyState } from '../empty-state/empty-state'
@@ -22,17 +22,16 @@ export interface DataTableProps extends ReactProps {
   sticky?: boolean
 }
 
-export const DataTable = (rawProps: DataTableProps) => {
-  const props = useDefaults(rawProps, { queries: [] })
+export const DataTable = (props: DataTableProps) => {
+  const { cellFn, className, data, loading, queries = [], sticky, style } = props
   const { t } = useTranslation()
-  const { cellFn } = props
   const [isLoading, setIsLoading] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
   const headerRef = useRef<HTMLTableSectionElement | null>(null)
 
   const columns = useMemo(
-    () => props.data.cols.map((col) => ({ ...col, size: computeColSize(col, props.data.rows) })),
-    [props.data.cols, props.data.rows, computeColSize],
+    () => data.cols.map((col) => ({ ...col, size: computeColSize(col, data.rows) })),
+    [data.cols, data.rows, computeColSize],
   )
   const renderCell = useCallback(
     (info: CellContext<TableRow, TableCell>) => {
@@ -40,17 +39,17 @@ export const DataTable = (rawProps: DataTableProps) => {
       if (value === '') return <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
 
       const strValue = formatCellValue(value, columns[info.column.getIndex()])
-      const lcQueries = props.queries!.map((query) => query.trim().toLowerCase()).filter(Boolean)
+      const lcQueries = queries.map((query) => query.trim().toLowerCase()).filter(Boolean)
       const query = lcQueries.find((lcQuery) => strValue.toLowerCase().includes(lcQuery)) || ''
 
       return cellFn ? cellFn(strValue, query) : query ? <TextHighlight text={strValue} query={query} /> : strValue
     },
-    [columns, cellFn, props.queries, t],
+    [columns, cellFn, queries, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,
-    rows: props.data.rows,
-    queries: props.queries!,
+    rows: data.rows,
+    queries: queries,
     cellFn: renderCell,
   })
 
@@ -63,7 +62,7 @@ export const DataTable = (rawProps: DataTableProps) => {
   const { vRowItems, vColItems, vTotalWidth, vScrollerRef } = virtualizer
   const { vSpaceOnTop, vSpaceOnBottom, vSpaceOnRight } = virtualizer
   const stickyColWidth = tableCols[0]?.column.getSize() ?? 0
-  const vSpaceOnLeft = props.sticky
+  const vSpaceOnLeft = sticky
     ? virtualizer.vSpaceOnLeft - (vColItems[0]?.index === 0 ? 0 : stickyColWidth)
     : virtualizer.vSpaceOnLeft
 
@@ -79,23 +78,23 @@ export const DataTable = (rawProps: DataTableProps) => {
     // Show 200ms loading to avoid UI freeze due to large data
     setIsLoading(true)
     wait(200).then(() => setIsLoading(false))
-  }, [props.data])
+  }, [data])
 
   return (
-    <div ref={rootRef} className={cx('bg-color-bg-card max-w-full', props.className)} style={props.style}>
+    <div ref={rootRef} className={cx('bg-color-bg-card max-w-full', className)} style={style}>
       <div ref={vScrollerRef} className="h-full overflow-auto">
         <table className="min-w-full border-collapse" style={{ width: vTotalWidth }}>
           <thead ref={headerRef} className="z-sticky bg-color-bg-card shadow-below-sm sticky top-0">
             <tr>
               {/* STICKY */}
-              {props.sticky && tableCols.length > 0 && (
+              {sticky && tableCols.length > 0 && (
                 <ColCell key={tableCols[0].id} cell={tableCols[0]} col={columns[0]} width={stickyColWidth} sticky />
               )}
               {/* SPACER */}
               <th style={{ width: vSpaceOnLeft, padding: 0 }} />
               {/* CONTENT */}
               {vColItems
-                .filter((vCol) => vCol.index !== 0 || !props.sticky)
+                .filter((vCol) => vCol.index !== 0 || !sticky)
                 .map((vCol: VirtualItem) => (
                   <ColCell
                     key={tableCols[vCol.index].id}
@@ -109,7 +108,7 @@ export const DataTable = (rawProps: DataTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {isLoading || props.loading ? (
+            {isLoading || loading ? (
               <tr>
                 <td colSpan={vColItems.length + 2} className="relative">
                   <div className="flex-center min-h-lg-0 sticky left-0 flex w-full" style={spinnerStyle}>
@@ -140,14 +139,14 @@ export const DataTable = (rawProps: DataTableProps) => {
                   return (
                     <tr key={tableRows[vItem.index].id}>
                       {/* STICKY */}
-                      {props.sticky && cells.length > 0 && (
+                      {sticky && cells.length > 0 && (
                         <RowCell cell={cells[0]} col={columns[0]} width={stickyColWidth} height={vItem.size} sticky />
                       )}
                       {/* SPACER */}
                       <td style={{ width: vSpaceOnLeft, padding: 0 }} />
                       {/* CONTENT */}
                       {vColItems
-                        .filter((vCol) => vCol.index !== 0 || !props.sticky)
+                        .filter((vCol) => vCol.index !== 0 || !sticky)
                         .map((vCol: VirtualItem) => (
                           <RowCell
                             key={cells[vCol.index].id}

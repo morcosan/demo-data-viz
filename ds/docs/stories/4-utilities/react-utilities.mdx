@@ -10,7 +10,6 @@ React utilities provide reusable hooks and components for common React patterns.
 | Utility                     | Description                                                            |
 | --------------------------- | ---------------------------------------------------------------------- |
 | [HocComposer](#hoccomposer) | Component for composing multiple Higher-Order Components declaratively |
-| [useDefaults](#usedefaults) | Hook for merging component props with default values                   |
 
 <br />
 
@@ -49,47 +48,3 @@ const App = ({ children }) => (
 - HOCs are applied from right to left (last HOC in array wraps innermost)
 - Useful for organizing multiple context providers in a clean, maintainable way
 - Props are spread onto each HOC component
-
-## useDefaults
-
-Hook for merging component props with default values. <br/>
-This utility provides a clean way to handle optional props by merging them with defaults, with optional truthy validation.
-
-```
-import { useDefaults } from '@ds/core'
-//
-const Button = (rawProps) => {
-	const props = useDefaults(
-		rawProps,
-		{ variant: 'primary', size: 'medium', disabled: false },
-		false // truthy validation off
-	)
-	return <button {...props} />
-}
-//
-// With truthy validation enabled
-const Card = (rawProps) => {
-	const props = useDefaults(
-		rawProps,
-		{ title: 'Default Title', showBorder: true },
-		true // only merge props with truthy values
-	)
-	return <div {...props} />
-}
-```
-
-| Parameter | Type                       | Description                                                       |
-| --------- | -------------------------- | ----------------------------------------------------------------- |
-| rawProps  | `Record<string, any>`      | Raw props object passed to component                              |
-| defaults  | `Partial<typeof rawProps>` | Default values for props                                          |
-| truthy    | `boolean`                  | If `true`, only merge props with truthy values (default: `false`) |
-
-**Returns:** `Record<string, any>` - Merged props object with defaults applied
-
-<br />
-**Usage notes:**
-
-- When `truthy` is `false`, props with `undefined` values are ignored (uses default)
-- When `truthy` is `true`, props with any falsy value (`false`, `0`, `''`, etc.) are ignored
-- Uses `useMemo` internally for performance optimization
-- Useful for components with many optional props

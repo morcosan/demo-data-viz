@@ -12,6 +12,7 @@ declare global {
       utils?: string[]
       assets?: string[]
       docs?: string[]
+      internal?: string[]
     }
   }
 

@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { renderHtml } from '@ds/docs/core'
-import { changelog } from './changelog'
+import { CHANGELOG } from './changelog'
 
 export const BulletList = (title, items) => (
   <>
@@ -15,7 +15,7 @@ export const BulletList = (title, items) => (
 
 export const ChangelogContent = () => (
   <>
-    {changelog.map((entry) => (
+    {CHANGELOG.map((entry) => (
       <div
         key={entry.version}
         className="bg-color-bg-card px-sm-0 py-xs-9 mt-sm-2 border-color-border-subtle rounded-lg border"
@@ -28,10 +28,11 @@ export const ChangelogContent = () => (
           {entry.changes.deprecated?.length ? BulletList('💀 Deprecated:', entry.changes.deprecated) : ''}
           {entry.changes.tokens?.length ? BulletList('🎨 Design tokens:', entry.changes.tokens) : ''}
           {entry.changes.components?.length ? BulletList('🧩 Components:', entry.changes.components) : ''}
-          {entry.changes.services?.length ? BulletList('🧱 Services:', entry.changes.services) : ''}
+          {entry.changes.services?.length ? BulletList('⚙️ Services:', entry.changes.services) : ''}
           {entry.changes.utils?.length ? BulletList('🛠️ Utilities:', entry.changes.utils) : ''}
           {entry.changes.assets?.length ? BulletList('🖼️ Assets:', entry.changes.assets) : ''}
           {entry.changes.docs?.length ? BulletList('📚 Docs:', entry.changes.docs) : ''}
+          {entry.changes.internal?.length ? BulletList('🔒 Internal:', entry.changes.internal) : ''}
         </div>
       </div>
     ))}

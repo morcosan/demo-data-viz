@@ -17,7 +17,7 @@ interface Props extends ReactProps {
   onClickDataset?: () => void
 }
 
-export const ListingSection = (props: Props) => {
+export const ListingSection = ({ className, onClickDataset }: Props) => {
   const { t } = useTranslation()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
@@ -50,7 +50,7 @@ export const ListingSection = (props: Props) => {
   })
 
   return (
-    <LayoutPane className={cx('flex flex-col', props.className)}>
+    <LayoutPane className={cx('flex flex-col', className)}>
       <div className="shadow-below-sm z-sticky p-scrollbar-w relative">
         <SearchField
           id="dataset-search"
@@ -85,7 +85,7 @@ export const ListingSection = (props: Props) => {
                 selected={idParam === datasets[vItem.index].id}
                 className="absolute top-0 left-0 w-full"
                 style={{ transform: `translateY(${vItem.start}px)` }}
-                onClick={props.onClickDataset}
+                onClick={onClickDataset}
               />
             ))}
           </ul>

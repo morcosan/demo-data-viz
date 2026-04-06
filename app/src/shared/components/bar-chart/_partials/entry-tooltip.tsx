@@ -10,27 +10,28 @@ interface Props extends TooltipContentProps, ReactProps {
 
 // This component will rerender on mousemove, due to bad recharts implementation
 export const EntryTooltip = (props: Props) => {
-  const title = props.labelFn(String(props.label)) || props.label
+  const { barNames, id, label, labelFn, payload, ref, visible } = props
+  const title = labelFn(String(label)) || label
 
   return (
     <div
-      ref={props.ref}
-      id={props.id}
+      ref={ref}
+      id={id}
       className={cx(
         'px-xs-5 py-xs-3 min-w-md-9 rounded-xs',
         'bg-color-bg-card border-color-border-shadow border shadow-sm',
         'text-size-sm',
-        !props.visible && 'hidden',
+        !visible && 'hidden',
       )}
     >
-      <div className="font-weight-lg mb-xs-4" aria-label={`${props.label},`}>
+      <div className="font-weight-lg mb-xs-4" aria-label={`${label},`}>
         {title}
       </div>
 
       <div className="gap-xs-2 grid w-full grid-cols-[auto_1fr]">
-        {props.payload.map((bar, index) => (
+        {payload.map((bar, index) => (
           <Fragment key={String(bar.dataKey) + index}>
-            <div>{props.barNames[bar.name || '']}:</div>
+            <div>{barNames[bar.name || '']}:</div>
             <div className="font-weight-lg" aria-label={`${formatNumber(bar.value as number)},`}>
               {formatNumber(bar.value as number)}
             </div>

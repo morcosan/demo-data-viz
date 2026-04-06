@@ -6,26 +6,26 @@ export interface StatsCardProps extends ReactProps {
   onClick?: () => void
 }
 
-export const StatsCard = (props: StatsCardProps) => {
+export const StatsCard = ({ type, label, onClick, children, className }: StatsCardProps) => {
   return (
     <div
       className={cx(
         'lg:min-w-lg-0 w-fit flex-1 lg:flex-initial',
         'flex flex-col justify-center',
-        props.type === 'button' ? 'px-xs-4 py-xs-3' : 'px-xs-6 py-xs-2',
+        type === 'button' ? 'px-xs-4 py-xs-3' : 'px-xs-6 py-xs-2',
         'bg-color-bg-card border-color-border-subtle rounded-md border',
         'whitespace-nowrap',
-        props.className,
+        className,
       )}
     >
-      {props.type === 'button' ? (
-        <Button variant="text-default" size="sm" className="px-xs-3!" onClick={props.onClick}>
-          {props.children}
+      {type === 'button' ? (
+        <Button variant="text-default" size="sm" className="px-xs-3!" onClick={onClick}>
+          {children}
         </Button>
       ) : (
         <>
-          <div className="text-size-xs text-color-text-subtle">{props.label}</div>
-          <div className="text-size-md font-weight-md">{props.children}</div>
+          <div className="text-size-xs text-color-text-subtle">{label}</div>
+          <div className="text-size-md font-weight-md">{children}</div>
         </>
       )}
     </div>

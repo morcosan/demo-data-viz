@@ -15,15 +15,15 @@ import {
 } from '@ds/core'
 
 interface Props {
-  closeMenu: () => void
-  onClickBack?(): void
+  closeMenuFn: () => void
+  onClickBack?: () => void
 }
 
-export const SettingsMenu = (props: Props) => {
+export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
   const { t } = useTranslation()
   const { isUiLight, isUiDark, changeColorTheme } = useThemeService()
 
-  const isPopup = !props.onClickBack
+  const isPopup = !onClickBack
   const appStorybookUrl = `${ENV__BASE_PATH}/storybook`
   const dsStorybookUrl = `${ENV__BASE_PATH}/design-system`
 
@@ -36,7 +36,7 @@ export const SettingsMenu = (props: Props) => {
       {/* BACK BUTTON */}
       {!isPopup && (
         <div className="mb-sm-0 gap-xs-3 flex items-center">
-          <IconButton tooltip={t('core.action.back')} onClick={props.onClickBack}>
+          <IconButton tooltip={t('core.action.back')} onClick={onClickBack}>
             <ArrowBackSvg className="h-xs-7" />
           </IconButton>
           <span className="text-size-lg">{t('core.label.preferences')}</span>
@@ -92,7 +92,7 @@ export const SettingsMenu = (props: Props) => {
       <hr className={hrClass} />
 
       {/* SETTINGS */}
-      <Button linkHref="/settings" variant="item-text-default" onClick={props.closeMenu}>
+      <Button linkHref="/settings" variant="item-text-default" onClick={closeMenuFn}>
         <SettingsSvg className={actionIconClass} />
         {t('core.label.settings')}
       </Button>

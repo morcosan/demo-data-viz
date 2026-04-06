@@ -38,6 +38,7 @@ interface Props extends ReactProps {
 }
 
 const ThemeService = (props: Props) => {
+  const { colorTheme: colorThemeProp, cookieKey, children } = props
   const [colorTheme, setColorTheme] = useState<ColorTheme>('light')
   const [tokens, setTokens] = useState<ThemeTokens>(lightThemeTokens)
 
@@ -45,8 +46,8 @@ const ThemeService = (props: Props) => {
   const isUiLight = colorTheme === 'light'
 
   const setHtmlAttr = (theme: ColorTheme) => document.documentElement.setAttribute(ATTR_KEY__COLOR_THEME, theme)
-  const setCookie = (theme: ColorTheme) => localStorage.setItem(props.cookieKey, theme)
-  const getCookie = () => localStorage.getItem(props.cookieKey) as ColorTheme | null
+  const setCookie = (theme: ColorTheme) => localStorage.setItem(cookieKey, theme)
+  const getCookie = () => localStorage.getItem(cookieKey) as ColorTheme | null
 
   const changeUiTheme = (theme: ColorTheme) => {
     setCookie(theme)
@@ -56,8 +57,8 @@ const ThemeService = (props: Props) => {
   }
 
   useEffect(() => {
-    if (props.colorTheme) {
-      changeUiTheme(props.colorTheme)
+    if (colorThemeProp) {
+      changeUiTheme(colorThemeProp)
       return
     }
 
@@ -71,15 +72,15 @@ const ThemeService = (props: Props) => {
   }, [])
 
   useEffect(() => {
-    props.colorTheme && changeUiTheme(props.colorTheme)
-  }, [props.colorTheme])
+    colorThemeProp && changeUiTheme(colorThemeProp)
+  }, [colorThemeProp])
 
   const store: Store = useMemo(
     () => ({ ...tokens, colorTheme: colorTheme, isUiDark, isUiLight, changeColorTheme: changeUiTheme }),
     [tokens, colorTheme, isUiDark, isUiLight, changeUiTheme],
   )
 
-  return <Context.Provider value={store}>{props.children}</Context.Provider>
+  return <Context.Provider value={store}>{children}</Context.Provider>
 }
 
 /**

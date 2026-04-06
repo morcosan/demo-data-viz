@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { TOKENS, useDefaults, wait } from '@ds/core'
+import { TOKENS, wait } from '@ds/core'
 import { useEffect, useRef, useState } from 'react'
 import { EmptyState } from '../empty-state/empty-state'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
@@ -13,38 +13,46 @@ import { type BarChartData, type BarChartEntry, type BarChartProps } from './_ty
 
 export type { BarChartData, BarChartEntry, BarChartProps }
 
-export const BarChart = (rawProps: BarChartProps) => {
-  const props = useDefaults(rawProps, {
-    entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
-    chartSize: 'md',
-    queries: [],
-  })
+export const BarChart = (props: BarChartProps) => {
+  const {
+    barNames,
+    chartSize = 'md',
+    className,
+    data,
+    entryKey,
+    entryName,
+    entryWidth = parseFloat(TOKENS.SPACING['md-5'].$value),
+    loading,
+    queries = [],
+    style,
+    toolbar,
+  } = props
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const hoverRef = useRef<Element | null>(null)
   const tooltipRef = useRef<Element | null>(null)
-  const barKeys = Object.keys(props.barNames)
+  const barKeys = Object.keys(barNames)
   const { handleKeyDown } = useScrolling({ hoverRef, tooltipRef })
-  const { entries, sortKey, sortDir, toggleSort } = useSorting({ ...props, barKeys })
+  const { entries, sortKey, sortDir, toggleSort } = useSorting({ ...props, barKeys, chartSize, queries })
 
   useEffect(() => {
     // Show 200ms loading to avoid UI freeze due to large data
     setIsLoading(true)
     wait(200).then(() => setIsLoading(false))
-  }, [props.data])
+  }, [data])
 
   return (
-    <div className={cx('bg-color-bg-card flex w-full flex-col', props.className)} style={props.style}>
+    <div className={cx('bg-color-bg-card flex w-full flex-col', className)} style={style}>
       <Toolbar
-        barNames={props.barNames}
-        entryKey={props.entryKey}
-        entryName={props.entryName}
-        entryWidth={props.entryWidth!}
+        barNames={barNames}
+        entryKey={entryKey}
+        entryName={entryName}
+        entryWidth={entryWidth}
         sortKey={sortKey}
         sortDir={sortDir}
-        toolbar={props.toolbar}
+        toolbar={toolbar}
         className="p-xs-1"
         onSort={toggleSort}
       />
@@ -58,7 +66,7 @@ export const BarChart = (rawProps: BarChartProps) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {isLoading || props.loading ? (
+        {isLoading || loading ? (
           <div className="flex-center flex h-full">
             <LoadingSpinner />
           </div>

@@ -8,7 +8,7 @@ interface Props {
   onChange: (view: DataView) => void
 }
 
-export const ViewToggle = (props: Props) => {
+export const ViewToggle = ({ view, onChange }: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -19,26 +19,22 @@ export const ViewToggle = (props: Props) => {
       )}
     >
       <Button
-        variant={props.view === 'table' ? 'solid-secondary' : 'text-default'}
+        variant={view === 'table' ? 'solid-secondary' : 'text-default'}
         size="sm"
-        onClick={() => props.onChange('table')}
+        onClick={() => onChange('table')}
       >
         <TableSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewTable')}
       </Button>
       <Button
-        variant={props.view === 'chart' ? 'solid-secondary' : 'text-default'}
+        variant={view === 'chart' ? 'solid-secondary' : 'text-default'}
         size="sm"
-        onClick={() => props.onChange('chart')}
+        onClick={() => onChange('chart')}
       >
         <ChartSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewChart')}
       </Button>
-      <Button
-        variant={props.view === 'map' ? 'solid-secondary' : 'text-default'}
-        size="sm"
-        onClick={() => props.onChange('map')}
-      >
+      <Button variant={view === 'map' ? 'solid-secondary' : 'text-default'} size="sm" onClick={() => onChange('map')}>
         <MapSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewMap')}
       </Button>

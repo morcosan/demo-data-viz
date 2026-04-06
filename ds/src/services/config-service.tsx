@@ -8,7 +8,7 @@ import { TOKENS__FONT_FAMILY } from '../styles/tokens'
 // Comment out everything related to outline
 const fixOutlineCSS = (css?: string) => css?.replace(/^\s*(outline(?:-[^:\s]+)?\s*:[^;]+;)\s*$/gim, '/* $1 */')
 
-const ConfigService = (props: ReactProps) => {
+const ConfigService = ({ children }: ReactProps) => {
   // Nextjs cannot import ?raw, it will import files as CSS and give undefined vars
   const mantineTheme = createTheme({
     fontFamily: TOKENS__FONT_FAMILY.sans.$value,
@@ -31,7 +31,7 @@ const ConfigService = (props: ReactProps) => {
     <MantineProvider theme={mantineTheme}>
       <style>{mantineCSS}</style>
       <style>{extraCSS}</style>
-      {props.children}
+      {children}
     </MantineProvider>
   )
 }

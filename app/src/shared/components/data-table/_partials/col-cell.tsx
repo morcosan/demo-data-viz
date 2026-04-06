@@ -10,41 +10,39 @@ interface Props {
   sticky?: boolean
 }
 
-export const ColCell = (props: Props) => {
+export const ColCell = ({ cell, col, width, sticky }: Props) => {
   const { t } = useTranslation()
-  const sort = props.cell.column.getIsSorted()
+  const sort = cell.column.getIsSorted()
 
-  const isNumeric = props.col.type === 'int' || props.col.type === 'float'
+  const isNumeric = col.type === 'int' || col.type === 'float'
   const cellClass = cx(
     'px-xs-6 py-xs-2 gap-xs-0 flex h-full items-center',
     'bg-color-bg-card',
     'text-size-sm font-weight-lg truncate',
-    props.sticky && 'border-color-border-subtle border-r',
+    sticky && 'border-color-border-subtle border-r',
     isNumeric && 'justify-end',
   )
 
   return (
     <th
-      title={props.cell.column.columnDef.header as string}
-      className={cx(props.sticky && 'sticky z-10')}
+      title={cell.column.columnDef.header as string}
+      className={cx(sticky && 'sticky z-10')}
       style={{
-        width: props.width,
-        maxWidth: props.sticky ? props.width : undefined,
-        left: props.sticky ? 0 : undefined,
+        width: width,
+        maxWidth: sticky ? width : undefined,
+        left: sticky ? 0 : undefined,
       }}
     >
       <div className={cellClass}>
-        <span className="pt-xs truncate">
-          {flexRender(props.cell.column.columnDef.header, props.cell.getContext())}
-        </span>
+        <span className="pt-xs truncate">{flexRender(cell.column.columnDef.header, cell.getContext())}</span>
 
-        {props.cell.column.getCanSort() && (
+        {cell.column.getCanSort() && (
           <IconButton
             tooltip={t('core.action.sort')}
             variant={sort ? 'solid-secondary' : 'text-default'}
             size="sm"
             className="rounded-full! before:rounded-full! after:rounded-full!"
-            onClick={props.cell.column.getToggleSortingHandler()}
+            onClick={cell.column.getToggleSortingHandler()}
           >
             {sort === 'asc' && <SortAscSvg className="h-xs-8" />}
             {sort === 'desc' && <SortDescSvg className="h-xs-8" />}

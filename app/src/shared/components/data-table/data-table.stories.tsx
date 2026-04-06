@@ -55,8 +55,9 @@ const meta: Meta = {
       style: { height: '600px' },
     },
     clearDefaults: ['data', 'cellFn'],
-    render: (props: DataTableProps) => {
-      return <DataTable {...props} cellFn={props.cellFn ? eval(String(props.cellFn)) : undefined} />
+
+    render: ({ cellFn, ...rest }: DataTableProps) => {
+      return <DataTable {...rest} cellFn={cellFn ? eval(String(cellFn)) : undefined} />
     },
   }),
 }

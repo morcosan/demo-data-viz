@@ -7,19 +7,20 @@ const meta: Meta<typeof NavMenu> = {
   ...defineMeta(NavMenu, {
     props: {
       pathname: '',
-      closeMenu: () => {},
+      closeMenuFn: () => {},
       mobile: false,
       collapsed: false,
       className: 'w-lg-7 bg-color-bg-card',
     },
     events: ['onTogglePopup'],
-    clearDefaults: ['closeMenu'],
+    clearDefaults: ['closeMenuFn'],
   }),
 
-  render: function Story(props: NavMenuProps) {
+  render: ({ pathname, ...rest }: NavMenuProps) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { location } = useLocationMock()
 
-    return <NavMenu {...props} pathname={props.pathname || location.pathname} />
+    return <NavMenu {...rest} pathname={pathname || location.pathname} />
   },
 }
 

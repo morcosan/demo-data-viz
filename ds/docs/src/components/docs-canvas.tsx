@@ -9,13 +9,13 @@ interface Props extends ReactProps {
 }
 
 export const DocsCanvas = (props: Props) => {
+  const { children, className, extended, shortcuts = [] } = props
   const { canvasBgClass } = useDocsCanvasService()
   const { forceA11yMode } = useA11yService()
   const input1Ref = useRef<HTMLInputElement>(null)
   const input2Ref = useRef<HTMLInputElement>(null)
-  const shortcuts = props.shortcuts || []
 
-  const rootClass = cx('border-color-border-default rounded-md border', canvasBgClass, props.className)
+  const rootClass = cx('border-color-border-default rounded-md border', canvasBgClass, className)
   const focusClass = cx(
     'w-md-3 bg-color-bg-page py-xs-0 absolute right-0',
     'text-size-xs text-color-text-subtle text-center',
@@ -42,7 +42,7 @@ export const DocsCanvas = (props: Props) => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [shortcuts])
 
-  return props.extended ? (
+  return extended ? (
     <div className={cx(rootClass, 'flex-center min-h-lg-9 relative flex-col')}>
       <label htmlFor="kf-1" className="sr-only">
         Keyboard focus 1
@@ -60,7 +60,7 @@ export const DocsCanvas = (props: Props) => {
         onFocus={handleInputFocus}
       />
 
-      {props.children}
+      {children}
 
       {shortcuts.length > 0 && (
         <DocsTooltip label={shortcutTooltip}>
@@ -78,6 +78,6 @@ export const DocsCanvas = (props: Props) => {
       <div tabIndex={0} className="opacity-0" onFocus={() => input1Ref.current?.focus()} />
     </div>
   ) : (
-    <div className={rootClass}>{props.children}</div>
+    <div className={rootClass}>{children}</div>
   )
 }

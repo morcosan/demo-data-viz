@@ -1,16 +1,16 @@
 'use client'
 
-import { useDefaults, useViewportService } from '@ds/core'
+import { useViewportService } from '@ds/core'
 import { ErrorBoundary } from '../error-boundary/error-boundary'
 import { DesktopNav } from './_partials/desktop-nav'
 import { MobileNav } from './_partials/mobile-nav'
-import { type AppLogo, type NavMenu } from './types'
+import { type AppLogoType, type NavMenuType } from './types'
 
 export interface AppNavProps extends ReactProps {
   /** App logo to be rendered on top of navigation */
-  appLogo: AppLogo
+  appLogo: AppLogoType
   /** Content to be rendered as navigation */
-  navMenu: NavMenu
+  navMenu: NavMenuType
   /** Topbar height on mobile */
   mobileHeight?: string
   /** Sidebar width on desktop when collapsed */
@@ -22,37 +22,40 @@ export interface AppNavProps extends ReactProps {
 }
 
 /** Navigation bar and menu for the entire app */
-export const AppNav = (rawProps: AppNavProps) => {
+export const AppNav = (props: AppNavProps) => {
   const { isViewportMaxLG } = useViewportService()
-  const props = useDefaults(rawProps, {
-    mobileHeight: 'var(--ds-spacing-sm-6)',
-    desktopMinWidth: 'var(--ds-spacing-md-2)',
-    desktopMaxWidth: 'var(--ds-spacing-lg-5)',
-    cookieKeyPinned: 'app-pinned-navbar',
-  } as const)
+  const {
+    appLogo: AppLogo,
+    navMenu: NavMenu,
+    children,
+    cookieKeyPinned = 'app-pinned-navbar',
+    desktopMaxWidth = 'var(--ds-spacing-lg-5)',
+    desktopMinWidth = 'var(--ds-spacing-md-2)',
+    mobileHeight = 'var(--ds-spacing-sm-6)',
+  } = props
 
   return (
     <div
       className="flex h-full w-full flex-1 flex-col items-stretch lg:flex-row lg:pt-0!"
-      style={{ paddingTop: props.mobileHeight }}
+      style={{ paddingTop: mobileHeight }}
     >
       <ErrorBoundary>
         {/* NAVIGATION */}
         {isViewportMaxLG ? (
-          <MobileNav appLogo={props.appLogo} navMenu={props.navMenu} mobileHeight={props.mobileHeight!} />
+          <MobileNav appLogo={AppLogo} navMenu={NavMenu} mobileHeight={mobileHeight} />
         ) : (
           <DesktopNav
-            appLogo={props.appLogo}
-            navMenu={props.navMenu}
-            desktopMinWidth={props.desktopMinWidth!}
-            desktopMaxWidth={props.desktopMaxWidth!}
-            cookieKeyPinned={props.cookieKeyPinned!}
+            appLogo={AppLogo}
+            navMenu={NavMenu}
+            desktopMinWidth={desktopMinWidth}
+            desktopMaxWidth={desktopMaxWidth}
+            cookieKeyPinned={cookieKeyPinned}
           />
         )}
       </ErrorBoundary>
 
       {/* PAGE CONTENT */}
-      <main className="h-full w-full flex-1 overflow-x-hidden">{props.children}</main>
+      <main className="h-full w-full flex-1 overflow-x-hidden">{children}</main>
     </div>
   )
 }

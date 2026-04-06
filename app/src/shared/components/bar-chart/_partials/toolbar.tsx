@@ -14,14 +14,25 @@ interface Props extends ReactProps {
 }
 
 export const Toolbar = (props: Props) => {
+  const {
+    barNames,
+    className,
+    entryKey,
+    entryName,
+    entryWidth: entryWidthProp,
+    onSort,
+    sortDir,
+    sortKey,
+    toolbar,
+  } = props
   const { t } = useTranslation()
-  const barKeys = Object.keys(props.barNames)
+  const barKeys = Object.keys(barNames)
 
   const cellClass = cx('gap-xs-0 flex items-center justify-end')
-  const entryWidth = props.entryWidth + parseFloat(TOKENS.SPACING[TOKENS.SPACING['button-h-sm'].$ref].$value)
+  const entryWidth = entryWidthProp + parseFloat(TOKENS.SPACING[TOKENS.SPACING['button-h-sm'].$ref].$value)
 
   const renderHeader = (key: string, name: string, className: string, width?: number) => {
-    const sort = props.sortKey === key && props.sortDir
+    const sort = sortKey === key && sortDir
 
     return (
       <div key={key} className={cx(cellClass, className)} style={{ width }}>
@@ -32,7 +43,7 @@ export const Toolbar = (props: Props) => {
           variant={sort ? 'solid-secondary' : 'text-default'}
           size="sm"
           className="rounded-full! before:rounded-full! after:rounded-full!"
-          onClick={() => props.onSort(key)}
+          onClick={() => onSort(key)}
         >
           {sort === 'asc' && <SortAscSvg className="h-xs-8" />}
           {sort === 'desc' && <SortDescSvg className="h-xs-8" />}
@@ -48,14 +59,14 @@ export const Toolbar = (props: Props) => {
         'z-sticky bg-color-bg-card shadow-below-sm',
         'gap-y-xs-1 gap-x-sm-1 flex flex-wrap items-center',
         'text-size-sm font-weight-lg',
-        props.className,
+        className,
       )}
     >
-      {renderHeader(props.entryKey, props.entryName, cx('pl-xs-2'), entryWidth)}
+      {renderHeader(entryKey, entryName, cx('pl-xs-2'), entryWidth)}
 
-      {barKeys.map((key) => renderHeader(key, props.barNames[key], cx('max-w-lg-2')))}
+      {barKeys.map((key) => renderHeader(key, barNames[key], cx('max-w-lg-2')))}
 
-      {props.toolbar}
+      {toolbar}
     </div>
   )
 }

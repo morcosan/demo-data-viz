@@ -3,57 +3,58 @@ import { useThemeService } from '../../services/theme-service'
 import { CSS__ABSOLUTE_OVERLAY, CSS_A11Y_OUTLINE_PROXY } from '../../utilities/internal/css-utils'
 import type { TextFieldProps } from './_types'
 
-export const useStyles = (props: TextFieldProps, isNoop: boolean) => {
+interface Props extends TextFieldProps {
+  isNoop: boolean
+}
+
+export const useStyles = (props: Props) => {
+  const { disabled, invalid, isNoop, multiline, readonly, size, variant } = props
   const { $fontSize, $color, $lineHeight, $spacing, $radius } = useThemeService()
   const ifNotNoop = (css: CSSObject) => (isNoop ? {} : css)
 
   const tokens = {
     minHeight: (() => {
-      if (props.size === 'sm') return $spacing['field-h-sm']
-      if (props.size === 'md') return $spacing['field-h-md']
-      if (props.size === 'lg') return $spacing['field-h-lg']
-      if (props.size === 'xl') return $spacing['field-h-xl']
+      if (size === 'sm') return $spacing['field-h-sm']
+      if (size === 'md') return $spacing['field-h-md']
+      if (size === 'lg') return $spacing['field-h-lg']
+      if (size === 'xl') return $spacing['field-h-xl']
       return ''
     })(),
     buttonPadding: (() => {
-      if (props.size === 'sm') return `calc((${$spacing['field-h-sm']} - ${$spacing['button-h-xs']}) / 2)`
-      if (props.size === 'md') return `calc((${$spacing['field-h-md']} - ${$spacing['button-h-sm']}) / 2)`
-      if (props.size === 'lg') return `calc((${$spacing['field-h-lg']} - ${$spacing['button-h-sm']}) / 2)`
-      if (props.size === 'xl') return `calc((${$spacing['field-h-xl']} - ${$spacing['button-h-md']}) / 2)`
+      if (size === 'sm') return `calc((${$spacing['field-h-sm']} - ${$spacing['button-h-xs']}) / 2)`
+      if (size === 'md') return `calc((${$spacing['field-h-md']} - ${$spacing['button-h-sm']}) / 2)`
+      if (size === 'lg') return `calc((${$spacing['field-h-lg']} - ${$spacing['button-h-sm']}) / 2)`
+      if (size === 'xl') return `calc((${$spacing['field-h-xl']} - ${$spacing['button-h-md']}) / 2)`
       return ''
     })(),
     textPaddingX: (() => {
-      if (props.size === 'sm') return $spacing['xs-4']
-      if (props.size === 'md') return $spacing['xs-5']
-      if (props.size === 'lg') return $spacing['xs-7']
-      if (props.size === 'xl') return $spacing['xs-8']
+      if (size === 'sm') return $spacing['xs-4']
+      if (size === 'md') return $spacing['xs-5']
+      if (size === 'lg') return $spacing['xs-7']
+      if (size === 'xl') return $spacing['xs-8']
       return ''
     })(),
     textPaddingY: (() => {
-      if (props.size === 'sm') return $spacing['xs-2']
-      if (props.size === 'md') return $spacing['xs-3']
-      if (props.size === 'lg') return $spacing['xs-5']
-      if (props.size === 'xl') return $spacing['xs-7']
+      if (size === 'sm') return $spacing['xs-2']
+      if (size === 'md') return $spacing['xs-3']
+      if (size === 'lg') return $spacing['xs-5']
+      if (size === 'xl') return $spacing['xs-7']
       return ''
     })(),
     borderRadius: (() => {
-      if (props.size === 'sm') return $radius['sm']
-      if (props.size === 'md') return $radius['sm']
-      if (props.size === 'lg') return $radius['md']
-      if (props.size === 'xl') return $radius['md']
+      if (size === 'sm') return $radius['sm']
+      if (size === 'md') return $radius['sm']
+      if (size === 'lg') return $radius['md']
+      if (size === 'xl') return $radius['md']
       return ''
     })(),
-    borderColor: props.invalid
-      ? $color['danger-page-text']
-      : props.readonly
-        ? $color['border-subtle']
-        : $color['border-default'],
-    borderColorHover: props.invalid ? $color['danger-page-text'] : $color['border-hover'],
+    borderColor: invalid ? $color['danger-page-text'] : readonly ? $color['border-subtle'] : $color['border-default'],
+    borderColorHover: invalid ? $color['danger-page-text'] : $color['border-hover'],
     borderColorActive: (() => {
-      if (props.invalid) return $color['danger-page-text']
-      if (props.variant === 'default') return $color['border-active']
-      if (props.variant === 'primary') return $color['primary-page-text']
-      if (props.variant === 'secondary') return $color['secondary-page-text']
+      if (invalid) return $color['danger-page-text']
+      if (variant === 'default') return $color['border-active']
+      if (variant === 'primary') return $color['primary-page-text']
+      if (variant === 'secondary') return $color['secondary-page-text']
       return ''
     })(),
   }
@@ -64,7 +65,7 @@ export const useStyles = (props: TextFieldProps, isNoop: boolean) => {
     zIndex: 0,
     display: 'flex',
     alignItems: 'stretch',
-    height: props.multiline ? 'unset' : tokens.minHeight,
+    height: multiline ? 'unset' : tokens.minHeight,
     minHeight: tokens.minHeight,
     borderRadius: tokens.borderRadius,
     color: $color['text-placeholder'],
@@ -76,8 +77,8 @@ export const useStyles = (props: TextFieldProps, isNoop: boolean) => {
       borderWidth: '1px',
       borderColor: tokens.borderColor,
       borderRadius: tokens.borderRadius,
-      background: props.readonly ? 'transparent' : $color['bg-field'],
-      opacity: props.disabled ? 0.4 : 1,
+      background: readonly ? 'transparent' : $color['bg-field'],
+      opacity: disabled ? 0.4 : 1,
     },
 
     ...ifNotNoop({
@@ -104,8 +105,8 @@ export const useStyles = (props: TextFieldProps, isNoop: boolean) => {
     background: 'transparent',
     color: $color['text-default'],
     lineHeight: $lineHeight['md'],
-    fontSize: props.size === 'sm' ? $fontSize['sm'] : $fontSize['md'],
-    opacity: props.disabled ? 0.4 : 1,
+    fontSize: size === 'sm' ? $fontSize['sm'] : $fontSize['md'],
+    opacity: disabled ? 0.4 : 1,
     resize: 'none',
 
     '&:focus-visible': {

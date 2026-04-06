@@ -1,19 +1,19 @@
-import { useDefaults } from '@ds/core'
-
 interface Props extends ReactProps {
   type?: 'default' | 'empty' | 'error'
 }
 
-export const EmptyState = (rawProps: Props) => {
-  const props = useDefaults(rawProps, { type: 'default' })
+export const EmptyState = (props: Props) => {
+  const { type = 'default', children, className } = props
+
   const emoji = (() => {
-    if (props.type === 'default') return '😉'
-    if (props.type === 'error') return '😢'
-    if (props.type === 'empty') return '🙄'
+    if (type === 'default') return '😉'
+    if (type === 'error') return '😢'
+    if (type === 'empty') return '🙄'
+    return ''
   })()
 
   return (
-    <div className={cx('gap-xs-3 p-xs-3 flex items-end', props.className)}>
+    <div className={cx('gap-xs-3 p-xs-3 flex items-end', className)}>
       <div className="text-size-xxl">{emoji}</div>
 
       <div
@@ -31,7 +31,7 @@ export const EmptyState = (rawProps: Props) => {
           'after:border-r-color-bg-menu after:border-r-[7px]',
         )}
       >
-        {props.children}
+        {children}
       </div>
     </div>
   )

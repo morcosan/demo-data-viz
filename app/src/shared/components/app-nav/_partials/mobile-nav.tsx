@@ -2,15 +2,16 @@ import { useTranslation } from '@app-i18n'
 import { IconButton, MenuSvg, wait } from '@ds/core'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import { type AppLogo, type NavMenu } from '../types'
+import { type AppLogoType, type NavMenuType } from '../types'
 
 interface Props {
-  appLogo: AppLogo
-  navMenu: NavMenu
+  appLogo: AppLogoType
+  navMenu: NavMenuType
   mobileHeight: string
 }
 
 export const MobileNav = (props: Props) => {
+  const { appLogo: AppLogo, navMenu: NavMenu, mobileHeight } = props
   const { t } = useTranslation()
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -28,7 +29,7 @@ export const MobileNav = (props: Props) => {
       {/* PAGE OVERLAY */}
       <div
         className={cx('absolute-overlay backdrop-blur-subtle', !isMenuOpen && 'hidden')}
-        style={{ top: props.mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
+        style={{ top: mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
         onClick={() => setIsMenuOpen(false)}
       />
 
@@ -36,7 +37,7 @@ export const MobileNav = (props: Props) => {
       <nav
         aria-label={t('core.label.navigationBar')}
         className="z-navbar border-color-border-shadow absolute top-0 left-0 w-full border-t shadow-sm"
-        style={{ minHeight: props.mobileHeight, height: props.mobileHeight }}
+        style={{ minHeight: mobileHeight, height: mobileHeight }}
       >
         <div className="bg-color-bg-card px-xs-2 flex h-full items-center">
           {/* MENU BUTTON */}
@@ -49,7 +50,7 @@ export const MobileNav = (props: Props) => {
           </IconButton>
 
           {/* LOGO */}
-          <props.appLogo mobile className="ml-xs-3" />
+          <AppLogo mobile className="ml-xs-3" />
         </div>
       </nav>
 
@@ -63,10 +64,10 @@ export const MobileNav = (props: Props) => {
           isMenuOpen ? 'translate-x-0' : '-translate-x-full',
           !isMenuVisible && 'invisible',
         )}
-        style={{ top: props.mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
+        style={{ top: mobileHeight, zIndex: 'calc(var(--ds-z-index-navbar) - 1)' }}
       >
         <div className="p-a11y-scrollbar flex h-full w-full flex-col">
-          <props.navMenu mobile pathname={pathname} closeMenu={closeMenu} />
+          <NavMenu mobile pathname={pathname} closeMenuFn={closeMenu} />
         </div>
       </nav>
     </>

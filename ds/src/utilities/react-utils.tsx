@@ -15,6 +15,7 @@ const HocComposer = ({ children, hocs }: Props) => {
 }
 HocComposer.hoc = <C,>(comp: C, props: JsxProps<C>): HOC<C> => ({ comp, props })
 
+// Deprecated
 const useDefaults = <P extends Record<string, any>>(rawProps: P, defaults: Partial<P>, truthy?: boolean): P => {
   return useMemo(() => {
     const props = { ...defaults } as any

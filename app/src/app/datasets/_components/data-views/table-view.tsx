@@ -10,16 +10,17 @@ interface Props extends ReactProps {
 }
 
 export const TableView = (props: Props) => {
+  const { data, queries, cellFn, className } = props
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
 
   return (
     <DataTable
-      data={props.data}
-      queries={props.queries}
-      cellFn={props.cellFn}
+      data={data}
+      queries={queries}
+      cellFn={cellFn}
       sticky={Boolean(indexKey && pivotKey)}
-      className={props.className}
+      className={className}
     />
   )
 }

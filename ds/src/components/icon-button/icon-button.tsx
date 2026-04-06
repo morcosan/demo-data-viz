@@ -2,7 +2,6 @@
 
 import { type CSSObject } from '@emotion/react'
 import { useThemeService } from '../../services/theme-service'
-import { useDefaults } from '../../utilities/react-utils'
 import { useBaseButton } from '../_shared/use-base-button'
 import { type IconButtonProps } from './_types'
 
@@ -10,15 +9,17 @@ export type { LinkType } from '../_shared/types'
 export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_types'
 
 /** Fundamental component for user actions and navigation, displayed as icon */
-export const IconButton = (rawProps: IconButtonProps) => {
-  const props = useDefaults<IconButtonProps>(rawProps, {
-    size: 'md',
-    variant: 'text-default',
-    linkType: 'internal',
-  })
+export const IconButton = (props: IconButtonProps) => {
+  const { linkHref, linkType = 'internal', pressed, size = 'md', variant = 'text-default' } = props
   const { $fontSize, $radius } = useThemeService()
-  const highlight = props.pressed ? 'pressed' : 'default'
-  const { baseTokens, bindings, content, cssBaseButton, isVText } = useBaseButton({ ...props, highlight })
+  const highlight = pressed ? 'pressed' : 'default'
+  const { baseTokens, bindings, content, cssBaseButton, isVText } = useBaseButton({
+    ...props,
+    highlight,
+    linkType,
+    size,
+    variant,
+  })
 
   const tokens = {
     ...baseTokens,
@@ -39,7 +40,7 @@ export const IconButton = (rawProps: IconButtonProps) => {
     },
   }
 
-  return props.linkHref ? (
+  return linkHref ? (
     <a {...bindings} css={cssButton}>
       {content}
     </a>

@@ -7,11 +7,11 @@ interface Props {
   tooltipRef: RefObject<Element | null>
 }
 
-export const useScrolling = (props: Props) => {
+export const useScrolling = ({ hoverRef, tooltipRef }: Props) => {
   const scrollToView = useMemo(() => {
     return debounce(() => {
-      props.hoverRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-      props.tooltipRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      hoverRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      tooltipRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     }, 200)
   }, [])
 
