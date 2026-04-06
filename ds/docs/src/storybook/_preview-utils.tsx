@@ -56,6 +56,11 @@ interface DocsContainerProps {
   }
 }
 
+interface DocsComponentProps {
+  className?: string
+  children: string | { props: ReactProps }
+}
+
 const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
   const colorTheme = !globals.colorTheme || globals.colorTheme === '_reset' ? 'light' : globals.colorTheme
   const canvasBg = !globals.canvasBg || globals.canvasBg === '_reset' ? 'grid' : globals.canvasBg
@@ -73,6 +78,7 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
 
 export { computeServices }
 export type {
+  DocsComponentProps,
   DocsContainerProps,
   GlobalConfig,
   GlobalDefaults,

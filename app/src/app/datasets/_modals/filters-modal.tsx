@@ -18,8 +18,8 @@ interface Props {
 }
 
 export const FiltersModal = (props: Props) => {
+  const { data, opened, indexOptions, pivotOptions, onClose } = props
   const { t } = useTranslation()
-  const { cellsByCol, cols } = props.data
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
   const filterByCol = useTableStore((s) => s.filterByCol)
@@ -31,44 +31,38 @@ export const FiltersModal = (props: Props) => {
 
   const colKeys = useMemo(() => {
     return indexKey
-      ? Object.keys(cellsByCol).filter((key) => key !== indexKey && key !== pivotKey && cellsByCol[key])
+      ? Object.keys(data.cellsByCol).filter((key) => key !== indexKey && key !== pivotKey && data.cellsByCol[key])
       : []
-  }, [indexKey, pivotKey, cellsByCol])
+  }, [indexKey, pivotKey, data.cellsByCol])
 
   const filterCols = useMemo(
-    () => colKeys.map((key) => cols.find((col) => col.key === key)).filter(Boolean) as TableCol[],
-    [colKeys, cols],
+    () => colKeys.map((key) => data.cols.find((col) => col.key === key)).filter(Boolean) as TableCol[],
+    [colKeys, data.cols],
   )
 
   const optionsByCol = useMemo(() => {
     return colKeys.reduce(
       (acc, key) => ({
         ...acc,
-        [key]: cellsByCol[key].map((cell) => ({
+        [key]: data.cellsByCol[key].map((cell) => ({
           value: String(cell.code),
           label: String(cell.value),
         })),
       }),
       {} as Record<string, SelectOption[]>,
     )
-  }, [colKeys, cellsByCol])
+  }, [colKeys, data.cellsByCol])
 
   useEffect(() => {
-    resetPivotQueries(props.data).then(() => pivotQueryRef.current?.reset())
-  }, [props.data, pivotKey])
+    resetPivotQueries(data).then(() => pivotQueryRef.current?.reset())
+  }, [data, pivotKey])
 
   useEffect(() => {
     pivotQueryRef.current?.reset()
-  }, [props.opened])
+  }, [opened])
 
   return (
-    <Modal
-      opened={props.opened}
-      width="md"
-      title={t('dataViz.label.filtersModalTitle')}
-      noFooter
-      onClose={props.onClose}
-    >
+    <Modal opened={opened} width="md" title={t('dataViz.label.filtersModalTitle')} noFooter onClose={onClose}>
       {/* SECTION 1 */}
       <SettingSection header={t('dataViz.label.headerFiltersModal1')}>
         <SettingMemo
@@ -76,7 +70,7 @@ export const FiltersModal = (props: Props) => {
           colKey=""
           colLabel={t('dataViz.label.fieldLabelForIndex')}
           value={indexKey}
-          options={props.indexOptions}
+          options={indexOptions}
           onChange={setIndexKey}
         />
         <SettingMemo
@@ -84,7 +78,7 @@ export const FiltersModal = (props: Props) => {
           colKey=""
           colLabel={t('dataViz.label.fieldLabelForPivot')}
           value={pivotKey}
-          options={props.pivotOptions}
+          options={pivotOptions}
           onChange={setPivotKey}
         />
       </SettingSection>
@@ -125,18 +119,14 @@ interface SettingProps {
   onChange: ((value: SelectValue) => void) | ((value: SelectValue, key: string) => void)
 }
 const SettingMemo = memo(function SettingMemo(props: SettingProps) {
+  const { id, value, options, colKey, colLabel, onChange } = props
   return (
     <div>
       <dt>
-        <label htmlFor={props.id}>{props.colLabel}</label>
+        <label htmlFor={id}>{colLabel}</label>
       </dt>
       <dd>
-        <SelectField
-          id={props.id}
-          options={props.options}
-          value={props.value}
-          onChange={(value) => props.onChange(value, props.colKey)}
-        />
+        <SelectField id={id} options={options} value={value} onChange={(value) => onChange(value, colKey)} />
       </dd>
     </div>
   )
@@ -145,7 +135,7 @@ const SettingMemo = memo(function SettingMemo(props: SettingProps) {
 interface PivotQueryHandle {
   reset: () => void
 }
-const PivotQueryMemo = memo(function PivotQueryMemo(props: ReactProps<PivotQueryHandle>) {
+const PivotQueryMemo = memo(function PivotQueryMemo({ ref }: ReactProps<PivotQueryHandle>) {
   const { t } = useTranslation()
   const pivotKey = useTableStore((s) => s.pivotKey)
   const pivotQueries = useTableStore((s) => s.pivotQueries)
@@ -166,14 +156,14 @@ const PivotQueryMemo = memo(function PivotQueryMemo(props: ReactProps<PivotQuery
           .filter(Boolean),
       )
     }, 300)
-  }, [])
+  }, [setPivotQueries])
 
   const handleQueryClear = () => {
     setQuery('')
     setPivotQueries([])
   }
 
-  useImperativeHandle(props.ref, () => ({
+  useImperativeHandle(ref, () => ({
     reset: resetQuery,
   }))
 

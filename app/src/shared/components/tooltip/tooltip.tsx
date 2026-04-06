@@ -5,10 +5,10 @@ export interface TooltipProps extends ReactProps {
   label: string
 }
 
-export const Tooltip = (props: TooltipProps) => {
+export const Tooltip = ({ label, children }: TooltipProps) => {
   return (
     <MantineTooltip
-      label={props.label}
+      label={label}
       position="top-start"
       offset={3}
       zIndex="var(--ds-z-index-tooltip)"
@@ -24,7 +24,7 @@ export const Tooltip = (props: TooltipProps) => {
       }}
       events={{ hover: true, focus: true, touch: true }}
     >
-      {props.children}
+      {children}
     </MantineTooltip>
   )
 }

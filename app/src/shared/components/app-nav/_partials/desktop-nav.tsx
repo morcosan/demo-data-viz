@@ -2,17 +2,18 @@ import { useTranslation } from '@app-i18n'
 import { IconButton, PinSvg } from '@ds/core'
 import { usePathname } from 'next/navigation'
 import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react'
-import { type AppLogo, type NavMenu } from '../types'
+import { type AppLogoType, type NavMenuType } from '../types'
 
 interface Props {
-  appLogo: AppLogo
-  navMenu: NavMenu
+  appLogo: AppLogoType
+  navMenu: NavMenuType
   desktopMinWidth: string
   desktopMaxWidth: string
   cookieKeyPinned: string
 }
 
 export const DesktopNav = (props: Props) => {
+  const { appLogo: AppLogo, navMenu: NavMenu, cookieKeyPinned, desktopMaxWidth, desktopMinWidth } = props
   const { t } = useTranslation()
   const pathname = usePathname()
   const [isHovered, setIsHovered] = useState(false)
@@ -23,8 +24,8 @@ export const DesktopNav = (props: Props) => {
 
   const isCollapsed = !isHovered && !isPinned && !isFocused && !hasPopup
 
-  const collapsedStyle: CSSProperties = { minWidth: props.desktopMinWidth, width: props.desktopMinWidth }
-  const expandedStyle: CSSProperties = { minWidth: props.desktopMaxWidth, width: props.desktopMaxWidth }
+  const collapsedStyle: CSSProperties = { minWidth: desktopMinWidth, width: desktopMinWidth }
+  const expandedStyle: CSSProperties = { minWidth: desktopMaxWidth, width: desktopMaxWidth }
   const sidebarStyle = isCollapsed ? collapsedStyle : expandedStyle
   const sidebarClass = cx(
     'z-navbar absolute top-0 left-0 h-full',
@@ -35,15 +36,15 @@ export const DesktopNav = (props: Props) => {
   const pinColorClass = cx(isPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
 
   const loadPinConfig = () => {
-    const cookie = localStorage.getItem(props.cookieKeyPinned)
+    const cookie = localStorage.getItem(cookieKeyPinned)
     const isPinned = cookie === 'true' || cookie !== 'false' // Start with sidebar as pinned
     setIsPinned(isPinned)
-    localStorage.setItem(props.cookieKeyPinned, isPinned ? 'true' : 'false')
+    localStorage.setItem(cookieKeyPinned, isPinned ? 'true' : 'false')
   }
 
   const handlePinClick = (value: boolean) => {
     setIsPinned(value)
-    localStorage.setItem(props.cookieKeyPinned, value ? 'true' : 'false')
+    localStorage.setItem(cookieKeyPinned, value ? 'true' : 'false')
   }
 
   const handleWindowClick = (event: MouseEvent) => {
@@ -108,7 +109,7 @@ export const DesktopNav = (props: Props) => {
           onBlurCapture={handleBlurInside}
         >
           {/* LOGO */}
-          <props.appLogo collapsed={isCollapsed} className="mb-xs-9" />
+          <AppLogo collapsed={isCollapsed} className="mb-xs-9" />
 
           {/* PIN */}
           <IconButton
@@ -121,9 +122,9 @@ export const DesktopNav = (props: Props) => {
           </IconButton>
 
           {/* MENU */}
-          <props.navMenu
+          <NavMenu
             pathname={pathname}
-            closeMenu={closeMenu}
+            closeMenuFn={closeMenu}
             collapsed={isCollapsed}
             onTogglePopup={handlePopupToggle}
           />

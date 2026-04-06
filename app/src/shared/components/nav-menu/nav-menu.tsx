@@ -10,7 +10,7 @@ export interface NavMenuProps extends ReactProps {
   /** Current url pathname (same as `location.pathname`) */
   pathname: string
   /** Callback to close the menu on mobile (no effect on desktop) */
-  closeMenu: () => void
+  closeMenuFn: () => void
   /** Flag for rendering the menu on mobile */
   mobile?: boolean
   /** Flag for rendering the menu as collapsed on desktop (no effect on mobile) */
@@ -21,6 +21,7 @@ export interface NavMenuProps extends ReactProps {
 
 /** Content to be rendered as navigation */
 export const NavMenu = (props: NavMenuProps) => {
+  const { className, closeMenuFn, collapsed, mobile, onTogglePopup, pathname } = props
   const { t } = useTranslation()
   const [isPopupOpened, setIsPopupOpened] = useState(false)
   const settingsRef = useRef<HTMLDivElement>(null)
@@ -51,13 +52,13 @@ export const NavMenu = (props: NavMenuProps) => {
   ]
 
   const closeMenu = () => {
-    props.closeMenu()
+    closeMenuFn()
     togglePopup(false)
   }
 
   const togglePopup = (opened: boolean) => {
     setIsPopupOpened(opened)
-    props.onTogglePopup?.(opened)
+    onTogglePopup?.(opened)
   }
 
   const handlePopupToggle = () => {
@@ -77,15 +78,15 @@ export const NavMenu = (props: NavMenuProps) => {
   }, [])
 
   return (
-    <div className={cx('flex flex-1 flex-col', props.className)}>
-      {props.mobile && isPopupOpened ? (
-        <SettingsMenu closeMenu={closeMenu} onClickBack={handlePopupToggle} />
+    <div className={cx('flex flex-1 flex-col', className)}>
+      {mobile && isPopupOpened ? (
+        <SettingsMenu closeMenuFn={closeMenu} onClickBack={handlePopupToggle} />
       ) : (
         <>
           <div className="flex flex-1 flex-col">
             {/* ITEMS */}
             {items.map((item: Item) => {
-              const selected = props.pathname === item.path
+              const selected = pathname === item.path
               return (
                 <Button
                   key={item.path}
@@ -94,10 +95,10 @@ export const NavMenu = (props: NavMenuProps) => {
                   highlight={selected ? 'selected' : 'default'}
                   size="lg"
                   className="w-full"
-                  onClick={props.closeMenu}
+                  onClick={closeMenu}
                 >
                   {item.icon}
-                  {!props.collapsed && <span className="ml-button-px-item">{item.label}</span>}
+                  {!collapsed && <span className="ml-button-px-item">{item.label}</span>}
                 </Button>
               )
             })}
@@ -107,13 +108,13 @@ export const NavMenu = (props: NavMenuProps) => {
           <div ref={settingsRef} className="relative">
             <SettingsButton
               iconWidth={iconWidth}
-              collapsed={props.collapsed}
+              collapsed={collapsed}
               highlight={isPopupOpened ? 'pressed' : 'default'}
               className="mt-xs-1"
               onClick={handlePopupToggle}
             />
             <div className={settingsMenuClass}>
-              <SettingsMenu closeMenu={closeMenu} />
+              <SettingsMenu closeMenuFn={closeMenu} />
             </div>
           </div>
         </>

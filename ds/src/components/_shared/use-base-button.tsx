@@ -54,25 +54,26 @@ interface BaseButtonProps {
 }
 
 export const useBaseButton = (props: BaseButtonProps) => {
+  const { ariaDescription, children, className, highlight, loading, size, style, tooltip, variant } = props
   const { $color, $spacing } = useThemeService()
   const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
 
-  const isVDanger = VARIANTS_DANGER.includes(props.variant)
-  const isVDefault = VARIANTS_DEFAULT.includes(props.variant)
-  const isVGhost = VARIANTS_GHOST.includes(props.variant)
-  const isVItem = VARIANTS_ITEM.includes(props.variant)
-  const isVPrimary = VARIANTS_PRIMARY.includes(props.variant)
-  const isVSecondary = VARIANTS_SECONDARY.includes(props.variant)
-  const isVSolid = VARIANTS_SOLID.includes(props.variant)
-  const isVSubtle = VARIANTS_SUBTLE.includes(props.variant)
-  const isVText = VARIANTS_TEXT.includes(props.variant)
+  const isVDanger = VARIANTS_DANGER.includes(variant)
+  const isVDefault = VARIANTS_DEFAULT.includes(variant)
+  const isVGhost = VARIANTS_GHOST.includes(variant)
+  const isVItem = VARIANTS_ITEM.includes(variant)
+  const isVPrimary = VARIANTS_PRIMARY.includes(variant)
+  const isVSecondary = VARIANTS_SECONDARY.includes(variant)
+  const isVSolid = VARIANTS_SOLID.includes(variant)
+  const isVSubtle = VARIANTS_SUBTLE.includes(variant)
+  const isVText = VARIANTS_TEXT.includes(variant)
 
   const baseTokens = {
     size: (() => {
-      if (props.size === 'xs') return $spacing['button-h-xs']
-      if (props.size === 'sm') return $spacing['button-h-sm']
-      if (props.size === 'md') return $spacing['button-h-md']
-      if (props.size === 'lg') return $spacing['button-h-lg']
+      if (size === 'xs') return $spacing['button-h-xs']
+      if (size === 'sm') return $spacing['button-h-sm']
+      if (size === 'md') return $spacing['button-h-md']
+      if (size === 'lg') return $spacing['button-h-lg']
       return ''
     })(),
     bgColor: (() => {
@@ -119,7 +120,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     })(),
     hoverBgColor: (() => {
       if (isNoop) return 'transparent'
-      if (props.highlight === 'default') {
+      if (highlight === 'default') {
         if (isVText || isVGhost) return $color['hover-text-default']
         if (isVPrimary) return $color['primary-hover-default']
         if (isVSecondary) return $color['secondary-hover-default']
@@ -128,8 +129,8 @@ export const useBaseButton = (props: BaseButtonProps) => {
       return ''
     })(),
     pressBgColor: (() => {
-      if (isNoop || props.highlight === 'selected') return 'transparent'
-      if (isPressed || props.highlight === 'pressed') {
+      if (isNoop || highlight === 'selected') return 'transparent'
+      if (isPressed || highlight === 'pressed') {
         if (isVText || isVGhost) return $color['hover-text-pressed']
         if (isVPrimary) return $color['primary-hover-pressed']
         if (isVSecondary) return $color['secondary-hover-pressed']
@@ -137,7 +138,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
       }
       return ''
     })(),
-    pressTransform: isPressed && props.highlight === 'default' ? 'translateY(1px)' : 'unset',
+    pressTransform: isPressed && highlight === 'default' ? 'translateY(1px)' : 'unset',
     outlineOffset: `calc(1px + ${$spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
@@ -178,7 +179,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     alignItems: 'center',
     justifyContent: isVItem ? 'unset' : 'center',
     width: '100%',
-    opacity: props.loading ? 0 : 1,
+    opacity: loading ? 0 : 1,
     pointerEvents: 'none',
     userSelect: 'none',
     textAlign: isVItem ? 'left' : 'center',
@@ -186,18 +187,18 @@ export const useBaseButton = (props: BaseButtonProps) => {
 
   const bindings = {
     ...clickableBindings,
-    title: props.tooltip,
-    className: props.className,
-    style: props.style,
-    'aria-description': props.ariaDescription,
+    title: tooltip,
+    className: className,
+    style: style,
+    'aria-description': ariaDescription,
     css: cssBaseButton,
   }
 
   const spinnerSize = (() => {
-    if (props.size === 'xs') return $spacing['xs-5']
-    if (props.size === 'sm') return $spacing['xs-7']
-    if (props.size === 'md') return $spacing['xs-9']
-    if (props.size === 'lg') return $spacing['sm-0']
+    if (size === 'xs') return $spacing['xs-5']
+    if (size === 'sm') return $spacing['xs-7']
+    if (size === 'md') return $spacing['xs-9']
+    if (size === 'lg') return $spacing['sm-0']
     return ''
   })()
   const cssSpinner: CSSObject = {
@@ -216,9 +217,9 @@ export const useBaseButton = (props: BaseButtonProps) => {
 
   const content = (
     <>
-      <span css={cssChildren}>{props.children}</span>
+      <span css={cssChildren}>{children}</span>
 
-      {Boolean(props.loading) && (
+      {Boolean(loading) && (
         <span css={cssSpinner}>
           <Loader css={cssSpinnerIcon} />
         </span>

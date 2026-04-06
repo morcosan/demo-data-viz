@@ -1,6 +1,6 @@
 'use client'
 
-import { LogoSvg, useDefaults, useI18nService } from '@ds/core'
+import { LogoSvg, useI18nService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
 import { useEffect, useState } from 'react'
 
@@ -9,8 +9,8 @@ interface Props extends ReactProps {
   maxTimeout?: number
 }
 
-export const LoadingScreen = (rawProps: Props) => {
-  const props = useDefaults(rawProps, { minTimeout: 0, maxTimeout: 3000 })
+export const LoadingScreen = (props: Props) => {
+  const { children, minTimeout = 0, maxTimeout = 3000 } = props
   const { loading } = useI18nService()
   const [viewportWidth, setViewportWidth] = useState(0)
   const [hasMinTimeout, setHasMinTimeout] = useState(false)
@@ -31,8 +31,8 @@ export const LoadingScreen = (rawProps: Props) => {
   useEffect(() => {
     setViewportWidth(window.innerWidth)
 
-    const minTimer = setTimeout(() => setHasMinTimeout(true), props.minTimeout)
-    const maxTimer = setTimeout(() => setHasMaxTimeout(true), props.maxTimeout)
+    const minTimer = setTimeout(() => setHasMinTimeout(true), minTimeout)
+    const maxTimer = setTimeout(() => setHasMaxTimeout(true), maxTimeout)
 
     return () => {
       clearTimeout(minTimer)
@@ -44,7 +44,7 @@ export const LoadingScreen = (rawProps: Props) => {
     <>
       {/* CONTENT */}
       <div className="h-full w-full" aria-busy={!isReady}>
-        {props.children}
+        {children}
       </div>
 
       {/* OVERLAY */}

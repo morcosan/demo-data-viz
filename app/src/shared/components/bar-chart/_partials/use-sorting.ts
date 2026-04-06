@@ -6,11 +6,12 @@ interface Props extends BarChartProps {
 }
 
 export const useSorting = (props: Props) => {
-  const [sortKey, setSortKey] = useState<string | null>(props.sortKey || null)
-  const [sortDir, setSortDir] = useState<'asc' | 'desc' | false>(props.sortDir || false)
+  const { data, barKeys, entryKey, sortKey: sortKeyProp, sortDir: sortDirProp } = props
+  const [sortKey, setSortKey] = useState<string | null>(sortKeyProp || null)
+  const [sortDir, setSortDir] = useState<'asc' | 'desc' | false>(sortDirProp || false)
 
   const entries = useMemo(() => {
-    const filtered = props.data.entries.filter((entry) => props.barKeys.some((key) => typeof entry[key] === 'number'))
+    const filtered = data.entries.filter((entry) => barKeys.some((key) => typeof entry[key] === 'number'))
 
     if (!sortKey || !sortDir) return filtered
 
@@ -28,20 +29,20 @@ export const useSorting = (props: Props) => {
           ? strA.localeCompare(strB)
           : strB.localeCompare(strA)
     })
-  }, [props.data.entries, props.barKeys, sortKey, sortDir])
+  }, [data.entries, barKeys, sortKey, sortDir])
 
   const toggleSort = (key: string) => {
-    const mainDir = key === props.entryKey ? 'asc' : 'desc'
-    const secDir = key === props.entryKey ? 'desc' : 'asc'
+    const mainDir = key === entryKey ? 'asc' : 'desc'
+    const secDir = key === entryKey ? 'desc' : 'asc'
     const otherDir = sortDir === mainDir ? secDir : sortDir === secDir ? false : mainDir
     setSortKey(key)
     setSortDir(sortKey === key ? otherDir : mainDir)
   }
 
   useEffect(() => {
-    setSortKey(props.sortKey || null)
-    setSortDir(props.sortDir || false)
-  }, [props.sortKey, props.sortDir])
+    setSortKey(sortKeyProp || null)
+    setSortDir(sortDirProp || false)
+  }, [sortKeyProp, sortDirProp])
 
   return { entries, sortKey, sortDir, toggleSort }
 }

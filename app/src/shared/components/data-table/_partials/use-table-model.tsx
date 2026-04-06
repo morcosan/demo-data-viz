@@ -10,27 +10,24 @@ interface Props {
   cellFn: (info: CellContext<TableRow, TableCell>) => ReactNode
 }
 
-const useTableModel = (props: Props) => {
+const useTableModel = ({ cols, rows, queries, cellFn }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const columns = useMemo((): ColumnDef<TableRow>[] => {
-    return props.cols.map((col) => ({
+    return cols.map((col) => ({
       accessorKey: col.key,
       header: col.label,
       size: col.size,
-      cell: props.cellFn,
+      cell: cellFn,
     }))
-  }, [props.cols, props.cellFn])
+  }, [cols, cellFn])
 
-  const lcQueries = useMemo(
-    () => props.queries.map((query) => query.trim().toLowerCase()).filter(Boolean),
-    [props.queries],
-  )
+  const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     columns,
-    data: props.rows,
+    data: rows,
     state: { sorting, globalFilter: lcQueries },
     getColumnCanGlobalFilter: () => true,
     globalFilterFn: (row: Row<TableRow>, columnId: string, lcQueries: string[]) => {

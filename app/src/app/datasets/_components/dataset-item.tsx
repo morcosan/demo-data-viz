@@ -12,28 +12,24 @@ interface Props extends ReactProps {
 }
 
 export const DatasetItem = (props: Props) => {
-  const { dataset } = props
+  const { className, dataset, height, keyword, onClick, selected, style } = props
 
   return (
-    <li className={props.className} style={props.style}>
+    <li className={className} style={style}>
       <Link
         href={`/datasets?id=${encodeURIComponent(dataset.id)}`}
         className={cx(
           'relative flex flex-wrap items-center overflow-hidden',
           'px-xs-4 py-xs-2 rounded-sm shadow-xs',
           'active:translate-y-px',
-          props.selected
+          selected
             ? 'bg-color-secondary-button-bg text-color-secondary-button-text font-weight-md'
             : 'bg-color-bg-card',
         )}
-        style={{ height: props.height }}
-        onClick={props.onClick}
+        style={{ height }}
+        onClick={onClick}
       >
-        <TextHighlight
-          text={dataset.title}
-          query={props.keyword}
-          className="text-size-sm font-weight-md line-clamp-2"
-        />
+        <TextHighlight text={dataset.title} query={keyword} className="text-size-sm font-weight-md line-clamp-2" />
         <span className="w-full" />
         <span className="text-size-xs text-color-text-subtle font-weight-sm">
           {dataset.stats && `${formatNumber(dataset.stats.colsCount)} x ${formatNumber(dataset.stats.rowsCount)}`}

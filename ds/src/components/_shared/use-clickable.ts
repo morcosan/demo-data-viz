@@ -9,34 +9,34 @@ export interface ClickableProps {
   disabled?: boolean
   linkHref?: string
   linkType?: LinkType
-  onClick?(event: ReactMouseEvent): void
+  onClick?: (event: ReactMouseEvent) => void
 }
 
 export const useClickable = (props: ClickableProps) => {
-  const { onClick: onClickProp } = props
+  const { disabled, linkHref, linkType, loading, onClick } = props
   const { navigate } = useRoutingService()
   const [isPressed, setIsPressed] = useState(false)
 
-  const linkTarget = props.linkType === 'internal' ? '_self' : '_blank'
-  const isNoop = props.disabled || props.loading
+  const linkTarget = linkType === 'internal' ? '_self' : '_blank'
+  const isNoop = disabled || loading
 
   const handleClick = useCallback(
     (event: ReactMouseEvent) => {
-      if (isNoop || props.linkType !== 'external') event.preventDefault()
+      if (isNoop || linkType !== 'external') event.preventDefault()
       if (isNoop) return
 
-      onClickProp?.(event)
+      onClick?.(event)
 
       if (isA11yModePointer()) {
         const button = event.target as HTMLElement
         button.blur()
       }
 
-      if (props.linkHref && props.linkType === 'internal') {
-        navigate(props.linkHref)
+      if (linkHref && linkType === 'internal') {
+        navigate(linkHref)
       }
     },
-    [isNoop, props.linkType, props.linkHref, onClickProp, navigate],
+    [isNoop, linkType, linkHref, onClick, navigate],
   )
 
   const handleMouseDown = () => !isNoop && setIsPressed(true)
@@ -74,8 +74,8 @@ export const useClickable = (props: ClickableProps) => {
       onKeyDown: handleKeyDown,
       onKeyUp: handleKeyUp,
     }
-    if (props.linkHref) {
-      bindings.href = props.linkHref
+    if (linkHref) {
+      bindings.href = linkHref
       bindings.target = linkTarget
       bindings.rel = 'noopener noreferrer'
     }

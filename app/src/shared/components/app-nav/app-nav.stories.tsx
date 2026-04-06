@@ -21,16 +21,18 @@ const meta: Meta<typeof AppNav> = {
     clearDefaults: ['mobileHeight', 'desktopMinWidth', 'desktopMaxWidth', 'cookieKeyPinned'],
   }),
 
-  render: function Story(props: AppNavProps) {
+  render: (props: AppNavProps) => {
+    const { appLogo, navMenu } = props
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { location } = useLocationMock()
 
     return (
       <AppNav
         {...props}
-        appLogo={props.appLogo ? () => props.appLogo as any : AppLogo}
+        appLogo={appLogo ? () => appLogo as any : AppLogo}
         navMenu={
-          props.navMenu
-            ? () => props.navMenu as any
+          navMenu
+            ? () => navMenu as any
             : (navMenuProps: NavMenuProps) => <NavMenu {...navMenuProps} pathname={location.pathname} />
         }
       />

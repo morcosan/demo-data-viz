@@ -3,28 +3,34 @@ import { useThemeService } from '../../services/theme-service'
 import { CSS__FIXED_OVERLAY } from '../../utilities/internal/css-utils'
 import { ANIM_TIME, type ModalProps } from './_types'
 
-export const useStyles = (props: ModalProps, isVisible: boolean, stackIndex: number) => {
+interface Props extends ModalProps {
+  isVisible: boolean
+  stackIndex: number
+}
+
+export const useStyles = (props: Props) => {
+  const { height, isVisible, noDismiss, noFooter, stackIndex, width } = props
   const { $blur, $color, $fontSize, $fontWeight, $spacing, $radius, $shadow, $zIndex } = useThemeService()
 
   const tokens = {
-    modalOverlayBgColor: props.noDismiss ? $color['modal-overlay-strong'] : $color['modal-overlay-subtle'],
-    modalOverlayBlur: props.noDismiss ? `blur(${$blur['default']})` : `blur(${$blur['subtle']})`,
+    modalOverlayBgColor: noDismiss ? $color['modal-overlay-strong'] : $color['modal-overlay-subtle'],
+    modalOverlayBlur: noDismiss ? `blur(${$blur['default']})` : `blur(${$blur['subtle']})`,
     modalMargin: $spacing['xs-9'],
     modalContentPX: $spacing['sm-0'],
     modalContentPY: $spacing['xs-8'],
     modalZIndex: `calc(${$zIndex['modal']} + ${stackIndex})`,
     modalWidth: (() => {
-      if (props.width === 'xs') return $spacing['modal-xs']
-      if (props.width === 'sm') return $spacing['modal-sm']
-      if (props.width === 'md') return $spacing['modal-md']
-      if (props.width === 'lg') return $spacing['modal-lg']
-      if (props.width === 'xl') return $spacing['modal-xl']
-      if (props.width === 'full') return '100%'
+      if (width === 'xs') return $spacing['modal-xs']
+      if (width === 'sm') return $spacing['modal-sm']
+      if (width === 'md') return $spacing['modal-md']
+      if (width === 'lg') return $spacing['modal-lg']
+      if (width === 'xl') return $spacing['modal-xl']
+      if (width === 'full') return '100%'
       return ''
     })(),
     modalHeight: (() => {
-      if (props.height === 'fit') return 'fit-content'
-      if (props.height === 'full') return '100%'
+      if (height === 'fit') return 'fit-content'
+      if (height === 'full') return '100%'
       return ''
     })(),
   }
@@ -72,7 +78,7 @@ export const useStyles = (props: ModalProps, isVisible: boolean, stackIndex: num
     overflowY: 'scroll',
   }
   const cssFooter: CSSObject = {
-    display: props.noFooter ? 'none' : 'flex',
+    display: noFooter ? 'none' : 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
     marginTop: $spacing['xs-5'],

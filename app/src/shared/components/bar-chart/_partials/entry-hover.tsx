@@ -7,16 +7,16 @@ interface Props extends ReactProps {
   radius: number
 }
 
-export const EntryHover = (props: Props) => {
-  if (!props.visible) return null
+export const EntryHover = ({ ref, visible, x, y, width, height, radius }: Props) => {
+  if (!visible) return null
   return (
     <rect
-      ref={props.ref}
+      ref={ref}
       x={0}
-      y={props.y}
-      width={props.width + props.x}
-      height={props.height}
-      rx={props.radius}
+      y={y}
+      width={width + x}
+      height={height}
+      rx={radius}
       fill="var(--ds-color-hover-text-default)"
     />
   )

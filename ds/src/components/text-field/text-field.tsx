@@ -2,7 +2,7 @@
 
 import '@mantine/core/styles/Input.css'
 import { useCallback, useEffect, useRef } from 'react'
-import { useDefaults, useRefHandle } from '../../utilities/react-utils'
+import { useRefHandle } from '../../utilities/react-utils'
 import { Keyboard } from '../../utilities/various-utils'
 import { type InputElement, type TextFieldProps } from './_types'
 import { useStyles } from './_use-styles'
@@ -10,16 +10,36 @@ import { useStyles } from './_use-styles'
 export type { TextFieldHandle, TextFieldProps, TextFieldSize, TextFieldVariant } from './_types'
 
 /** Basic text and textarea field component */
-export const TextField = (rawProps: TextFieldProps) => {
-  const props = useDefaults(rawProps, {
-    variant: 'default',
-    size: 'md',
-  })
-  const { onSubmit, onChange } = props
+export const TextField = (props: TextFieldProps) => {
+  const {
+    ariaDescription,
+    ariaLabel,
+    className,
+    disabled,
+    id,
+    invalid,
+    maxLength,
+    minRows: minRowsProp,
+    maxRows: maxRowsProp,
+    multiline,
+    onBlur,
+    onChange,
+    onFocus,
+    onSubmit,
+    placeholder,
+    prefix,
+    readonly,
+    ref,
+    size = 'md',
+    style,
+    suffix,
+    value,
+    variant = 'default',
+  } = props
   const inputRef = useRef<InputElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-  const isNoop = Boolean(props.disabled || props.readonly)
-  const { cssInput, cssPrefix, cssRoot, cssSuffix } = useStyles(props, isNoop)
+  const isNoop = Boolean(disabled || readonly)
+  const { cssInput, cssPrefix, cssRoot, cssSuffix } = useStyles({ ...props, isNoop, size, variant })
 
   const handleKeyDown = useCallback(
     (event: ReactKeyboardEvent) => event.key === Keyboard.ENTER && onSubmit?.(event),
@@ -29,15 +49,15 @@ export const TextField = (rawProps: TextFieldProps) => {
   const updateInputHeight = useCallback(() => {
     const elem = inputRef.current
 
-    if (elem && props.multiline) {
+    if (elem && multiline) {
       // Must set 'auto' to calculate real height
       elem.style.height = 'auto'
       // Calculate real height
       let height = elem.scrollHeight
 
-      if (props.maxRows) {
-        const minRows = props.minRows || 1
-        const maxRows = props.maxRows > minRows ? props.maxRows : minRows
+      if (maxRowsProp) {
+        const minRows = minRowsProp || 1
+        const maxRows = maxRowsProp > minRows ? maxRowsProp : minRows
         const style = window.getComputedStyle(elem)
         const lineHeight = parseFloat(style.lineHeight)
         const paddingY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
@@ -49,32 +69,32 @@ export const TextField = (rawProps: TextFieldProps) => {
       // Set real height
       elem.style.height = height + 'px'
     }
-  }, [props.multiline, props.maxRows, props.minRows])
+  }, [minRowsProp, maxRowsProp, multiline])
 
   const handleChange = useCallback(
     (event: ReactChangeEvent<InputElement>) => {
       onChange?.(event.target.value, event)
       updateInputHeight()
     },
-    [props.minRows, props.maxRows, onChange, updateInputHeight],
+    [minRowsProp, maxRowsProp, onChange, updateInputHeight],
   )
 
   useEffect(() => {
-    if (props.multiline && inputRef.current) {
-      inputRef.current.rows = props.minRows || 1
+    if (multiline && inputRef.current) {
+      inputRef.current.rows = minRowsProp || 1
       updateInputHeight()
     }
-  }, [props.minRows, props.maxRows, props.multiline, updateInputHeight])
+  }, [minRowsProp, maxRowsProp, multiline, updateInputHeight])
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.value = props.value || ''
+      inputRef.current.value = value || ''
       updateInputHeight()
     }
-  }, [props.value, updateInputHeight])
+  }, [value, updateInputHeight])
 
   useRefHandle(
-    props.ref,
+    ref,
     wrapperRef,
     {
       getValue: () => inputRef.current?.value || '',
@@ -90,28 +110,28 @@ export const TextField = (rawProps: TextFieldProps) => {
 
   const bindings = {
     ref: inputRef,
-    id: props.id,
-    maxLength: props.maxLength || undefined,
-    placeholder: props.placeholder,
-    'aria-label': props.ariaLabel,
-    'aria-description': props.ariaDescription,
-    'aria-invalid': props.invalid,
-    'aria-disabled': props.disabled,
+    id: id,
+    maxLength: maxLength || undefined,
+    placeholder: placeholder,
+    'aria-label': ariaLabel,
+    'aria-description': ariaDescription,
+    'aria-invalid': invalid,
+    'aria-disabled': disabled,
     readOnly: isNoop,
     css: cssInput,
-    onFocus: props.onFocus,
-    onBlur: props.onBlur,
+    onFocus: onFocus,
+    onBlur: onBlur,
     onKeyDown: handleKeyDown,
     onChange: handleChange,
   }
 
   return (
-    <div ref={wrapperRef} css={cssRoot} className={props.className} style={props.style}>
-      {Boolean(props.prefix) && <div css={cssPrefix}>{props.prefix}</div>}
+    <div ref={wrapperRef} css={cssRoot} className={className} style={style}>
+      {Boolean(prefix) && <div css={cssPrefix}>{prefix}</div>}
 
-      {props.multiline ? <textarea rows={props.minRows} {...bindings} /> : <input type="text" {...bindings} />}
+      {multiline ? <textarea rows={minRowsProp} {...bindings} /> : <input type="text" {...bindings} />}
 
-      {Boolean(props.suffix) && <div css={cssSuffix}>{props.suffix}</div>}
+      {Boolean(suffix) && <div css={cssSuffix}>{suffix}</div>}
     </div>
   )
 }

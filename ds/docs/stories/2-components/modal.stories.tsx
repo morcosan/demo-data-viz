@@ -28,12 +28,15 @@ const meta: Meta = {
 const Default: StoryObj<typeof Modal> = {
   tags: ['autodocs', 'controls'],
 
-  render: function Story(props: ModalProps) {
+  render: (props: ModalProps) => {
+    const { actions, opened: openedProp, onClose } = props
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [opened, setOpened] = useState(false)
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-      setOpened(props.opened)
-    }, [props.opened])
+      setOpened(openedProp)
+    }, [openedProp])
 
     return (
       <>
@@ -44,10 +47,10 @@ const Default: StoryObj<typeof Modal> = {
         <Modal
           {...props}
           opened={opened}
-          actions={<div dangerouslySetInnerHTML={{ __html: String(props.actions) }} />}
+          actions={<div dangerouslySetInnerHTML={{ __html: String(actions) }} />}
           onClose={() => {
             setOpened(false)
-            props.onClose?.()
+            onClose?.()
           }}
         />
       </>
@@ -56,11 +59,15 @@ const Default: StoryObj<typeof Modal> = {
 }
 
 const Nesting: StoryObj<typeof Modal> = {
-  render: function Story() {
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [opened1, setOpened1] = useState(false)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [opened2, setOpened2] = useState(false)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [opened3, setOpened3] = useState(false)
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const slotTriggers = useMemo(
       () => (
         <div className="gap-xs-5 flex">

@@ -13,10 +13,10 @@ const meta: Meta = {
     },
     clearDefaults: ['label'],
 
-    render: (props: TooltipProps) => (
-      <Tooltip {...props}>
-        {props.children ? (
-          <div dangerouslySetInnerHTML={{ __html: props.children || '' }} />
+    render: ({ children, ...rest }: TooltipProps) => (
+      <Tooltip {...rest}>
+        {children ? (
+          <div dangerouslySetInnerHTML={{ __html: children || '' }} />
         ) : (
           <div className="border" tabIndex={0}>
             Content with tooltip

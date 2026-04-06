@@ -7,20 +7,12 @@ interface Props extends ReactProps {
   chartSize: 'sm' | 'md' | 'lg'
 }
 
-export const EntryLabel = (props: Props) => {
+export const EntryLabel = ({ x, y, height, label, chartSize, className }: Props) => {
   return (
-    <foreignObject x={0} y={props.y - props.height / 2} width={props.x} height={props.height}>
-      <div
-        className={cx(
-          'pl-xs-5 pr-xs-5 h-full w-full overflow-hidden',
-          'flex items-center justify-end',
-          props.className,
-        )}
-      >
-        <div
-          className={cx('text-right', props.chartSize === 'sm' ? 'text-size-xs truncate' : 'text-size-sm line-clamp-2')}
-        >
-          {props.label}
+    <foreignObject x={0} y={y - height / 2} width={x} height={height}>
+      <div className={cx('pl-xs-5 pr-xs-5 h-full w-full overflow-hidden', 'flex items-center justify-end', className)}>
+        <div className={cx('text-right', chartSize === 'sm' ? 'text-size-xs truncate' : 'text-size-sm line-clamp-2')}>
+          {label}
         </div>
       </div>
     </foreignObject>

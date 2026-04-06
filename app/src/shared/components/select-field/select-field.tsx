@@ -20,15 +20,16 @@ export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
 }
 
 export const SelectField = (props: SelectFieldProps) => {
+  const { className, clearable, id, onChange, options, placeholder, ref, style, value } = props
   const { t } = useTranslation()
 
   const getSelectProps = (css: Function): MantineSelectProps => ({
-    id: props.id,
-    data: props.options,
-    value: props.value,
-    placeholder: props.placeholder,
-    clearable: props.clearable,
-    onChange: props.onChange,
+    id: id,
+    data: options,
+    value: value,
+    placeholder: placeholder,
+    clearable: clearable,
+    onChange: onChange,
     allowDeselect: false,
     withScrollArea: false,
     comboboxProps: {
@@ -42,13 +43,13 @@ export const SelectField = (props: SelectFieldProps) => {
         },
       },
     },
-    className: cx('a11y-outline-proxy', props.className),
-    style: props.style,
+    className: cx('a11y-outline-proxy', className),
+    style: style,
     classNames: {
       root: css`
         ${cssField.styles}
       `,
-      input: props.clearable ? 'clearable' : undefined,
+      input: clearable ? 'clearable' : undefined,
       dropdown: css`
         ${cssDropdown.styles}
       `,
@@ -56,7 +57,7 @@ export const SelectField = (props: SelectFieldProps) => {
     clearButtonProps: { title: t('core.action.clearSelection') },
   })
 
-  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} ref={props.ref} />}</ClassNames>
+  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} ref={ref} />}</ClassNames>
 }
 
 /**********************************************************************************************************************

@@ -4,7 +4,11 @@ import { type CSSProperties, useMemo, useRef, useState } from 'react'
 
 type WithClientRect = { getBoundingClientRect: () => DOMRect | undefined }
 
-export const useFullscreen = (padding: string) => {
+interface Props {
+  padding: string
+}
+
+export const useFullscreen = ({ padding }: Props) => {
   const { t } = useTranslation()
   const elemRef = useRef<WithClientRect>(null)
   const [enabled, setEnabled] = useState(false)

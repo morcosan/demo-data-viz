@@ -11,13 +11,12 @@ interface Props {
   onClose?: () => void
 }
 
-export const DetailsModal = (props: Props) => {
+export const DetailsModal = ({ opened, dataset, onClose }: Props) => {
   const { t } = useTranslation()
-  const { dataset } = props
 
   if (!dataset) return null
   return (
-    <Modal opened={props.opened} title={t('dataViz.label.datasetDetails')} width="sm" noFooter onClose={props.onClose}>
+    <Modal opened={opened} title={t('dataViz.label.datasetDetails')} width="sm" noFooter onClose={onClose}>
       {/* METADATA */}
       <SettingSection header={t('dataViz.label.headerMetadata')}>
         <div>

@@ -19,7 +19,7 @@ export interface DatasetPaneProps extends ReactProps {
   view: DataView
 }
 
-export const DataPane = (props: DatasetPaneProps) => {
+export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
   const { getCountryCode } = useCountries()
   const searchParams = useSearchParams()
   const indexKey = useTableStore((s) => s.indexKey)
@@ -30,8 +30,8 @@ export const DataPane = (props: DatasetPaneProps) => {
   const [queries, setQueries] = useState<string[]>([])
 
   const pivotedData = useMemo(
-    () => pivotJsonStatTable(props.data, { indexKey, pivotKey, filterByCol }),
-    [props.data, indexKey, pivotKey, filterByCol],
+    () => pivotJsonStatTable(data, { indexKey, pivotKey, filterByCol }),
+    [data, indexKey, pivotKey, filterByCol],
   )
   const isColVisible = useCallback(
     (col: TableCol) => !col.pivoted || pivotQueries.some((keyword) => col.label.toLowerCase().includes(keyword)),
@@ -44,11 +44,12 @@ export const DataPane = (props: DatasetPaneProps) => {
   }, [pivotedData, pivotKey, pivotQueries, isColVisible])
 
   const chartData = useMemo(() => {
+    const pivotCol = data.cols.find((col) => col.key === pivotKey)
     return {
       ...visibleData,
-      cols: pivotKey ? [...visibleData.cols, props.data.cols.find((col) => col.key === pivotKey)!] : visibleData.cols,
+      cols: pivotCol ? [...visibleData.cols, pivotCol] : visibleData.cols,
     }
-  }, [visibleData, pivotKey, props.data])
+  }, [visibleData, pivotKey, data])
 
   const cellFn = (value: string, query: string, flip?: boolean): ReactNode => {
     const flag = getCountryCode(value)
@@ -76,14 +77,14 @@ export const DataPane = (props: DatasetPaneProps) => {
   }
 
   useEffect(() => {
-    initTableStore(props.data)
+    initTableStore(data)
     loadDataQueries()
-  }, [props.data])
+  }, [data])
 
   useEffect(() => {
     // Reset all filters when reopening the same dataset
     if (!searchParams.has(UrlKey.INDEX_KEY)) {
-      initTableStore(props.data)
+      initTableStore(data)
       loadDataQueries(queries)
     }
   }, [searchParams])
@@ -92,18 +93,18 @@ export const DataPane = (props: DatasetPaneProps) => {
     <div
       className={cx(
         'bg-color-bg-card border-color-border-subtle flex max-w-full flex-col rounded-md border',
-        props.className,
+        className,
       )}
     >
-      <DataToolbar data={props.data} queries={queries} onChangeQueries={onChangeQueries} />
+      <DataToolbar data={data} queries={queries} onChangeQueries={onChangeQueries} />
 
-      {props.view === 'table' && (
+      {view === 'table' && (
         <TableView data={visibleData} queries={queries} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
       )}
-      {props.view === 'chart' && (
+      {view === 'chart' && (
         <ChartView data={chartData} queries={queries} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
       )}
-      {props.view === 'map' && (
+      {view === 'map' && (
         <MapView data={visibleData} queries={queries} cellFn={cellFn} className="min-h-0 flex-1 rounded-md" />
       )}
     </div>

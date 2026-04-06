@@ -46,8 +46,8 @@ const meta: Meta = {
     },
     inlineRadios: ['chartSize'],
     clearDefaults: ['data', 'entryKey', 'entryName', 'entryFn', 'barNames'],
-    render: (props: BarChartProps) => {
-      return <BarChart {...props} entryFn={props.entryFn ? eval(String(props.entryFn)) : undefined} />
+    render: ({ entryFn, ...rest }: BarChartProps) => {
+      return <BarChart {...rest} entryFn={entryFn ? eval(String(entryFn)) : undefined} />
     },
   }),
 }

@@ -27,11 +27,11 @@ interface Props extends ReactProps {
   onClickBack: () => void
 }
 
-export const DetailsSection = (props: Props) => {
+export const DetailsSection = ({ onClickBack }: Props) => {
   const { t } = useTranslation()
   const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
   const DATA_VIEW_VALUES = ['table', 'chart', 'map'] as const satisfies DataView[]
-  const fullscreen = useFullscreen('var(--ds-spacing-xs-5)')
+  const fullscreen = useFullscreen({ padding: 'var(--ds-spacing-xs-5)' })
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id') || ''
@@ -115,12 +115,7 @@ export const DetailsSection = (props: Props) => {
       >
         {/* HEADER */}
         <div className="flex">
-          <IconButton
-            tooltip={t('core.action.back')}
-            size="sm"
-            className="mr-xs-1 lg:hidden!"
-            onClick={props.onClickBack}
-          >
+          <IconButton tooltip={t('core.action.back')} size="sm" className="mr-xs-1 lg:hidden!" onClick={onClickBack}>
             <ArrowBackSvg className="h-xs-7" />
           </IconButton>
 
@@ -180,6 +175,6 @@ export const DetailsSection = (props: Props) => {
  * Memo
  */
 
-const DatasetPaneMemo = memo(function DatasetPaneMemo(props: DatasetPaneProps) {
-  return <DataPane data={props.data} view={props.view} className="min-h-0 flex-1" />
+const DatasetPaneMemo = memo(function DatasetPaneMemo({ data, view }: DatasetPaneProps) {
+  return <DataPane data={data} view={view} className="min-h-0 flex-1" />
 })

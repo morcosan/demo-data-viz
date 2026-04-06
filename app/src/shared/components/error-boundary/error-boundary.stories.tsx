@@ -10,9 +10,9 @@ const meta: Meta = {
     },
   }),
 
-  render: (props: ReactProps) => {
+  render: ({ children }: ReactProps) => {
     const ThrowError = () => {
-      eval(props.children as string)
+      eval(children as string)
       return null
     }
     return (

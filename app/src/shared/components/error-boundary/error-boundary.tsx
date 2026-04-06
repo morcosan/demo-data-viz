@@ -4,14 +4,14 @@ import { useTranslation } from '@app-i18n'
 import { WarningSvg } from '@ds/core'
 import { ErrorBoundary as ReactErrorBoundary, type FallbackProps } from 'react-error-boundary'
 
-export const ErrorBoundary = (props: ReactProps) => {
+export const ErrorBoundary = ({ children, className }: ReactProps) => {
   const { t } = useTranslation()
 
   const fallbackRender = ({ error }: FallbackProps) => {
     const message = String(error instanceof Error ? error.message : error)
 
     return (
-      <div className={cx('flex-center p-xs-3 flex h-full w-full flex-1', props.className)}>
+      <div className={cx('flex-center p-xs-3 flex h-full w-full flex-1', className)}>
         <div
           className={cx(
             'p-xs-7 lg:p-sm-0 flex flex-wrap',
@@ -29,5 +29,5 @@ export const ErrorBoundary = (props: ReactProps) => {
     )
   }
 
-  return <ReactErrorBoundary fallbackRender={fallbackRender}>{props.children}</ReactErrorBoundary>
+  return <ReactErrorBoundary fallbackRender={fallbackRender}>{children}</ReactErrorBoundary>
 }

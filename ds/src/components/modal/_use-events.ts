@@ -6,6 +6,7 @@ import { ANIM_TIME, type ModalProps } from './_types'
 let _globalStackIndex = 0
 
 export const useEvents = (props: ModalProps) => {
+  const { opened, onClose, onClosed, onOpened, noDismiss } = props
   const [isVisible, setIsVisible] = useState(false)
   const [stackIndex, setStackIndex] = useState(0)
   const modalRef = useRef<HTMLDivElement | null>(null)
@@ -15,7 +16,7 @@ export const useEvents = (props: ModalProps) => {
 
   const isLastStackIndex = (index: number) => Boolean(index && index === _globalStackIndex)
   const computeStackIndex = () => {
-    if (props.opened) {
+    if (opened) {
       _globalStackIndex++
       setStackIndex(_globalStackIndex)
     } else {
@@ -29,14 +30,14 @@ export const useEvents = (props: ModalProps) => {
   const handleModalOpen = () => {
     if (isVisible) return
     setIsVisible(true)
-    wait(ANIM_TIME.SHOW).then(props.onOpened)
+    wait(ANIM_TIME.SHOW).then(onOpened)
     wait(10).then(() => modalRef.current?.focus()) // Wait for html to be visible
     triggerRef.current = document.activeElement as HTMLElement | null
   }
   const handleModalClose = () => {
     if (!isVisible) return
     setIsVisible(false)
-    wait(ANIM_TIME.HIDE).then(props.onClosed)
+    wait(ANIM_TIME.HIDE).then(onClosed)
     triggerRef.current?.focus()
   }
 
@@ -44,11 +45,11 @@ export const useEvents = (props: ModalProps) => {
     (event: KeyboardEvent) => {
       if (!isVisible || !isLastStackIndex(stackIndex)) return
       if (event.key !== Keyboard.ESCAPE) return
-      if (props.noDismiss) return
+      if (noDismiss) return
       event.stopPropagation()
-      props.onClose?.()
+      onClose?.()
     },
-    [isVisible, stackIndex, props.onClose, props.noDismiss],
+    [isVisible, stackIndex, onClose, noDismiss],
   )
 
   const handleWindowFocusIn = useCallback(
@@ -84,8 +85,8 @@ export const useEvents = (props: ModalProps) => {
 
   useEffect(() => {
     computeStackIndex()
-    props.opened ? handleModalOpen() : handleModalClose()
-  }, [props.opened])
+    opened ? handleModalOpen() : handleModalClose()
+  }, [opened])
 
   return {
     focusTrap1Ref,

@@ -1,4 +1,12 @@
-export const changelog: ChangelogItem[] = [
+export const CHANGELOG = [
+  {
+    version: 'v0.7.0',
+    date: '06-04-2026',
+    changes: {
+      deprecated: ['Deprecated `useDefaults` utility hook'],
+      internal: ['Refactored props setup for all components and hooks'],
+    },
+  },
   {
     version: 'v0.6.0',
     date: '05-04-2026',
@@ -157,4 +165,4 @@ export const changelog: ChangelogItem[] = [
       docs: ['Created basic Storybook docs for design tokens, web core and versioning'],
     },
   },
-]
+] as const satisfies ChangelogItem[]

@@ -7,6 +7,7 @@ import { DocsPage } from '../components/docs-page'
 import { fixBrokenCSS } from './_preview-css-fix'
 import {
   computeServices,
+  type DocsComponentProps,
   type DocsContainerProps,
   type GlobalConfig,
   type GlobalDefaults,
@@ -90,15 +91,15 @@ const getStoryConfig = (providers: HOC[]) => {
 const getDocsConfig = (providers: HOC[]) => {
   return {
     components: {
-      pre: (props: { className?: string; children: string | { props: ReactProps } }) => {
+      pre: ({ children: childrenProp, className: classNameProp }: DocsComponentProps) => {
         let children, className
 
-        if (typeof props.children === 'string') {
-          children = props.children
-          className = props.className
+        if (typeof childrenProp === 'string') {
+          children = childrenProp
+          className = classNameProp
         } else {
-          children = props.children?.props.children
-          className = props.children?.props.className
+          children = childrenProp?.props.children
+          className = childrenProp?.props.className
         }
 
         return <DocsCodeBlock code={String(children)} language={className?.replace('language-', '') as any} />
@@ -106,16 +107,17 @@ const getDocsConfig = (providers: HOC[]) => {
     },
 
     container: (props: DocsContainerProps) => {
-      const isAutodocs = props.context.attachedCSFFiles?.size > 0
+      const { children, context } = props
+      const isAutodocs = context.attachedCSFFiles?.size > 0
 
       fixBrokenCSS()
 
       return isAutodocs ? (
         <DocsContainer {...(props as any)} />
       ) : (
-        <HocComposer hocs={computeServices(providers, props.context.store.userGlobals.globals)}>
+        <HocComposer hocs={computeServices(providers, context.store.userGlobals.globals)}>
           <DocsContainer {...(props as any)}>
-            <DocsPage type="mdx">{props.children}</DocsPage>
+            <DocsPage type="mdx">{children}</DocsPage>
           </DocsContainer>
         </HocComposer>
       )

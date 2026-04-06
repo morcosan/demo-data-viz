@@ -15,16 +15,16 @@ interface Props {
 }
 
 export const DataToolbar = (props: Props) => {
+  const { data, queries, onChangeQueries } = props
   const { t } = useTranslation()
   const { isViewportMinXL, isViewportMD } = useViewportService()
   const isMdOrLarger = isViewportMinXL || isViewportMD
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
   const [openedModal, setOpenedModal] = useState(false)
-  const { cellsByCol, cols } = props.data
-  const colKeys = useMemo(() => [...Object.keys(cellsByCol), ''], [cellsByCol])
+  const colKeys = useMemo(() => [...Object.keys(data.cellsByCol), ''], [data.cellsByCol])
   const filterCount = (indexKey ? colKeys.length - (pivotKey ? 3 : 2) : 0) + (pivotKey ? 1 : 0)
-  const getColLabel = useCallback((key: string) => cols.find((col) => col.key === key)?.label || key, [cols])
+  const getColLabel = useCallback((key: string) => data.cols.find((col) => col.key === key)?.label || key, [data.cols])
   const [query, setQuery] = useState('')
   const isQueryDirty = useRef(false)
 
@@ -47,7 +47,7 @@ export const DataToolbar = (props: Props) => {
   const handleQueryChange = (value: string) => {
     isQueryDirty.current = true
     setQuery(value)
-    props.onChangeQueries(
+    onChangeQueries(
       value
         .split(QueryOperator.SPLIT)
         .map((v) => v.trim().toLowerCase())
@@ -57,14 +57,14 @@ export const DataToolbar = (props: Props) => {
 
   const resetQuery = () => {
     isQueryDirty.current = false
-    setQuery(props.queries.join(QueryOperator.JOIN))
+    setQuery(queries.join(QueryOperator.JOIN))
   }
 
   useEffect(() => {
     if (!isQueryDirty.current) {
-      setQuery(props.queries.join(QueryOperator.JOIN))
+      setQuery(queries.join(QueryOperator.JOIN))
     }
-  }, [props.queries])
+  }, [queries])
 
   return (
     <div
@@ -106,7 +106,7 @@ export const DataToolbar = (props: Props) => {
       {/* MODAL */}
       <FiltersModal
         opened={openedModal}
-        data={props.data}
+        data={data}
         indexOptions={indexOptions}
         pivotOptions={pivotOptions}
         onClose={() => setOpenedModal(false)}
@@ -125,6 +125,7 @@ interface RowColProps {
 }
 
 const IndexPivotMemo = memo(function IndexPivotMemo(props: RowColProps) {
+  const { indexOptions, pivotOptions } = props
   const { t } = useTranslation()
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
@@ -137,7 +138,7 @@ const IndexPivotMemo = memo(function IndexPivotMemo(props: RowColProps) {
       <Tooltip label={t('dataViz.label.fieldLabelForIndex')}>
         <SelectField
           id="index-col"
-          options={props.indexOptions}
+          options={indexOptions}
           value={indexKey}
           className={fieldClass}
           onChange={setIndexKey}
@@ -149,7 +150,7 @@ const IndexPivotMemo = memo(function IndexPivotMemo(props: RowColProps) {
       <Tooltip label={t('dataViz.label.fieldLabelForPivot')}>
         <SelectField
           id="pivot-col"
-          options={props.pivotOptions}
+          options={pivotOptions}
           value={pivotKey}
           className={fieldClass}
           onChange={setPivotKey}

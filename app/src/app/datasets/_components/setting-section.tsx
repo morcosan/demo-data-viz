@@ -2,7 +2,7 @@ interface Props extends ReactProps {
   header: string
 }
 
-export const SettingSection = (props: Props) => {
+export const SettingSection = ({ header, children, className }: Props) => {
   const headerClass = cx(
     // Header
     'mb-xs-3 pb-xs-1 relative',
@@ -22,9 +22,9 @@ export const SettingSection = (props: Props) => {
   )
 
   return (
-    <section className={props.className}>
-      <h2 className={headerClass}>{props.header}</h2>
-      <dl className={listClass}>{props.children}</dl>
+    <section className={className}>
+      <h2 className={headerClass}>{header}</h2>
+      <dl className={listClass}>{children}</dl>
     </section>
   )
 }

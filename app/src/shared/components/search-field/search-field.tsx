@@ -11,14 +11,14 @@ export interface SearchFieldProps extends ReactProps {
   value: string
   label: string
   disabled?: boolean
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
   onBlur?: () => void
 }
 
 export const SearchField = (props: SearchFieldProps) => {
+  const { id, value, label, disabled, onChange, onBlur, className, style } = props
   const { t } = useTranslation()
-  const { onChange } = props
-  const [query, setQuery] = useState(props.value)
+  const [query, setQuery] = useState(value)
   const debouncedRef = useRef<ReturnType<typeof debounce> | null>(null)
 
   const handleQueryChange = useCallback((value: string) => {
@@ -27,23 +27,23 @@ export const SearchField = (props: SearchFieldProps) => {
   }, [])
 
   useEffect(() => {
-    debouncedRef.current = debounce(onChange, 300)
+    debouncedRef.current = debounce(onChange || (() => {}), 300)
     return () => debouncedRef.current?.cancel()
   }, [onChange])
 
   useEffect(() => {
-    setQuery(props.value)
-  }, [props.value])
+    setQuery(value)
+  }, [value])
 
   return (
-    <Tooltip label={props.label}>
+    <Tooltip label={label}>
       <TextField
         value={query}
-        disabled={props.disabled}
-        id={props.id}
+        disabled={disabled}
+        id={id}
         size="sm"
         placeholder={t('core.placeholder.search')}
-        ariaLabel={props.label}
+        ariaLabel={label}
         prefix={<SearchSvg className="ml-xs-2 w-xs-5 mt-px" />}
         suffix={
           query && (
@@ -57,10 +57,10 @@ export const SearchField = (props: SearchFieldProps) => {
             </IconButton>
           )
         }
-        className={props.className}
-        style={props.style}
+        className={className}
+        style={style}
         onChange={handleQueryChange}
-        onBlur={props.onBlur}
+        onBlur={onBlur}
       />
     </Tooltip>
   )
