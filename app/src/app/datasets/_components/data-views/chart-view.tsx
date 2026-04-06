@@ -23,8 +23,11 @@ export const ChartView = (props: Props) => {
   const VALUE_LABEL = t('core.label.value')
   const indexCol = data.cols.find((col) => col.key === indexKey)
   const pivotCol = data.cols.find((col) => col.key === pivotKey)
-  const barCols = data.cols.filter((col) => col.key !== indexKey && col.key !== pivotKey)
   const barNames = { [VALUE_KEY]: VALUE_LABEL }
+  const barCols = useMemo(
+    () => data.cols.filter((col) => col.key !== indexKey && col.key !== pivotKey),
+    [data.cols, indexKey, pivotKey],
+  )
   const chartData = useMemo(
     (): BarChartData => ({
       entries: data.rows.map((row) => ({
@@ -32,7 +35,7 @@ export const ChartView = (props: Props) => {
         [VALUE_KEY]: row[colKey || ''],
       })),
     }),
-    [indexKey, pivotKey, colKey, data],
+    [data.rows, indexKey, colKey],
   )
   const colOptions = useMemo(
     (): SelectOption[] => barCols.map((col) => ({ value: col.key, label: col.label })),
@@ -43,7 +46,7 @@ export const ChartView = (props: Props) => {
 
   useEffect(() => {
     setColKey(barCols[0]?.key || null)
-  }, [data, indexKey])
+  }, [barCols])
 
   return !colKey ? (
     <div className={cx('flex-center flex h-full', className)}>
