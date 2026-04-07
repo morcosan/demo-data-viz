@@ -11,7 +11,7 @@ export interface Props extends ReactProps {
   entries: ChoroplethEntry[]
 }
 
-export const MapCanvas = (props: Props) => {
+export const PlotlyCanvas = (props: Props) => {
   const { entries, className } = props
   const { colorTheme } = useThemeService()
   const canvasRef = useRef<HTMLDivElement>(null)
@@ -47,6 +47,7 @@ export const MapCanvas = (props: Props) => {
       showocean: true,
       oceancolor: getTokenValue_COLOR('map-ocean', colorTheme),
       showframe: false,
+      showcountries: true,
     },
     paper_bgcolor: 'transparent',
     autosize: true,
