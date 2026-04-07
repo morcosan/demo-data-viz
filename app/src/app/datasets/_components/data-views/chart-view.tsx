@@ -41,6 +41,7 @@ export const ChartView = (props: Props) => {
     (): SelectOption[] => barCols.map((col) => ({ value: col.key, label: col.label })),
     [barCols],
   )
+  const hasValues = chartData.entries.some((entry) => entry[colKey] !== undefined)
 
   const cellFn = (value: string, query: string) => cellFnProp(value, query, true)
 
@@ -48,11 +49,7 @@ export const ChartView = (props: Props) => {
     setColKey(barCols[0]?.key || null)
   }, [barCols])
 
-  log('data:', data)
-  log('chartData:', chartData)
-  log('colKey:', colKey)
-
-  return !colKey ? (
+  return !colKey || !hasValues ? (
     <div className={cx('flex-center flex h-full', className)}>
       <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>
     </div>
