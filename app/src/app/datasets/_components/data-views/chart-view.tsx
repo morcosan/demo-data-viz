@@ -41,7 +41,7 @@ export const ChartView = (props: Props) => {
     (): SelectOption[] => barCols.map((col) => ({ value: col.key, label: col.label })),
     [barCols],
   )
-  const hasValues = chartData.entries.some((entry) => entry[colKey] !== undefined)
+  const hasValues = chartData.entries.some((entry) => entry[VALUE_KEY] !== undefined)
 
   const cellFn = (value: string, query: string) => cellFnProp(value, query, true)
 
