@@ -1,3 +1,4 @@
+import { getTokenValue_COLOR, useThemeService } from '@ds/core'
 import { type Config, type Data, type Layout } from 'plotly.js-dist-min'
 import { useEffect, useMemo, useRef } from 'react'
 import { type ChoroplethEntry } from '../_types'
@@ -12,6 +13,7 @@ export interface Props extends ReactProps {
 
 export const MapCanvas = (props: Props) => {
   const { entries, className } = props
+  const { colorTheme } = useThemeService()
   const canvasRef = useRef<HTMLDivElement>(null)
   const plotlyRef = useRef<typeof import('plotly.js-dist-min')>(null)
 
@@ -23,7 +25,10 @@ export const MapCanvas = (props: Props) => {
       type: 'choropleth',
       locationmode: 'ISO-3',
       hovertemplate: '<b>%{text}</b><br>Value: %{z}<extra></extra>',
-      colorscale: 'Viridis',
+      colorscale: [
+        [0, getTokenValue_COLOR('map-scale-low', colorTheme)],
+        [1, getTokenValue_COLOR('map-scale-high', colorTheme)],
+      ],
       colorbar: {
         thickness: 15,
         len: 0.6,
@@ -32,17 +37,15 @@ export const MapCanvas = (props: Props) => {
         line: { color: 'white', width: 0.5 },
       },
     }
-  }, [entries])
+  }, [entries, colorTheme])
 
   const plotlyLayout: PlotlyLayout = {
     margin: { t: 0, b: 0, l: 0, r: 0 },
     geo: {
-      showcoastlines: true,
-      coastlinecolor: '#aaa',
       showland: true,
-      landcolor: '#f0f0f0',
+      landcolor: getTokenValue_COLOR('map-land', colorTheme),
       showocean: true,
-      oceancolor: '#d6eaf8',
+      oceancolor: getTokenValue_COLOR('map-ocean', colorTheme),
       showframe: false,
     },
     paper_bgcolor: 'transparent',
@@ -65,7 +68,7 @@ export const MapCanvas = (props: Props) => {
       if (!canvasRef.current) return
       plotlyRef.current?.purge(canvasRef.current)
     }
-  }, [])
+  }, [plotlyData])
 
   return <div ref={canvasRef} className={className} />
 }

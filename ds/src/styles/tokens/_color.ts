@@ -34,6 +34,15 @@ export const TOKENS__COLOR = {
   'purple-7': { $value: '#6b21a8' },
   'purple-8': { $value: '#4c1874' },
 
+  'blue-1': { $value: '#dbeafe' },
+  'blue-2': { $value: '#bfdbfe' },
+  'blue-3': { $value: '#93c5fd' },
+  'blue-4': { $value: '#60a5fa' },
+  'blue-5': { $value: '#3b82f6' },
+  'blue-6': { $value: '#2563eb' },
+  'blue-7': { $value: '#1d4ed8' },
+  'blue-8': { $value: '#1e3a8a' },
+
   'yellow-1': { $value: '#fef9c3' },
   'yellow-2': { $value: '#fef6b6' },
   'yellow-3': { $value: '#fde56c' },
@@ -152,4 +161,9 @@ export const TOKENS__COLOR = {
 
   'chart-bar-default': { $ref: { light: 'grey-12', dark: 'grey-10' } },
   'chart-bar-hover': { $ref: { light: 'grey-14', dark: 'grey-8' } },
+
+  'map-ocean': { $ref: { light: 'blue-8', dark: 'blue-8' } },
+  'map-land': { $ref: { light: 'grey-4', dark: 'grey-9' } },
+  'map-scale-high': { $ref: { light: 'yellow-1', dark: 'yellow-1' } },
+  'map-scale-low': { $ref: { light: 'yellow-8', dark: 'yellow-8' } },
 } as const satisfies DesignTokenGroup<string>
