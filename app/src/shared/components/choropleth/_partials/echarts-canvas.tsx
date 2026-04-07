@@ -51,7 +51,7 @@ export const EchartsCanvas = (props: Props) => {
           map: 'world',
           roam: true,
           emphasis: {
-            itemStyle: { areaColor: colors.hover },
+            itemStyle: { areaColor: null },
             label: { show: false },
           },
           itemStyle: {
