@@ -6,6 +6,11 @@ import worldGeoJson from './world-geo.json'
 
 echarts.registerMap('world', worldGeoJson as unknown as Parameters<typeof echarts.registerMap>[1])
 
+type EchartsData = {
+  name: string
+  value: number
+}
+
 export interface Props extends ReactProps {
   entries: ChoroplethEntry[]
 }
@@ -16,15 +21,8 @@ export const EchartsCanvas = (props: Props) => {
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<echarts.ECharts>(null)
 
-  const mapData = useMemo(
-    () =>
-      entries.map((e) => ({
-        name: e.label, // ECharts matches by country name in the GeoJSON
-        value: e.value,
-        iso3: e.key, // Keep the ISO-3 key available for custom tooltip use
-      })),
-    [entries],
-  )
+  // Must match country name in world-geo.json
+  const mapData = useMemo(() => entries.map((e): EchartsData => ({ name: e.label, value: e.value })), [entries])
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -34,40 +32,33 @@ export const EchartsCanvas = (props: Props) => {
     chartRef.current.setOption({
       tooltip: {
         trigger: 'item',
-        formatter: (params: echarts.DefaultLabelFormatterCallbackParams) => {
-          const d = params.data as { name: string; value: number } | undefined
-          if (!d) return ''
-          return `<b>${d.name}</b><br/>Value: ${d.value}`
+        formatter: ({ data }: { data: EchartsData }) => {
+          return data ? `<b>${data.name}</b><br/>Value: ${data.value}` : ''
         },
       },
       visualMap: {
+        show: true,
         min: Math.min(...entries.map((e) => e.value)),
         max: Math.max(...entries.map((e) => e.value)),
-        show: true,
-        orient: 'vertical',
-        left: 'right',
-        bottom: 'center',
-        itemWidth: 15,
-        itemHeight: 120,
-        inRange: {
-          color: [colors.scaleLow, colors.scaleHigh],
-        },
+        itemWidth: 20,
+        itemHeight: 150,
+        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
       },
       series: [
         {
+          data: mapData,
           type: 'map',
           map: 'world',
-          roam: false,
+          roam: true,
           emphasis: {
+            itemStyle: { areaColor: colors.hover },
             label: { show: false },
-            itemStyle: { areaColor: colors.scaleHigh },
           },
           itemStyle: {
             areaColor: colors.land,
-            borderColor: '#ffffff',
+            borderColor: colors.border,
             borderWidth: 0.5,
           },
-          data: mapData,
         },
       ],
     })

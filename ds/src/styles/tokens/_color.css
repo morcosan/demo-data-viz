@@ -169,8 +169,8 @@
 
   --ds-color-map-ocean: var(--ds-color-blue-1);
   --ds-color-map-land: var(--ds-color-grey-1);
-  --ds-color-map-scale-high: var(--ds-color-yellow-1);
-  --ds-color-map-scale-low: var(--ds-color-yellow-8);
+  --ds-color-map-scale-high: var(--ds-color-purple-8);
+  --ds-color-map-scale-low: var(--ds-color-purple-1);
 }
 
 [data-color-theme='dark'] {
@@ -246,6 +246,6 @@
 
   --ds-color-map-ocean: var(--ds-color-blue-8);
   --ds-color-map-land: var(--ds-color-grey-8);
-  --ds-color-map-scale-high: var(--ds-color-yellow-1);
-  --ds-color-map-scale-low: var(--ds-color-yellow-8);
+  --ds-color-map-scale-high: var(--ds-color-purple-1);
+  --ds-color-map-scale-low: var(--ds-color-purple-8);
 }

@@ -8,5 +8,7 @@ export const useColors = () => {
     scaleHigh: getTokenValue_COLOR('map-scale-high', colorTheme),
     land: getTokenValue_COLOR('map-land', colorTheme),
     ocean: getTokenValue_COLOR('map-ocean', colorTheme),
+    border: getTokenValue_COLOR('border-default', colorTheme),
+    hover: getTokenValue_COLOR('secondary-button-bg', colorTheme),
   }
 }

@@ -164,6 +164,6 @@ export const TOKENS__COLOR = {
 
   'map-ocean': { $ref: { light: 'blue-1', dark: 'blue-8' } },
   'map-land': { $ref: { light: 'grey-1', dark: 'grey-8' } },
-  'map-scale-high': { $ref: { light: 'yellow-1', dark: 'yellow-1' } },
-  'map-scale-low': { $ref: { light: 'yellow-8', dark: 'yellow-8' } },
+  'map-scale-high': { $ref: { light: 'purple-8', dark: 'purple-1' } },
+  'map-scale-low': { $ref: { light: 'purple-1', dark: 'purple-8' } },
 } as const satisfies DesignTokenGroup<string>
