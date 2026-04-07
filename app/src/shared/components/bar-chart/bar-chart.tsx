@@ -19,6 +19,7 @@ export const BarChart = (props: BarChartProps) => {
     chartSize = 'md',
     className,
     data,
+    emptyState,
     entryKey,
     entryName,
     entryWidth = parseFloat(TOKENS.SPACING['md-5'].$value),
@@ -82,7 +83,7 @@ export const BarChart = (props: BarChartProps) => {
           />
         ) : (
           <div className="flex-center flex h-full">
-            <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>
+            {emptyState || <EmptyState variant="empty">{t('dataViz.error.noData')}</EmptyState>}
           </div>
         )}
       </div>

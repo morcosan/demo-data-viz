@@ -9,10 +9,10 @@ const meta: Meta = {
       children: 'Select an item!',
     },
     props: {
-      type: 'default',
+      variant: 'default',
       className: '',
     },
-    inlineRadios: ['type'],
+    inlineRadios: ['variant'],
   }),
 }
 

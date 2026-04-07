@@ -86,7 +86,7 @@
     "error": {
       "fetchDataset": "Failed to load dataset",
       "fetchDatasets": "Failed to load datasets",
-      "noData": "Nothing to display",
+      "noData": "There is no data",
       "noDataForFilters": "Check your filters!",
       "noDatasetSelected": "Select a dataset!",
       "noIndexColumn": "Select a column to filter by!",

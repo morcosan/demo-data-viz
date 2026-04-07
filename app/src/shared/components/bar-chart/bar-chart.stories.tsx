@@ -41,6 +41,7 @@ const meta: Meta = {
       sortDir: undefined,
       loading: false,
       toolbar: '',
+      emptyState: '',
       className: '',
       style: { height: '500px' },
     },

@@ -14,7 +14,7 @@ export const MapView = (props: Props) => {
 
   return (
     <div className={cx('flex-center flex h-full', props.className)}>
-      <EmptyState type="error">{t('dataViz.error.noMapForDataset')}</EmptyState>
+      <EmptyState variant="error">{t('dataViz.error.noMapForDataset')}</EmptyState>
     </div>
   )
 }

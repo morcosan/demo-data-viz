@@ -71,7 +71,7 @@ export const ListingSection = ({ className, onClickDataset }: Props) => {
         </div>
       ) : error ? (
         <div className="flex-center flex h-full">
-          <EmptyState type="error">{t('dataViz.error.fetchDatasets')}</EmptyState>
+          <EmptyState variant="error">{t('dataViz.error.fetchDatasets')}</EmptyState>
         </div>
       ) : (
         <div ref={vScrollerRef} className="px-scrollbar-w py-a11y-scrollbar flex-1 overflow-y-auto">

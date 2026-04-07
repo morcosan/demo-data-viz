@@ -20,10 +20,11 @@ export interface DataTableProps extends ReactProps {
   queries?: string[]
   loading?: boolean
   sticky?: boolean
+  emptyState?: ReactNode
 }
 
 export const DataTable = (props: DataTableProps) => {
-  const { cellFn, className, data, loading, queries = [], sticky, style } = props
+  const { cellFn, className, data, emptyState, loading, queries = [], sticky, style } = props
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
@@ -120,7 +121,7 @@ export const DataTable = (props: DataTableProps) => {
               <tr>
                 <td colSpan={vColItems.length + 2} className="relative">
                   <div className="flex-center min-h-lg-0 sticky left-0 flex w-full" style={spinnerStyle}>
-                    <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>
+                    {emptyState || <EmptyState variant="empty">{t('dataViz.error.noData')}</EmptyState>}
                   </div>
                 </td>
               </tr>

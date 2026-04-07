@@ -48,6 +48,10 @@ export const ChartView = (props: Props) => {
     setColKey(barCols[0]?.key || null)
   }, [barCols])
 
+  log('data:', data)
+  log('chartData:', chartData)
+  log('colKey:', colKey)
+
   return !colKey ? (
     <div className={cx('flex-center flex h-full', className)}>
       <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>

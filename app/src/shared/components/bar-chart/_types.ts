@@ -16,4 +16,5 @@ export interface BarChartProps extends ReactProps {
   sortDir?: 'asc' | 'desc'
   loading?: boolean
   toolbar?: ReactNode
+  emptyState?: ReactNode
 }
