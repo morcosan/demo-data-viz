@@ -3,7 +3,7 @@
 import { wait } from '@ds/core'
 import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
-import { PlotlyCanvas } from './_partials/plotly-canvas'
+import { EchartsCanvas } from './_partials/echarts-canvas'
 import { type ChoroplethData, type ChoroplethEntry, type ChoroplethProps } from './_types'
 
 export type { ChoroplethData, ChoroplethEntry, ChoroplethProps }
@@ -25,7 +25,8 @@ export const Choropleth = (props: ChoroplethProps) => {
           <LoadingSpinner />
         </div>
       ) : (
-        <PlotlyCanvas entries={data.entries} className="h-full w-full" />
+        // <PlotlyCanvas entries={data.entries} className="h-full w-full" />
+        <EchartsCanvas entries={data.entries} className="h-full w-full" />
       )}
     </div>
   )
