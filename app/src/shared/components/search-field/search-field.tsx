@@ -19,7 +19,7 @@ export const SearchField = (props: SearchFieldProps) => {
   const { id, value, label, disabled, onChange, onBlur, className, style } = props
   const { t } = useTranslation()
   const [query, setQuery] = useState(value)
-  const debouncedRef = useRef<ReturnType<typeof debounce> | null>(null)
+  const debouncedRef = useRef<ReturnType<typeof debounce>>(null)
 
   const handleQueryChange = useCallback((value: string) => {
     setQuery(value)

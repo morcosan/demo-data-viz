@@ -27,8 +27,8 @@ export const DataTable = (props: DataTableProps) => {
   const { cellFn, className, data, emptyState, loading, queries = [], sticky, style } = props
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
-  const rootRef = useRef<HTMLDivElement | null>(null)
-  const headerRef = useRef<HTMLTableSectionElement | null>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLTableSectionElement>(null)
 
   const columns = useMemo(
     () => data.cols.map((col) => ({ ...col, size: computeColSize(col, data.rows) })),

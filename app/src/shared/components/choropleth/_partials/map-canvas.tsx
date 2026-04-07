@@ -1,4 +1,3 @@
-import Plotly from 'plotly.js-dist-min'
 import { useEffect, useMemo, useRef } from 'react'
 import { type ChoroplethEntry } from '../_types'
 
@@ -8,7 +7,8 @@ export interface Props extends ReactProps {
 
 export const MapCanvas = (props: Props) => {
   const { entries, className } = props
-  const canvasReF = useRef(null)
+  const canvasRef = useRef<HTMLDivElement>(null)
+  const plotlyRef = useRef<typeof import('plotly.js-dist-min')>(null)
 
   const config = useMemo(
     () => ({
@@ -20,50 +20,52 @@ export const MapCanvas = (props: Props) => {
   )
 
   useEffect(() => {
-    if (!canvasReF.current) return
+    if (!canvasRef.current) return
 
-    Plotly.newPlot(
-      canvasReF.current,
-      [
+    import('plotly.js-dist-min').then((Plotly) => {
+      plotlyRef.current = Plotly
+
+      Plotly.newPlot(
+        canvasRef.current!,
+        [
+          {
+            ...config,
+            type: 'choropleth',
+            locationmode: 'ISO-3',
+            hovertemplate: '<b>%{text}</b><br>Value: %{z}<extra></extra>',
+            colorscale: 'Viridis',
+            colorbar: {
+              thickness: 15,
+              len: 0.6,
+            },
+            marker: {
+              line: { color: 'white', width: 0.5 },
+            },
+          },
+        ],
         {
-          ...config,
-          type: 'choropleth',
-          locationmode: 'ISO-3',
-          hovertemplate: '<b>%{text}</b><br>Value: %{z}<extra></extra>',
-          colorscale: 'Viridis',
-          colorbar: {
-            thickness: 15,
-            len: 0.6,
+          margin: { t: 0, b: 0, l: 0, r: 0 },
+          geo: {
+            showcoastlines: true,
+            coastlinecolor: '#aaa',
+            showland: true,
+            landcolor: '#f0f0f0',
+            showocean: true,
+            oceancolor: '#d6eaf8',
+            showframe: false,
           },
-          marker: {
-            line: { color: 'white', width: 0.5 },
-          },
+          paper_bgcolor: 'transparent',
+          autosize: true,
         },
-      ],
-      {
-        margin: { t: 0, b: 0, l: 0, r: 0 },
-        geo: {
-          showcoastlines: true,
-          coastlinecolor: '#aaa',
-          showland: true,
-          landcolor: '#f0f0f0',
-          showocean: true,
-          oceancolor: '#d6eaf8',
-          showframe: false,
+        {
+          responsive: true,
+          displayModeBar: false,
         },
-        paper_bgcolor: 'transparent',
-        autosize: true,
-      },
-      {
-        responsive: true,
-        displayModeBar: false,
-      },
-    )
+      )
+    })
 
-    return () => {
-      canvasReF.current && Plotly.purge(canvasReF.current)
-    }
+    return () => plotlyRef.current?.purge(canvasRef.current!)
   }, [])
 
-  return <div ref={canvasReF} className={className} />
+  return <div ref={canvasRef} className={className} />
 }

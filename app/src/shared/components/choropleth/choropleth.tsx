@@ -4,7 +4,9 @@ import { wait } from '@ds/core'
 import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
 import { MapCanvas } from './_partials/map-canvas'
-import { type ChoroplethProps } from './_types'
+import { type ChoroplethData, type ChoroplethEntry, type ChoroplethProps } from './_types'
+
+export type { ChoroplethData, ChoroplethEntry, ChoroplethProps }
 
 export const Choropleth = (props: ChoroplethProps) => {
   const { data, loading, queries = [] } = props
