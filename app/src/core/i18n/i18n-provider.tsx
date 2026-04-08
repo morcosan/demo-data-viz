@@ -65,7 +65,7 @@ const I18nProvider = ({ children }: ReactProps) => {
 const useCountries = () => {
   const { i18n } = useTranslation()
 
-  const getCountryCode = (query: string) => {
+  const getCountryCode = (query: string): string => {
     const lang = i18n.language.split('-')[0]
     const code = countries.getAlpha2Code(query, lang)
     if (code) return code.toLowerCase()
@@ -76,10 +76,14 @@ const useCountries = () => {
       ([, value]) => value.toLowerCase().startsWith(lcQuery) || lcQuery.startsWith(value.toLowerCase()),
     )
 
-    return match ? match[0].toLowerCase() : null
+    return match ? match[0].toLowerCase() : ''
   }
 
-  return { getCountryCode }
+  const getCountryName = (iso3: string): string => {
+    return countries.getName(iso3, 'en', { select: 'official' }) || ''
+  }
+
+  return { getCountryCode, getCountryName }
 }
 
 export { I18nProvider, useCountries }

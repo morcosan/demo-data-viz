@@ -1,9 +1,12 @@
 import { type ReactNode } from 'react'
 
-export type ChoroplethData = { entries: ChoroplethEntry[] } // Data wrapper required due to Storybook limitations
-export type ChoroplethEntry = {
-  key: string // ISO-3 country code
-  label: string
+export interface ChoroplethData {
+  countries: ChoroplethCountry[]
+}
+
+export interface ChoroplethCountry {
+  iso3: string // ISO-3 country code
+  name: string
   value: number
 }
 

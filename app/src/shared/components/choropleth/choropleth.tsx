@@ -4,9 +4,9 @@ import { wait } from '@ds/core'
 import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
 import { EchartsCanvas } from './_partials/echarts-canvas'
-import { type ChoroplethData, type ChoroplethEntry, type ChoroplethProps } from './_types'
+import { type ChoroplethCountry, type ChoroplethData, type ChoroplethProps } from './_types'
 
-export type { ChoroplethData, ChoroplethEntry, ChoroplethProps }
+export type { ChoroplethCountry, ChoroplethData, ChoroplethProps }
 
 export const Choropleth = (props: ChoroplethProps) => {
   const { data, loading, queries = [] } = props
@@ -26,7 +26,7 @@ export const Choropleth = (props: ChoroplethProps) => {
         </div>
       ) : (
         // <PlotlyCanvas entries={data.entries} className="h-full w-full" />
-        <EchartsCanvas entries={data.entries} className="h-full w-full" />
+        <EchartsCanvas countries={data.countries} className="h-full w-full" />
       )}
     </div>
   )

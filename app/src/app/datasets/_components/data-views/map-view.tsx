@@ -20,7 +20,7 @@ export const MapView = (props: Props) => {
 
   const choroplethData = useMemo((): ChoroplethData => {
     return {
-      entries: [],
+      countries: [],
     }
   }, [data])
 

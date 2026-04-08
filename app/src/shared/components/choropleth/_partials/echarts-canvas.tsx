@@ -1,7 +1,8 @@
+import { useCountries } from '@app-i18n'
 import { useColors } from '@app/shared/components/choropleth/_partials/use-colors'
 import * as echarts from 'echarts'
 import { useEffect, useMemo, useRef } from 'react'
-import { type ChoroplethEntry } from '../_types'
+import { type ChoroplethCountry } from '../_types'
 import worldGeoJson from './world-geo.json'
 
 echarts.registerMap('world', worldGeoJson as unknown as Parameters<typeof echarts.registerMap>[1])
@@ -12,17 +13,21 @@ type EchartsData = {
 }
 
 export interface Props extends ReactProps {
-  entries: ChoroplethEntry[]
+  countries: ChoroplethCountry[]
 }
 
 export const EchartsCanvas = (props: Props) => {
-  const { entries, className } = props
+  const { countries, className } = props
+  const { getCountryName } = useCountries()
   const colors = useColors()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<echarts.ECharts>(null)
 
   // Must match country name in world-geo.json
-  const mapData = useMemo(() => entries.map((e): EchartsData => ({ name: e.label, value: e.value })), [entries])
+  const mapData = useMemo(
+    () => countries.map((e): EchartsData => ({ name: getCountryName(e.iso3), value: e.value })),
+    [countries, getCountryName],
+  )
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -38,8 +43,8 @@ export const EchartsCanvas = (props: Props) => {
       },
       visualMap: {
         show: true,
-        min: Math.min(...entries.map((e) => e.value)),
-        max: Math.max(...entries.map((e) => e.value)),
+        min: Math.min(...countries.map((e) => e.value)),
+        max: Math.max(...countries.map((e) => e.value)),
         itemWidth: 20,
         itemHeight: 150,
         inRange: { color: [colors.scaleLow, colors.scaleHigh] },

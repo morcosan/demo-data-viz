@@ -1,27 +1,27 @@
 import { getTokenValue_COLOR, useThemeService } from '@ds/core'
 import { type Config, type Data, type Layout } from 'plotly.js-dist-min'
 import { useEffect, useMemo, useRef } from 'react'
-import { type ChoroplethEntry } from '../_types'
+import { type ChoroplethCountry } from '../_types'
 
 type PlotlyData = Partial<Data>
 type PlotlyConfig = Partial<Config>
 type PlotlyLayout = Partial<Layout>
 
 export interface Props extends ReactProps {
-  entries: ChoroplethEntry[]
+  countries: ChoroplethCountry[]
 }
 
 export const PlotlyCanvas = (props: Props) => {
-  const { entries, className } = props
+  const { countries, className } = props
   const { colorTheme } = useThemeService()
   const canvasRef = useRef<HTMLDivElement>(null)
   const plotlyRef = useRef<typeof import('plotly.js-dist-min')>(null)
 
   const plotlyData = useMemo((): PlotlyData => {
     return {
-      locations: entries.map((e) => e.key),
-      z: entries.map((e) => e.value),
-      text: entries.map((e) => e.label),
+      locations: countries.map((e) => e.iso3),
+      z: countries.map((e) => e.value),
+      text: countries.map((e) => e.name),
       type: 'choropleth',
       locationmode: 'ISO-3',
       hovertemplate: '<b>%{text}</b><br>Value: %{z}<extra></extra>',
@@ -37,7 +37,7 @@ export const PlotlyCanvas = (props: Props) => {
         line: { color: 'white', width: 0.5 },
       },
     }
-  }, [entries, colorTheme])
+  }, [countries, colorTheme])
 
   const plotlyLayout: PlotlyLayout = {
     margin: { t: 0, b: 0, l: 0, r: 0 },
