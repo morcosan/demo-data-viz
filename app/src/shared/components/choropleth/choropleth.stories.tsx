@@ -1,4 +1,4 @@
-import { defineMeta, loremBool, loremInt, loremTrue } from '@ds/docs/core'
+import { defineMeta, loremBool, loremInt } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { Choropleth, type ChoroplethProps } from './choropleth'
 
@@ -69,7 +69,12 @@ const meta: Meta = {
             { iso3: 'BOL', name: 'Bolivia', value: loremInt(0, 100) },
             { iso3: 'VEN', name: 'Venezuela', value: loremInt(0, 100) },
             { iso3: 'ARE', name: 'United Arab Emirates', value: loremInt(0, 100) },
-          ].filter(() => loremTrue()),
+          ].filter(() => loremBool()),
+        ],
+        cities: [
+          { name: 'New York', lng: -74.006, lat: 40.713, value: loremInt(0, 100) },
+          { name: 'London', lng: -0.128, lat: 51.507, value: loremInt(0, 100) },
+          { name: 'Tokyo', lng: 139.691, lat: 35.689, value: loremInt(0, 100) },
         ],
       },
       labelFn: '' as any,

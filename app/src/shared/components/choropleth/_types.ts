@@ -2,11 +2,17 @@ import { type ReactNode } from 'react'
 
 export interface ChoroplethData {
   countries: ChoroplethCountry[]
+  cities: ChoroplethCity[]
 }
-
 export interface ChoroplethCountry {
-  iso3: string // ISO-3 country code
+  iso3: string
   name: string
+  value: number
+}
+export interface ChoroplethCity {
+  name: string
+  lng: number
+  lat: number
   value: number
 }
 

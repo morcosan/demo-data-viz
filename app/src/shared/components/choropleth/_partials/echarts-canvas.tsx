@@ -3,7 +3,7 @@ import { useColors } from '@app/shared/components/choropleth/_partials/use-color
 import type { EChartsOption } from 'echarts'
 import * as echarts from 'echarts'
 import { useEffect, useMemo, useRef } from 'react'
-import { type ChoroplethCountry } from '../_types'
+import { type ChoroplethCity, type ChoroplethCountry } from '../_types'
 import worldGeoJson from './world-geo.json'
 
 echarts.registerMap('world', worldGeoJson as unknown as Parameters<typeof echarts.registerMap>[1])
@@ -28,20 +28,25 @@ type ECountry = {
   name: string
   value: number
 }
+type ECity = {
+  name: string
+  value: number[]
+}
 
 export interface Props extends ReactProps {
   countries: ChoroplethCountry[]
+  cities: ChoroplethCity[]
 }
 
 export const EchartsCanvas = (props: Props) => {
-  const { countries, className } = props
+  const { cities, countries, className } = props
   const { getCountryNames } = useCountries()
   const colors = useColors()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<echarts.ECharts>(null)
 
   // Must match country name in world-geo.json
-  const mapData = useMemo(() => {
+  const countryData = useMemo(() => {
     const entries = [] as ECountry[]
     countries.forEach((country) => {
       getCountryNames(country.iso3).forEach((name) =>
@@ -51,30 +56,21 @@ export const EchartsCanvas = (props: Props) => {
     return entries
   }, [countries, getCountryNames])
 
-  log(mapData)
+  const cityData = useMemo(
+    () => cities.map((city): ECity => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
+    [cities],
+  )
+
   useEffect(() => {
     if (!canvasRef.current) return
 
     chartRef.current?.dispose()
     chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'svg' })
     chartRef.current.setOption({
-      tooltip: {
-        trigger: 'item',
-        formatter: (country: any & ECountry) => {
-          return `<b>${country.name}</b><br/>Value: ${country.value}`
-        },
-      },
-      visualMap: {
-        show: true,
-        min: Math.min(...countries.map((e) => e.value)),
-        max: Math.max(...countries.map((e) => e.value)),
-        itemWidth: 20,
-        itemHeight: 150,
-        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
-      },
       series: [
+        // Country layer
         {
-          data: mapData,
+          data: countryData,
           type: 'map',
           map: 'world',
           roam: true,
@@ -88,7 +84,43 @@ export const EchartsCanvas = (props: Props) => {
             borderWidth: 0.5,
           },
         },
+        // City layer
+        {
+          data: cityData,
+          symbolSize: 20,
+          type: 'scatter',
+          coordinateSystem: 'geo',
+          itemStyle: { opacity: 0.8 },
+          emphasis: {
+            label: { show: false },
+          },
+          tooltip: { trigger: 'item' },
+        },
       ],
+      geo: {
+        map: 'world',
+        roam: true,
+        silent: true,
+        itemStyle: { opacity: 0 },
+        emphasis: { disabled: true },
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: (item: any & (ECountry | ECity)) => {
+          return Array.isArray(item.value)
+            ? `<b>${item.name}</b><br/>Value: ${item.value[2]}`
+            : `<b>${item.name}</b><br/>Value: ${item.value}`
+        },
+      },
+      visualMap: {
+        show: true,
+        min: Math.min(...countries.map((e) => e.value)),
+        max: Math.max(...countries.map((e) => e.value)),
+        itemWidth: 20,
+        itemHeight: 150,
+        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
+        seriesIndex: [0, 1],
+      },
     } satisfies EChartsOption)
 
     const handleResize = () => chartRef.current?.resize()
@@ -99,7 +131,7 @@ export const EchartsCanvas = (props: Props) => {
       chartRef.current?.dispose()
       chartRef.current = null
     }
-  }, [mapData, colors])
+  }, [countryData, cityData, colors])
 
   return <div ref={canvasRef} className={className} style={{ backgroundColor: colors.ocean }} />
 }

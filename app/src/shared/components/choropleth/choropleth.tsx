@@ -26,7 +26,7 @@ export const Choropleth = (props: ChoroplethProps) => {
         </div>
       ) : (
         // <PlotlyCanvas entries={data.entries} className="h-full w-full" />
-        <EchartsCanvas countries={data.countries} className="h-full w-full" />
+        <EchartsCanvas countries={data.countries} cities={data.cities} className="h-full w-full" />
       )}
     </div>
   )
