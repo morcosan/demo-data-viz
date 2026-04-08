@@ -83,7 +83,11 @@ const useCountries = () => {
     return countries.getName(iso3, 'en', { select: 'official' }) || ''
   }
 
-  return { getCountryCode, getCountryName }
+  const getCountryNames = (iso3: string): string[] => {
+    return countries.getName(iso3, 'en', { select: 'all' }) || []
+  }
+
+  return { getCountryCode, getCountryName, getCountryNames }
 }
 
 export { I18nProvider, useCountries }
