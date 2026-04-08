@@ -61,6 +61,8 @@ export const EchartsCanvas = (props: Props) => {
     [cities],
   )
 
+  const citySize = 12 // px
+
   useEffect(() => {
     if (!canvasRef.current) return
 
@@ -73,36 +75,33 @@ export const EchartsCanvas = (props: Props) => {
           data: countryData,
           type: 'map',
           map: 'world',
-          roam: true,
-          emphasis: {
-            itemStyle: { areaColor: undefined },
-            label: { show: false },
-          },
-          itemStyle: {
-            areaColor: colors.land,
-            borderColor: colors.border,
-            borderWidth: 0.5,
-          },
+          geoIndex: 0,
         },
         // City layer
         {
           data: cityData,
-          symbolSize: 20,
           type: 'scatter',
           coordinateSystem: 'geo',
-          itemStyle: { opacity: 0.8 },
-          emphasis: {
-            label: { show: false },
-          },
-          tooltip: { trigger: 'item' },
+          symbolSize: citySize,
         },
       ],
       geo: {
         map: 'world',
         roam: true,
-        silent: true,
-        itemStyle: { opacity: 0 },
-        emphasis: { disabled: true },
+        silent: false,
+        itemStyle: {
+          areaColor: colors.land,
+          borderColor: colors.border,
+          borderWidth: 0.5,
+        },
+        emphasis: {
+          itemStyle: {
+            areaColor: 'inherit',
+            borderColor: colors.hover,
+            borderWidth: 1,
+          },
+          label: { show: false },
+        },
       },
       tooltip: {
         trigger: 'item',
@@ -122,6 +121,14 @@ export const EchartsCanvas = (props: Props) => {
         seriesIndex: [0, 1],
       },
     } satisfies EChartsOption)
+
+    chartRef.current.on('georoam', () => {
+      const geo = chartRef.current?.getOption()?.geo as any[]
+      const zoom = geo?.[0]?.zoom ?? 1
+      chartRef.current?.setOption({
+        series: [{}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom) }],
+      })
+    })
 
     const handleResize = () => chartRef.current?.resize()
     window.addEventListener('resize', handleResize)
