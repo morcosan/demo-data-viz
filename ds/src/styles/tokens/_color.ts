@@ -34,14 +34,14 @@ export const TOKENS__COLOR = {
   'purple-7': { $value: '#6b21a8' },
   'purple-8': { $value: '#4c1874' },
 
-  'blue-1': { $value: '#dbeafe' },
-  'blue-2': { $value: '#bfdbfe' },
-  'blue-3': { $value: '#93c5fd' },
-  'blue-4': { $value: '#60a5fa' },
+  'blue-1': { $value: '#d8e6fd' },
+  'blue-2': { $value: '#b1cdfb' },
+  'blue-3': { $value: '#89b4fa' },
+  'blue-4': { $value: '#629bf8' },
   'blue-5': { $value: '#3b82f6' },
-  'blue-6': { $value: '#2563eb' },
-  'blue-7': { $value: '#1d4ed8' },
-  'blue-8': { $value: '#1e3a8a' },
+  'blue-6': { $value: '#2f68c5' },
+  'blue-7': { $value: '#234e94' },
+  'blue-8': { $value: '#0c1a31' },
 
   'yellow-1': { $value: '#fef9c3' },
   'yellow-2': { $value: '#fef6b6' },
@@ -163,7 +163,7 @@ export const TOKENS__COLOR = {
   'chart-bar-hover': { $ref: { light: 'grey-14', dark: 'grey-8' } },
 
   'map-ocean': { $ref: { light: 'blue-1', dark: 'blue-8' } },
-  'map-land': { $ref: { light: 'white', dark: 'grey-8' } },
-  'map-scale-low': { $ref: { light: 'grey-3', dark: 'purple-8' } },
-  'map-scale-high': { $ref: { light: 'grey-12', dark: 'purple-1' } },
+  'map-land': { $ref: { light: 'white', dark: 'grey-18' } },
+  'map-scale-low': { $ref: { light: 'grey-3', dark: 'grey-15' } },
+  'map-scale-high': { $ref: { light: 'grey-12', dark: 'grey-6' } },
 } as const satisfies DesignTokenGroup<string>

@@ -36,14 +36,14 @@
   --ds-color-purple-7: #6b21a8;
   --ds-color-purple-8: #4c1874;
 
-  --ds-color-blue-1: #dbeafe;
-  --ds-color-blue-2: #bfdbfe;
-  --ds-color-blue-3: #93c5fd;
-  --ds-color-blue-4: #60a5fa;
+  --ds-color-blue-1: #d8e6fd;
+  --ds-color-blue-2: #b1cdfb;
+  --ds-color-blue-3: #89b4fa;
+  --ds-color-blue-4: #629bf8;
   --ds-color-blue-5: #3b82f6;
-  --ds-color-blue-6: #2563eb;
-  --ds-color-blue-7: #1d4ed8;
-  --ds-color-blue-8: #1e3a8a;
+  --ds-color-blue-6: #2f68c5;
+  --ds-color-blue-7: #234e94;
+  --ds-color-blue-8: #0c1a31;
 
   --ds-color-yellow-1: #fef9c3;
   --ds-color-yellow-2: #fef6b6;
@@ -168,9 +168,9 @@
   --ds-color-chart-bar-hover: var(--ds-color-grey-14);
 
   --ds-color-map-ocean: var(--ds-color-blue-1);
-  --ds-color-map-land: var(--ds-color-grey-1);
-  --ds-color-map-scale-high: var(--ds-color-purple-8);
-  --ds-color-map-scale-low: var(--ds-color-purple-1);
+  --ds-color-map-land: var(--ds-color-white);
+  --ds-color-map-scale-high: var(--ds-color-grey-3);
+  --ds-color-map-scale-low: var(--ds-color-grey-12);
 }
 
 [data-color-theme='dark'] {
@@ -245,7 +245,7 @@
   --ds-color-chart-bar-hover: var(--ds-color-grey-8);
 
   --ds-color-map-ocean: var(--ds-color-blue-8);
-  --ds-color-map-land: var(--ds-color-grey-8);
-  --ds-color-map-scale-high: var(--ds-color-purple-1);
-  --ds-color-map-scale-low: var(--ds-color-purple-8);
+  --ds-color-map-land: var(--ds-color-grey-18);
+  --ds-color-map-scale-high: var(--ds-color-grey-15);
+  --ds-color-map-scale-low: var(--ds-color-grey-6);
 }

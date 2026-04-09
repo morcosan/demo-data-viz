@@ -4,8 +4,8 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type ChoroplethProps } from '../_types'
 import { Tooltip } from './tooltip'
-import { useColors } from './use-colors'
 import { type ECharts, type EChartsOption, useEcharts } from './use-echarts'
+import { useStyles } from './use-styles'
 
 interface EItem extends Record<string, any> {
   name: string
@@ -18,7 +18,7 @@ export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
-  const colors = useColors()
+  const { colors, sizes, shadow } = useStyles()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
@@ -92,26 +92,11 @@ export const Canvas = (props: ChoroplethProps) => {
       },
       series: [
         {
-          data: countryData.filter((item) => item.match),
+          data: countryData,
           type: 'map',
           map: 'world',
           geoIndex: 0,
           selectedMode: false,
-        },
-        {
-          data: countryData
-            .filter((item) => !item.match)
-            .map((item) => ({
-              ...item,
-              itemStyle: { areaColor: colors.land },
-            })),
-          type: 'map',
-          map: 'world',
-          geoIndex: 0,
-          selectedMode: false,
-          itemStyle: {
-            areaColor: colors.land,
-          },
         },
         {
           data: cityData,
@@ -119,13 +104,13 @@ export const Canvas = (props: ChoroplethProps) => {
           coordinateSystem: 'geo',
           symbolSize: citySize,
           itemStyle: {
-            borderWidth: 0.8,
+            borderWidth: sizes.border,
             opacity: 1,
           },
           emphasis: {
             itemStyle: {
               borderColor: colors.borderHover,
-              borderWidth: 1.2,
+              borderWidth: sizes.borderHover,
             },
           },
         },
@@ -135,26 +120,23 @@ export const Canvas = (props: ChoroplethProps) => {
           map: 'world',
           roam: true,
           regions: [
-            ...countryData
-              .filter((item) => !item.match)
-              .map((item) => ({
-                ...item,
-                itemStyle: {
-                  opacity: 0,
-                },
-              })),
+            ...countryData.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: { opacity: 0 } })),
           ],
           itemStyle: {
             areaColor: colors.land,
             borderColor: colors.border,
-            borderWidth: 0.8,
+            borderWidth: sizes.border,
           },
           emphasis: {
             itemStyle: {
+              opacity: 1,
               areaColor: 'inherit',
               borderColor: colors.borderHover,
-              borderWidth: 1.2,
-              opacity: 1,
+              borderWidth: sizes.borderHover,
+              shadowColor: shadow.color,
+              shadowBlur: shadow.blur,
+              shadowOffsetX: shadow.offsetX,
+              shadowOffsetY: shadow.offsetY,
             },
             label: { show: false },
           },
@@ -193,7 +175,7 @@ export const Canvas = (props: ChoroplethProps) => {
       const { zoom, center } = geoOpt?.[0] ?? {}
       chartRef.current?.setOption({
         geo: [{}, { zoom, center }],
-        series: [{}, {}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom ?? 1) }],
+        series: [{}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom ?? 1) }],
       })
     })
 
