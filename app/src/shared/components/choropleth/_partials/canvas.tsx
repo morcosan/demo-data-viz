@@ -11,6 +11,7 @@ interface EItem extends Record<string, any> {
   name: string
   value: number | number[]
   seriesType?: 'map' | 'scatter'
+  match?: boolean
 }
 
 export const Canvas = (props: ChoroplethProps) => {
@@ -21,34 +22,59 @@ export const Canvas = (props: ChoroplethProps) => {
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
-  const countryData = useMemo(() => {
-    const items = [] as EItem[]
+  const nameFn = useCallback(
+    (value: string) => {
+      const lcValue = value.toLowerCase()
+      const query = queries?.find((query) => lcValue.includes(query.toLowerCase())) || ''
+      return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
+    },
+    [nameFnProp, queries],
+  )
+
+  const queryNames = useMemo(() => {
+    const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
+    const names = [] as string[]
+
     data.countries.forEach((country) => {
+      const name = country.name.toLowerCase()
+      const isMatch = !lcQueries.length || lcQueries.some((query) => name.includes(query))
+      if (isMatch) names.push(country.name)
+    })
+    data.cities.forEach((city) => {
+      const name = city.name.toLowerCase()
+      const isMatch = !lcQueries.length || lcQueries.some((query) => name.includes(query))
+      if (isMatch) names.push(city.name)
+    })
+
+    return names
+  }, [data.countries, data.cities, queries])
+
+  const [countryData, countryNames] = useMemo(() => {
+    const items = [] as EItem[]
+
+    data.countries.forEach((country) => {
+      const match = queryNames.includes(country.name)
       getCountryNames(country.iso3).forEach((name) =>
         items.push({
           name: GEO_JSON_NAMES[name] || name,
           value: country.value,
+          match,
         }),
       )
     })
-    return items
-  }, [data.countries, getCountryNames, GEO_JSON_NAMES])
-  const countryNames = countryData.map((country) => country.name)
+
+    return [items, items.map((item) => item.name)]
+  }, [data.countries, getCountryNames, GEO_JSON_NAMES, queryNames])
+
+  log(
+    countryData.filter((item) => item.match),
+    countryData.filter((item) => !item.match),
+  )
 
   const citySize = 12 // px
   const cityData = useMemo(
     () => data.cities.map((city): EItem => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
     [data.cities],
-  )
-
-  const nameFn = useCallback(
-    (value: string) => {
-      const lcValue = value.toLowerCase()
-      const query = queries?.find((query) => lcValue.includes(query.toLowerCase())) || ''
-
-      return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
-    },
-    [nameFnProp, queries],
   )
 
   useEffect(() => {
@@ -60,16 +86,23 @@ export const Canvas = (props: ChoroplethProps) => {
       series: [
         // Country layer
         {
-          data: countryData,
+          data: countryData.filter((item) => item.match),
           type: 'map',
           map: 'world',
           geoIndex: 0,
           selectedMode: false,
           itemStyle: {
-            areaColor: colors.land,
-            borderColor: colors.border,
-            borderWidth: 0.5,
+            areaColor: colors.hover,
+            borderColor: colors.hover,
+            borderWidth: 3,
           },
+        },
+        {
+          data: countryData.filter((item) => !item.match),
+          type: 'map',
+          map: 'world',
+          geoIndex: 0,
+          selectedMode: false,
         },
         // City layer
         {
@@ -78,7 +111,6 @@ export const Canvas = (props: ChoroplethProps) => {
           coordinateSystem: 'geo',
           symbolSize: citySize,
           itemStyle: {
-            borderColor: colors.border,
             borderWidth: 0.5,
           },
         },
@@ -87,7 +119,11 @@ export const Canvas = (props: ChoroplethProps) => {
         map: 'world',
         roam: true,
         silent: false,
-        itemStyle: { areaColor: colors.land },
+        itemStyle: {
+          areaColor: colors.land,
+          // borderColor: colors.border,
+          // borderWidth: 0.5,
+        },
         emphasis: {
           itemStyle: {
             areaColor: 'inherit',
@@ -96,6 +132,15 @@ export const Canvas = (props: ChoroplethProps) => {
           },
           label: { show: false },
         },
+      },
+      visualMap: {
+        show: true,
+        min: Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value)),
+        max: Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value)),
+        itemWidth: 20,
+        itemHeight: 150,
+        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
+        seriesIndex: [0, 1, 2],
       },
       tooltip: {
         trigger: 'item',
@@ -107,15 +152,6 @@ export const Canvas = (props: ChoroplethProps) => {
           const value = Array.isArray(item.value) ? item.value[2] : item.value
           return renderToStaticMarkup(<Tooltip name={item.name} value={value} nameFn={nameFn} />)
         },
-      },
-      visualMap: {
-        show: true,
-        min: Math.min(...data.countries.map((e) => e.value)),
-        max: Math.max(...data.countries.map((e) => e.value)),
-        itemWidth: 20,
-        itemHeight: 150,
-        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
-        seriesIndex: [0, 1],
       },
     } satisfies EChartsOption)
 
@@ -132,7 +168,7 @@ export const Canvas = (props: ChoroplethProps) => {
       const geo = chartRef.current?.getOption()?.geo as any[]
       const zoom = geo?.[0]?.zoom ?? 1
       chartRef.current?.setOption({
-        series: [{}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom) }],
+        series: [{}, {}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom) }],
       })
     })
 

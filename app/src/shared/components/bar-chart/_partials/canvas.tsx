@@ -46,9 +46,9 @@ export const Canvas = (props: Props) => {
   const queryIndexes = useMemo(() => {
     const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
     return entries.reduce<number[]>((acc, entry, index) => {
-      const entryValue = String(entry[entryKey]).toLowerCase()
-      const matches = lcQueries.length === 0 || lcQueries.some((query) => entryValue.includes(query))
-      return matches ? [...acc, index] : acc
+      const label = String(entry[entryKey]).toLowerCase()
+      const isMatch = !lcQueries.length || lcQueries.some((query) => label.includes(query))
+      return isMatch ? [...acc, index] : acc
     }, [])
   }, [entries, entryKey, queries])
 
@@ -62,7 +62,6 @@ export const Canvas = (props: Props) => {
       value = value || ''
       const lcValue = value.toLowerCase()
       const query = queries.find((query) => lcValue.includes(query.toLowerCase())) || ''
-
       return entryFn ? entryFn(value, query) : <TextHighlight text={value} query={query} />
     },
     [entryFn, queries],
