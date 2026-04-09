@@ -4,7 +4,7 @@ import { wait } from '@ds/core'
 import { useCallback, useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
 import { TextHighlight } from '../text-highlight/text-highlight'
-import { EchartsCanvas } from './_partials/echarts-canvas'
+import { Canvas } from './_partials/canvas'
 import { type ChoroplethCountry, type ChoroplethData, type ChoroplethProps } from './_types'
 
 export type { ChoroplethCountry, ChoroplethData, ChoroplethProps }
@@ -37,7 +37,7 @@ export const Choropleth = (props: ChoroplethProps) => {
         </div>
       ) : (
         // <PlotlyCanvas entries={data.entries} className="h-full w-full" />
-        <EchartsCanvas countries={data.countries} cities={data.cities} nameFn={nameFn} className="h-full w-full" />
+        <Canvas countries={data.countries} cities={data.cities} nameFn={nameFn} className="h-full w-full" />
       )}
     </div>
   )

@@ -1,12 +1,12 @@
 import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
 import { TOKENS, useThemeService, useViewportService } from '@ds/core'
 import { type RefObject, useCallback, useId, useMemo } from 'react'
-import { Bar, LabelList, BarChart as ReBarChart, Rectangle, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'
+import Recharts from 'recharts'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type BarChartEntry, type BarChartProps } from '../_types'
 import { EntryHover } from './entry-hover'
 import { EntryLabel } from './entry-label'
-import { EntryTooltip } from './entry-tooltip'
+import { Tooltip } from './tooltip'
 
 interface Props extends BarChartProps {
   entries: BarChartEntry[]
@@ -17,7 +17,7 @@ interface Props extends BarChartProps {
   tooltipRef: RefObject<Element | null>
 }
 
-export const ChartCanvas = (props: Props) => {
+export const Canvas = (props: Props) => {
   const {
     barKeys,
     barNames,
@@ -121,7 +121,7 @@ export const ChartCanvas = (props: Props) => {
   )
 
   return (
-    <ReBarChart
+    <Recharts.BarChart
       data={entries}
       layout="vertical"
       width="100%"
@@ -133,13 +133,13 @@ export const ChartCanvas = (props: Props) => {
     >
       {/* BARS */}
       {barKeys.map((key) => (
-        <Bar
+        <Recharts.Bar
           key={key}
           dataKey={key}
           barSize={barSize}
           radius={[0, barRadius, barRadius, 0]}
           shape={(params: any) => (
-            <Rectangle
+            <Recharts.Rectangle
               {...params}
               className={cx(
                 'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
@@ -149,7 +149,7 @@ export const ChartCanvas = (props: Props) => {
           )}
         >
           {isViewportMinSM && (
-            <LabelList
+            <Recharts.LabelList
               dataKey={key}
               content={(params: any) => (
                 <text
@@ -164,11 +164,11 @@ export const ChartCanvas = (props: Props) => {
               )}
             />
           )}
-        </Bar>
+        </Recharts.Bar>
       ))}
 
       {/* AXIS */}
-      <XAxis
+      <Recharts.XAxis
         type="number"
         padding={isViewportMinSM ? { left: barMarginLeft, right: barMarginRight } : undefined}
         axisLine={{ stroke: axisColor }}
@@ -176,8 +176,8 @@ export const ChartCanvas = (props: Props) => {
         tick={{ fontSize: $fontSize['sm'], fill: axisColor }}
         tickFormatter={(value) => formatNumber(value)}
       />
-      {hasBothSides && <ReferenceLine x={0} stroke={axisColor} strokeDasharray="3 3" />}
-      <YAxis
+      {hasBothSides && <Recharts.ReferenceLine x={0} stroke={axisColor} strokeDasharray="3 3" />}
+      <Recharts.YAxis
         type="category"
         dataKey={entryKey}
         width={entryWidth}
@@ -198,22 +198,20 @@ export const ChartCanvas = (props: Props) => {
       />
 
       {/* TOOLTIP */}
-      <Tooltip
+      <Recharts.Tooltip
         active={true} // Always render content
         cursor={<EntryHover {...({} as any)} visible={isTooltipVisible} ref={hoverRef} radius={barRadius} />}
-        content={(params: any) => {
-          return (
-            <EntryTooltip
-              {...params}
-              visible={isTooltipVisible}
-              ref={tooltipRef}
-              id={tooltipId}
-              barNames={barNames}
-              labelFn={(value) => entryLabelFn(value)}
-            />
-          )
-        }}
+        content={(params: any) => (
+          <Tooltip
+            {...params}
+            visible={isTooltipVisible}
+            ref={tooltipRef}
+            id={tooltipId}
+            barNames={barNames}
+            labelFn={(value) => entryLabelFn(value)}
+          />
+        )}
       />
-    </ReBarChart>
+    </Recharts.BarChart>
   )
 }

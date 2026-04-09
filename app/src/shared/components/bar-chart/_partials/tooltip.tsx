@@ -9,7 +9,7 @@ interface Props extends TooltipContentProps, ReactProps {
 }
 
 // This component will rerender on mousemove, due to bad recharts implementation
-export const EntryTooltip = (props: Props) => {
+export const Tooltip = (props: Props) => {
   const { barNames, id, label, labelFn, payload: bars, ref, visible } = props
   const title = labelFn(String(label)) || label
 

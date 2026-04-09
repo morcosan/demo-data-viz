@@ -18,7 +18,7 @@ export interface Props extends ReactProps {
   nameFn: (value: string) => ReactNode
 }
 
-export const EchartsCanvas = (props: Props) => {
+export const Canvas = (props: Props) => {
   const { cities, countries, nameFn, className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
