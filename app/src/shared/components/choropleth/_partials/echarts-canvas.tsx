@@ -4,13 +4,10 @@ import { type ChoroplethCity, type ChoroplethCountry } from '../_types'
 import { useColors } from './use-colors'
 import { type ECharts, type EChartsOption, useEcharts } from './use-echarts'
 
-interface ECountry {
+interface EItem extends Record<string, any> {
   name: string
-  value: number
-}
-interface ECity {
-  name: string
-  value: number[]
+  value: number | number[]
+  seriesType?: 'map' | 'scatter'
 }
 
 export interface Props extends ReactProps {
@@ -27,18 +24,22 @@ export const EchartsCanvas = (props: Props) => {
   const chartRef = useRef<ECharts>(null)
 
   const countryData = useMemo(() => {
-    const entries = [] as ECountry[]
+    const items = [] as EItem[]
     countries.forEach((country) => {
       getCountryNames(country.iso3).forEach((name) =>
-        entries.push({ name: GEO_JSON_NAMES[name] || name, value: country.value }),
+        items.push({
+          name: GEO_JSON_NAMES[name] || name,
+          value: country.value,
+        }),
       )
     })
-    return entries
+    return items
   }, [countries, getCountryNames, GEO_JSON_NAMES])
+  const countryNames = countryData.map((country) => country.name)
 
   const citySize = 12 // px
   const cityData = useMemo(
-    () => cities.map((city): ECity => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
+    () => cities.map((city): EItem => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
     [cities],
   )
 
@@ -84,10 +85,14 @@ export const EchartsCanvas = (props: Props) => {
       },
       tooltip: {
         trigger: 'item',
-        formatter: (item: any & (ECountry | ECity)) => {
-          return Array.isArray(item.value)
-            ? `<b>${item.name}</b><br/>Value: ${item.value[2]}`
-            : `<b>${item.name}</b><br/>Value: ${item.value}`
+        formatter: (item: any & EItem) => {
+          if (item.seriesType === 'scatter' && Array.isArray(item.value)) {
+            return `<b>${item.name}</b><br/>Value: ${item.value[2]}`
+          }
+          if (item.seriesType === 'map' && item.value !== undefined && !isNaN(item.value)) {
+            return `<b>${item.name}</b><br/>Value: ${item.value}`
+          }
+          return ''
         },
       },
       visualMap: {
@@ -100,6 +105,14 @@ export const EchartsCanvas = (props: Props) => {
         seriesIndex: [0, 1],
       },
     } satisfies EChartsOption)
+
+    chartRef.current.on('mouseover', (item: any & EItem) => {
+      if (item.componentType !== 'series') return
+      if (item.seriesType === 'scatter') return
+      if (!countryNames.includes(item.name)) {
+        chartRef.current?.dispatchAction({ type: 'downplay', name: item.name })
+      }
+    })
 
     chartRef.current.on('georoam', () => {
       const geo = chartRef.current?.getOption()?.geo as any[]
