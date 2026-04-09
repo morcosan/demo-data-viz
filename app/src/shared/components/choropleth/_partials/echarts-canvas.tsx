@@ -1,34 +1,14 @@
 import { useCountries } from '@app-i18n'
-import { useColors } from '@app/shared/components/choropleth/_partials/use-colors'
-import type { EChartsOption } from 'echarts'
-import * as echarts from 'echarts'
 import { useEffect, useMemo, useRef } from 'react'
 import { type ChoroplethCity, type ChoroplethCountry } from '../_types'
-import worldGeoJson from './world-geo.json'
+import { useColors } from './use-colors'
+import { type ECharts, type EChartsOption, useEcharts } from './use-echarts'
 
-echarts.registerMap('world', worldGeoJson as unknown as Parameters<typeof echarts.registerMap>[1])
-
-const GEO_JSON_COUNTRIES = {
-  Czechia: 'Czech Rep.',
-  'Ivory Coast': "Côte d'Ivoire",
-  Eswatini: 'Swaziland',
-  'Timor-Leste': 'East Timor',
-  "Lao People's Democratic Republic": 'Laos',
-  'Syrian Arab Republic': 'Syria',
-  'Dominican Republic': 'Dominican Rep.',
-  'Solomon Islands': 'Solomon Is.',
-  'Falkland Islands (Malvinas)': 'Falkland Is.',
-  'Central African Republic': 'Central African Rep.',
-  'South Sudan': 'S. Sudan',
-  'Bosnia and Herzegovina': 'Bosnia and Herz.',
-  'Democratic Republic of the Congo': 'Dem. Rep. Congo',
-} as const as Record<string, string>
-
-type ECountry = {
+interface ECountry {
   name: string
   value: number
 }
-type ECity = {
+interface ECity {
   name: string
   value: number[]
 }
@@ -41,33 +21,32 @@ export interface Props extends ReactProps {
 export const EchartsCanvas = (props: Props) => {
   const { cities, countries, className } = props
   const { getCountryNames } = useCountries()
+  const { echarts, GEO_JSON_NAMES } = useEcharts()
   const colors = useColors()
   const canvasRef = useRef<HTMLDivElement>(null)
-  const chartRef = useRef<echarts.ECharts>(null)
+  const chartRef = useRef<ECharts>(null)
 
-  // Must match country name in world-geo.json
   const countryData = useMemo(() => {
     const entries = [] as ECountry[]
     countries.forEach((country) => {
       getCountryNames(country.iso3).forEach((name) =>
-        entries.push({ name: GEO_JSON_COUNTRIES[name] || name, value: country.value }),
+        entries.push({ name: GEO_JSON_NAMES[name] || name, value: country.value }),
       )
     })
     return entries
-  }, [countries, getCountryNames])
+  }, [countries, getCountryNames, GEO_JSON_NAMES])
 
+  const citySize = 12 // px
   const cityData = useMemo(
     () => cities.map((city): ECity => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
     [cities],
   )
 
-  const citySize = 12 // px
-
   useEffect(() => {
     if (!canvasRef.current) return
 
     chartRef.current?.dispose()
-    chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'svg' })
+    chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'canvas' })
     chartRef.current.setOption({
       series: [
         // Country layer
