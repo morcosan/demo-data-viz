@@ -1,7 +1,8 @@
 import { useCountries } from '@app-i18n'
-import { type ReactNode, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { type ChoroplethCity, type ChoroplethCountry } from '../_types'
+import { TextHighlight } from '../../text-highlight/text-highlight'
+import { type ChoroplethProps } from '../_types'
 import { Tooltip } from './tooltip'
 import { useColors } from './use-colors'
 import { type ECharts, type EChartsOption, useEcharts } from './use-echarts'
@@ -12,14 +13,8 @@ interface EItem extends Record<string, any> {
   seriesType?: 'map' | 'scatter'
 }
 
-export interface Props extends ReactProps {
-  countries: ChoroplethCountry[]
-  cities: ChoroplethCity[]
-  nameFn: (value: string) => ReactNode
-}
-
-export const Canvas = (props: Props) => {
-  const { cities, countries, nameFn, className } = props
+export const Canvas = (props: ChoroplethProps) => {
+  const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
   const colors = useColors()
@@ -28,7 +23,7 @@ export const Canvas = (props: Props) => {
 
   const countryData = useMemo(() => {
     const items = [] as EItem[]
-    countries.forEach((country) => {
+    data.countries.forEach((country) => {
       getCountryNames(country.iso3).forEach((name) =>
         items.push({
           name: GEO_JSON_NAMES[name] || name,
@@ -37,13 +32,23 @@ export const Canvas = (props: Props) => {
       )
     })
     return items
-  }, [countries, getCountryNames, GEO_JSON_NAMES])
+  }, [data.countries, getCountryNames, GEO_JSON_NAMES])
   const countryNames = countryData.map((country) => country.name)
 
   const citySize = 12 // px
   const cityData = useMemo(
-    () => cities.map((city): EItem => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
-    [cities],
+    () => data.cities.map((city): EItem => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
+    [data.cities],
+  )
+
+  const nameFn = useCallback(
+    (value: string) => {
+      const lcValue = value.toLowerCase()
+      const query = queries?.find((query) => lcValue.includes(query.toLowerCase())) || ''
+
+      return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
+    },
+    [nameFnProp, queries],
   )
 
   useEffect(() => {
@@ -97,7 +102,7 @@ export const Canvas = (props: Props) => {
         padding: 0,
         borderWidth: 0,
         backgroundColor: 'transparent',
-        extraCssText: 'box-shadow: none;',
+        extraCssText: 'box-shadow: none; color: unset;',
         formatter: (item: any & EItem) => {
           const value = Array.isArray(item.value) ? item.value[2] : item.value
           return renderToStaticMarkup(<Tooltip name={item.name} value={value} nameFn={nameFn} />)
@@ -105,8 +110,8 @@ export const Canvas = (props: Props) => {
       },
       visualMap: {
         show: true,
-        min: Math.min(...countries.map((e) => e.value)),
-        max: Math.max(...countries.map((e) => e.value)),
+        min: Math.min(...data.countries.map((e) => e.value)),
+        max: Math.max(...data.countries.map((e) => e.value)),
         itemWidth: 20,
         itemHeight: 150,
         inRange: { color: [colors.scaleLow, colors.scaleHigh] },

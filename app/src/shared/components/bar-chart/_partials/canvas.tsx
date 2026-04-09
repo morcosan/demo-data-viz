@@ -30,7 +30,7 @@ export const Canvas = (props: Props) => {
     hoverRef,
     isFocused,
     isHovered,
-    queries,
+    queries = [],
     tooltipRef,
   } = props
   const { isViewportMinSM } = useViewportService()
@@ -44,7 +44,7 @@ export const Canvas = (props: Props) => {
   const axisColor = $color['text-placeholder']
 
   const queryIndexes = useMemo(() => {
-    const lcQueries = queries?.map((q) => q.trim().toLowerCase()).filter(Boolean) ?? []
+    const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
     return entries.reduce<number[]>((acc, entry, index) => {
       const entryValue = String(entry[entryKey]).toLowerCase()
       const matches = lcQueries.length === 0 || lcQueries.some((query) => entryValue.includes(query))
@@ -61,7 +61,7 @@ export const Canvas = (props: Props) => {
     (value?: string) => {
       value = value || ''
       const lcValue = value.toLowerCase()
-      const query = queries?.find((query) => lcValue.includes(query.toLowerCase())) || ''
+      const query = queries.find((query) => lcValue.includes(query.toLowerCase())) || ''
 
       return entryFn ? entryFn(value, query) : <TextHighlight text={value} query={query} />
     },
