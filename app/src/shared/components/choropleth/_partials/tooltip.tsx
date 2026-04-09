@@ -1,4 +1,3 @@
-import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app/shared/utils/formatting'
 import type { ReactNode } from 'react'
 
@@ -9,11 +8,10 @@ interface Props {
 }
 
 export const Tooltip = ({ name, nameFn, value }: Props) => {
-  const { t } = useTranslation()
+  if (value === undefined || isNaN(value)) return null
+
   const title = nameFn(String(name)) || name
 
-  if (value === undefined) return null
-  if (isNaN(value)) return null
   return (
     <div
       className={cx(
@@ -22,7 +20,7 @@ export const Tooltip = ({ name, nameFn, value }: Props) => {
         'text-size-sm',
       )}
     >
-      <div className="font-weight-lg mb-xs-4" aria-label={`${name},`}>
+      <div className="font-weight-lg mb-xs-2" aria-label={`${name},`}>
         {title}
       </div>
       <div className="font-family-mono">{formatNumber(value as number)}</div>
