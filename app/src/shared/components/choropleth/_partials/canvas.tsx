@@ -53,7 +53,6 @@ export const Canvas = (props: ChoroplethProps) => {
 
   const [countryData, countryNames] = useMemo(() => {
     const items = [] as EItem[]
-
     data.countries.forEach((country) => {
       const match = queryNames.includes(country.name)
       getCountryNames(country.iso3).forEach((name) =>
@@ -64,7 +63,6 @@ export const Canvas = (props: ChoroplethProps) => {
         }),
       )
     })
-
     return [items, items.map((item) => item.name)]
   }, [data.countries, getCountryNames, GEO_JSON_NAMES, queryNames])
 
@@ -149,6 +147,7 @@ export const Canvas = (props: ChoroplethProps) => {
       },
     } satisfies EChartsOption)
 
+    // Disable hover effect for other countries
     chartRef.current.on('mouseover', (item: any & EItem) => {
       if (item.seriesType === 'scatter') return
       if (item.seriesType === 'map') {
@@ -158,6 +157,7 @@ export const Canvas = (props: ChoroplethProps) => {
       }
     })
 
+    // Sync all canvas layers
     chartRef.current.on('georoam', () => {
       const geoOpt = chartRef.current?.getOption()?.geo as any[]
       const { zoom, center } = geoOpt?.[0] ?? {}

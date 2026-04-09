@@ -20,7 +20,7 @@ export const Tooltip = (props: Props) => {
       id={id}
       className={cx(
         'px-xs-5 py-xs-3 min-w-md-9 rounded-xs',
-        'bg-color-bg-card border-color-border-shadow border shadow-sm',
+        'bg-color-bg-menu border-color-border-shadow border shadow-md',
         'text-size-sm',
         !visible && 'hidden',
       )}
