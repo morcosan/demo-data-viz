@@ -18,7 +18,7 @@ export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
-  const { colors, sizes, shadows } = useStyles()
+  const { colors, sizes, styles } = useStyles()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
@@ -68,7 +68,6 @@ export const Canvas = (props: ChoroplethProps) => {
     return [items, items.map((item) => item.name)]
   }, [data.countries, getCountryNames, GEO_JSON_NAMES, queryNames])
 
-  const citySize = 12 // px
   const cityData = useMemo(
     () => data.cities.map((city): EItem => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
     [data.cities],
@@ -98,91 +97,42 @@ export const Canvas = (props: ChoroplethProps) => {
           selectedMode: false,
         },
         {
+          zlevel: 2,
           data: cityData,
           type: 'scatter',
           coordinateSystem: 'geo',
-          symbolSize: citySize,
-          itemStyle: {
-            borderWidth: sizes.border,
-            opacity: 1,
-          },
-          emphasis: {
-            itemStyle: {
-              borderColor: colors.borderHover,
-              borderWidth: sizes.borderHover,
-            },
-          },
+          symbolSize: sizes.city,
+          itemStyle: styles.lv1.default,
+          emphasis: { itemStyle: styles.lv1.hover },
         },
       ],
       geo: [
         {
+          zlevel: 1,
           map: 'world',
           roam: true,
-          itemStyle: { opacity: 0 },
-          emphasis: {
-            itemStyle: {
-              opacity: 1,
-              areaColor: 'inherit',
-              borderColor: colors.borderHover,
-              borderWidth: sizes.borderHover,
-              shadowColor: shadows.lg.color,
-              shadowBlur: shadows.lg.blur,
-              shadowOffsetX: shadows.lg.offsetX,
-              shadowOffsetY: shadows.lg.offsetY,
-            },
-            label: { show: false },
-          },
+          itemStyle: styles.lv1.landmark,
           regions: [
-            ...countryData.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: { opacity: 0 } })),
-            ...countryData
-              .filter((item) => item.match)
-              .map((item) => ({
-                ...item,
-                itemStyle: {
-                  opacity: 1,
-                  shadowColor: shadows.sm.color,
-                  shadowBlur: shadows.sm.blur,
-                  shadowOffsetX: shadows.sm.offsetX,
-                  shadowOffsetY: shadows.sm.offsetY,
-                },
-              })),
+            ...countryData.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: styles.lv1.landmark })),
+            ...countryData.filter((item) => item.match).map((item) => ({ ...item, itemStyle: styles.lv1.default })),
             ...countryData
               .filter((item) => item.match && lcQueries.length > 0)
-              .map((item) => ({
-                ...item,
-                itemStyle: {
-                  borderColor: colors.borderQuery,
-                  borderWidth: sizes.borderQuery,
-                  shadowColor: shadows.md.color,
-                  shadowBlur: shadows.md.blur,
-                  shadowOffsetX: shadows.md.offsetX,
-                  shadowOffsetY: shadows.md.offsetY,
-                },
-              })),
+              .map((item) => ({ ...item, itemStyle: styles.lv1.query })),
           ],
+          emphasis: {
+            itemStyle: styles.lv1.hover,
+            label: { show: false },
+          },
         },
         {
-          zlevel: -1,
+          zlevel: 0,
           map: 'world',
           silent: true,
-          itemStyle: {
-            areaColor: colors.land,
-            borderColor: colors.border,
-            borderWidth: sizes.border,
-          },
+          itemStyle: styles.lv0.landmark,
           regions: [
             ...countryData
-              .filter((item) => !item.match)
-              .map((item) => ({
-                ...item,
-                itemStyle: {
-                  areaColor: colors.scaleLow,
-                  shadowColor: shadows.sm.color,
-                  shadowBlur: shadows.sm.blur,
-                  shadowOffsetX: shadows.sm.offsetX,
-                  shadowOffsetY: shadows.sm.offsetY,
-                },
-              })),
+              .filter((item) => !item.match && lcQueries.length > 0)
+              .map((item) => ({ ...item, itemStyle: styles.lv0.default })),
           ],
         },
       ],
@@ -213,7 +163,7 @@ export const Canvas = (props: ChoroplethProps) => {
       const { zoom, center } = geoOpt?.[0] ?? {}
       chartRef.current?.setOption({
         geo: [{}, { zoom, center }],
-        series: [{}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom ?? 1) }],
+        series: [{}, { type: 'scatter', symbolSize: sizes.city * Math.sqrt(zoom ?? 1) }],
       })
     })
 
