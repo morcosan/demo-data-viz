@@ -1,16 +1,27 @@
 'use client'
 
 import { wait } from '@ds/core'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
+import { TextHighlight } from '../text-highlight/text-highlight'
 import { EchartsCanvas } from './_partials/echarts-canvas'
 import { type ChoroplethCountry, type ChoroplethData, type ChoroplethProps } from './_types'
 
 export type { ChoroplethCountry, ChoroplethData, ChoroplethProps }
 
 export const Choropleth = (props: ChoroplethProps) => {
-  const { data, loading, queries = [] } = props
+  const { data, loading, queries = [], nameFn: nameFnProp } = props
   const [isLoading, setIsLoading] = useState(false)
+
+  const nameFn = useCallback(
+    (value: string) => {
+      const lcValue = value.toLowerCase()
+      const query = queries?.find((query) => lcValue.includes(query.toLowerCase())) || ''
+
+      return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
+    },
+    [nameFnProp, queries],
+  )
 
   useEffect(() => {
     // Show 200ms loading to avoid UI freeze due to large data
@@ -26,7 +37,7 @@ export const Choropleth = (props: ChoroplethProps) => {
         </div>
       ) : (
         // <PlotlyCanvas entries={data.entries} className="h-full w-full" />
-        <EchartsCanvas countries={data.countries} cities={data.cities} className="h-full w-full" />
+        <EchartsCanvas countries={data.countries} cities={data.cities} nameFn={nameFn} className="h-full w-full" />
       )}
     </div>
   )

@@ -32,7 +32,7 @@ export const EntryTooltip = (props: Props) => {
         {payload.map((bar, index) => (
           <Fragment key={String(bar.dataKey) + index}>
             <div>{barNames[bar.name || '']}:</div>
-            <div className="font-weight-lg" aria-label={`${formatNumber(bar.value as number)},`}>
+            <div className="font-weight-lg font-family-mono" aria-label={`${formatNumber(bar.value as number)},`}>
               {formatNumber(bar.value as number)}
             </div>
           </Fragment>

@@ -18,7 +18,7 @@ export interface ChoroplethCity {
 
 export interface ChoroplethProps extends ReactProps {
   data: ChoroplethData
-  labelFn?: (value: string, query: string) => ReactNode
+  nameFn?: (value: string, query: string) => ReactNode
   queries?: string[]
   loading?: boolean
   toolbar?: ReactNode

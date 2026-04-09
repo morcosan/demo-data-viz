@@ -1,6 +1,8 @@
 import { useCountries } from '@app-i18n'
-import { useEffect, useMemo, useRef } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { type ChoroplethCity, type ChoroplethCountry } from '../_types'
+import { Tooltip } from './tooltip'
 import { useColors } from './use-colors'
 import { type ECharts, type EChartsOption, useEcharts } from './use-echarts'
 
@@ -13,10 +15,11 @@ interface EItem extends Record<string, any> {
 export interface Props extends ReactProps {
   countries: ChoroplethCountry[]
   cities: ChoroplethCity[]
+  nameFn: (value: string) => ReactNode
 }
 
 export const EchartsCanvas = (props: Props) => {
-  const { cities, countries, className } = props
+  const { cities, countries, nameFn, className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
   const colors = useColors()
@@ -47,7 +50,7 @@ export const EchartsCanvas = (props: Props) => {
     if (!canvasRef.current) return
 
     chartRef.current?.dispose()
-    chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'canvas' })
+    chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'svg' })
     chartRef.current.setOption({
       series: [
         // Country layer
@@ -57,6 +60,11 @@ export const EchartsCanvas = (props: Props) => {
           map: 'world',
           geoIndex: 0,
           selectedMode: false,
+          itemStyle: {
+            areaColor: colors.land,
+            borderColor: colors.border,
+            borderWidth: 0.5,
+          },
         },
         // City layer
         {
@@ -64,17 +72,17 @@ export const EchartsCanvas = (props: Props) => {
           type: 'scatter',
           coordinateSystem: 'geo',
           symbolSize: citySize,
+          itemStyle: {
+            borderColor: colors.border,
+            borderWidth: 0.5,
+          },
         },
       ],
       geo: {
         map: 'world',
         roam: true,
         silent: false,
-        itemStyle: {
-          areaColor: colors.land,
-          borderColor: colors.border,
-          borderWidth: 0.5,
-        },
+        itemStyle: { areaColor: colors.land },
         emphasis: {
           itemStyle: {
             areaColor: 'inherit',
@@ -86,14 +94,13 @@ export const EchartsCanvas = (props: Props) => {
       },
       tooltip: {
         trigger: 'item',
+        padding: 0,
+        borderWidth: 0,
+        backgroundColor: 'transparent',
+        extraCssText: 'box-shadow: none;',
         formatter: (item: any & EItem) => {
-          if (item.seriesType === 'scatter' && Array.isArray(item.value)) {
-            return `<b>${item.name}</b><br/>Value: ${item.value[2]}`
-          }
-          if (item.seriesType === 'map' && item.value !== undefined && !isNaN(item.value)) {
-            return `<b>${item.name}</b><br/>Value: ${item.value}`
-          }
-          return ''
+          const value = Array.isArray(item.value) ? item.value[2] : item.value
+          return renderToStaticMarkup(<Tooltip name={item.name} value={value} nameFn={nameFn} />)
         },
       },
       visualMap: {
