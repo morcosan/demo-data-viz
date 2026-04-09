@@ -22,6 +22,9 @@ export const Canvas = (props: ChoroplethProps) => {
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
+  const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
+  const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
+
   const nameFn = useCallback(
     (value: string) => {
       const lcValue = value.toLowerCase()
@@ -66,11 +69,6 @@ export const Canvas = (props: ChoroplethProps) => {
     return [items, items.map((item) => item.name)]
   }, [data.countries, getCountryNames, GEO_JSON_NAMES, queryNames])
 
-  log(
-    countryData.filter((item) => item.match),
-    countryData.filter((item) => !item.match),
-  )
-
   const citySize = 12 // px
   const cityData = useMemo(
     () => data.cities.map((city): EItem => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
@@ -86,19 +84,7 @@ export const Canvas = (props: ChoroplethProps) => {
       series: [
         // Country layer
         {
-          data: countryData.filter((item) => item.match),
-          type: 'map',
-          map: 'world',
-          geoIndex: 0,
-          selectedMode: false,
-          itemStyle: {
-            areaColor: colors.hover,
-            borderColor: colors.hover,
-            borderWidth: 3,
-          },
-        },
-        {
-          data: countryData.filter((item) => !item.match),
+          data: countryData,
           type: 'map',
           map: 'world',
           geoIndex: 0,
@@ -119,10 +105,21 @@ export const Canvas = (props: ChoroplethProps) => {
         map: 'world',
         roam: true,
         silent: false,
+        regions: [
+          ...countryData
+            .filter((item) => !item.match)
+            .map((item) => ({
+              name: item.name,
+              value: item.value,
+              itemStyle: {
+                opacity: 0.5,
+              },
+            })),
+        ],
         itemStyle: {
           areaColor: colors.land,
-          // borderColor: colors.border,
-          // borderWidth: 0.5,
+          borderColor: colors.border,
+          borderWidth: 0.5,
         },
         emphasis: {
           itemStyle: {
@@ -134,13 +131,12 @@ export const Canvas = (props: ChoroplethProps) => {
         },
       },
       visualMap: {
-        show: true,
-        min: Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value)),
-        max: Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value)),
+        seriesIndex: [0, 1],
+        min: minValue,
+        max: maxValue,
+        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
         itemWidth: 20,
         itemHeight: 150,
-        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
-        seriesIndex: [0, 1, 2],
       },
       tooltip: {
         trigger: 'item',
@@ -168,7 +164,7 @@ export const Canvas = (props: ChoroplethProps) => {
       const geo = chartRef.current?.getOption()?.geo as any[]
       const zoom = geo?.[0]?.zoom ?? 1
       chartRef.current?.setOption({
-        series: [{}, {}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom) }],
+        series: [{}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom) }],
       })
     })
 
