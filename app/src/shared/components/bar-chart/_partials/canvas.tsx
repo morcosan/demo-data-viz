@@ -1,12 +1,13 @@
-import { computeTextWidth, formatNumber } from '@app/shared/utils/formatting'
-import { TOKENS, useThemeService, useViewportService } from '@ds/core'
+import { formatNumber } from '@app/shared/utils/formatting'
+import { useThemeService, useViewportService } from '@ds/core'
 import { type RefObject, useCallback, useId, useMemo } from 'react'
-import Recharts from 'recharts'
+import * as Recharts from 'recharts'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type BarChartEntry, type BarChartProps } from '../_types'
 import { EntryHover } from './entry-hover'
 import { EntryLabel } from './entry-label'
 import { Tooltip } from './tooltip'
+import { useSizes } from './use-sizes'
 
 interface Props extends BarChartProps {
   entries: BarChartEntry[]
@@ -36,64 +37,11 @@ export const Canvas = (props: Props) => {
   const { $color, $fontSize } = useThemeService()
   const tooltipId = useId()
   const isTooltipVisible = isFocused || isHovered
-
-  const axisColor = $color['text-placeholder']
-
   const minEntryValue = Math.min(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const hasBothSides = minEntryValue < 0 && maxEntryValue > 0
-
-  const barLabelGap = (() => {
-    if (chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-1'].$value)
-    if (chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-2'].$value)
-    if (chartSize === 'lg') return parseFloat(TOKENS.SPACING['xs-4'].$value)
-    return 0
-  })()
-  const barMarginLeft = minEntryValue < 0 ? computeTextWidth(formatNumber(minEntryValue), 12) + barLabelGap : 0
-  const barMarginRight = maxEntryValue > 0 ? computeTextWidth(formatNumber(maxEntryValue), 12) + barLabelGap : 0
-  const barSize = (() => {
-    if (barKeys.length > 1) {
-      if (chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-9'].$value)
-      if (chartSize === 'md') return parseFloat(TOKENS.SPACING['sm-1'].$value)
-      if (chartSize === 'lg') return parseFloat(TOKENS.SPACING['sm-5'].$value)
-    } else {
-      if (chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-9'].$value)
-      if (chartSize === 'md') return parseFloat(TOKENS.SPACING['sm-1'].$value)
-      if (chartSize === 'lg') return parseFloat(TOKENS.SPACING['sm-5'].$value)
-    }
-    return 0
-  })()
-  const barGap = (() => {
-    if (chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-0'].$value)
-    if (chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-1'].$value)
-    if (chartSize === 'lg') return parseFloat(TOKENS.SPACING['xs-2'].$value)
-    return 0
-  })()
-  const barRadius = (() => {
-    if (chartSize === 'sm') return parseFloat(TOKENS.RADIUS['xs'].$value)
-    if (chartSize === 'md') return parseFloat(TOKENS.RADIUS['sm'].$value)
-    if (chartSize === 'lg') return parseFloat(TOKENS.RADIUS['md'].$value)
-    return 0
-  })()
-
-  const entryGap = (() => {
-    if (barKeys.length > 1) {
-      if (chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-6'].$value)
-      if (chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-9'].$value)
-      if (chartSize === 'lg') return parseFloat(TOKENS.SPACING['sm-2'].$value)
-    } else {
-      if (chartSize === 'sm') return parseFloat(TOKENS.SPACING['xs-1'].$value)
-      if (chartSize === 'md') return parseFloat(TOKENS.SPACING['xs-2'].$value)
-      if (chartSize === 'lg') return parseFloat(TOKENS.SPACING['xs-4'].$value)
-    }
-    return 0
-  })()
-  const entrySize = barKeys.length * (barSize + barGap) - barGap
-  const entryHeight = entrySize + entryGap
-
-  const xAxisHeight = 30 // px
-  const chartPadding = 2 * entryGap
-  const chartHeight = entries.length * (entrySize + entryGap) - entryGap + chartPadding + xAxisHeight
+  const sizes = useSizes({ entries, barKeys, minEntryValue, maxEntryValue, chartSize })
+  const axisColor = $color['text-placeholder']
 
   const queryIndexes = useMemo(() => {
     const lcQueries = queries?.map((q) => q.trim().toLowerCase()).filter(Boolean) ?? []
@@ -125,8 +73,8 @@ export const Canvas = (props: Props) => {
       data={entries}
       layout="vertical"
       width="100%"
-      height={chartHeight}
-      barGap={barGap}
+      height={sizes.chartHeight}
+      barGap={sizes.barGap}
       aria-describedby={tooltipId} // Default a11y for recharts sucks
       className="min-w-xl-2 [&_g]:outline-none [&_svg]:outline-none"
       responsive
@@ -136,8 +84,8 @@ export const Canvas = (props: Props) => {
         <Recharts.Bar
           key={key}
           dataKey={key}
-          barSize={barSize}
-          radius={[0, barRadius, barRadius, 0]}
+          barSize={sizes.barSize}
+          radius={[0, sizes.barRadius, sizes.barRadius, 0]}
           shape={(params: any) => (
             <Recharts.Rectangle
               {...params}
@@ -153,11 +101,11 @@ export const Canvas = (props: Props) => {
               dataKey={key}
               content={(params: any) => (
                 <text
-                  x={params.x + params.width + (params.value < 0 ? -barLabelGap : barLabelGap)}
+                  x={params.x + params.width + (params.value < 0 ? -sizes.barLabelGap : sizes.barLabelGap)}
                   y={params.y + params.height / 2}
                   textAnchor={params.value < 0 ? 'end' : 'start'}
                   dominantBaseline="central"
-                  className={cx('text-size-xs fill-color-text-default', getQueryClass(params.index))}
+                  className={cx('text-size-xs fill-color-text-default font-family-mono', getQueryClass(params.index))}
                 >
                   {formatNumber(params.value)}
                 </text>
@@ -170,7 +118,7 @@ export const Canvas = (props: Props) => {
       {/* AXIS */}
       <Recharts.XAxis
         type="number"
-        padding={isViewportMinSM ? { left: barMarginLeft, right: barMarginRight } : undefined}
+        padding={isViewportMinSM ? { left: sizes.barMarginLeft, right: sizes.barMarginRight } : undefined}
         axisLine={{ stroke: axisColor }}
         tickLine={{ stroke: axisColor }}
         tick={{ fontSize: $fontSize['sm'], fill: axisColor }}
@@ -190,7 +138,7 @@ export const Canvas = (props: Props) => {
           <EntryLabel
             {...params}
             label={entryLabelFn(params.payload.value) || params.payload.value}
-            height={entryHeight}
+            height={sizes.entryHeight}
             chartSize={chartSize}
             className={getQueryClass(params.index)}
           />
@@ -200,7 +148,7 @@ export const Canvas = (props: Props) => {
       {/* TOOLTIP */}
       <Recharts.Tooltip
         active={true} // Always render content
-        cursor={<EntryHover {...({} as any)} visible={isTooltipVisible} ref={hoverRef} radius={barRadius} />}
+        cursor={<EntryHover {...({} as any)} visible={isTooltipVisible} ref={hoverRef} radius={sizes.barRadius} />}
         content={(params: any) => (
           <Tooltip
             {...params}
