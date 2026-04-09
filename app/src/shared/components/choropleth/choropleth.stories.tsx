@@ -84,7 +84,7 @@ const meta: Meta = {
       loading: false,
       toolbar: '',
       className: '',
-      style: { height: '500px' },
+      style: { height: '600px' },
     },
     clearDefaults: ['data', 'nameFn'],
     render: (props: ChoroplethProps) => {

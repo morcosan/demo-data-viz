@@ -76,7 +76,39 @@ export const Canvas = (props: ChoroplethProps) => {
 
     chartRef.current?.dispose()
     chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'svg' })
-    chartRef.current.setOption({
+
+    // Disable hover effect for other countries
+    chartRef.current.on('mouseover', (item: any & EItem) => {
+      if (item.seriesType === 'scatter') return
+      if (item.seriesType === 'map') {
+        if (!countryNames.includes(item.name)) {
+          chartRef.current?.dispatchAction({ type: 'downplay', name: item.name })
+        }
+      }
+    })
+
+    // Sync all canvas layers
+    chartRef.current.on('georoam', () => {
+      const geoOpt = chartRef.current?.getOption()?.geo as any[]
+      const { zoom, center } = geoOpt?.[0] ?? {}
+      chartRef.current?.setOption({
+        geo: [{}, { zoom, center }],
+        series: [{}, { type: 'scatter', symbolSize: sizes.city * Math.sqrt(zoom ?? 1) }],
+      })
+    })
+
+    const handleResize = () => chartRef.current?.resize()
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      chartRef.current?.dispose()
+      chartRef.current = null
+    }
+  }, [])
+
+  useEffect(() => {
+    chartRef.current?.setOption({
       animation: false,
       visualMap: {
         seriesIndex: [0, 1, 2],
@@ -146,35 +178,6 @@ export const Canvas = (props: ChoroplethProps) => {
         },
       },
     } satisfies EChartsOption)
-
-    // Disable hover effect for other countries
-    chartRef.current.on('mouseover', (item: any & EItem) => {
-      if (item.seriesType === 'scatter') return
-      if (item.seriesType === 'map') {
-        if (!countryNames.includes(item.name)) {
-          chartRef.current?.dispatchAction({ type: 'downplay', name: item.name })
-        }
-      }
-    })
-
-    // Sync all canvas layers
-    chartRef.current.on('georoam', () => {
-      const geoOpt = chartRef.current?.getOption()?.geo as any[]
-      const { zoom, center } = geoOpt?.[0] ?? {}
-      chartRef.current?.setOption({
-        geo: [{}, { zoom, center }],
-        series: [{}, { type: 'scatter', symbolSize: sizes.city * Math.sqrt(zoom ?? 1) }],
-      })
-    })
-
-    const handleResize = () => chartRef.current?.resize()
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      chartRef.current?.dispose()
-      chartRef.current = null
-    }
   }, [countryData, cityData, colors])
 
   return (

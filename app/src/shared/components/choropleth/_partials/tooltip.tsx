@@ -16,7 +16,7 @@ export const Tooltip = ({ name, nameFn, value }: Props) => {
   return (
     <div
       className={cx(
-        'px-xs-5 py-xs-3 min-w-md-9 rounded-xs',
+        'px-xs-5 py-xs-3 min-w-md-9 rounded-sm',
         'bg-color-bg-menu border-color-border-shadow border shadow-md',
         'text-size-sm',
       )}
@@ -27,7 +27,7 @@ export const Tooltip = ({ name, nameFn, value }: Props) => {
       {hasValue ? (
         <div className="font-family-mono">{formatNumber(value as number)}</div>
       ) : (
-        <div>{t('dataViz.error.noDataForCountry')}</div>
+        <div className="text-size-xs text-color-text-subtle">{t('dataViz.error.noDataForCountry')}</div>
       )}
     </div>
   )

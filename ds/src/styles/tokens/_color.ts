@@ -163,7 +163,7 @@ export const TOKENS__COLOR = {
   'chart-bar-hover': { $ref: { light: 'grey-14', dark: 'grey-8' } },
 
   'map-ocean': { $ref: { light: 'blue-1', dark: 'blue-8' } },
-  'map-land': { $ref: { light: 'white', dark: 'grey-19' } },
-  'map-scale-low': { $ref: { light: 'grey-3', dark: 'grey-15' } },
-  'map-scale-high': { $ref: { light: 'grey-12', dark: 'grey-6' } },
+  'map-land': { $ref: { light: 'grey-1', dark: 'grey-18' } },
+  'map-scale-low': { $ref: { light: 'grey-4', dark: 'grey-14' } },
+  'map-scale-high': { $ref: { light: 'grey-13', dark: 'grey-5' } },
 } as const satisfies DesignTokenGroup<string>
