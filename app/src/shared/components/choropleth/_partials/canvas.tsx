@@ -18,26 +18,26 @@ export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
-  const { colors, sizes, shadow } = useStyles()
+  const { colors, sizes, shadows } = useStyles()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
   const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
 
+  const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
+
   const nameFn = useCallback(
     (value: string) => {
       const lcValue = value.toLowerCase()
-      const query = queries?.find((query) => lcValue.includes(query.toLowerCase())) || ''
+      const query = lcQueries?.find((query) => lcValue.includes(query)) || ''
       return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
     },
-    [nameFnProp, queries],
+    [nameFnProp, lcQueries],
   )
 
   const queryNames = useMemo(() => {
-    const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
     const names = [] as string[]
-
     data.countries.forEach((country) => {
       const name = country.name.toLowerCase()
       const isMatch = !lcQueries.length || lcQueries.some((query) => name.includes(query))
@@ -48,9 +48,8 @@ export const Canvas = (props: ChoroplethProps) => {
       const isMatch = !lcQueries.length || lcQueries.some((query) => name.includes(query))
       if (isMatch) names.push(city.name)
     })
-
     return names
-  }, [data.countries, data.cities, queries])
+  }, [data.countries, data.cities, lcQueries])
 
   const [countryData, countryNames] = useMemo(() => {
     const items = [] as EItem[]
@@ -119,33 +118,72 @@ export const Canvas = (props: ChoroplethProps) => {
         {
           map: 'world',
           roam: true,
-          regions: [
-            ...countryData.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: { opacity: 0 } })),
-          ],
-          itemStyle: {
-            areaColor: colors.land,
-            borderColor: colors.border,
-            borderWidth: sizes.border,
-          },
+          itemStyle: { opacity: 0 },
           emphasis: {
             itemStyle: {
               opacity: 1,
               areaColor: 'inherit',
               borderColor: colors.borderHover,
               borderWidth: sizes.borderHover,
-              shadowColor: shadow.color,
-              shadowBlur: shadow.blur,
-              shadowOffsetX: shadow.offsetX,
-              shadowOffsetY: shadow.offsetY,
+              shadowColor: shadows.lg.color,
+              shadowBlur: shadows.lg.blur,
+              shadowOffsetX: shadows.lg.offsetX,
+              shadowOffsetY: shadows.lg.offsetY,
             },
             label: { show: false },
           },
+          regions: [
+            ...countryData.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: { opacity: 0 } })),
+            ...countryData
+              .filter((item) => item.match)
+              .map((item) => ({
+                ...item,
+                itemStyle: {
+                  opacity: 1,
+                  shadowColor: shadows.sm.color,
+                  shadowBlur: shadows.sm.blur,
+                  shadowOffsetX: shadows.sm.offsetX,
+                  shadowOffsetY: shadows.sm.offsetY,
+                },
+              })),
+            ...countryData
+              .filter((item) => item.match && lcQueries.length > 0)
+              .map((item) => ({
+                ...item,
+                itemStyle: {
+                  borderColor: colors.borderQuery,
+                  borderWidth: sizes.borderQuery,
+                  shadowColor: shadows.md.color,
+                  shadowBlur: shadows.md.blur,
+                  shadowOffsetX: shadows.md.offsetX,
+                  shadowOffsetY: shadows.md.offsetY,
+                },
+              })),
+          ],
         },
         {
           zlevel: -1,
           map: 'world',
           silent: true,
-          itemStyle: { areaColor: colors.scaleLow },
+          itemStyle: {
+            areaColor: colors.land,
+            borderColor: colors.border,
+            borderWidth: sizes.border,
+          },
+          regions: [
+            ...countryData
+              .filter((item) => !item.match)
+              .map((item) => ({
+                ...item,
+                itemStyle: {
+                  areaColor: colors.scaleLow,
+                  shadowColor: shadows.sm.color,
+                  shadowBlur: shadows.sm.blur,
+                  shadowOffsetX: shadows.sm.offsetX,
+                  shadowOffsetY: shadows.sm.offsetY,
+                },
+              })),
+          ],
         },
       ],
       tooltip: {

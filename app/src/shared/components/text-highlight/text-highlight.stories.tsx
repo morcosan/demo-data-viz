@@ -7,7 +7,7 @@ const meta: Meta = {
   ...defineMeta(TextHighlight, {
     props: {
       text: 'Lorem ipsum dolor sit amet\nConsectetur adipiscing elit\nLorem ipsum dolor sit amet',
-      query: 'ipsum dolor',
+      md: 'ipsum dolor',
       className: '',
     },
     clearDefaults: ['text', 'query'],
