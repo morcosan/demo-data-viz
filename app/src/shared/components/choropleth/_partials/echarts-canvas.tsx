@@ -56,6 +56,7 @@ export const EchartsCanvas = (props: Props) => {
           type: 'map',
           map: 'world',
           geoIndex: 0,
+          selectedMode: false,
         },
         // City layer
         {
@@ -107,10 +108,11 @@ export const EchartsCanvas = (props: Props) => {
     } satisfies EChartsOption)
 
     chartRef.current.on('mouseover', (item: any & EItem) => {
-      if (item.componentType !== 'series') return
       if (item.seriesType === 'scatter') return
-      if (!countryNames.includes(item.name)) {
-        chartRef.current?.dispatchAction({ type: 'downplay', name: item.name })
+      if (item.seriesType === 'map') {
+        if (!countryNames.includes(item.name)) {
+          chartRef.current?.dispatchAction({ type: 'downplay', name: item.name })
+        }
       }
     })
 
@@ -132,5 +134,7 @@ export const EchartsCanvas = (props: Props) => {
     }
   }, [countryData, cityData, colors])
 
-  return <div ref={canvasRef} className={className} style={{ backgroundColor: colors.ocean }} />
+  return (
+    <div ref={canvasRef} className={cx(className, '[&_*]:cursor-default!')} style={{ backgroundColor: colors.ocean }} />
+  )
 }
