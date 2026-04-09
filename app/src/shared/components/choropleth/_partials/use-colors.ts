@@ -9,6 +9,6 @@ export const useColors = () => {
     land: getTokenValue_COLOR('map-land', colorTheme),
     ocean: getTokenValue_COLOR('map-ocean', colorTheme),
     border: getTokenValue_COLOR('border-default', colorTheme),
-    hover: getTokenValue_COLOR('secondary-card-text', colorTheme),
+    borderHover: getTokenValue_COLOR('text-default', colorTheme),
   }
 }

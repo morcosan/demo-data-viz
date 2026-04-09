@@ -81,63 +81,91 @@ export const Canvas = (props: ChoroplethProps) => {
     chartRef.current?.dispose()
     chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'svg' })
     chartRef.current.setOption({
-      series: [
-        // Country layer
-        {
-          data: countryData,
-          type: 'map',
-          map: 'world',
-          geoIndex: 0,
-          selectedMode: false,
-        },
-        // City layer
-        {
-          data: cityData,
-          type: 'scatter',
-          coordinateSystem: 'geo',
-          symbolSize: citySize,
-          itemStyle: {
-            borderWidth: 0.5,
-          },
-        },
-      ],
-      geo: {
-        map: 'world',
-        roam: true,
-        silent: false,
-        regions: [
-          ...countryData
-            .filter((item) => !item.match)
-            .map((item) => ({
-              name: item.name,
-              value: item.value,
-              itemStyle: {
-                opacity: 0.5,
-              },
-            })),
-        ],
-        itemStyle: {
-          areaColor: colors.land,
-          borderColor: colors.border,
-          borderWidth: 0.5,
-        },
-        emphasis: {
-          itemStyle: {
-            areaColor: 'inherit',
-            borderColor: colors.hover,
-            borderWidth: 1,
-          },
-          label: { show: false },
-        },
-      },
+      animation: false,
       visualMap: {
-        seriesIndex: [0, 1],
+        seriesIndex: [0, 1, 2],
         min: minValue,
         max: maxValue,
         inRange: { color: [colors.scaleLow, colors.scaleHigh] },
         itemWidth: 20,
         itemHeight: 150,
       },
+      series: [
+        {
+          data: countryData.filter((item) => item.match),
+          type: 'map',
+          map: 'world',
+          geoIndex: 0,
+          selectedMode: false,
+        },
+        {
+          data: countryData
+            .filter((item) => !item.match)
+            .map((item) => ({
+              ...item,
+              itemStyle: { areaColor: colors.land },
+            })),
+          type: 'map',
+          map: 'world',
+          geoIndex: 0,
+          selectedMode: false,
+          itemStyle: {
+            areaColor: colors.land,
+          },
+        },
+        {
+          data: cityData,
+          type: 'scatter',
+          coordinateSystem: 'geo',
+          symbolSize: citySize,
+          itemStyle: {
+            borderWidth: 0.8,
+            opacity: 1,
+          },
+          emphasis: {
+            itemStyle: {
+              borderColor: colors.borderHover,
+              borderWidth: 1.2,
+            },
+          },
+        },
+      ],
+      geo: [
+        {
+          map: 'world',
+          roam: true,
+          regions: [
+            ...countryData
+              .filter((item) => !item.match)
+              .map((item) => ({
+                ...item,
+                itemStyle: {
+                  opacity: 0,
+                },
+              })),
+          ],
+          itemStyle: {
+            areaColor: colors.land,
+            borderColor: colors.border,
+            borderWidth: 0.8,
+          },
+          emphasis: {
+            itemStyle: {
+              areaColor: 'inherit',
+              borderColor: colors.borderHover,
+              borderWidth: 1.2,
+              opacity: 1,
+            },
+            label: { show: false },
+          },
+        },
+        {
+          zlevel: -1,
+          map: 'world',
+          silent: true,
+          itemStyle: { areaColor: colors.scaleLow },
+        },
+      ],
       tooltip: {
         trigger: 'item',
         padding: 0,
@@ -161,10 +189,11 @@ export const Canvas = (props: ChoroplethProps) => {
     })
 
     chartRef.current.on('georoam', () => {
-      const geo = chartRef.current?.getOption()?.geo as any[]
-      const zoom = geo?.[0]?.zoom ?? 1
+      const geoOpt = chartRef.current?.getOption()?.geo as any[]
+      const { zoom, center } = geoOpt?.[0] ?? {}
       chartRef.current?.setOption({
-        series: [{}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom) }],
+        geo: [{}, { zoom, center }],
+        series: [{}, {}, { type: 'scatter', symbolSize: citySize * Math.sqrt(zoom ?? 1) }],
       })
     })
 
