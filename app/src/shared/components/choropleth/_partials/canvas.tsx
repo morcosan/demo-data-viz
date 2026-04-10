@@ -19,7 +19,7 @@ export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
-  const { colors, font, sizes, styles, cssCanvas } = useStyles()
+  const { colors, sizes, styles, cssCanvas } = useStyles()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
@@ -116,15 +116,12 @@ export const Canvas = (props: ChoroplethProps) => {
     chartRef.current?.setOption({
       animation: false,
       visualMap: {
-        seriesIndex: [0, 1, 2],
-        min: minValue,
+        ...styles.legend,
+        seriesIndex: [0, 1],
         max: maxValue,
-        inRange: { color: [colors.scaleLow, colors.scaleHigh] },
-        itemWidth: 20,
-        itemHeight: 150,
+        min: minValue,
         text: [maxLabel, minLabel],
-        textGap: 6,
-        textStyle: { color: colors.text, fontFamily: font.mono, fontSize: font.size },
+        inRange: { color: [colors.minValue, colors.maxValue] },
         formatter: numberFn as any,
       },
       series: [
@@ -141,8 +138,8 @@ export const Canvas = (props: ChoroplethProps) => {
           type: 'scatter',
           coordinateSystem: 'geo',
           symbolSize: sizes.city,
-          itemStyle: styles.lv1.default,
-          emphasis: { itemStyle: styles.lv1.hover },
+          itemStyle: styles.layer1.default,
+          emphasis: { itemStyle: styles.layer1.hover },
         },
       ],
       geo: [
@@ -150,16 +147,18 @@ export const Canvas = (props: ChoroplethProps) => {
           zlevel: 1,
           map: 'world',
           roam: true,
-          itemStyle: styles.lv1.landmark,
+          itemStyle: styles.layer1.landscape,
           regions: [
-            ...countryData.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: styles.lv1.landmark })),
-            ...countryData.filter((item) => item.match).map((item) => ({ ...item, itemStyle: styles.lv1.default })),
+            ...countryData
+              .filter((item) => !item.match)
+              .map((item) => ({ ...item, itemStyle: styles.layer1.landscape })),
+            ...countryData.filter((item) => item.match).map((item) => ({ ...item, itemStyle: styles.layer1.default })),
             ...countryData
               .filter((item) => item.match && lcQueries.length > 0)
-              .map((item) => ({ ...item, itemStyle: styles.lv1.query })),
+              .map((item) => ({ ...item, itemStyle: styles.layer1.query })),
           ],
           emphasis: {
-            itemStyle: styles.lv1.hover,
+            itemStyle: styles.layer1.hover,
             label: { show: false },
           },
         },
@@ -167,20 +166,17 @@ export const Canvas = (props: ChoroplethProps) => {
           zlevel: 0,
           map: 'world',
           silent: true,
-          itemStyle: styles.lv0.landmark,
+          itemStyle: styles.layer0.landscape,
           regions: [
             ...countryData
               .filter((item) => !item.match && lcQueries.length > 0)
-              .map((item) => ({ ...item, itemStyle: styles.lv0.default })),
+              .map((item) => ({ ...item, itemStyle: styles.layer0.default })),
           ],
         },
       ],
       tooltip: {
+        ...styles.tooltip,
         trigger: 'item',
-        padding: 0,
-        borderWidth: 0,
-        backgroundColor: 'transparent',
-        extraCssText: 'box-shadow: none; color: unset;',
         formatter: (item: any & EItem) => {
           const value = Array.isArray(item.value) ? item.value[2] : item.value
           return renderToStaticMarkup(<Tooltip name={item.name} value={value} nameFn={nameFn} />)

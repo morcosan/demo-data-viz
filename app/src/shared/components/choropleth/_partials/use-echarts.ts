@@ -22,6 +22,8 @@ const GEO_JSON_NAMES = {
 export type ECharts = echarts.ECharts
 export type EChartsOption = echarts.EChartsOption
 export type EItemStyle = echarts.MapSeriesOption['itemStyle']
+export type ELegend = echarts.EChartsOption['visualMap']
+export type ETooltip = echarts.EChartsOption['tooltip']
 
 export const useEcharts = () => {
   return { echarts, GEO_JSON_NAMES }

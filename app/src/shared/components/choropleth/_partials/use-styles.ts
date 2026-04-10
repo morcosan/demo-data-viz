@@ -1,20 +1,14 @@
 import { getTokenValue_COLOR, getTokenValue_FONT_FAMILY, useThemeService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
-import { type EItemStyle } from './use-echarts'
+import { type EItemStyle, type ELegend, type ETooltip } from './use-echarts'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
 
-  const font = {
-    sans: getTokenValue_FONT_FAMILY('sans'),
-    mono: getTokenValue_FONT_FAMILY('mono'),
-    size: '12px',
-  }
-
   const colors = {
     text: getTokenValue_COLOR('text-default', colorTheme),
-    scaleLow: getTokenValue_COLOR('map-scale-low', colorTheme),
-    scaleHigh: getTokenValue_COLOR('map-scale-high', colorTheme),
+    minValue: getTokenValue_COLOR('map-scale-low', colorTheme),
+    maxValue: getTokenValue_COLOR('map-scale-high', colorTheme),
     land: getTokenValue_COLOR('map-land', colorTheme),
     ocean: getTokenValue_COLOR('map-ocean', colorTheme),
     borderDefault: getTokenValue_COLOR('border-subtle', colorTheme),
@@ -50,22 +44,22 @@ export const useStyles = () => {
   }
 
   const styles = {
-    lv0: {
-      landmark: {
+    layer0: {
+      landscape: {
         areaColor: colors.land,
         borderColor: colors.borderDefault,
         borderWidth: sizes.borderDefault,
       },
       default: {
-        areaColor: colors.scaleLow,
+        areaColor: colors.minValue,
         shadowColor: shadows.sm.color,
         shadowBlur: shadows.sm.blur,
         shadowOffsetX: shadows.sm.offsetX,
         shadowOffsetY: shadows.sm.offsetY,
       },
     } satisfies Record<string, EItemStyle>,
-    lv1: {
-      landmark: {
+    layer1: {
+      landscape: {
         opacity: 0,
       },
       default: {
@@ -97,6 +91,22 @@ export const useStyles = () => {
         shadowOffsetY: shadows.lg.offsetY,
       },
     } satisfies Record<string, EItemStyle>,
+    legend: {
+      itemWidth: 20,
+      itemHeight: 150,
+      textGap: 6,
+      textStyle: {
+        color: colors.text,
+        fontFamily: getTokenValue_FONT_FAMILY('mono'),
+        fontSize: '12px',
+      },
+    } satisfies ELegend,
+    tooltip: {
+      padding: 0,
+      borderWidth: 0,
+      backgroundColor: 'transparent',
+      extraCssText: 'box-shadow: none; color: unset;',
+    } satisfies ETooltip,
   }
 
   const cssCanvas: CSSObject = {
@@ -115,7 +125,6 @@ export const useStyles = () => {
   return {
     colors,
     cssCanvas,
-    font,
     shadows,
     sizes,
     styles,
