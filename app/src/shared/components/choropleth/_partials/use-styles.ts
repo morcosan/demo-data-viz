@@ -1,4 +1,5 @@
 import { getTokenValue_COLOR, useThemeService } from '@ds/core'
+import { type EItemStyle } from './use-echarts'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
@@ -54,7 +55,7 @@ export const useStyles = () => {
         shadowOffsetX: shadows.sm.offsetX,
         shadowOffsetY: shadows.sm.offsetY,
       },
-    },
+    } satisfies Record<string, EItemStyle>,
     lv1: {
       landmark: {
         opacity: 0,
@@ -87,7 +88,7 @@ export const useStyles = () => {
         shadowOffsetX: shadows.lg.offsetX,
         shadowOffsetY: shadows.lg.offsetY,
       },
-    },
+    } satisfies Record<string, EItemStyle>,
   }
 
   return {
