@@ -1,10 +1,12 @@
 import { getTokenValue_COLOR, useThemeService } from '@ds/core'
+import { type CSSObject } from '@emotion/react'
 import { type EItemStyle } from './use-echarts'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
 
   const colors = {
+    text: getTokenValue_COLOR('text-default', colorTheme),
     scaleLow: getTokenValue_COLOR('map-scale-low', colorTheme),
     scaleHigh: getTokenValue_COLOR('map-scale-high', colorTheme),
     land: getTokenValue_COLOR('map-land', colorTheme),
@@ -91,10 +93,24 @@ export const useStyles = () => {
     } satisfies Record<string, EItemStyle>,
   }
 
+  const cssCanvas: CSSObject = {
+    backgroundColor: colors.ocean,
+
+    '& *': {
+      cursor: 'default !important',
+    },
+
+    '& svg g[clip-path] path': {
+      stroke: getTokenValue_COLOR('border-active', colorTheme),
+      strokeWidth: '1px',
+    },
+  }
+
   return {
     colors,
     sizes,
     shadows,
     styles,
+    cssCanvas,
   }
 }

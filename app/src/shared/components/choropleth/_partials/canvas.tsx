@@ -1,4 +1,5 @@
 import { useCountries } from '@app-i18n'
+import { formatInt } from '@app/shared/utils/formatting'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
@@ -18,12 +19,14 @@ export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
-  const { colors, sizes, styles } = useStyles()
+  const { colors, sizes, styles, cssCanvas } = useStyles()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
-  const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
+  const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
+  const maxLabel = formatInt(maxValue, 'up')
+  const minLabel = formatInt(minValue, 'down')
 
   const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
 
@@ -117,6 +120,10 @@ export const Canvas = (props: ChoroplethProps) => {
         inRange: { color: [colors.scaleLow, colors.scaleHigh] },
         itemWidth: 20,
         itemHeight: 150,
+        text: [maxLabel, minLabel],
+        textStyle: {
+          color: colors.text,
+        },
       },
       series: [
         {
@@ -180,7 +187,5 @@ export const Canvas = (props: ChoroplethProps) => {
     } satisfies EChartsOption)
   }, [countryData, cityData, colors])
 
-  return (
-    <div ref={canvasRef} className={cx(className, '[&_*]:cursor-default!')} style={{ backgroundColor: colors.ocean }} />
-  )
+  return <div ref={canvasRef} className={className} css={cssCanvas} />
 }

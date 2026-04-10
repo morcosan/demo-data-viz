@@ -14,6 +14,27 @@ const formatNumber = (value?: number, decimals?: number): string => {
     : ''
 }
 
+const formatInt = (value?: number, round: 'up' | 'down' = 'up'): string => {
+  if (value === undefined) return ''
+
+  const abs = Math.abs(value)
+  const sign = value < 0 ? '-' : ''
+  const snap = round === 'up' ? Math.ceil : Math.floor
+  const rounded = snap(abs / 10) * 10
+
+  if (rounded >= 1_000_000_000) {
+    return sign + Math.round(rounded / 1_000_000_000) + 'b'
+  }
+  if (rounded >= 1_000_000) {
+    return sign + Math.round(rounded / 1_000_000) + 'm'
+  }
+  if (rounded >= 1_000) {
+    return sign + Math.round(rounded / 1_000) + 'k'
+  }
+
+  return sign + rounded.toString()
+}
+
 const formatDate = (value?: string | Date): string => {
   return value ? new Date(value).toLocaleString(i18n.language, { dateStyle: 'long' }) : ''
 }
@@ -60,4 +81,4 @@ const MONO_WIDTH_BY_CHAR = ((): Record<string, number> => {
   return { default: parseFloat(ctx.measureText('a').width.toFixed(1)) }
 })()
 
-export { QueryOperator, computeTextWidth, formatDate, formatNumber }
+export { QueryOperator, computeTextWidth, formatDate, formatInt, formatNumber }
