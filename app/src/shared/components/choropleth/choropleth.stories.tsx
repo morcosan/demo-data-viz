@@ -7,6 +7,9 @@ const MAX = 100_000_000
 const meta: Meta = {
   title: 'Components / Choropleth',
   ...defineMeta(Choropleth, {
+    slots: {
+      toolbar: '',
+    },
     props: {
       data: {
         countries: [

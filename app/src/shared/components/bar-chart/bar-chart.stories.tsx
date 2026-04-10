@@ -8,6 +8,9 @@ const MAX = 100_000_000
 const meta: Meta = {
   title: 'Components / BarChart',
   ...defineMeta(BarChart, {
+    slots: {
+      toolbar: '',
+    },
     props: {
       data: {
         entries: loremTrue()
@@ -42,7 +45,6 @@ const meta: Meta = {
       sortKey: '',
       sortDir: undefined,
       loading: false,
-      toolbar: '',
       emptyState: '',
       className: '',
       style: { height: '500px' },
