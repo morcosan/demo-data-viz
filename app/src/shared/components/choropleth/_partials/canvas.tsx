@@ -1,6 +1,6 @@
 import { useCountries } from '@app-i18n'
 import { formatInt, formatNumber } from '@app/shared/utils/formatting'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type ChoroplethProps } from '../_types'
@@ -12,13 +12,7 @@ import { useStyles } from './use-styles'
 export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
-  const containerRef = useRef<HTMLDivElement>(null)
   const { colors, sizes, styles, cssContainer } = useStyles()
-  const { echartsRef } = useEcharts({
-    containerRef,
-    citySize: sizes.city,
-    isActiveFn: (name: string) => countryNames.includes(name),
-  })
 
   const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
@@ -28,16 +22,6 @@ export const Canvas = (props: ChoroplethProps) => {
   const legendFn = (value: number) => (hasDigits ? formatNumber(value) : formatInt(value))
 
   const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
-
-  const nameFn = useCallback(
-    (value: string) => {
-      const lcValue = value.toLowerCase()
-      const query = lcQueries?.find((query) => lcValue.includes(query)) || ''
-      return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
-    },
-    [nameFnProp, lcQueries],
-  )
-
   const queryNames = useMemo(() => {
     const names = [] as string[]
     data.countries.forEach((country) => {
@@ -53,24 +37,31 @@ export const Canvas = (props: ChoroplethProps) => {
     return names
   }, [data.countries, data.cities, lcQueries])
 
-  const [countryData, countryNames] = useMemo(() => {
-    const items = [] as EItem[]
-    data.countries.forEach((country) => {
-      const match = queryNames.includes(country.name)
-      getCountryNames(country.iso3).forEach((name) =>
-        items.push({
-          name: GEO_JSON_NAMES[name] || name,
-          value: country.value,
-          match,
-        }),
-      )
-    })
-    return [items, items.map((item) => item.name)]
-  }, [data.countries, getCountryNames, GEO_JSON_NAMES, queryNames])
-
-  const cityData = useMemo(
+  const cityItems = useMemo(
     () => data.cities.map((city): EItem => ({ name: city.name, value: [city.lng, city.lat, city.value] })),
     [data.cities],
+  )
+  const countryItems = useMemo((): EItem[] => {
+    return data.countries.flatMap((country) => {
+      return getCountryNames(country.iso3).map((name) => ({
+        name: GEO_JSON_NAMES[name] || name,
+        value: country.value,
+        match: queryNames.includes(country.name),
+      }))
+    })
+  }, [data.countries, getCountryNames, GEO_JSON_NAMES, queryNames])
+
+  const countryNames = useMemo(() => countryItems.map((item) => item.name), [countryItems])
+  const isItemActive = useCallback((name: string) => countryNames.includes(name), [countryNames])
+  const { containerRef, echartsRef } = useEcharts({ geoCount: 2, markerSize: sizes.city, isItemActive })
+
+  const nameFn = useCallback(
+    (value: string) => {
+      const lcValue = value.toLowerCase()
+      const query = lcQueries?.find((query) => lcValue.includes(query)) || ''
+      return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
+    },
+    [nameFnProp, lcQueries],
   )
 
   useEffect(() => {
@@ -87,7 +78,7 @@ export const Canvas = (props: ChoroplethProps) => {
       },
       series: [
         {
-          data: countryData,
+          data: countryItems,
           type: 'map',
           map: 'world',
           geoIndex: 0,
@@ -95,7 +86,7 @@ export const Canvas = (props: ChoroplethProps) => {
         },
         {
           zlevel: 2,
-          data: cityData,
+          data: cityItems,
           type: 'scatter',
           coordinateSystem: 'geo',
           symbolSize: sizes.city,
@@ -112,11 +103,11 @@ export const Canvas = (props: ChoroplethProps) => {
           roam: true,
           itemStyle: styles.layer1.landscape,
           regions: [
-            ...countryData
+            ...countryItems
               .filter((item) => !item.match)
               .map((item) => ({ ...item, itemStyle: styles.layer1.landscape })),
-            ...countryData.filter((item) => item.match).map((item) => ({ ...item, itemStyle: styles.layer1.default })),
-            ...countryData
+            ...countryItems.filter((item) => item.match).map((item) => ({ ...item, itemStyle: styles.layer1.default })),
+            ...countryItems
               .filter((item) => item.match && lcQueries.length > 0)
               .map((item) => ({ ...item, itemStyle: styles.layer1.query })),
           ],
@@ -133,7 +124,7 @@ export const Canvas = (props: ChoroplethProps) => {
           silent: true,
           itemStyle: styles.layer0.landscape,
           regions: [
-            ...countryData
+            ...countryItems
               .filter((item) => !item.match && lcQueries.length > 0)
               .map((item) => ({ ...item, itemStyle: styles.layer0.default })),
           ],
@@ -148,7 +139,7 @@ export const Canvas = (props: ChoroplethProps) => {
         },
       },
     } satisfies EChartsOption)
-  }, [countryData, cityData, colors])
+  }, [countryItems, cityItems, colors])
 
   return <div ref={containerRef} className={className} css={cssContainer} />
 }
