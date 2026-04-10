@@ -19,7 +19,7 @@ export const Choropleth = (props: ChoroplethProps) => {
   }, [data])
 
   return (
-    <div className={cx('bg-color-bg-card flex w-full flex-col', className)} style={style}>
+    <div className={cx('bg-color-bg-card flex w-full flex-col overflow-hidden', className)} style={style}>
       <div
         className={cx(
           'z-sticky bg-color-bg-card shadow-below-sm',
