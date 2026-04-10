@@ -1,5 +1,5 @@
 import { useCountries } from '@app-i18n'
-import { formatInt } from '@app/shared/utils/formatting'
+import { formatInt, formatNumber } from '@app/shared/utils/formatting'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
@@ -19,14 +19,16 @@ export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { echarts, GEO_JSON_NAMES } = useEcharts()
-  const { colors, sizes, styles, cssCanvas } = useStyles()
+  const { colors, font, sizes, styles, cssCanvas } = useStyles()
   const canvasRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
 
   const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
-  const maxLabel = formatInt(maxValue, 'up')
-  const minLabel = formatInt(minValue, 'down')
+  const hasDigits = maxValue <= 10 && minValue >= -10
+  const maxLabel = hasDigits ? formatNumber(maxValue) : formatInt(maxValue, 'up')
+  const minLabel = hasDigits ? formatNumber(minValue) : formatInt(minValue, 'down')
+  const numberFn = (value: number) => formatNumber(value, hasDigits ? 2 : 0)
 
   const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
 
@@ -121,9 +123,9 @@ export const Canvas = (props: ChoroplethProps) => {
         itemWidth: 20,
         itemHeight: 150,
         text: [maxLabel, minLabel],
-        textStyle: {
-          color: colors.text,
-        },
+        textGap: 6,
+        textStyle: { color: colors.text, fontFamily: font.mono, fontSize: font.size },
+        formatter: numberFn as any,
       },
       series: [
         {

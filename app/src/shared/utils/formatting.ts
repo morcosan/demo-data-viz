@@ -8,8 +8,8 @@ const QueryOperator = {
 const formatNumber = (value?: number, decimals?: number): string => {
   return value !== undefined
     ? value.toLocaleString(i18n.language, {
-        minimumFractionDigits: decimals || 0,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: decimals ?? 0,
+        maximumFractionDigits: decimals ?? 2,
       })
     : ''
 }

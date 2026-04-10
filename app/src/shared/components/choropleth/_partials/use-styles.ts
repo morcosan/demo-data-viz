@@ -1,9 +1,15 @@
-import { getTokenValue_COLOR, useThemeService } from '@ds/core'
+import { getTokenValue_COLOR, getTokenValue_FONT_FAMILY, useThemeService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
 import { type EItemStyle } from './use-echarts'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
+
+  const font = {
+    sans: getTokenValue_FONT_FAMILY('sans'),
+    mono: getTokenValue_FONT_FAMILY('mono'),
+    size: '12px',
+  }
 
   const colors = {
     text: getTokenValue_COLOR('text-default', colorTheme),
@@ -108,9 +114,10 @@ export const useStyles = () => {
 
   return {
     colors,
-    sizes,
-    shadows,
-    styles,
     cssCanvas,
+    font,
+    shadows,
+    sizes,
+    styles,
   }
 }
