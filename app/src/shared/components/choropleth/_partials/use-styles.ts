@@ -103,11 +103,11 @@ export const useStyles = () => {
     } satisfies ETooltip,
   }
 
-  const cssCanvas: CSSObject = {
+  const cssContainer: CSSObject = {
     backgroundColor: colors.ocean,
 
     '& *': {
-      cursor: 'default !important',
+      cursor: 'unset !important',
     },
 
     '& svg g[clip-path] path': {
@@ -118,7 +118,7 @@ export const useStyles = () => {
 
   return {
     colors,
-    cssCanvas,
+    cssContainer,
     shadows,
     sizes,
     styles,

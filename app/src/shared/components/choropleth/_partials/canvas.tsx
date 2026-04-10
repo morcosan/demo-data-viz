@@ -5,23 +5,19 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type ChoroplethProps } from '../_types'
 import { Tooltip } from './tooltip'
-import { type ECharts, type EChartsOption, useEcharts } from './use-echarts'
+import { type EChartsOption, type EItem, useEcharts } from './use-echarts'
 import { useStyles } from './use-styles'
-
-interface EItem extends Record<string, any> {
-  name: string
-  value: number | number[]
-  seriesType?: 'map' | 'scatter'
-  match?: boolean
-}
 
 export const Canvas = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
-  const { echarts, GEO_JSON_NAMES } = useEcharts()
-  const { colors, sizes, styles, cssCanvas } = useStyles()
-  const canvasRef = useRef<HTMLDivElement>(null)
-  const chartRef = useRef<ECharts>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { colors, sizes, styles, cssContainer } = useStyles()
+  const { echartsRef, GEO_JSON_NAMES } = useEcharts({
+    containerRef,
+    citySize: sizes.city,
+    isActiveFn: (name: string) => countryNames.includes(name),
+  })
 
   const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
@@ -77,43 +73,7 @@ export const Canvas = (props: ChoroplethProps) => {
   )
 
   useEffect(() => {
-    if (!canvasRef.current) return
-
-    chartRef.current?.dispose()
-    chartRef.current = echarts.init(canvasRef.current, null, { renderer: 'svg' })
-
-    // Disable hover effect for other countries
-    chartRef.current.on('mouseover', (item: any & EItem) => {
-      if (item.seriesType === 'scatter') return
-      if (item.seriesType === 'map') {
-        if (!countryNames.includes(item.name)) {
-          chartRef.current?.dispatchAction({ type: 'downplay', name: item.name })
-        }
-      }
-    })
-
-    // Sync all canvas layers
-    chartRef.current.on('georoam', () => {
-      const geoOpt = chartRef.current?.getOption()?.geo as any[]
-      const { zoom, center } = geoOpt?.[0] ?? {}
-      chartRef.current?.setOption({
-        geo: [{}, { zoom, center }],
-        series: [{}, { type: 'scatter', symbolSize: sizes.city * Math.sqrt(zoom ?? 1) }],
-      })
-    })
-
-    const resizeObserver = new ResizeObserver(() => chartRef.current?.resize())
-    resizeObserver.observe(canvasRef.current)
-
-    return () => {
-      resizeObserver.disconnect()
-      chartRef.current?.dispose()
-      chartRef.current = null
-    }
-  }, [])
-
-  useEffect(() => {
-    chartRef.current?.setOption({
+    echartsRef.current?.setOption({
       animation: false,
       visualMap: {
         ...styles.legend,
@@ -146,6 +106,8 @@ export const Canvas = (props: ChoroplethProps) => {
         {
           zlevel: 1,
           map: 'world',
+          center: [0, 0],
+          zoom: 1,
           roam: true,
           itemStyle: styles.layer1.landscape,
           regions: [
@@ -165,6 +127,8 @@ export const Canvas = (props: ChoroplethProps) => {
         {
           zlevel: 0,
           map: 'world',
+          center: [0, 0],
+          zoom: 1,
           silent: true,
           itemStyle: styles.layer0.landscape,
           regions: [
@@ -185,5 +149,5 @@ export const Canvas = (props: ChoroplethProps) => {
     } satisfies EChartsOption)
   }, [countryData, cityData, colors])
 
-  return <div ref={canvasRef} className={className} css={cssCanvas} />
+  return <div ref={containerRef} className={className} css={cssContainer} />
 }
