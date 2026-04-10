@@ -14,20 +14,21 @@ interface Props extends ReactProps {
 }
 
 export const ChartView = (props: Props) => {
-  const { data, queries, cellFn: cellFnProp, className } = props
+  const { data, queries, cellFn, className } = props
   const { t } = useTranslation()
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
   const [colKey, setColKey] = useState<string | null>(null)
-  const VALUE_KEY = 'value'
-  const VALUE_LABEL = t('core.label.value')
   const indexCol = data.cols.find((col) => col.key === indexKey)
   const pivotCol = data.cols.find((col) => col.key === pivotKey)
-  const barNames = { [VALUE_KEY]: VALUE_LABEL }
-  const barCols = useMemo(
+  const valueCols = useMemo(
     () => data.cols.filter((col) => col.key !== indexKey && col.key !== pivotKey),
     [data.cols, indexKey, pivotKey],
   )
+  const VALUE_KEY = 'value'
+  const VALUE_LABEL = t('core.label.value')
+  const barNames = { [VALUE_KEY]: VALUE_LABEL }
+
   const chartData = useMemo(
     (): BarChartData => ({
       entries: data.rows.map((row) => ({
@@ -37,19 +38,20 @@ export const ChartView = (props: Props) => {
     }),
     [data.rows, indexKey, colKey],
   )
-  const colOptions = useMemo(
-    (): SelectOption[] => barCols.map((col) => ({ value: col.key, label: col.label })),
-    [barCols],
-  )
-  const hasValues = chartData.entries.some((entry) => entry[VALUE_KEY] !== undefined)
+  const hasData = chartData.entries.some((entry) => entry[VALUE_KEY] !== undefined)
 
-  const cellFn = (value: string, query: string) => cellFnProp(value, query, true)
+  const valueOptions = useMemo(
+    (): SelectOption[] => valueCols.map((col) => ({ value: col.key, label: col.label })),
+    [valueCols],
+  )
+
+  const entryFn = (value: string, query: string) => cellFn(value, query, true)
 
   useEffect(() => {
-    setColKey(barCols[0]?.key || null)
-  }, [barCols])
+    setColKey(valueCols[0]?.key || null)
+  }, [valueCols])
 
-  return !colKey || !hasValues ? (
+  return !colKey || !hasData ? (
     <div className={cx('flex-center flex h-full', className)}>
       <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>
     </div>
@@ -63,7 +65,7 @@ export const ChartView = (props: Props) => {
       barNames={barNames}
       entryKey={indexKey}
       entryName={indexCol?.label || ''}
-      entryFn={cellFn}
+      entryFn={entryFn}
       entryWidth={parseFloat(TOKENS.SPACING['lg-1'].$value)}
       chartSize="sm"
       sortKey={VALUE_KEY}
@@ -72,7 +74,7 @@ export const ChartView = (props: Props) => {
       toolbar={
         <div className="gap-x-xs-3 min-w-md-7 flex flex-1 items-center justify-end">
           <label htmlFor="chart-col-key">{pivotCol ? pivotCol.label : VALUE_LABEL}:</label>
-          <SelectField id="chart-col-key" options={colOptions} value={colKey} onChange={setColKey} />
+          <SelectField id="chart-col-key" options={valueOptions} value={colKey} onChange={setColKey} />
         </div>
       }
       className={className}

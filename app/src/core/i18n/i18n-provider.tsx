@@ -65,29 +65,34 @@ const I18nProvider = ({ children }: ReactProps) => {
 const useCountries = () => {
   const { i18n } = useTranslation()
 
-  const getCountryCode = (query: string): string => {
+  const getCountryName = (iso3: string): string => countries.getName(iso3, 'en', { select: 'official' }) || ''
+  const getCountryNames = (iso3: string): string[] => countries.getName(iso3, 'en', { select: 'all' }) || []
+  const getCountryIso2 = (query: string): string => {
     const lang = i18n.language.split('-')[0]
-    const code = countries.getAlpha2Code(query, lang)
-    if (code) return code.toLowerCase()
+    const iso2 = countries.getAlpha2Code(query, lang)
+    return iso2 ? iso2.toLowerCase() : findCountryIso2(lang, query) || ''
+  }
+  const getCountryIso3 = (query: string): string => {
+    const lang = i18n.language.split('-')[0]
+    const iso3 = countries.getAlpha3Code(query, lang)
+    return iso3 ? iso3.toLowerCase() : countries.alpha2ToAlpha3(findCountryIso2(lang, query))?.toLowerCase() || ''
+  }
 
+  const findCountryIso2 = (lang: string, query: string): string => {
     // Bug: getAlpha2Code is not working for countries like "Moldova" or "Kosovo*"
     const lcQuery = query.toLowerCase()
     const match = Object.entries(countries.getNames(lang)).find(
       ([, value]) => value.toLowerCase().startsWith(lcQuery) || lcQuery.startsWith(value.toLowerCase()),
     )
-
-    return match ? match[0].toLowerCase() : ''
+    return match && match[0] ? match[0].toLowerCase() : ''
   }
 
-  const getCountryName = (iso3: string): string => {
-    return countries.getName(iso3, 'en', { select: 'official' }) || ''
+  return {
+    getCountryIso2,
+    getCountryIso3,
+    getCountryName,
+    getCountryNames,
   }
-
-  const getCountryNames = (iso3: string): string[] => {
-    return countries.getName(iso3, 'en', { select: 'all' }) || []
-  }
-
-  return { getCountryCode, getCountryName, getCountryNames }
 }
 
 export { I18nProvider, useCountries }

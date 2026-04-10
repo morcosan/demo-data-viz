@@ -91,6 +91,7 @@
       "noDataForFilters": "Check your filters!",
       "noDatasetSelected": "Select a dataset!",
       "noIndexColumn": "Select a column to filter by!",
+      "noIndexColumnForMap": "Filter by countries or cities!",
       "noMapForDataset": "No map for this dataset"
     }
   }
