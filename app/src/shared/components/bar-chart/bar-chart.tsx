@@ -54,7 +54,6 @@ export const BarChart = (props: BarChartProps) => {
         sortKey={sortKey}
         sortDir={sortDir}
         toolbar={toolbar}
-        className="p-xs-1"
         onSort={toggleSort}
       />
 

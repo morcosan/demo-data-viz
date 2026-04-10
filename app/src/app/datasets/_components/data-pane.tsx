@@ -61,7 +61,7 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
     return flag ? (
       <div className="flex items-center">
         {flip && text}
-        {flag && <span className={cx(`fi fi-${flag} shadow-xs`, flip ? 'ml-xs-2' : 'mr-xs-2')} />}
+        {flag && <span className={cx(`fi fi-${flag} shadow-xs`, flip ? 'ml-xs-2' : 'mr-xs-2 mb-px')} />}
         {!flip && text}
       </div>
     ) : (
@@ -106,7 +106,7 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
       {view === 'chart' && <ChartView data={chartData} queries={queries} cellFn={cellFn} className={viewClass} />}
       {view === 'map' &&
         (hasMap ? (
-          <MapView data={visibleData} queries={queries} cellFn={cellFn} className={viewClass} />
+          <MapView data={chartData} queries={queries} cellFn={cellFn} className={viewClass} />
         ) : (
           <div className={cx('flex-center flex h-full', viewClass)}>
             <EmptyState>{t('dataViz.error.noMapForDataset')}</EmptyState>

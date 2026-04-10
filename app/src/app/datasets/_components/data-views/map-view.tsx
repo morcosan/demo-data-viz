@@ -69,11 +69,14 @@ export const MapView = (props: Props) => {
   ) : (
     <Choropleth
       data={mapData}
+      continent="europe"
       queries={queries}
       nameFn={cellFn}
       toolbar={
         <div className="gap-x-xs-3 min-w-md-7 flex flex-1 items-center justify-end">
-          <label htmlFor="chart-col-key">{pivotCol ? pivotCol.label : t('core.label.value')}:</label>
+          <label htmlFor="chart-col-key" className="font-weight-lg">
+            {pivotCol ? pivotCol.label : t('core.label.value')}:
+          </label>
           <SelectField id="chart-col-key" options={valueOptions} value={colKey} onChange={setColKey} />
         </div>
       }

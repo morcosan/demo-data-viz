@@ -2,7 +2,7 @@ import { useTranslation } from '@app-i18n'
 import { IconButton, SortAscSvg, SortDescSvg, SortNoneSvg, TOKENS } from '@ds/core'
 import { type ReactNode } from 'react'
 
-interface Props extends ReactProps {
+interface Props {
   barNames: Record<string, string>
   entryKey: string
   entryName: string
@@ -14,17 +14,7 @@ interface Props extends ReactProps {
 }
 
 export const Toolbar = (props: Props) => {
-  const {
-    barNames,
-    className,
-    entryKey,
-    entryName,
-    entryWidth: entryWidthProp,
-    onSort,
-    sortDir,
-    sortKey,
-    toolbar,
-  } = props
+  const { barNames, entryKey, entryName, entryWidth: entryWidthProp, onSort, sortDir, sortKey, toolbar } = props
   const { t } = useTranslation()
   const barKeys = Object.keys(barNames)
 
@@ -57,14 +47,13 @@ export const Toolbar = (props: Props) => {
     <div
       className={cx(
         'z-sticky bg-color-bg-card shadow-below-sm',
-        'gap-y-xs-1 gap-x-sm-1 flex flex-wrap items-center',
-        'text-size-sm font-weight-lg',
-        className,
+        'p-xs-1 gap-y-xs-1 gap-x-sm-1 flex flex-wrap items-center',
+        'text-size-sm',
       )}
     >
-      {renderHeader(entryKey, entryName, cx('pl-xs-2'), entryWidth)}
+      {renderHeader(entryKey, entryName, cx('pl-xs-2 font-weight-lg'), entryWidth)}
 
-      {barKeys.map((key) => renderHeader(key, barNames[key], cx('max-w-lg-2')))}
+      {barKeys.map((key) => renderHeader(key, barNames[key], cx('max-w-lg-2 font-weight-lg')))}
 
       {toolbar}
     </div>
