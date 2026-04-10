@@ -28,7 +28,7 @@ export const Canvas = (props: ChoroplethProps) => {
   const hasDigits = maxValue <= 10 && minValue >= -10
   const maxLabel = hasDigits ? formatNumber(maxValue) : formatInt(maxValue, 'up')
   const minLabel = hasDigits ? formatNumber(minValue) : formatInt(minValue, 'down')
-  const numberFn = (value: number) => (hasDigits ? formatNumber(value) : formatInt(value))
+  const legendFn = (value: number) => (hasDigits ? formatNumber(value) : formatInt(value))
 
   const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
 
@@ -122,7 +122,7 @@ export const Canvas = (props: ChoroplethProps) => {
         min: minValue,
         text: [maxLabel, minLabel],
         inRange: { color: [colors.minValue, colors.maxValue] },
-        formatter: numberFn as any,
+        formatter: legendFn as any,
       },
       series: [
         {
