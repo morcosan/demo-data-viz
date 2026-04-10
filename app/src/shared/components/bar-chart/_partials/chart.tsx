@@ -18,7 +18,7 @@ interface Props extends BarChartProps {
   tooltipRef: RefObject<Element | null>
 }
 
-export const Canvas = (props: Props) => {
+export const Chart = (props: Props) => {
   const {
     barKeys,
     barNames,

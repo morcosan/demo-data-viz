@@ -80,7 +80,7 @@ const meta: Meta = {
         ],
       },
       nameFn: '' as any,
-      queries: ['ro', 'po', 'fr'],
+      queries: [],
       loading: false,
       toolbar: '',
       className: '',

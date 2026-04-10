@@ -5,13 +5,13 @@ import { TOKENS, wait } from '@ds/core'
 import { useEffect, useRef, useState } from 'react'
 import { EmptyState } from '../empty-state/empty-state'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
-import { Canvas } from './_partials/canvas'
+import { Chart } from './_partials/chart'
 import { Toolbar } from './_partials/toolbar'
 import { useScrolling } from './_partials/use-scrolling'
 import { useSorting } from './_partials/use-sorting'
-import { type BarChartData, type BarChartEntry, type BarChartProps } from './_types'
+import { type BarChartProps } from './_types'
 
-export type { BarChartData, BarChartEntry, BarChartProps }
+export type * from './_types'
 
 export const BarChart = (props: BarChartProps) => {
   const {
@@ -72,7 +72,7 @@ export const BarChart = (props: BarChartProps) => {
             <LoadingSpinner />
           </div>
         ) : entries.length ? (
-          <Canvas
+          <Chart
             {...props}
             entries={entries}
             barKeys={barKeys}

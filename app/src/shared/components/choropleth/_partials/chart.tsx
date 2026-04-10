@@ -9,7 +9,7 @@ import { Tooltip } from './tooltip'
 import { useEcharts } from './use-echarts'
 import { useStyles } from './use-styles'
 
-export const Canvas = (props: ChoroplethProps) => {
+export const Chart = (props: ChoroplethProps) => {
   const { data, nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { colors, sizes, styles, cssContainer } = useStyles()
