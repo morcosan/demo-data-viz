@@ -4,8 +4,9 @@ import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type ChoroplethProps } from '../_types'
+import { type EChartsOption, type EItem, GEO_JSON_NAMES } from './echarts-config'
 import { Tooltip } from './tooltip'
-import { type EChartsOption, type EItem, useEcharts } from './use-echarts'
+import { useEcharts } from './use-echarts'
 import { useStyles } from './use-styles'
 
 export const Canvas = (props: ChoroplethProps) => {
@@ -13,7 +14,7 @@ export const Canvas = (props: ChoroplethProps) => {
   const { getCountryNames } = useCountries()
   const containerRef = useRef<HTMLDivElement>(null)
   const { colors, sizes, styles, cssContainer } = useStyles()
-  const { echartsRef, GEO_JSON_NAMES } = useEcharts({
+  const { echartsRef } = useEcharts({
     containerRef,
     citySize: sizes.city,
     isActiveFn: (name: string) => countryNames.includes(name),

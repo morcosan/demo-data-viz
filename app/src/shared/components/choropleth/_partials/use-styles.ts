@@ -1,6 +1,6 @@
 import { getTokenValue_COLOR, getTokenValue_FONT_FAMILY, useThemeService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
-import { type EItemStyle, type ELegend, type ETooltip } from './use-echarts'
+import { type EItemStyle, type ELegend, type ETooltip } from './echarts-config'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
