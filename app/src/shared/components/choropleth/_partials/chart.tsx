@@ -79,7 +79,7 @@ export const Chart = (props: ChoroplethProps) => {
         max: legendMaxValue,
         min: legendMinValue,
         text: [legendMaxLabel, legendMinLabel],
-        inRange: { color: [colors.minValue, colors.maxValue] },
+        inRange: { color: [colors.valueMin, colors.valueMax] },
         formatter: legendFn as any,
         zlevel: 100,
       },

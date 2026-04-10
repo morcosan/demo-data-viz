@@ -7,8 +7,9 @@ export const useStyles = () => {
 
   const colors = {
     text: getTokenValue_COLOR('text-default', colorTheme),
-    minValue: getTokenValue_COLOR('map-scale-low', colorTheme),
-    maxValue: getTokenValue_COLOR('map-scale-high', colorTheme),
+    valueMin: getTokenValue_COLOR('map-scale-min', colorTheme),
+    valueMax: getTokenValue_COLOR('map-scale-max', colorTheme),
+    valueNone: getTokenValue_COLOR('map-scale-none', colorTheme),
     land: getTokenValue_COLOR('map-land', colorTheme),
     ocean: getTokenValue_COLOR('map-ocean', colorTheme),
     borderDefault: getTokenValue_COLOR('border-subtle', colorTheme),
@@ -45,7 +46,7 @@ export const useStyles = () => {
         borderWidth: sizes.borderDefault,
       },
       default: {
-        areaColor: colors.minValue,
+        areaColor: colors.valueNone,
         shadowColor: shadows.sm.color,
         shadowBlur: shadows.sm.blur,
         shadowOffsetX: shadows.sm.offsetX,

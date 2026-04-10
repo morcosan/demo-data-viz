@@ -30,6 +30,8 @@ export const MapView = (props: ChartViewProps) => {
   )
   const hasData = mapData.countries.length > 0 || mapData.cities.length > 0
 
+  const nameFn = (value: string, query: string) => cellFn(value, query, true)
+
   return !hasGeoIndex ? (
     <div className={cx('flex-center flex h-full', className)}>
       <EmptyState>{t('dataViz.error.noIndexColumnForMap')}</EmptyState>
@@ -43,7 +45,7 @@ export const MapView = (props: ChartViewProps) => {
       data={mapData}
       continent="europe"
       queries={queries}
-      nameFn={cellFn}
+      nameFn={nameFn}
       toolbar={toolbar}
       className={className}
     />

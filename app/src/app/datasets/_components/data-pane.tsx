@@ -72,7 +72,7 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
     return flag ? (
       <div className="flex items-center">
         {flip && text}
-        {flag && <span className={cx(`fi fi-${flag} shadow-xs`, flip ? 'ml-xs-2' : 'mr-xs-2 mb-px')} />}
+        {flag && <span className={cx(`fi fi-${flag} shadow-xs`, flip ? 'ml-xs-2' : 'mr-xs-2 mb-xs-0')} />}
         {!flip && text}
       </div>
     ) : (
