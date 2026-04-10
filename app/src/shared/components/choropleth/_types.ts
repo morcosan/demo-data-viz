@@ -16,8 +16,11 @@ export interface ChoroplethCity {
   value: number
 }
 
+export type Continent = 'world' | 'europe' | 'north-america' | 'south-america' | 'africa' | 'asia' | 'oceania'
+
 export interface ChoroplethProps extends ReactProps {
   data: ChoroplethData
+  continent?: Continent
   nameFn?: (value: string, query: string) => ReactNode
   queries?: string[]
   loading?: boolean

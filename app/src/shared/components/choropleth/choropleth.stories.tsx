@@ -79,6 +79,7 @@ const meta: Meta = {
           { name: 'Tokyo', lng: 139.691, lat: 35.689, value: loremFloat(0, MAX) },
         ],
       },
+      continent: 'world',
       nameFn: '' as any,
       queries: [],
       loading: false,
@@ -86,6 +87,7 @@ const meta: Meta = {
       className: '',
       style: { height: '600px' },
     },
+    inlineRadios: ['continent'],
     clearDefaults: ['data', 'nameFn'],
     render: (props: ChoroplethProps) => {
       return <Choropleth {...props} nameFn={props.nameFn ? eval(String(props.nameFn)) : undefined} />

@@ -4,13 +4,13 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type ChoroplethProps } from '../_types'
-import { type EChartsOption, type EItem, GEO_JSON_NAMES } from './echarts-config'
+import { type EChartsOption, type EItem, GEO_CONTINENT_VIEW, GEO_JSON_NAMES } from './echarts-config'
 import { Tooltip } from './tooltip'
 import { useEcharts } from './use-echarts'
 import { useStyles } from './use-styles'
 
 export const Chart = (props: ChoroplethProps) => {
-  const { data, nameFn: nameFnProp, queries = [], className } = props
+  const { data, continent = 'world', nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
   const { colors, sizes, styles, cssContainer } = useStyles()
 
@@ -65,6 +65,8 @@ export const Chart = (props: ChoroplethProps) => {
   )
 
   useEffect(() => {
+    const view = GEO_CONTINENT_VIEW[continent]
+
     echartsRef.current?.setOption({
       animation: false,
       visualMap: {
@@ -96,10 +98,9 @@ export const Chart = (props: ChoroplethProps) => {
       ],
       geo: [
         {
+          ...view,
           zlevel: 1,
           map: 'world',
-          center: [0, 0],
-          zoom: 1,
           roam: true,
           itemStyle: styles.layer1.landscape,
           regions: [
@@ -117,10 +118,9 @@ export const Chart = (props: ChoroplethProps) => {
           },
         },
         {
+          ...view,
           zlevel: 0,
           map: 'world',
-          center: [0, 0],
-          zoom: 1,
           silent: true,
           itemStyle: styles.layer0.landscape,
           regions: [
@@ -139,7 +139,7 @@ export const Chart = (props: ChoroplethProps) => {
         },
       },
     } satisfies EChartsOption)
-  }, [countryItems, cityItems, colors])
+  }, [continent, countryItems, cityItems, colors])
 
   return <div ref={containerRef} className={className} css={cssContainer} />
 }
