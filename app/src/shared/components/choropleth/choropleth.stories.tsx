@@ -2,7 +2,7 @@ import { defineMeta, loremBool, loremFloat } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { Choropleth, type ChoroplethProps } from './choropleth'
 
-const MAX = 100
+const MAX = 100_000_000
 
 const meta: Meta = {
   title: 'Components / Choropleth',

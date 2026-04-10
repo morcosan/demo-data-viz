@@ -24,22 +24,16 @@ export const useStyles = () => {
 
   const shadows = {
     sm: {
-      color: isUiLight ? 'rgba(0, 0, 0, 0.25)' : 'rgba(0, 0, 0, 0.7)',
-      blur: 3,
+      color: isUiLight ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.7)',
+      blur: isUiLight ? 3 : 4,
       offsetX: 0,
-      offsetY: 1,
+      offsetY: isUiLight ? 1 : 2,
     },
     md: {
-      color: isUiLight ? 'rgba(0, 0, 0, 0.25)' : 'rgba(0, 0, 0, 0.5)',
-      blur: 6,
+      color: isUiLight ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.6)',
+      blur: 8,
       offsetX: 0,
-      offsetY: 4,
-    },
-    lg: {
-      color: isUiLight ? 'rgba(0, 0, 0, 0.25)' : 'rgba(0, 0, 0, 0.4)',
-      blur: 15,
-      offsetX: 0,
-      offsetY: 10,
+      offsetY: 5,
     },
   }
 
@@ -75,20 +69,20 @@ export const useStyles = () => {
         opacity: 1,
         borderColor: colors.borderQuery,
         borderWidth: sizes.borderQuery,
-        shadowColor: shadows.md.color,
-        shadowBlur: shadows.md.blur,
-        shadowOffsetX: shadows.md.offsetX,
-        shadowOffsetY: shadows.md.offsetY,
+        shadowColor: shadows.sm.color,
+        shadowBlur: shadows.sm.blur,
+        shadowOffsetX: shadows.sm.offsetX,
+        shadowOffsetY: shadows.sm.offsetY,
       },
       hover: {
         opacity: 1,
         areaColor: 'inherit',
         borderColor: colors.borderHover,
         borderWidth: sizes.borderHover,
-        shadowColor: shadows.lg.color,
-        shadowBlur: shadows.lg.blur,
-        shadowOffsetX: shadows.lg.offsetX,
-        shadowOffsetY: shadows.lg.offsetY,
+        shadowColor: shadows.md.color,
+        shadowBlur: shadows.md.blur,
+        shadowOffsetX: shadows.md.offsetX,
+        shadowOffsetY: shadows.md.offsetY,
       },
     } satisfies Record<string, EItemStyle>,
     legend: {
