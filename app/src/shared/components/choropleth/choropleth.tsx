@@ -20,7 +20,15 @@ export const Choropleth = (props: ChoroplethProps) => {
 
   return (
     <div className={cx('bg-color-bg-card flex w-full flex-col', className)} style={style}>
-      <div className="p-xs-1 gap-y-xs-1 gap-x-sm-1 text-size-sm flex flex-wrap items-center">{toolbar}</div>
+      <div
+        className={cx(
+          'z-sticky bg-color-bg-card shadow-below-sm',
+          'p-xs-1 gap-y-xs-1 gap-x-sm-1 flex flex-wrap items-center',
+          'text-size-sm',
+        )}
+      >
+        {toolbar}
+      </div>
 
       <div className="a11y-outline-proxy min-h-0 flex-1">
         {isLoading || loading ? (

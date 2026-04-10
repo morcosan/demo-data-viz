@@ -1,7 +1,8 @@
 'use client'
 
-import { EmptyState, TextHighlight } from '@app-components'
+import { EmptyState, SelectField, type SelectOption, TextHighlight } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
+import type { ChartViewProps } from '@app/app/datasets/_components/data-views/types'
 import { type TableCol } from '@app/shared/types/table'
 import { EurostatConfig, type JsonStatData, pivotJsonStatTable } from '@app/shared/utils/json-stat'
 import { getUrlParamArray, setUrlParam } from '@app/shared/utils/url-query'
@@ -28,7 +29,9 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
   const filterByCol = useTableStore((s) => s.filterByCol)
   const pivotQueries = useTableStore((s) => s.pivotQueries)
   const initTableStore = useTableStore((s) => s.initTableStore)
+  const pivotCol = data.cols.find((col) => col.key === pivotKey)
   const [queries, setQueries] = useState<string[]>([])
+  const [chartValueColKey, setChartValueColKey] = useState<string | null>(null)
   const { GEO_KEY } = EurostatConfig
   const hasMap = useMemo(() => data.source === 'eurostat' && data.cols.some((col) => col.key === GEO_KEY), [data])
   const viewClass = cx('min-h-0 flex-1 rounded-md')
@@ -48,12 +51,20 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
   }, [pivotedData, pivotKey, pivotQueries, isColVisible])
 
   const chartData = useMemo(() => {
-    const pivotCol = data.cols.find((col) => col.key === pivotKey)
     return {
       ...visibleData,
       cols: pivotCol ? [...visibleData.cols, pivotCol] : visibleData.cols,
     }
-  }, [visibleData, pivotKey, data])
+  }, [visibleData, pivotCol, data])
+
+  const chartValueCols = useMemo(
+    () => chartData.cols.filter((col) => col.key !== indexKey && col.key !== pivotKey),
+    [chartData.cols, indexKey, pivotKey],
+  )
+  const chartValueOptions = useMemo(
+    (): SelectOption[] => chartValueCols.map((col) => ({ value: col.key, label: col.label })),
+    [chartValueCols],
+  )
 
   const cellFn = (value: string, query: string, flip?: boolean): ReactNode => {
     const flag = getCountryIso2(value)
@@ -93,6 +104,32 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
     }
   }, [searchParams])
 
+  useEffect(() => {
+    setChartValueColKey(chartValueCols[0]?.key || null)
+  }, [chartValueCols])
+
+  const chartToolbar = (
+    <div className="gap-x-xs-3 min-w-md-7 flex flex-1 items-center justify-end">
+      <label htmlFor="chart-col-key" className="font-weight-lg">
+        {pivotCol ? pivotCol.label : t('core.label.value')}:
+      </label>
+      <SelectField
+        id="chart-col-key"
+        options={chartValueOptions}
+        value={chartValueColKey}
+        onChange={setChartValueColKey}
+      />
+    </div>
+  )
+  const chartProps: ChartViewProps = {
+    data: chartData,
+    colKey: chartValueColKey,
+    queries: queries,
+    cellFn: cellFn,
+    toolbar: chartToolbar,
+    className: viewClass,
+  }
+
   return (
     <div
       className={cx(
@@ -103,10 +140,10 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
       <DataToolbar data={data} queries={queries} onChangeQueries={onChangeQueries} />
 
       {view === 'table' && <TableView data={visibleData} queries={queries} cellFn={cellFn} className={viewClass} />}
-      {view === 'chart' && <ChartView data={chartData} queries={queries} cellFn={cellFn} className={viewClass} />}
+      {view === 'chart' && <ChartView {...chartProps} />}
       {view === 'map' &&
         (hasMap ? (
-          <MapView data={chartData} queries={queries} cellFn={cellFn} className={viewClass} />
+          <MapView {...chartProps} />
         ) : (
           <div className={cx('flex-center flex h-full', viewClass)}>
             <EmptyState>{t('dataViz.error.noMapForDataset')}</EmptyState>
