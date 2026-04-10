@@ -14,11 +14,15 @@ export const Chart = (props: ChoroplethProps) => {
   const { getCountryNames } = useCountries()
   const { colors, sizes, styles, cssContainer } = useStyles()
 
-  const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
+  const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
+  const hasOpposites = minValue < 0 && maxValue > 0
+  const absMaxValue = Math.max(Math.abs(minValue), Math.abs(maxValue))
+  const legendMinValue = hasOpposites ? -absMaxValue : minValue
+  const legendMaxValue = hasOpposites ? absMaxValue : maxValue
   const hasDigits = maxValue <= 10 && minValue >= -10
-  const maxLabel = hasDigits ? formatNumber(maxValue) : formatInt(maxValue, 'up')
-  const minLabel = hasDigits ? formatNumber(minValue) : formatInt(minValue, 'down')
+  const legendMinLabel = hasDigits ? formatNumber(legendMinValue) : formatInt(legendMinValue, 'down')
+  const legendMaxLabel = hasDigits ? formatNumber(legendMaxValue) : formatInt(legendMaxValue, 'up')
   const legendFn = (value: number) => (hasDigits ? formatNumber(value) : formatInt(value))
 
   const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
@@ -72,9 +76,9 @@ export const Chart = (props: ChoroplethProps) => {
       visualMap: {
         ...styles.legend,
         seriesIndex: [0, 1],
-        max: maxValue,
-        min: minValue,
-        text: [maxLabel, minLabel],
+        max: legendMaxValue,
+        min: legendMinValue,
+        text: [legendMaxLabel, legendMinLabel],
         inRange: { color: [colors.minValue, colors.maxValue] },
         formatter: legendFn as any,
         zlevel: 100,
