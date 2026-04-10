@@ -43,18 +43,22 @@ export const Canvas = (props: Props) => {
   const sizes = useSizes({ entries, barKeys, minEntryValue, maxEntryValue, chartSize })
   const axisColor = $color['text-placeholder']
 
+  const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
+
   const queryIndexes = useMemo(() => {
-    const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
     return entries.reduce<number[]>((acc, entry, index) => {
       const label = String(entry[entryKey]).toLowerCase()
       const isMatch = !lcQueries.length || lcQueries.some((query) => label.includes(query))
       return isMatch ? [...acc, index] : acc
     }, [])
-  }, [entries, entryKey, queries])
+  }, [entries, entryKey, lcQueries])
 
   const getQueryClass = (index: number | string) => {
     const isMatch = queryIndexes.includes(parseInt(String(index)))
-    return isMatch ? undefined : 'opacity-30'
+    return {
+      bar: isMatch ? (lcQueries.length ? 'stroke-color-bg-highlight!' : undefined) : 'opacity-30',
+      label: isMatch ? undefined : 'opacity-30',
+    }
   }
 
   const entryLabelFn = useCallback(
@@ -88,9 +92,15 @@ export const Canvas = (props: Props) => {
           shape={(params: any) => (
             <Recharts.Rectangle
               {...params}
+              x={params.x + sizes.barStroke}
+              y={params.y + sizes.barStroke}
+              width={params.width - sizes.barStroke * 2}
+              height={params.height - sizes.barStroke * 2}
+              strokeWidth={sizes.barStroke}
               className={cx(
                 'fill-color-chart-bar-default hover:fill-color-chart-bar-hover',
-                getQueryClass(params.index),
+                'stroke-color-chart-bar-default hover:stroke-color-chart-bar-hover',
+                getQueryClass(params.index).bar,
               )}
             />
           )}
@@ -104,7 +114,10 @@ export const Canvas = (props: Props) => {
                   y={params.y + params.height / 2}
                   textAnchor={params.value < 0 ? 'end' : 'start'}
                   dominantBaseline="central"
-                  className={cx('text-size-xs fill-color-text-default font-family-mono', getQueryClass(params.index))}
+                  className={cx(
+                    'text-size-xs fill-color-text-default font-family-mono',
+                    getQueryClass(params.index).label,
+                  )}
                 >
                   {formatNumber(params.value)}
                 </text>
@@ -139,7 +152,7 @@ export const Canvas = (props: Props) => {
             label={entryLabelFn(params.payload.value) || params.payload.value}
             height={sizes.entryHeight}
             chartSize={chartSize}
-            className={getQueryClass(params.index)}
+            className={getQueryClass(params.index).label}
           />
         )}
       />

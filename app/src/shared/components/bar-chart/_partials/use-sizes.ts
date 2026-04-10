@@ -45,6 +45,12 @@ export const useSizes = (props: Props) => {
     if (chartSize === 'lg') return parseFloat(TOKENS.RADIUS['md'].$value)
     return 0
   })()
+  const barStroke = (() => {
+    if (chartSize === 'sm') return 1.5
+    if (chartSize === 'md') return 2
+    if (chartSize === 'lg') return 3
+    return 0
+  })()
 
   const entryGap = (() => {
     if (barKeys.length > 1) {
@@ -72,6 +78,7 @@ export const useSizes = (props: Props) => {
     barMarginRight,
     barRadius,
     barSize,
+    barStroke,
     chartHeight,
     entryHeight,
   }

@@ -30,6 +30,7 @@ export const DataTable = (props: DataTableProps) => {
   const rootRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLTableSectionElement>(null)
 
+  const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
   const columns = useMemo(
     () => data.cols.map((col) => ({ ...col, size: computeColSize(col, data.rows) })),
     [data.cols, data.rows, computeColSize],
@@ -40,12 +41,11 @@ export const DataTable = (props: DataTableProps) => {
       if (value === '') return <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
 
       const strValue = formatCellValue(value, columns[info.column.getIndex()])
-      const lcQueries = queries.map((query) => query.trim().toLowerCase()).filter(Boolean)
       const query = lcQueries.find((lcQuery) => strValue.toLowerCase().includes(lcQuery)) || ''
 
       return cellFn ? cellFn(strValue, query) : query ? <TextHighlight text={strValue} query={query} /> : strValue
     },
-    [columns, cellFn, queries, t],
+    [columns, cellFn, lcQueries, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,

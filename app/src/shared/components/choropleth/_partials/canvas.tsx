@@ -30,7 +30,7 @@ export const Canvas = (props: ChoroplethProps) => {
   const minLabel = hasDigits ? formatNumber(minValue) : formatInt(minValue, 'down')
   const numberFn = (value: number) => (hasDigits ? formatNumber(value) : formatInt(value))
 
-  const lcQueries = queries.map((q) => q.trim().toLowerCase()).filter(Boolean)
+  const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
 
   const nameFn = useCallback(
     (value: string) => {
