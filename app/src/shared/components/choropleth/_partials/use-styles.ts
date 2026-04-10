@@ -87,7 +87,7 @@ export const useStyles = () => {
     } satisfies Record<string, EItemStyle>,
     legend: {
       itemWidth: 20,
-      itemHeight: 150,
+      itemHeight: 120,
       textGap: 6,
       textStyle: {
         color: colors.text,

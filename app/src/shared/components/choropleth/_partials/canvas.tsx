@@ -102,11 +102,11 @@ export const Canvas = (props: ChoroplethProps) => {
       })
     })
 
-    const handleResize = () => chartRef.current?.resize()
-    window.addEventListener('resize', handleResize)
+    const resizeObserver = new ResizeObserver(() => chartRef.current?.resize())
+    resizeObserver.observe(canvasRef.current)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      resizeObserver.disconnect()
       chartRef.current?.dispose()
       chartRef.current = null
     }
