@@ -12,7 +12,7 @@ import { useStyles } from './use-styles'
 export const Chart = (props: ChoroplethProps) => {
   const { data, continent = 'world', nameFn: nameFnProp, queries = [], className } = props
   const { getCountryNames } = useCountries()
-  const { colors, sizes, styles, cssContainer } = useStyles()
+  const { colors, sizes, styles, cssContainer, draggingClass } = useStyles()
 
   const REVERSED_GEO_JSON_NAMES = Object.fromEntries(Object.entries(GEO_JSON_NAMES).map(([k, v]) => [v, k]))
 
@@ -59,7 +59,7 @@ export const Chart = (props: ChoroplethProps) => {
 
   const countryNames = useMemo(() => countryItems.map((item) => item.name), [countryItems])
   const isItemActive = useCallback((name: string) => countryNames.includes(name), [countryNames])
-  const { containerRef, echartsRef } = useEcharts({ geoCount: 2, markerSize: sizes.city, isItemActive })
+  const { containerRef, echartsRef } = useEcharts({ geoCount: 2, markerSize: sizes.city, isItemActive, draggingClass })
 
   const nameFn = useCallback(
     (value: string) => {
@@ -110,7 +110,7 @@ export const Chart = (props: ChoroplethProps) => {
           ...view,
           zlevel: 1,
           map: 'world',
-          roam: true,
+          roam: 'scale',
           itemStyle: { opacity: 0 },
           regions: [
             // Echarts bug: only opacity can be overwritten, not areaColor

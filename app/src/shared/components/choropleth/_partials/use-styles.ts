@@ -4,6 +4,8 @@ import { type EItemStyle, type ELegend, type ETooltip } from './echarts-config'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
+  const draggingClass = 'choropleth-dragging'
+  const tooltipClass = 'choropleth-tooltip'
 
   const colors = {
     text: getTokenValue_COLOR('text-default', colorTheme),
@@ -94,6 +96,7 @@ export const useStyles = () => {
       borderWidth: 0,
       backgroundColor: 'transparent',
       extraCssText: 'box-shadow: none; color: unset;',
+      className: tooltipClass,
     } satisfies ETooltip,
   }
 
@@ -106,11 +109,16 @@ export const useStyles = () => {
       stroke: colors.borderLegend,
       strokeWidth: '1px',
     },
+
+    [`&.${draggingClass} .${tooltipClass}`]: {
+      display: 'none !important',
+    },
   }
 
   return {
     colors,
     cssContainer,
+    draggingClass,
     shadows,
     sizes,
     styles,

@@ -6,10 +6,11 @@ interface Props {
   geoCount: number
   markerSize: number
   isItemActive: (name: string) => boolean
+  draggingClass: string
 }
 
 export const useEcharts = (props: Props) => {
-  const { geoCount, markerSize, isItemActive } = props
+  const { geoCount, markerSize, isItemActive, draggingClass } = props
   const containerRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
   const isDraggingRef = useRef(false)
@@ -63,13 +64,17 @@ export const useEcharts = (props: Props) => {
     })
   }, [markerSize])
 
-  const handleMouseDown = useCallback((event: MouseEvent) => {
-    if (!containerRef.current || event.button !== 0) return
-    isDraggingRef.current = true
-    containerRef.current.style.cursor = 'grabbing'
-    lastPosRef.current = getEventCoords(event)
-    event.stopPropagation()
-  }, [])
+  const handleMouseDown = useCallback(
+    (event: MouseEvent) => {
+      if (!containerRef.current || event.button !== 0) return
+      isDraggingRef.current = true
+      containerRef.current.style.cursor = 'grabbing'
+      containerRef.current.classList.add(draggingClass)
+      lastPosRef.current = getEventCoords(event)
+      event.stopPropagation()
+    },
+    [draggingClass],
+  )
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
     if (!containerRef.current || event.touches.length !== 1) return
@@ -90,26 +95,30 @@ export const useEcharts = (props: Props) => {
     if (!containerRef.current) return
     isDraggingRef.current = false
     containerRef.current.style.cursor = 'unset'
-  }, [])
+    containerRef.current.classList.remove(draggingClass)
+  }, [draggingClass])
 
   const handlePointerMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      if (!isDraggingRef.current || !chartRef.current) return
-      if ('touches' in event && event.touches.length !== 1) return // Ignore multi-touch (pinch-zoom)
+      if (!chartRef.current) return
+      if ('touches' in event) {
+        if (event.touches.length !== 1) return // Ignore multi-touch (pinch-zoom)
+      } else {
+        if (!isDraggingRef.current) return
+      }
 
       const { x, y } = getEventCoords(event)
       const dx = x - lastPosRef.current.x
       const dy = y - lastPosRef.current.y
+      lastPosRef.current = { x, y }
 
       // Start dragging only after threshold
       if (!isDraggingRef.current) {
         if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return
         isDraggingRef.current = true
         chartRef.current.dispatchAction({ type: 'hideTip' })
-        return
       }
 
-      lastPosRef.current = { x, y }
       updateMapPosition(dx, dy)
     },
     [updateMapPosition],
