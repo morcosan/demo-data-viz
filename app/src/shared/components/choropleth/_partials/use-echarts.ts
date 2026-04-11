@@ -41,6 +41,20 @@ export const useEcharts = (props: Props) => {
     [geoCount],
   )
 
+  const enableDragging = useCallback(() => {
+    if (!containerRef.current) return
+    isDraggingRef.current = true
+    containerRef.current.style.cursor = 'grabbing'
+    containerRef.current.classList.add(draggingClass)
+  }, [draggingClass])
+
+  const disableDragging = useCallback(() => {
+    if (!containerRef.current) return
+    isDraggingRef.current = false
+    containerRef.current.style.cursor = 'unset'
+    containerRef.current.classList.remove(draggingClass)
+  }, [draggingClass])
+
   const handleMapMouseOver = useCallback(
     (item: any & EItem) => {
       if (item.seriesType === 'scatter') return
@@ -67,13 +81,11 @@ export const useEcharts = (props: Props) => {
   const handleMouseDown = useCallback(
     (event: MouseEvent) => {
       if (!containerRef.current || event.button !== 0) return
-      isDraggingRef.current = true
-      containerRef.current.style.cursor = 'grabbing'
-      containerRef.current.classList.add(draggingClass)
+      enableDragging()
       lastPosRef.current = getEventCoords(event)
       event.stopPropagation()
     },
-    [draggingClass],
+    [enableDragging],
   )
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
@@ -91,12 +103,7 @@ export const useEcharts = (props: Props) => {
     })
   }, [])
 
-  const handlePointerUp = useCallback(() => {
-    if (!containerRef.current) return
-    isDraggingRef.current = false
-    containerRef.current.style.cursor = 'unset'
-    containerRef.current.classList.remove(draggingClass)
-  }, [draggingClass])
+  const handlePointerUp = disableDragging
 
   const handlePointerMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -115,13 +122,12 @@ export const useEcharts = (props: Props) => {
       // Start dragging only after threshold
       if (!isDraggingRef.current) {
         if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return
-        isDraggingRef.current = true
-        chartRef.current.dispatchAction({ type: 'hideTip' })
+        enableDragging()
       }
 
       updateMapPosition(dx, dy)
     },
-    [updateMapPosition],
+    [enableDragging, updateMapPosition],
   )
 
   useEffect(() => {
