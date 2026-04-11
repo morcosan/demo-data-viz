@@ -14,6 +14,8 @@ export const Chart = (props: ChoroplethProps) => {
   const { getCountryNames } = useCountries()
   const { colors, sizes, styles, cssContainer } = useStyles()
 
+  const REVERSED_GEO_JSON_NAMES = Object.fromEntries(Object.entries(GEO_JSON_NAMES).map(([k, v]) => [v, k]))
+
   const minValue = Math.min(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const maxValue = Math.max(...data.countries.map((c) => c.value), ...data.cities.map((c) => c.value))
   const hasOpposites = minValue < 0 && maxValue > 0
@@ -61,9 +63,10 @@ export const Chart = (props: ChoroplethProps) => {
 
   const nameFn = useCallback(
     (value: string) => {
-      const lcValue = value.toLowerCase()
-      const query = lcQueries?.find((query) => lcValue.includes(query)) || ''
-      return nameFnProp ? nameFnProp(value, query) : <TextHighlight text={value} query={query} />
+      const name = REVERSED_GEO_JSON_NAMES[value] || value
+      const lcName = name.toLowerCase()
+      const query = lcQueries?.find((query) => lcName.includes(query)) || ''
+      return nameFnProp ? nameFnProp(name, query) : <TextHighlight text={name} query={query} />
     },
     [nameFnProp, lcQueries],
   )

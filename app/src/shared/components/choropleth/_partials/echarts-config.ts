@@ -1,10 +1,10 @@
+import worldGeoJson from '@app/shared/utils/geo-data/world-geo-echarts.json'
 import * as echarts from 'echarts'
 import { type Continent } from '../_types'
-import worldGeoJson from './world-geo.json'
 
 echarts.registerMap('world', worldGeoJson as unknown as Parameters<typeof echarts.registerMap>[1])
 
-export const GEO_JSON_NAMES = {
+export const GEO_JSON_NAMES: Record<string, string> = {
   Czechia: 'Czech Rep.',
   'Ivory Coast': "Côte d'Ivoire",
   Eswatini: 'Swaziland',
@@ -18,9 +18,9 @@ export const GEO_JSON_NAMES = {
   'South Sudan': 'S. Sudan',
   'Bosnia and Herzegovina': 'Bosnia and Herz.',
   'Democratic Republic of the Congo': 'Dem. Rep. Congo',
-} as const as Record<string, string>
+} as const
 
-export const GEO_CONTINENT_VIEW = {
+export const GEO_CONTINENT_VIEW: Record<Continent, EView> = {
   world: { center: [0, 13], zoom: 1.2 },
   europe: { center: [15, 52], zoom: 4.4 },
   'north-america': { center: [-100, 45], zoom: 2.2 },
@@ -28,7 +28,7 @@ export const GEO_CONTINENT_VIEW = {
   africa: { center: [20, 1], zoom: 2.35 },
   asia: { center: [90, 33], zoom: 1.95 },
   oceania: { center: [140, -28], zoom: 4.2 },
-} as const as Record<Continent, EView>
+} as const
 
 export type EView = { center: [number, number]; zoom: number }
 export type ECharts = echarts.ECharts
