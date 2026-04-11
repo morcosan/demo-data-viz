@@ -14,12 +14,31 @@ export const useEcharts = (props: Props) => {
   const chartRef = useRef<ECharts>(null)
   const isDraggingRef = useRef(false)
   const lastPosRef = useRef({ x: 0, y: 0 })
+  const DRAG_THRESHOLD = 10
 
   const getEventCoords = (event: MouseEvent | TouchEvent) => {
     return 'touches' in event
       ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
       : { x: event.clientX, y: event.clientY }
   }
+
+  const updateMapPosition = useCallback(
+    (dx: number, dy: number) => {
+      if (!chartRef.current) return
+
+      const geoOpt = chartRef.current.getOption()?.geo as any[]
+      const { center } = geoOpt?.[0] ?? {}
+
+      const centerPixel = chartRef.current.convertToPixel({ geoIndex: 0 }, center) as unknown as number[]
+      if (!centerPixel) return
+
+      const newCenter = chartRef.current.convertFromPixel({ geoIndex: 0 }, [centerPixel[0] - dx, centerPixel[1] - dy])
+      if (!newCenter) return
+
+      chartRef.current.setOption({ geo: Array.from({ length: geoCount }, () => ({ center: newCenter })) })
+    },
+    [geoCount],
+  )
 
   const handleMapMouseOver = useCallback(
     (item: any & EItem) => {
@@ -54,9 +73,17 @@ export const useEcharts = (props: Props) => {
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
     if (!containerRef.current || event.touches.length !== 1) return
-    isDraggingRef.current = true
     lastPosRef.current = getEventCoords(event)
     event.preventDefault()
+
+    // Trigger tooltip at touchpoint, mimicking mouse hover
+    const rect = containerRef.current.getBoundingClientRect()
+    const { x, y } = getEventCoords(event)
+    chartRef.current?.dispatchAction({
+      type: 'showTip',
+      x: x - rect.left,
+      y: y - rect.top,
+    })
   }, [])
 
   const handlePointerUp = useCallback(() => {
@@ -73,20 +100,19 @@ export const useEcharts = (props: Props) => {
       const { x, y } = getEventCoords(event)
       const dx = x - lastPosRef.current.x
       const dy = y - lastPosRef.current.y
+
+      // Start dragging only after threshold
+      if (!isDraggingRef.current) {
+        if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return
+        isDraggingRef.current = true
+        chartRef.current.dispatchAction({ type: 'hideTip' })
+        return
+      }
+
       lastPosRef.current = { x, y }
-
-      const geoOpt = chartRef.current.getOption()?.geo as any[]
-      const { center } = geoOpt?.[0] ?? {}
-
-      const centerPixel = chartRef.current.convertToPixel({ geoIndex: 0 }, center) as unknown as number[]
-      if (!centerPixel) return
-
-      const newCenter = chartRef.current.convertFromPixel({ geoIndex: 0 }, [centerPixel[0] - dx, centerPixel[1] - dy])
-      if (!newCenter) return
-
-      chartRef.current.setOption({ geo: Array.from({ length: geoCount }, () => ({ center: newCenter })) })
+      updateMapPosition(dx, dy)
     },
-    [geoCount],
+    [updateMapPosition],
   )
 
   useEffect(() => {
