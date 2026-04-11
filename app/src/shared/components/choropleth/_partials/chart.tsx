@@ -73,7 +73,7 @@ export const Chart = (props: ChoroplethProps) => {
 
     echartsRef.current?.setOption({
       animation: false,
-      // Echarts bug: visualMap overwrites all seriesIndex regardless
+      // Echarts bug: visualMap colors ignore seriesIndex
       visualMap: {
         ...styles.legend,
         seriesIndex: [0, 1],
@@ -114,10 +114,10 @@ export const Chart = (props: ChoroplethProps) => {
             ...countryItems.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: { opacity: 0 } })),
             ...countryItems
               .filter((item) => item.match)
-              .map((item) => ({ ...item, itemStyle: styles.mapItem.default })),
-            ...countryItems
-              .filter((item) => item.match && lcQueries.length > 0)
-              .map((item) => ({ ...item, itemStyle: styles.mapItem.queryActive })),
+              .map((item) => ({
+                ...item,
+                itemStyle: lcQueries.length ? styles.mapItem.queryActive : styles.mapItem.default,
+              })),
           ],
           emphasis: {
             itemStyle: styles.mapItem.hover,

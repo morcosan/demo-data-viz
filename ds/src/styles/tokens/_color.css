@@ -170,9 +170,9 @@
 
   --ds-color-map-ocean: var(--ds-color-blue-1);
   --ds-color-map-land: var(--ds-color-grey-1);
-  --ds-color-map-value-none: var(--ds-color-grey-4);
-  --ds-color-map-value-min: var(--ds-color-grey-13);
-  --ds-color-map-value-max: var(--ds-color-grey-4);
+  --ds-color-map-value-none: var(--ds-color-purple-1);
+  --ds-color-map-value-min: var(--ds-color-purple-2);
+  --ds-color-map-value-max: var(--ds-color-purple-8);
 }
 
 [data-color-theme='dark'] {
@@ -250,6 +250,6 @@
   --ds-color-map-ocean: var(--ds-color-blue-8);
   --ds-color-map-land: var(--ds-color-grey-18);
   --ds-color-map-value-none: var(--ds-color-grey-14);
-  --ds-color-map-value-min: var(--ds-color-grey-14);
-  --ds-color-map-value-max: var(--ds-color-grey-5);
+  --ds-color-map-value-min: var(--ds-color-purple-7);
+  --ds-color-map-value-max: var(--ds-color-purple-1);
 }

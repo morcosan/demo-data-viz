@@ -7,15 +7,16 @@ export const useStyles = () => {
 
   const colors = {
     text: getTokenValue_COLOR('text-default', colorTheme),
+    valueNone: getTokenValue_COLOR('map-value-none', colorTheme),
     valueMin: getTokenValue_COLOR('map-value-min', colorTheme),
     valueMax: getTokenValue_COLOR('map-value-max', colorTheme),
-    valueNone: getTokenValue_COLOR('map-value-none', colorTheme),
     land: getTokenValue_COLOR('map-land', colorTheme),
     ocean: getTokenValue_COLOR('map-ocean', colorTheme),
     borderInactive: getTokenValue_COLOR(isUiLight ? 'border-subtle' : 'border-default', colorTheme),
     borderActive: getTokenValue_COLOR('text-inverse', colorTheme),
     borderQuery: getTokenValue_COLOR('border-highlight', colorTheme),
     borderHover: getTokenValue_COLOR('border-highlight', colorTheme),
+    borderLegend: getTokenValue_COLOR('border-active', colorTheme),
   }
   const sizes = {
     borderInactive: 0.5,
@@ -99,12 +100,10 @@ export const useStyles = () => {
   const cssContainer: CSSObject = {
     backgroundColor: colors.ocean,
 
-    '& *': {
-      cursor: 'unset !important',
-    },
+    '& *': { cursor: 'unset !important' },
 
     '& svg g[clip-path] path': {
-      stroke: getTokenValue_COLOR('border-active', colorTheme),
+      stroke: colors.borderLegend,
       strokeWidth: '1px',
     },
   }
