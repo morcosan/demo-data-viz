@@ -108,6 +108,7 @@ export const TOKENS__COLOR = {
   'border-default': { $ref: { light: 'grey-7', dark: 'grey-14' } },
   'border-subtle': { $ref: { light: 'black-alpha-3', dark: 'white-alpha-4' } },
   'border-shadow': { $ref: { light: 'grey-3', dark: 'grey-20' } },
+  'border-highlight': { $ref: { light: 'yellow-3', dark: 'yellow-4' } },
 
   'text-default': { $ref: { light: 'black', dark: 'white' } },
   'text-inverse': { $ref: { light: 'white', dark: 'black' } },
@@ -164,7 +165,7 @@ export const TOKENS__COLOR = {
 
   'map-ocean': { $ref: { light: 'blue-1', dark: 'blue-8' } },
   'map-land': { $ref: { light: 'grey-1', dark: 'grey-18' } },
-  'map-scale-none': { $ref: { light: 'grey-3', dark: 'grey-15' } },
-  'map-scale-min': { $ref: { light: 'grey-13', dark: 'grey-14' } },
-  'map-scale-max': { $ref: { light: 'grey-4', dark: 'grey-5' } },
+  'map-value-none': { $ref: { light: 'purple-1', dark: 'grey-14' } },
+  'map-value-min': { $ref: { light: 'purple-2', dark: 'purple-7' } },
+  'map-value-max': { $ref: { light: 'purple-8', dark: 'purple-1' } },
 } as const satisfies DesignTokenGroup<string>

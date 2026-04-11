@@ -7,19 +7,21 @@ export const useStyles = () => {
 
   const colors = {
     text: getTokenValue_COLOR('text-default', colorTheme),
-    valueMin: getTokenValue_COLOR('map-scale-min', colorTheme),
-    valueMax: getTokenValue_COLOR('map-scale-max', colorTheme),
-    valueNone: getTokenValue_COLOR('map-scale-none', colorTheme),
+    valueMin: getTokenValue_COLOR('map-value-min', colorTheme),
+    valueMax: getTokenValue_COLOR('map-value-max', colorTheme),
+    valueNone: getTokenValue_COLOR('map-value-none', colorTheme),
     land: getTokenValue_COLOR('map-land', colorTheme),
     ocean: getTokenValue_COLOR('map-ocean', colorTheme),
-    borderDefault: getTokenValue_COLOR('border-subtle', colorTheme),
-    borderHover: getTokenValue_COLOR('text-default', colorTheme),
-    borderQuery: getTokenValue_COLOR('bg-highlight', colorTheme),
+    borderInactive: getTokenValue_COLOR(isUiLight ? 'border-subtle' : 'border-default', colorTheme),
+    borderActive: getTokenValue_COLOR('text-inverse', colorTheme),
+    borderQuery: getTokenValue_COLOR('border-highlight', colorTheme),
+    borderHover: getTokenValue_COLOR('border-highlight', colorTheme),
   }
   const sizes = {
-    borderDefault: 0.5,
+    borderInactive: 0.5,
+    borderActive: 1.3,
     borderQuery: 1.5,
-    borderHover: 1.2,
+    borderHover: 2,
     city: 10,
   }
 
@@ -32,41 +34,31 @@ export const useStyles = () => {
     },
     md: {
       color: isUiLight ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.6)',
-      blur: 8,
+      blur: 6,
       offsetX: 0,
-      offsetY: 5,
+      offsetY: 4,
     },
   }
 
   const styles = {
-    layer0: {
+    mapItem: {
       landscape: {
         areaColor: colors.land,
-        borderColor: colors.borderDefault,
-        borderWidth: sizes.borderDefault,
-      },
-      default: {
-        areaColor: colors.valueNone,
-        shadowColor: shadows.sm.color,
-        shadowBlur: shadows.sm.blur,
-        shadowOffsetX: shadows.sm.offsetX,
-        shadowOffsetY: shadows.sm.offsetY,
-      },
-    } satisfies Record<string, EItemStyle>,
-    layer1: {
-      landscape: {
-        opacity: 0,
+        borderColor: colors.borderInactive,
+        borderWidth: sizes.borderInactive,
       },
       default: {
         opacity: 1,
-        borderColor: colors.borderDefault,
-        borderWidth: sizes.borderDefault,
-        shadowColor: shadows.sm.color,
-        shadowBlur: shadows.sm.blur,
-        shadowOffsetX: shadows.sm.offsetX,
-        shadowOffsetY: shadows.sm.offsetY,
+        borderColor: colors.borderActive,
+        borderWidth: sizes.borderActive,
       },
-      query: {
+      queryOther: {
+        opacity: 1,
+        areaColor: colors.valueNone,
+        borderColor: colors.borderActive,
+        borderWidth: sizes.borderActive,
+      },
+      queryActive: {
         opacity: 1,
         borderColor: colors.borderQuery,
         borderWidth: sizes.borderQuery,

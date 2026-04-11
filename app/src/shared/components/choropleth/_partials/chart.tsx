@@ -73,6 +73,7 @@ export const Chart = (props: ChoroplethProps) => {
 
     echartsRef.current?.setOption({
       animation: false,
+      // Echarts bug: visualMap overwrites all seriesIndex regardless
       visualMap: {
         ...styles.legend,
         seriesIndex: [0, 1],
@@ -97,8 +98,8 @@ export const Chart = (props: ChoroplethProps) => {
           type: 'scatter',
           coordinateSystem: 'geo',
           symbolSize: sizes.city,
-          itemStyle: styles.layer1.default,
-          emphasis: { itemStyle: styles.layer1.hover },
+          itemStyle: styles.mapItem.default,
+          emphasis: { itemStyle: styles.mapItem.hover },
         },
       ],
       geo: [
@@ -107,18 +108,19 @@ export const Chart = (props: ChoroplethProps) => {
           zlevel: 1,
           map: 'world',
           roam: true,
-          itemStyle: styles.layer1.landscape,
+          itemStyle: { opacity: 0 },
           regions: [
+            // Echarts bug: only opacity can be overwritten, not areaColor
+            ...countryItems.filter((item) => !item.match).map((item) => ({ ...item, itemStyle: { opacity: 0 } })),
             ...countryItems
-              .filter((item) => !item.match)
-              .map((item) => ({ ...item, itemStyle: styles.layer1.landscape })),
-            ...countryItems.filter((item) => item.match).map((item) => ({ ...item, itemStyle: styles.layer1.default })),
+              .filter((item) => item.match)
+              .map((item) => ({ ...item, itemStyle: styles.mapItem.default })),
             ...countryItems
               .filter((item) => item.match && lcQueries.length > 0)
-              .map((item) => ({ ...item, itemStyle: styles.layer1.query })),
+              .map((item) => ({ ...item, itemStyle: styles.mapItem.queryActive })),
           ],
           emphasis: {
-            itemStyle: styles.layer1.hover,
+            itemStyle: styles.mapItem.hover,
             label: { show: false },
           },
         },
@@ -127,11 +129,11 @@ export const Chart = (props: ChoroplethProps) => {
           zlevel: 0,
           map: 'world',
           silent: true,
-          itemStyle: styles.layer0.landscape,
+          itemStyle: styles.mapItem.landscape,
           regions: [
             ...countryItems
               .filter((item) => !item.match && lcQueries.length > 0)
-              .map((item) => ({ ...item, itemStyle: styles.layer0.default })),
+              .map((item) => ({ ...item, itemStyle: styles.mapItem.queryOther })),
           ],
         },
       ],

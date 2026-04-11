@@ -26,8 +26,8 @@ export const PlotlyCanvas = (props: Props) => {
       locationmode: 'ISO-3',
       hovertemplate: '<b>%{text}</b><br>Value: %{z}<extra></extra>',
       colorscale: [
-        [0, getTokenValue_COLOR('map-scale-min', colorTheme)],
-        [1, getTokenValue_COLOR('map-scale-max', colorTheme)],
+        [0, getTokenValue_COLOR('map-value-min', colorTheme)],
+        [1, getTokenValue_COLOR('map-value-max', colorTheme)],
       ],
       colorbar: {
         thickness: 15,
