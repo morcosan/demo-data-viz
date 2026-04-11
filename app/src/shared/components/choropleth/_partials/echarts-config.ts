@@ -4,8 +4,8 @@ import { type Continent } from '../_types'
 let _registered = false
 export const registerWorldMap = async () => {
   if (_registered) return
-  const worldGeoJson = (await import('@app/shared/utils/geo-data/world-geo.json')).default
-  echarts.registerMap('world', worldGeoJson as any)
+  const worldMap = (await import('@app/shared/utils/geo-data/world-map.json')).default
+  echarts.registerMap('world', worldMap as any)
   _registered = true
 }
 
