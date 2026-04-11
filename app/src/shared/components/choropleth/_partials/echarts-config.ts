@@ -11,19 +11,11 @@ export const registerWorldMap = async () => {
 }
 
 export const GEO_JSON_NAMES: Record<string, string> = {
-  Czechia: 'Czech Rep.',
-  'Ivory Coast': "Côte d'Ivoire",
-  Eswatini: 'Swaziland',
   'Timor-Leste': 'East Timor',
   "Lao People's Democratic Republic": 'Laos',
   'Syrian Arab Republic': 'Syria',
-  'Dominican Republic': 'Dominican Rep.',
-  'Solomon Islands': 'Solomon Is.',
-  'Falkland Islands (Malvinas)': 'Falkland Is.',
-  'Central African Republic': 'Central African Rep.',
-  'South Sudan': 'S. Sudan',
-  'Bosnia and Herzegovina': 'Bosnia and Herz.',
-  'Democratic Republic of the Congo': 'Dem. Rep. Congo',
+  Eswatini: 'eSwatini',
+  'Falkland Islands (Malvinas)': 'Falkland Islands',
 } as const
 
 export const GEO_CONTINENT_VIEW: Record<Continent, EView> = {
