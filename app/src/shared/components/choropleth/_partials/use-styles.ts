@@ -103,7 +103,7 @@ export const useStyles = () => {
   const cssContainer: CSSObject = {
     backgroundColor: colors.ocean,
 
-    '& *': { cursor: 'unset !important' },
+    '& div': { cursor: 'unset !important' },
 
     '& svg g[clip-path] path': {
       stroke: colors.borderLegend,
