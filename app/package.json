@@ -11,9 +11,10 @@
     "app--build": "node scripts/run-build.ts && next build",
     "app--serve": "concurrently \"node scripts/run-dev.ts\" \"vite preview --outDir out --port 3000\"",
     "sb--dev": "node scripts/run-sb.ts && storybook dev -p 6006 --no-open",
-    "sb--build": "node scripts/run-sb.ts && storybook build -o out-sb",
+    "sb--build": "storybook build -o out-sb",
     "sb--serve": "vite preview --outDir out-sb --port 6006",
     "sb--test": "vitest --project=storybook",
+    "build-geo": "node scripts/geo-data/builder.ts",
     "lint-all": "eslint . && tsc -b --noEmit",
     "clear-cache": "rmdir /s /q .next"
   },

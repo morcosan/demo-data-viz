@@ -38,7 +38,6 @@ lerna-debug.log*
 # Next.js
 next-env.d.ts
 /public/workers
-/public/world-geo.json
 
 # Output
 /.next
@@ -52,4 +51,3 @@ next-env.d.ts
 # Storybook
 *storybook.log
 storybook-static
-.storybook/public/world-geo.json
