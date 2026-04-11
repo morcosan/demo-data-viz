@@ -59,7 +59,7 @@ export const Chart = (props: ChoroplethProps) => {
 
   const countryNames = useMemo(() => countryItems.map((item) => item.name), [countryItems])
   const isItemActive = useCallback((name: string) => countryNames.includes(name), [countryNames])
-  const { containerRef, echartsRef } = useEcharts({ geoCount: 2, markerSize: sizes.city, isItemActive, draggingClass })
+  const { containerRef, echartsRef } = useEcharts({ markerSize: sizes.city, isItemActive, draggingClass })
 
   const nameFn = useCallback(
     (value: string) => {
@@ -110,7 +110,7 @@ export const Chart = (props: ChoroplethProps) => {
           ...view,
           zlevel: 1,
           map: 'world',
-          roam: 'scale',
+          roam: true,
           itemStyle: { opacity: 0 },
           regions: [
             // Echarts bug: only opacity can be overwritten, not areaColor
