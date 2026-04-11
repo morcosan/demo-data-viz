@@ -12,8 +12,14 @@ export const useEcharts = (props: Props) => {
   const { geoCount, markerSize, isItemActive } = props
   const containerRef = useRef<HTMLDivElement>(null)
   const chartRef = useRef<ECharts>(null)
-  const draggingRef = useRef(false)
+  const isDraggingRef = useRef(false)
   const lastPosRef = useRef({ x: 0, y: 0 })
+
+  const getEventCoords = (event: MouseEvent | TouchEvent) => {
+    return 'touches' in event
+      ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+      : { x: event.clientX, y: event.clientY }
+  }
 
   const handleMapMouseOver = useCallback(
     (item: any & EItem) => {
@@ -38,27 +44,36 @@ export const useEcharts = (props: Props) => {
     })
   }, [markerSize])
 
-  const handleContainerMouseDown = useCallback((event: MouseEvent) => {
-    if (event.button !== 0 || !containerRef.current) return
-    draggingRef.current = true
-    lastPosRef.current = { x: event.clientX, y: event.clientY }
+  const handleMouseDown = useCallback((event: MouseEvent) => {
+    if (!containerRef.current || event.button !== 0) return
+    isDraggingRef.current = true
     containerRef.current.style.cursor = 'grabbing'
+    lastPosRef.current = getEventCoords(event)
     event.stopPropagation()
   }, [])
 
-  const handleWindowMouseUp = useCallback(() => {
-    if (!draggingRef.current || !containerRef.current) return
-    draggingRef.current = false
+  const handleTouchStart = useCallback((event: TouchEvent) => {
+    if (!containerRef.current || event.touches.length !== 1) return
+    isDraggingRef.current = true
+    lastPosRef.current = getEventCoords(event)
+    event.preventDefault()
+  }, [])
+
+  const handlePointerUp = useCallback(() => {
+    if (!containerRef.current) return
+    isDraggingRef.current = false
     containerRef.current.style.cursor = 'unset'
   }, [])
 
-  const handleWindowMouseMove = useCallback(
-    (event: MouseEvent) => {
-      if (!draggingRef.current || !chartRef.current) return
+  const handlePointerMove = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (!isDraggingRef.current || !chartRef.current) return
+      if ('touches' in event && event.touches.length !== 1) return // Ignore multi-touch (pinch-zoom)
 
-      const dx = event.clientX - lastPosRef.current.x
-      const dy = event.clientY - lastPosRef.current.y
-      lastPosRef.current = { x: event.clientX, y: event.clientY }
+      const { x, y } = getEventCoords(event)
+      const dx = x - lastPosRef.current.x
+      const dy = y - lastPosRef.current.y
+      lastPosRef.current = { x, y }
 
       const geoOpt = chartRef.current.getOption()?.geo as any[]
       const { center } = geoOpt?.[0] ?? {}
@@ -82,22 +97,28 @@ export const useEcharts = (props: Props) => {
     chartRef.current.on('mouseover', handleMapMouseOver)
     chartRef.current.on('georoam', handleMapUpdate)
 
-    containerRef.current.addEventListener('mousedown', handleContainerMouseDown)
-    window.addEventListener('mousemove', handleWindowMouseMove)
-    window.addEventListener('mouseup', handleWindowMouseUp)
+    containerRef.current.addEventListener('mousedown', handleMouseDown, { passive: false })
+    containerRef.current.addEventListener('touchstart', handleTouchStart, { passive: false })
+    window.addEventListener('mousemove', handlePointerMove)
+    window.addEventListener('touchmove', handlePointerMove)
+    window.addEventListener('mouseup', handlePointerUp)
+    window.addEventListener('touchend', handlePointerUp)
 
     const resizeObserver = new ResizeObserver(() => chartRef.current?.resize())
     resizeObserver.observe(containerRef.current)
 
     return () => {
-      containerRef.current?.removeEventListener('mousedown', handleContainerMouseDown)
-      window.removeEventListener('mousemove', handleWindowMouseMove)
-      window.removeEventListener('mouseup', handleWindowMouseUp)
+      containerRef.current?.removeEventListener('mousedown', handleMouseDown)
+      containerRef.current?.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('mousemove', handlePointerMove)
+      window.removeEventListener('touchmove', handlePointerMove)
+      window.removeEventListener('mouseup', handlePointerUp)
+      window.removeEventListener('touchend', handlePointerUp)
       resizeObserver.disconnect()
       chartRef.current?.dispose()
       chartRef.current = null
     }
-  }, [handleMapMouseOver, handleMapUpdate, handleContainerMouseDown, handleWindowMouseMove, handleWindowMouseUp])
+  }, [handleMapMouseOver, handleMapUpdate, handleMouseDown, handlePointerMove, handlePointerUp, handleTouchStart])
 
   return { containerRef, echartsRef: chartRef }
 }

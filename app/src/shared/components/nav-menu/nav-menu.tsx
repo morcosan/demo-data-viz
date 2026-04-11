@@ -73,8 +73,8 @@ export const NavMenu = (props: NavMenuProps) => {
   }
 
   useEffect(() => {
-    window.addEventListener('mousedown', handleWindowClick, { capture: true })
-    return () => window.removeEventListener('mousedown', handleWindowClick, { capture: true })
+    window.addEventListener('mousedown', handleWindowClick, true)
+    return () => window.removeEventListener('mousedown', handleWindowClick, true)
   }, [])
 
   return (
