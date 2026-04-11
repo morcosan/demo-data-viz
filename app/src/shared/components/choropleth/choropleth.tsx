@@ -9,14 +9,14 @@ import { type ChoroplethProps } from './_types'
 export type * from './_types'
 
 export const Choropleth = (props: ChoroplethProps) => {
-  const { data, loading, toolbar, className, style } = props
+  const { loading, toolbar, className, style } = props
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    // Show 200ms loading to avoid UI freeze due to large data
+    // Show 200ms loading to avoid UI freeze on load
     setIsLoading(true)
     wait(200).then(() => setIsLoading(false))
-  }, [data])
+  }, [])
 
   return (
     <div className={cx('bg-color-bg-card flex w-full flex-col overflow-hidden', className)} style={style}>

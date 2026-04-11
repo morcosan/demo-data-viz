@@ -1,6 +1,6 @@
 'use client'
 
-import { EmptyState, SelectField, type SelectOption, TextHighlight } from '@app-components'
+import { EmptyState, SelectField, type SelectOption, TextHighlight, Tooltip } from '@app-components'
 import { useCountries, useTranslation } from '@app-i18n'
 import type { ChartViewProps } from '@app/app/datasets/_components/data-views/types'
 import { type TableCol } from '@app/shared/types/table'
@@ -80,6 +80,14 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
     )
   }
 
+  const chartProps: ChartViewProps = {
+    data: chartData,
+    colKey: chartValueColKey,
+    queries: queries,
+    cellFn: cellFn,
+    className: viewClass,
+  }
+
   const onChangeQueries = (value: string[]) => {
     setUrlParam(UrlKey.DATA_QUERIES, value)
     setQueries(value)
@@ -108,27 +116,18 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
     setChartValueColKey(chartValueCols[0]?.key || null)
   }, [chartValueCols])
 
-  const chartToolbar = (
-    <div className="gap-x-xs-3 min-w-md-7 flex flex-1 items-center justify-end">
-      <label htmlFor="chart-col-key" className="font-weight-lg">
-        {pivotCol ? pivotCol.label : t('core.label.value')}:
-      </label>
-      <SelectField
-        id="chart-col-key"
-        options={chartValueOptions}
-        value={chartValueColKey}
-        onChange={setChartValueColKey}
-      />
+  const chartToolbar = chartValueOptions.length > 1 && (
+    <div className="min-w-md-7 flex items-center">
+      <Tooltip label={pivotCol ? pivotCol.label : t('core.label.value')}>
+        <SelectField
+          id="chart-col-key"
+          options={chartValueOptions}
+          value={chartValueColKey}
+          onChange={setChartValueColKey}
+        />
+      </Tooltip>
     </div>
   )
-  const chartProps: ChartViewProps = {
-    data: chartData,
-    colKey: chartValueColKey,
-    queries: queries,
-    cellFn: cellFn,
-    toolbar: chartToolbar,
-    className: viewClass,
-  }
 
   return (
     <div
@@ -140,10 +139,10 @@ export const DataPane = ({ data, view, className }: DatasetPaneProps) => {
       <DataToolbar data={data} queries={queries} onChangeQueries={onChangeQueries} />
 
       {view === 'table' && <TableView data={visibleData} queries={queries} cellFn={cellFn} className={viewClass} />}
-      {view === 'chart' && <ChartView {...chartProps} />}
+      {view === 'chart' && <ChartView {...chartProps} toolbar={chartToolbar} />}
       {view === 'map' &&
         (hasMap ? (
-          <MapView {...chartProps} />
+          <MapView {...chartProps} toolbar={chartToolbar} />
         ) : (
           <div className={cx('flex-center flex h-full', viewClass)}>
             <EmptyState>{t('dataViz.error.noMapForDataset')}</EmptyState>

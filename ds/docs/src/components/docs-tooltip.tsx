@@ -22,7 +22,7 @@ export const DocsTooltip = ({ children, label }: TooltipProps) => {
           whiteSpace: 'pre-line',
         },
       }}
-      events={{ borderHover: true, focus: true, touch: true }}
+      events={{ hover: true, focus: true, touch: true }}
     >
       {children}
     </MantineTooltip>

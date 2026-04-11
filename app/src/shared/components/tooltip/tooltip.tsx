@@ -18,11 +18,11 @@ export const Tooltip = ({ label, children }: TooltipProps) => {
           backgroundColor: 'var(--ds-color-bg-menu)',
           boxShadow: 'var(--ds-shadow-sm)',
           border: '1px solid var(--ds-color-border-default)',
-          padding: 'var(--ds-spacing-xs-1) var(--ds-spacing-xs-4)',
+          padding: 'var(--ds-spacing-xs-1) var(--ds-spacing-xs-4) var(--ds-spacing-xs-0)',
           whiteSpace: 'pre-line',
         },
       }}
-      events={{ borderHover: true, focus: true, touch: true }}
+      events={{ hover: true, focus: true, touch: true }}
     >
       {children}
     </MantineTooltip>
