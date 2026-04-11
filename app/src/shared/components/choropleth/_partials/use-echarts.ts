@@ -15,7 +15,7 @@ export const useEcharts = (props: Props) => {
   const chartRef = useRef<ECharts>(null)
   const isDraggingRef = useRef(false)
   const lastPosRef = useRef({ x: 0, y: 0 })
-  const DRAG_THRESHOLD = 10
+  const DRAG_THRESHOLD = 5
 
   const getEventCoords = (event: MouseEvent | TouchEvent) => {
     return 'touches' in event
@@ -36,7 +36,10 @@ export const useEcharts = (props: Props) => {
       const newCenter = chartRef.current.convertFromPixel({ geoIndex: 0 }, [centerPixel[0] - dx, centerPixel[1] - dy])
       if (!newCenter) return
 
-      chartRef.current.setOption({ geo: Array.from({ length: geoCount }, () => ({ center: newCenter })) })
+      chartRef.current.setOption(
+        { geo: Array.from({ length: geoCount }, () => ({ center: newCenter })) },
+        { lazyUpdate: true },
+      )
     },
     [geoCount],
   )
@@ -72,10 +75,13 @@ export const useEcharts = (props: Props) => {
     const geoOpt = chartRef.current?.getOption()?.geo as any[]
     const { zoom, center } = geoOpt?.[0] ?? {}
     // Sync all canvas layers
-    chartRef.current?.setOption({
-      geo: [{}, { zoom, center }],
-      series: [{}, { type: 'scatter', symbolSize: markerSize * Math.sqrt(zoom ?? 1) }],
-    })
+    chartRef.current?.setOption(
+      {
+        geo: [{}, { zoom, center }],
+        series: [{}, { type: 'scatter', symbolSize: markerSize * Math.sqrt(zoom ?? 1) }],
+      },
+      { lazyUpdate: true },
+    )
   }, [markerSize])
 
   const handleMouseDown = useCallback(
