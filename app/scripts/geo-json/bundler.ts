@@ -11,10 +11,12 @@ const distPath = {
 
 const buildGeoJson = () => {
   const worldGeoJson = {
-    features: baseWorldGeoJson.features.map((feature: any) => ({
-      geometry: feature.geometry,
-      properties: { name: feature.properties.ADMIN },
-    })),
+    features: baseWorldGeoJson.features
+      .filter((feature: any) => feature.properties.ADMIN !== 'Antarctica')
+      .map((feature: any) => ({
+        geometry: feature.geometry,
+        properties: { name: feature.properties.ADMIN },
+      })),
   }
   writeFileSync(distPath.nextjs, JSON.stringify(worldGeoJson), 'utf-8')
   writeFileSync(distPath.storybook, JSON.stringify(worldGeoJson), 'utf-8')

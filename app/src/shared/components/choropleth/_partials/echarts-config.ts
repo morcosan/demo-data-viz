@@ -20,12 +20,12 @@ export const GEO_JSON_NAMES: Record<string, string> = {
 
 export const GEO_CONTINENT_VIEW: Record<Continent, EView> = {
   world: { center: [0, 13], zoom: 1.2 },
-  europe: { center: [15, 52], zoom: 4.4 },
-  'north-america': { center: [-100, 45], zoom: 2.2 },
-  'south-america': { center: [-60, -22], zoom: 2.4 },
-  africa: { center: [20, 1], zoom: 2.35 },
-  asia: { center: [90, 33], zoom: 1.95 },
-  oceania: { center: [140, -28], zoom: 4.2 },
+  europe: { center: [15, 52.5], zoom: 4.75 },
+  'north-america': { center: [-100, 45], zoom: 2.3 },
+  'south-america': { center: [-60, -22], zoom: 2.6 },
+  africa: { center: [20, 1], zoom: 2.45 },
+  asia: { center: [80, 33], zoom: 1.95 },
+  oceania: { center: [140, -27], zoom: 4.1 },
 } as const
 
 export type EView = { center: [number, number]; zoom: number }
