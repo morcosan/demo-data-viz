@@ -4,18 +4,23 @@ import { wait } from '@ds/core'
 import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
 import { Chart } from './_partials/chart'
+import { registerWorldMap } from './_partials/echarts-config'
 import { type ChoroplethProps } from './_types'
 
 export type * from './_types'
 
 export const Choropleth = (props: ChoroplethProps) => {
   const { loading, toolbar, className, style } = props
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Show 200ms loading to avoid UI freeze on load
-    setIsLoading(true)
-    wait(200).then(() => setIsLoading(false))
+    const init = async () => {
+      setIsLoading(true)
+      // Show 200ms loading to avoid UI freeze on load
+      await Promise.all([registerWorldMap(), wait(200)])
+      setIsLoading(false)
+    }
+    init()
   }, [])
 
   return (

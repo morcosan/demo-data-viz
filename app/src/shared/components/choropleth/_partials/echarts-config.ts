@@ -1,8 +1,14 @@
 import * as echarts from 'echarts'
 import { type Continent } from '../_types'
-import worldGeoJson from '/public/world-geo.json'
 
-echarts.registerMap('world', worldGeoJson as unknown as Parameters<typeof echarts.registerMap>[1])
+let _registered = false
+export const registerWorldMap = async () => {
+  if (_registered) return
+  const res = await fetch('/world-geo.json')
+  const worldGeoJson = await res.json()
+  echarts.registerMap('world', worldGeoJson)
+  _registered = true
+}
 
 export const GEO_JSON_NAMES: Record<string, string> = {
   Czechia: 'Czech Rep.',
