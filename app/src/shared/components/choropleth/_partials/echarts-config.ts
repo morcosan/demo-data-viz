@@ -1,6 +1,6 @@
-import worldGeoJson from '@app/shared/utils/geo-data/world-geo-echarts.json'
 import * as echarts from 'echarts'
 import { type Continent } from '../_types'
+import worldGeoJson from '/public/world-geo.json'
 
 echarts.registerMap('world', worldGeoJson as unknown as Parameters<typeof echarts.registerMap>[1])
 

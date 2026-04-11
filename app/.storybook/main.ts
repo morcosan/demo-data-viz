@@ -28,6 +28,7 @@ const config: StorybookConfig = {
       // 	image: { excludeFiles: ['**/*.svg'] }, // Disable default imports for SVG
     },
   },
+  staticDirs: ['public'],
 
   async viteFinal(config: InlineConfig) {
     config.plugins = [...(config.plugins || []), svgr({ include: '**/*.svgr' })]
