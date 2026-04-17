@@ -1,14 +1,14 @@
 interface Props extends ReactProps {
-  type?: 'default' | 'empty' | 'error'
+  variant?: 'default' | 'empty' | 'error'
 }
 
 export const EmptyState = (props: Props) => {
-  const { type = 'default', children, className } = props
+  const { variant = 'default', children, className } = props
 
   const emoji = (() => {
-    if (type === 'default') return '😉'
-    if (type === 'error') return '😢'
-    if (type === 'empty') return '🙄'
+    if (variant === 'default') return '😉'
+    if (variant === 'empty') return '🤨'
+    if (variant === 'error') return '😢'
     return ''
   })()
 

@@ -1,5 +1,14 @@
 export const CHANGELOG = [
   {
+    version: 'v0.8.0',
+    date: '17-04-2026',
+    changes: {
+      tokens: ['Added `blue-*`, `border-highlight` and `map-*` color tokens'],
+      components: ['Added `onFocus` and `onBlur` keys to `ReactProps` type'],
+      utils: ['Added `after:a11y-outline-proxy` helper class for a11y outline'],
+    },
+  },
+  {
     version: 'v0.7.0',
     date: '06-04-2026',
     changes: {

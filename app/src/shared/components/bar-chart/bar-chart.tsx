@@ -5,20 +5,24 @@ import { TOKENS, wait } from '@ds/core'
 import { useEffect, useRef, useState } from 'react'
 import { EmptyState } from '../empty-state/empty-state'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
-import { ChartCanvas } from './_partials/chart-canvas'
+import { Tooltip } from '../tooltip/tooltip'
+import { Chart } from './_partials/chart'
 import { Toolbar } from './_partials/toolbar'
 import { useScrolling } from './_partials/use-scrolling'
 import { useSorting } from './_partials/use-sorting'
-import { type BarChartData, type BarChartEntry, type BarChartProps } from './_types'
+import { type BarChartProps } from './_types'
 
-export type { BarChartData, BarChartEntry, BarChartProps }
+export type { BarChartData, BarChartEntry, BarChartProps, BarChartSize } from './_types'
 
 export const BarChart = (props: BarChartProps) => {
   const {
     barNames,
+    chartProps,
     chartSize = 'md',
     className,
     data,
+    emptyState,
+    entryFn,
     entryKey,
     entryName,
     entryWidth = parseFloat(TOKENS.SPACING['md-5'].$value),
@@ -31,8 +35,8 @@ export const BarChart = (props: BarChartProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
-  const hoverRef = useRef<Element | null>(null)
-  const tooltipRef = useRef<Element | null>(null)
+  const hoverRef = useRef<Element>(null)
+  const tooltipRef = useRef<Element>(null)
   const barKeys = Object.keys(barNames)
   const { handleKeyDown } = useScrolling({ hoverRef, tooltipRef })
   const { entries, sortKey, sortDir, toggleSort } = useSorting({ ...props, barKeys, chartSize, queries })
@@ -53,39 +57,49 @@ export const BarChart = (props: BarChartProps) => {
         sortKey={sortKey}
         sortDir={sortDir}
         toolbar={toolbar}
-        className="p-xs-1"
         onSort={toggleSort}
       />
 
-      <div
-        className="a11y-outline-proxy px-xs-2 pt-xs-3 pb-xs-1 min-h-0 flex-1 overflow-auto"
-        style={{ outlineOffset: '-1px' }} // Needed due to toolbar overlap
-        onKeyDownCapture={handleKeyDown}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {isLoading || loading ? (
-          <div className="flex-center flex h-full">
-            <LoadingSpinner />
-          </div>
-        ) : entries.length ? (
-          <ChartCanvas
-            {...props}
-            entries={entries}
-            barKeys={barKeys}
-            isFocused={isFocused}
-            isHovered={isHovered}
-            hoverRef={hoverRef}
-            tooltipRef={tooltipRef}
-          />
-        ) : (
-          <div className="flex-center flex h-full">
-            <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>
-          </div>
-        )}
-      </div>
+      <Tooltip label={t('dataViz.notice.chartKeyboard')} position="bottom" noFlip noHover noTouch>
+        <div
+          className={cx(
+            'a11y-outline-proxy outline-offset-[-1px]!',
+            'px-xs-2 pt-xs-3 pb-xs-1 min-h-0 flex-1 overflow-auto',
+            chartProps?.className,
+          )}
+          style={chartProps?.style}
+          onKeyDownCapture={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {isLoading || loading ? (
+            <div className="flex-center flex h-full">
+              <LoadingSpinner />
+            </div>
+          ) : entries.length ? (
+            <Chart
+              barNames={barNames}
+              entryKey={entryKey}
+              entryFn={entryFn}
+              entryWidth={entryWidth}
+              chartSize={chartSize}
+              queries={queries}
+              entries={entries}
+              barKeys={barKeys}
+              isFocused={isFocused}
+              isHovered={isHovered}
+              hoverRef={hoverRef}
+              tooltipRef={tooltipRef}
+            />
+          ) : (
+            <div className="flex-center flex h-full">
+              {emptyState || <EmptyState variant="empty">{t('dataViz.error.noData')}</EmptyState>}
+            </div>
+          )}
+        </div>
+      </Tooltip>
     </div>
   )
 }

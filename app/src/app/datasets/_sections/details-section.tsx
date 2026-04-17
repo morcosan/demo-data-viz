@@ -97,7 +97,7 @@ export const DetailsSection = ({ onClickBack }: Props) => {
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
-          <EmptyState type="error">{t('dataViz.error.fetchDataset')}</EmptyState>
+          <EmptyState variant="error">{t('dataViz.error.fetchDataset')}</EmptyState>
         ) : (
           <EmptyState>{t('dataViz.error.noDatasetSelected')}</EmptyState>
         )}

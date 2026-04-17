@@ -26,7 +26,7 @@ const meta: Meta = {
     props: {
       data: {
         cols,
-        rows: loremArray(100).map(() => {
+        rows: loremArray(20, 100).map(() => {
           return Object.fromEntries(
             cols.map((col: TableCol) => [
               col.key,
@@ -51,6 +51,7 @@ const meta: Meta = {
       queries: [],
       loading: false,
       sticky: false,
+      emptyState: '',
       className: '',
       style: { height: '600px' },
     },

@@ -81,15 +81,20 @@
       "viewTable": "Table"
     },
     "notice": {
+      "chartKeyboard": "Use Left/Right arrow keys (←,→) to navigate, Up/Down arrow keys (↑,↓) to scroll",
+      "mapAriaLabel": "World map showing data across {countryCount} countries and {cityCount} cities.",
+      "mapKeyboard": "Use Arrow keys (←,↑,→,↓) to move, Plus/Minus keys (+,-) to zoom, Space/+Shift keys to navigate",
       "pivotQuery": "You can use '{operator}' operator to query multiple values"
     },
     "error": {
       "fetchDataset": "Failed to load dataset",
       "fetchDatasets": "Failed to load datasets",
-      "noData": "Nothing to display",
+      "noData": "There is no data",
+      "noDataForCountry": "No data",
       "noDataForFilters": "Check your filters!",
       "noDatasetSelected": "Select a dataset!",
       "noIndexColumn": "Select a column to filter by!",
+      "noIndexColumnForMap": "Filter by countries or cities!",
       "noMapForDataset": "No map for this dataset"
     }
   }
