@@ -1,6 +1,7 @@
 export * from './app-logo/app-logo'
 export * from './app-nav/app-nav'
 export * from './bar-chart/bar-chart'
+export * from './choropleth/choropleth'
 export * from './data-table/data-table'
 export * from './empty-state/empty-state'
 export * from './error-boundary/error-boundary'

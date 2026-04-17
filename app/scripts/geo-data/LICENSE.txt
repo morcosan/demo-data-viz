@@ -1,0 +1,6 @@
+Natural Earth Data
+This data is in the PUBLIC DOMAIN. No restrictions on use.
+Full terms of use: https://www.naturalearthdata.com/about/terms-of-use
+
+World Map:  https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson
+Cities:     https://raw.githubusercontent.com/martynafford/natural-earth-geojson/master/10m/cultural/ne_10m_populated_places.json
