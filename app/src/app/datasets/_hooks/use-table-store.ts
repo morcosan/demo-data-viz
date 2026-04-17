@@ -27,10 +27,10 @@ const useTableStore = create<TableStore>((set) => ({
   initTableStore: async (data: JsonStatData) => {
     if (data.source !== 'eurostat') return
 
-    const { DEFAULT_INDEX_KEY, DEFAULT_PIVOT_KEY, DEFAULT_FILTERS } = EurostatConfig
+    const { DEFAULT_INDEX_KEYS, DEFAULT_PIVOT_KEYS, DEFAULT_FILTERS } = EurostatConfig
 
-    const defaultIndexKey = data.cellsByCol[DEFAULT_INDEX_KEY] ? DEFAULT_INDEX_KEY : ''
-    const defaultPivotKey = data.cellsByCol[DEFAULT_PIVOT_KEY] ? DEFAULT_PIVOT_KEY : ''
+    const defaultIndexKey = DEFAULT_INDEX_KEYS.find(key => data.cellsByCol[key]) ?? ''
+const defaultPivotKey = DEFAULT_PIVOT_KEYS.find(key => data.cellsByCol[key]) ?? ''
     let indexKey = getUrlParam(UrlKey.INDEX_KEY)
     let pivotKey = getUrlParam(UrlKey.PIVOT_KEY)
     indexKey = indexKey !== null && (indexKey === '' || data.cellsByCol[indexKey]) ? indexKey : defaultIndexKey

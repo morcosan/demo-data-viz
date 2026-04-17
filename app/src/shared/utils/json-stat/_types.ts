@@ -54,11 +54,12 @@ const JsonStatSchema = z.object({
 }) satisfies z.ZodType<JsonStat>
 
 const EurostatConfig = {
-  DEFAULT_INDEX_KEY: 'geo',
-  DEFAULT_PIVOT_KEY: 'time',
+  DEFAULT_INDEX_KEYS: ['geo', 'cities'],
+  DEFAULT_PIVOT_KEYS: ['time'],
   DEFAULT_FILTERS: {
     partner: 'WRL_REST',
   },
+  CITY_KEY: 'cities',
   GEO_KEY: 'geo',
   TIME_KEY: 'time',
 } as const
