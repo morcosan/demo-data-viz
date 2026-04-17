@@ -20,15 +20,17 @@ export interface DataTableProps extends ReactProps {
   queries?: string[]
   loading?: boolean
   sticky?: boolean
+  emptyState?: ReactNode
 }
 
 export const DataTable = (props: DataTableProps) => {
-  const { cellFn, className, data, loading, queries = [], sticky, style } = props
+  const { cellFn, className, data, emptyState, loading, queries = [], sticky, style } = props
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
-  const rootRef = useRef<HTMLDivElement | null>(null)
-  const headerRef = useRef<HTMLTableSectionElement | null>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLTableSectionElement>(null)
 
+  const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
   const columns = useMemo(
     () => data.cols.map((col) => ({ ...col, size: computeColSize(col, data.rows) })),
     [data.cols, data.rows, computeColSize],
@@ -39,12 +41,11 @@ export const DataTable = (props: DataTableProps) => {
       if (value === '') return <span className="text-color-text-placeholder">{t('dataViz.label.emptyCell')}</span>
 
       const strValue = formatCellValue(value, columns[info.column.getIndex()])
-      const lcQueries = queries.map((query) => query.trim().toLowerCase()).filter(Boolean)
       const query = lcQueries.find((lcQuery) => strValue.toLowerCase().includes(lcQuery)) || ''
 
       return cellFn ? cellFn(strValue, query) : query ? <TextHighlight text={strValue} query={query} /> : strValue
     },
-    [columns, cellFn, queries, t],
+    [columns, cellFn, lcQueries, t],
   )
   const { tableRows, tableCols } = useTableModel({
     cols: columns,
@@ -120,7 +121,7 @@ export const DataTable = (props: DataTableProps) => {
               <tr>
                 <td colSpan={vColItems.length + 2} className="relative">
                   <div className="flex-center min-h-lg-0 sticky left-0 flex w-full" style={spinnerStyle}>
-                    <EmptyState>{t('dataViz.error.noDataForFilters')}</EmptyState>
+                    {emptyState || <EmptyState variant="empty">{t('dataViz.error.noData')}</EmptyState>}
                   </div>
                 </td>
               </tr>

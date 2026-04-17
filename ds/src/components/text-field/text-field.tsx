@@ -36,8 +36,8 @@ export const TextField = (props: TextFieldProps) => {
     value,
     variant = 'default',
   } = props
-  const inputRef = useRef<InputElement | null>(null)
-  const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<InputElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const isNoop = Boolean(disabled || readonly)
   const { cssInput, cssPrefix, cssRoot, cssSuffix } = useStyles({ ...props, isNoop, size, variant })
 

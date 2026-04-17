@@ -3,18 +3,23 @@ import { defineMeta, loremArray, loremInt, loremLastName, loremTrue } from '@ds/
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { BarChart, type BarChartEntry, type BarChartProps } from './bar-chart'
 
+const MAX = 100_000_000
+
 const meta: Meta = {
   title: 'Components / BarChart',
   ...defineMeta(BarChart, {
+    slots: {
+      toolbar: '',
+    },
     props: {
       data: {
         entries: loremTrue()
           ? loremArray(15, 30).map(
               (): BarChartEntry => ({
                 label: loremLastName(),
-                v1: loremInt(0, 100_000_000),
-                v2: loremInt(0, 100_000_000),
-                v3: loremInt(0, 100_000_000),
+                v1: loremInt(0, MAX),
+                v2: loremInt(0, MAX),
+                v3: loremInt(0, MAX),
               }),
             )
           : loremArray(5, 15).map(
@@ -40,12 +45,13 @@ const meta: Meta = {
       sortKey: '',
       sortDir: undefined,
       loading: false,
-      toolbar: '',
+      emptyState: '',
+      chartProps: { className: '', style: {} },
       className: '',
       style: { height: '500px' },
     },
     inlineRadios: ['chartSize'],
-    clearDefaults: ['data', 'entryKey', 'entryName', 'entryFn', 'barNames'],
+    clearDefaults: ['data', 'entryKey', 'entryName', 'entryFn', 'barNames', 'chartProps'],
     render: ({ entryFn, ...rest }: BarChartProps) => {
       return <BarChart {...rest} entryFn={entryFn ? eval(String(entryFn)) : undefined} />
     },

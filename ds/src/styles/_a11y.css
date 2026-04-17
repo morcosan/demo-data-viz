@@ -18,6 +18,27 @@ audio,
   }
 }
 
-[data-a11y-mode='pointer'] * {
-  outline: none !important;
+.after\:a11y-outline-proxy {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: '';
+  }
+
+  &:has(:focus)::after,
+  &:has(:focus-visible)::after {
+    outline: auto;
+    outline-color: -webkit-focus-ring-color;
+    outline-offset: var(--ds-spacing-a11y-outline);
+  }
+}
+
+[data-a11y-mode='pointer'] {
+  & *,
+  & .after\:a11y-outline-proxy::after {
+    outline: none !important;
+  }
 }

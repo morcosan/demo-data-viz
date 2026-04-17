@@ -20,7 +20,7 @@ export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
 }
 
 export const SelectField = (props: SelectFieldProps) => {
-  const { className, clearable, id, onChange, options, placeholder, ref, style, value } = props
+  const { className, clearable, id, options, placeholder, ref, style, value, onChange, onFocus, onBlur } = props
   const { t } = useTranslation()
 
   const getSelectProps = (css: Function): MantineSelectProps => ({
@@ -29,7 +29,6 @@ export const SelectField = (props: SelectFieldProps) => {
     value: value,
     placeholder: placeholder,
     clearable: clearable,
-    onChange: onChange,
     allowDeselect: false,
     withScrollArea: false,
     comboboxProps: {
@@ -55,6 +54,9 @@ export const SelectField = (props: SelectFieldProps) => {
       `,
     },
     clearButtonProps: { title: t('core.action.clearSelection') },
+    onChange: onChange,
+    onFocus: onFocus,
+    onBlur: onBlur,
   })
 
   return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} ref={ref} />}</ClassNames>

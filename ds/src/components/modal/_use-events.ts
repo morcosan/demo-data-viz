@@ -9,8 +9,8 @@ export const useEvents = (props: ModalProps) => {
   const { opened, onClose, onClosed, onOpened, noDismiss } = props
   const [isVisible, setIsVisible] = useState(false)
   const [stackIndex, setStackIndex] = useState(0)
-  const modalRef = useRef<HTMLDivElement | null>(null)
-  const triggerRef = useRef<HTMLElement | null>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLElement>(null)
   const focusTrap1Ref = useRef<HTMLDivElement>(null)
   const focusTrap2Ref = useRef<HTMLDivElement>(null)
 

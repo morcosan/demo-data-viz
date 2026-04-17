@@ -31,5 +31,7 @@ declare global {
     className?: string
     style?: CSSProperties
     children?: ReactNode
+    onFocus?: (event: ReactFocusEvent) => void
+    onBlur?: (event: ReactFocusEvent) => void
   }
 }

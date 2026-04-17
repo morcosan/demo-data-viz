@@ -36,6 +36,15 @@
   --ds-color-purple-7: #6b21a8;
   --ds-color-purple-8: #4c1874;
 
+  --ds-color-blue-1: #d8e6fd;
+  --ds-color-blue-2: #b1cdfb;
+  --ds-color-blue-3: #89b4fa;
+  --ds-color-blue-4: #629bf8;
+  --ds-color-blue-5: #3b82f6;
+  --ds-color-blue-6: #2f68c5;
+  --ds-color-blue-7: #234e94;
+  --ds-color-blue-8: #0c1a31;
+
   --ds-color-yellow-1: #fef9c3;
   --ds-color-yellow-2: #fef6b6;
   --ds-color-yellow-3: #fde56c;
@@ -104,6 +113,7 @@
   --ds-color-border-default: var(--ds-color-grey-7);
   --ds-color-border-subtle: var(--ds-color-black-alpha-3);
   --ds-color-border-shadow: var(--ds-color-grey-3);
+  --ds-color-border-highlight: var(--ds-color-yellow-3);
 
   --ds-color-text-default: var(--ds-color-black);
   --ds-color-text-inverse: var(--ds-color-white);
@@ -157,6 +167,12 @@
 
   --ds-color-chart-bar-default: var(--ds-color-grey-12);
   --ds-color-chart-bar-hover: var(--ds-color-grey-14);
+
+  --ds-color-map-ocean: var(--ds-color-blue-1);
+  --ds-color-map-land: var(--ds-color-grey-1);
+  --ds-color-map-value-none: var(--ds-color-purple-1);
+  --ds-color-map-value-min: var(--ds-color-purple-2);
+  --ds-color-map-value-max: var(--ds-color-purple-8);
 }
 
 [data-color-theme='dark'] {
@@ -176,6 +192,7 @@
   --ds-color-border-default: var(--ds-color-grey-14);
   --ds-color-border-subtle: var(--ds-color-white-alpha-4);
   --ds-color-border-shadow: var(--ds-color-grey-20);
+  --ds-color-border-highlight: var(--ds-color-yellow-4);
 
   --ds-color-text-default: var(--ds-color-white);
   --ds-color-text-inverse: var(--ds-color-black);
@@ -229,4 +246,10 @@
 
   --ds-color-chart-bar-default: var(--ds-color-grey-10);
   --ds-color-chart-bar-hover: var(--ds-color-grey-8);
+
+  --ds-color-map-ocean: var(--ds-color-blue-8);
+  --ds-color-map-land: var(--ds-color-grey-18);
+  --ds-color-map-value-none: var(--ds-color-grey-14);
+  --ds-color-map-value-min: var(--ds-color-purple-7);
+  --ds-color-map-value-max: var(--ds-color-purple-1);
 }
