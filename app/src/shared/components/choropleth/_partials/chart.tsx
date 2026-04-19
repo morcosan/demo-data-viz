@@ -1,6 +1,6 @@
 import { useCountries, useTranslation } from '@app-i18n'
 import { formatInt, formatNumber } from '@app/shared/utils/formatting'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { type ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
 import { type ChoroplethProps, type EChartsOption, type ECityItem, type ECountryItem, type EItem } from '../_types'
@@ -13,7 +13,7 @@ export const Chart = (props: ChoroplethProps) => {
   const { data, view = 'world', queries = [], className } = props
   const { t } = useTranslation()
   const { getCountryNames, getCountryIso2 } = useCountries()
-  const { colors, styles, cssContainer, draggingClass, viewConfigs, getCitySize } = useStyles()
+  const { colors, styles, cssContainer, draggingClass, VIEW_CONFIGS, getCitySize, getItemStyle } = useStyles()
   const { geoCities, loadCities, getGeoCity } = useCities()
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -29,16 +29,16 @@ export const Chart = (props: ChoroplethProps) => {
   const legendFn = (value: number) => (hasDigits ? formatNumber(value) : formatInt(value))
 
   const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
-  const queryNames = useMemo(() => {
+  const queriedNames = useMemo(() => {
     const names = [] as string[]
     data.countries.forEach((country) => {
       const name = country.name.toLowerCase()
-      const isMatch = !lcQueries.length || lcQueries.some((query) => name.includes(query))
+      const isMatch = lcQueries.length && lcQueries.some((query) => name.includes(query))
       if (isMatch) names.push(country.name)
     })
     data.cities.forEach((city) => {
       const name = city.name.toLowerCase()
-      const isMatch = !lcQueries.length || lcQueries.some((query) => name.includes(query))
+      const isMatch = lcQueries.length && lcQueries.some((query) => name.includes(query))
       if (isMatch) names.push(city.name)
     })
     return names
@@ -46,17 +46,20 @@ export const Chart = (props: ChoroplethProps) => {
 
   const countryItems = useMemo((): ECountryItem[] => {
     return data.countries.flatMap((country) => {
+      const status = queriedNames.length ? (queriedNames.includes(country.name) ? 'queried' : 'unqueried') : 'default'
       return getCountryNames(getCountryIso2(country.name)).map((name) => ({
         name,
         value: country.value,
-        match: queryNames.includes(country.name),
+        status: status,
+        itemStyle: getItemStyle(status),
       }))
     })
-  }, [data.countries, queryNames, getCountryNames, getCountryIso2])
+  }, [data.countries, queriedNames, getCountryNames, getCountryIso2, getItemStyle])
 
   const cityItems = useMemo(() => {
     return data.cities.flatMap((city): ECityItem[] => {
       const geoCity = getGeoCity(city)
+      const status = queriedNames.length ? (queriedNames.includes(city.name) ? 'queried' : 'unqueried') : 'default'
       if (!geoCity) return []
       return [
         {
@@ -64,23 +67,25 @@ export const Chart = (props: ChoroplethProps) => {
           value: [geoCity.lng, geoCity.lat, city.value],
           iso2: geoCity.iso2,
           area: city.area,
-          match: queryNames.includes(city.name),
+          status: status,
+          itemStyle: getItemStyle(status),
         },
       ]
     })
-  }, [data.cities, queryNames, getGeoCity])
+  }, [data.cities, queriedNames, getGeoCity, getItemStyle])
 
-  const onDragging = useCallback(
-    (active: boolean) => {
-      const classList = containerRef.current?.classList
-      active ? classList?.add(draggingClass) : classList?.remove(draggingClass)
-    },
-    [draggingClass],
-  )
-  const { chartRef } = useEcharts({ containerRef, countryItems, cityItems, getCitySize, onDragging })
+  const removeItemValue = (item: EItem) => ({
+    ...item,
+    value:
+      item.status === 'unqueried'
+        ? Array.isArray(item.value)
+          ? [item.value[0], item.value[1], NaN]
+          : NaN
+        : item.value,
+  })
 
   const nameFn = useCallback(
-    (name: string, iso2: string) => {
+    (name: string, iso2: string): ReactNode => {
       const lcName = name.toLowerCase()
       const query = lcQueries?.find((query) => lcName.includes(query)) || ''
       const text = query ? <TextHighlight text={name} query={query} /> : name
@@ -97,85 +102,79 @@ export const Chart = (props: ChoroplethProps) => {
     [lcQueries],
   )
 
-  const isItemOther = (item: EItem) => !item.match && lcQueries.length > 0
-  const mapOtherItemStyle = (item: EItem) => ({ ...item, itemStyle: styles.mapItem.queryOther })
-  const mapActiveItemStyle = (item: EItem) => ({
-    ...item,
-    itemStyle: isItemOther(item)
-      ? { opacity: 0 }
-      : lcQueries.length
-        ? styles.mapItem.queryActive
-        : styles.mapItem.default,
-  })
+  const tooltipFn = useCallback(
+    (item: any & EItem): string => {
+      const isCountry = item.seriesType === 'map'
+      const iso2 = isCountry ? getCountryIso2(item.name) : item.data?.iso2 || getGeoCity(item)?.iso2 || ''
+      const findFn = (other: EItem) => other.name === item.name
+      const value = Number(isCountry ? countryItems.find(findFn)?.value : cityItems.find(findFn)?.value?.[2])
+      return renderToStaticMarkup(<Tooltip name={item.name} nameFn={nameFn} iso2={iso2} value={value} />)
+    },
+    [countryItems, cityItems, getCountryIso2, getGeoCity, nameFn],
+  )
+
+  const toggleDragging = useCallback(
+    (active: boolean) => {
+      const classList = containerRef.current?.classList
+      active ? classList?.add(draggingClass) : classList?.remove(draggingClass)
+    },
+    [draggingClass],
+  )
+
+  const { chartRef } = useEcharts({ containerRef, countryItems, cityItems, getCitySize, toggleDragging })
 
   const updateChart = () => {
     chartRef.current?.setOption({
       animation: false,
       // Echarts bug: visualMap colors ignore seriesIndex
       // Echarts bug: only opacity can be overwritten, not areaColor/color
-      visualMap: {
-        ...styles.legend,
-        seriesIndex: [0, 1],
-        max: legendMaxValue,
-        min: legendMinValue,
-        text: [legendMaxLabel, legendMinLabel],
-        inRange: { color: [colors.valueMin, colors.valueMax] },
-        formatter: legendFn as any,
-        zlevel: 100,
-      },
+      visualMap: [
+        {
+          ...styles.legend,
+          seriesIndex: [0, 1],
+          max: legendMaxValue,
+          min: legendMinValue,
+          text: [legendMaxLabel, legendMinLabel],
+          inRange: { color: [colors.valueMin, colors.valueMax] },
+          formatter: legendFn as any,
+          zlevel: 100,
+        },
+      ],
       series: [
         {
-          data: countryItems,
+          data: countryItems.map(removeItemValue),
           type: 'map',
           map: 'world',
           geoIndex: 0,
           selectedMode: false,
         },
         {
-          zlevel: 3,
-          data: cityItems.map(mapActiveItemStyle),
+          data: [
+            ...cityItems.filter((item) => item.status === 'unqueried').map(removeItemValue), // Render first
+            ...cityItems.filter((item) => item.status !== 'unqueried').map(removeItemValue), // Render on top
+          ],
           type: 'scatter',
           coordinateSystem: 'geo',
-          symbolSize: getCitySize(viewConfigs[view].zoom),
+          symbolSize: getCitySize(VIEW_CONFIGS[view].zoom),
           emphasis: { itemStyle: styles.mapItem.hover },
         },
-        {
-          zlevel: 2,
-          data: cityItems.filter(isItemOther).map(mapOtherItemStyle),
-          type: 'scatter',
-          coordinateSystem: 'geo',
-          symbolSize: getCitySize(viewConfigs[view].zoom),
-        },
       ],
+      // Geo needed to enable scatter series
       geo: [
         {
-          ...viewConfigs[view],
-          zlevel: 1,
+          ...VIEW_CONFIGS[view],
           map: 'world',
           roam: true,
-          regions: countryItems.map(mapActiveItemStyle),
-          emphasis: { itemStyle: styles.mapItem.hover, label: { show: false } },
-        },
-        {
-          ...viewConfigs[view],
-          zlevel: 0,
-          map: 'world',
-          silent: true,
-          regions: countryItems.filter(isItemOther).map(mapOtherItemStyle),
           itemStyle: styles.mapItem.landscape,
+          emphasis: { itemStyle: styles.mapItem.hover, label: { show: false } },
+          regions: countryItems,
         },
       ],
       tooltip: {
         ...styles.tooltip,
         trigger: 'item',
         confine: true,
-        formatter: (item: any & EItem) => {
-          const value = Array.isArray(item.value) ? item.value[2] : item.value
-          const iso2 = Array.isArray(item.value)
-            ? item.data?.iso2 || getGeoCity(item)?.iso2 || ''
-            : getCountryIso2(item.name)
-          return renderToStaticMarkup(<Tooltip name={item.name} nameFn={nameFn} iso2={iso2} value={value} />)
-        },
+        formatter: tooltipFn,
       },
     } satisfies EChartsOption)
   }

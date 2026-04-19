@@ -18,7 +18,8 @@ export type EItem<T = ECountryValue | ECityValue> = {
   value: T
   data?: ChoroEntry
   seriesType?: 'map' | 'scatter'
-  match?: boolean
+  status?: 'queried' | 'unqueried' | 'default'
+  itemStyle?: EItemStyle
 } & Record<string, any>
 
 export interface ChoroData {

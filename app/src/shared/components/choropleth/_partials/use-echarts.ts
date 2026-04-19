@@ -15,11 +15,11 @@ interface Props {
   countryItems: ECountryItem[]
   cityItems: ECityItem[]
   getCitySize: (zoom: number) => number
-  onDragging: (active: boolean) => void
+  toggleDragging: (active: boolean) => void
 }
 
 export const useEcharts = (props: Props) => {
-  const { containerRef, countryItems, cityItems, onDragging, getCitySize } = props
+  const { containerRef, countryItems, cityItems, toggleDragging, getCitySize } = props
   const [geoMap, setGeoMap] = useState<WorldMapJson | null>(null)
   const chartRef = useRef<echarts.ECharts>(null)
   const indexRef = useRef<number>(-1)
@@ -95,18 +95,15 @@ export const useEcharts = (props: Props) => {
       const isPointer = (params as GeoRoamParams).type !== undefined
       const flush = Boolean((params as GeoRoamParams).flush)
       const geoOpt = chartRef.current?.getOption()?.geo as any[]
-      const { zoom, center } = geoOpt?.[0] ?? {}
+      const { zoom } = geoOpt?.[0] ?? {}
       const symbolSize = getCitySize(zoom ?? 1)
 
-      // Sync all canvas layers (countries + cities)
-      chartRef.current?.setOption(
-        { geo: [{}, { zoom, center }], series: [{}, { type: 'scatter', symbolSize }, { type: 'scatter', symbolSize }] },
-        { lazyUpdate: !flush },
-      )
+      // Sync layers (countries + cities)
+      chartRef.current?.setOption({ series: [{}, { type: 'scatter', symbolSize }] }, { lazyUpdate: !flush })
 
-      isPointer && !isZoom && onDragging(true)
+      isPointer && !isZoom && toggleDragging(true)
     },
-    [getCitySize, onDragging],
+    [getCitySize, toggleDragging],
   )
 
   const focusItem = useCallback(
@@ -140,9 +137,9 @@ export const useEcharts = (props: Props) => {
   }, [actionItems, dispatchAction])
 
   const handleMouseUp = useCallback(() => {
-    onDragging(false)
+    toggleDragging(false)
     resetItemFocus()
-  }, [onDragging, resetItemFocus])
+  }, [toggleDragging, resetItemFocus])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
