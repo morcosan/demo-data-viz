@@ -78,10 +78,6 @@ export const useStyles = () => {
           opacity: 1,
           borderColor: colors.borderQuery,
           borderWidth: sizes.borderQuery,
-          shadowColor: shadows.sm.color,
-          shadowBlur: shadows.sm.blur,
-          shadowOffsetX: shadows.sm.offsetX,
-          shadowOffsetY: shadows.sm.offsetY,
         },
         hover: {
           opacity: 1,
