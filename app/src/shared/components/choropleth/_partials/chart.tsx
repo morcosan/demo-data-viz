@@ -3,17 +3,27 @@ import { formatInt, formatNumber } from '@app/shared/utils/formatting'
 import { type ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
-import { type ChoroplethProps, type EChartsOption, type ECityItem, type ECountryItem, type EItem } from '../_types'
+import type { ChoroplethProps, ChoroView, EChartsOption, ECityItem, ECountryItem, EItem, EViewConfig } from '../_types'
 import { Tooltip } from './tooltip'
 import { useCities } from './use-cities'
 import { useEcharts } from './use-echarts'
 import { useStyles } from './use-styles'
 
+const VIEW_CONFIGS: Record<ChoroView, EViewConfig> = {
+  world: { center: [0, 13], zoom: 1.2 },
+  europe: { center: [15, 52.5], zoom: 4.75 },
+  'north-america': { center: [-100, 45], zoom: 2.3 },
+  'south-america': { center: [-60, -22], zoom: 2.6 },
+  africa: { center: [20, 1], zoom: 2.45 },
+  asia: { center: [80, 33], zoom: 1.95 },
+  oceania: { center: [140, -27], zoom: 4.1 },
+}
+
 export const Chart = (props: ChoroplethProps) => {
   const { data, view = 'world', queries = [], className } = props
   const { t } = useTranslation()
   const { getCountryNames, getCountryIso2 } = useCountries()
-  const { colors, styles, cssContainer, draggingClass, VIEW_CONFIGS, getCitySize, getItemStyle } = useStyles()
+  const { colors, styles, cssContainer, draggingClass, getCitySize, getItemStyle } = useStyles()
   const { geoCities, loadCities, getGeoCity } = useCities()
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -74,6 +84,7 @@ export const Chart = (props: ChoroplethProps) => {
     })
   }, [data.cities, queriedNames, getGeoCity, getItemStyle])
 
+  // Echarts bug: visualMap colors override everything if item has value
   const removeItemValue = (item: EItem) => ({
     ...item,
     value:
@@ -126,40 +137,34 @@ export const Chart = (props: ChoroplethProps) => {
   const updateChart = () => {
     chartRef.current?.setOption({
       animation: false,
-      // Echarts bug: visualMap colors ignore seriesIndex
-      // Echarts bug: only opacity can be overwritten, not areaColor/color
       visualMap: [
         {
           ...styles.legend,
-          seriesIndex: [0, 1],
           max: legendMaxValue,
           min: legendMinValue,
           text: [legendMaxLabel, legendMinLabel],
           inRange: { color: [colors.valueMin, colors.valueMax] },
           formatter: legendFn as any,
-          zlevel: 100,
         },
       ],
       series: [
         {
-          data: countryItems.map(removeItemValue),
           type: 'map',
-          map: 'world',
-          geoIndex: 0,
-          selectedMode: false,
+          data: countryItems.map(removeItemValue),
+          geoIndex: 0, // Requires 'geo' config to be enabled
+          selectedMode: false, // Disable onClick for countries
         },
         {
+          type: 'scatter',
           data: [
             ...cityItems.filter((item) => item.status === 'unqueried').map(removeItemValue), // Render first
             ...cityItems.filter((item) => item.status !== 'unqueried').map(removeItemValue), // Render on top
           ],
-          type: 'scatter',
-          coordinateSystem: 'geo',
+          coordinateSystem: 'geo', // Requires 'geo' config to be enabled
           symbolSize: getCitySize(VIEW_CONFIGS[view].zoom),
           emphasis: { itemStyle: styles.mapItem.hover },
         },
       ],
-      // Geo needed to enable scatter series
       geo: [
         {
           ...VIEW_CONFIGS[view],
@@ -189,10 +194,7 @@ export const Chart = (props: ChoroplethProps) => {
       ref={containerRef}
       tabIndex={0}
       role="application"
-      aria-label={t('dataViz.notice.mapAriaLabel', {
-        countryCount: data.countries.length,
-        cityCount: data.cities.length,
-      })}
+      aria-label={t('dataViz.notice.mapAriaLabel', { countries: data.countries.length, cities: data.cities.length })}
       className={className}
       css={cssContainer}
     />

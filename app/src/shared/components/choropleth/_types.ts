@@ -1,8 +1,10 @@
 import { type GeoContinent } from '@app/shared/utils/geo-data/types'
 import { type MapSeriesOption } from 'echarts/charts'
+import * as echarts from 'echarts/core'
 import { type EChartsCoreOption } from 'echarts/core'
 import { type ReactNode } from 'react'
 
+export type ECharts = echarts.ECharts
 export type EChartsOption = EChartsCoreOption
 export type EItemStyle = MapSeriesOption['itemStyle']
 export type ELegend = EChartsCoreOption['visualMap']
@@ -21,6 +23,12 @@ export type EItem<T = ECountryValue | ECityValue> = {
   status?: 'queried' | 'unqueried' | 'default'
   itemStyle?: EItemStyle
 } & Record<string, any>
+export type EGeoRoam = (params: EGeoRoamParams) => void
+export type EGeoRoamParams = {
+  type?: string
+  zoom?: number
+  flush?: boolean
+}
 
 export interface ChoroData {
   countries: ChoroEntry[]

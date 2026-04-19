@@ -1,22 +1,12 @@
 import { getTokenValue_COLOR, getTokenValue_FONT_FAMILY, useThemeService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
 import { useCallback, useMemo } from 'react'
-import { type ChoroView, type EItemStyle, type ELegend, type ETooltip, type EViewConfig } from '../_types'
+import { type EItemStyle, type ELegend, type ETooltip } from '../_types'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
   const draggingClass = 'choropleth-dragging'
   const tooltipClass = 'choropleth-tooltip'
-
-  const VIEW_CONFIGS: Record<ChoroView, EViewConfig> = {
-    world: { center: [0, 13], zoom: 1.2 },
-    europe: { center: [15, 52.5], zoom: 4.75 },
-    'north-america': { center: [-100, 45], zoom: 2.3 },
-    'south-america': { center: [-60, -22], zoom: 2.6 },
-    africa: { center: [20, 1], zoom: 2.45 },
-    asia: { center: [80, 33], zoom: 1.95 },
-    oceania: { center: [140, -27], zoom: 4.1 },
-  }
 
   const colors = useMemo(
     () => ({
@@ -166,6 +156,5 @@ export const useStyles = () => {
     shadows,
     sizes,
     styles,
-    VIEW_CONFIGS,
   }
 }

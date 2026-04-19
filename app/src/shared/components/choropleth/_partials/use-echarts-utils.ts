@@ -1,13 +1,6 @@
-import { MapChart, ScatterChart } from 'echarts/charts'
-import { GeoComponent, TooltipComponent, VisualMapComponent } from 'echarts/components'
 import * as echarts from 'echarts/core'
-import { SVGRenderer } from 'echarts/renderers'
 import { type RefObject, useCallback } from 'react'
-import { type ECoords } from '../_types'
-
-echarts.use([GeoComponent, MapChart, SVGRenderer, ScatterChart, TooltipComponent, VisualMapComponent])
-
-export { echarts }
+import { type ECharts, type ECoords } from '../_types'
 
 export type ItemLimits = { left: number; right: number; top: number; bottom: number }
 export type ItemPosition = {
@@ -23,7 +16,7 @@ export type ActionItem = {
 }
 
 interface Props {
-  chartRef: RefObject<echarts.ECharts | null>
+  chartRef: RefObject<ECharts | null>
   containerRef: RefObject<HTMLDivElement | null>
 }
 
@@ -77,7 +70,7 @@ export const useEchartsUtils = (props: Props) => {
       const isOutside = px[0] < padding || px[0] > width - padding || px[1] < padding || px[1] > height - padding
 
       if (isOutside) {
-        chartRef.current.setOption({ geo: [{ center: item.center }, {}] }, { lazyUpdate: false })
+        chartRef.current.setOption({ geo: [{ center: item.center }] }, { lazyUpdate: false })
         return true
       }
     },
