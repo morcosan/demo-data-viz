@@ -2,6 +2,7 @@ import { type WorldMapJson } from '@app/shared/utils/geo-data/types'
 import { Keyboard } from '@ds/core'
 import { type RefObject, useCallback, useMemo, useRef } from 'react'
 import { type ECharts, type ECityItem, type ECountryItem, type EGeoRoam } from '../_types'
+import { HANDLED_KEYS, MAX_ZOOM, MIN_ZOOM, MOVE_KEY_DELTA, MOVE_SPEED, ZOOM_KEY_DELTA, ZOOM_SPEED } from './constants'
 import { type ActionItem, useEchartsUtils } from './use-echarts-utils'
 
 interface Props {
@@ -17,23 +18,6 @@ export const useEchartsA11y = (props: Props) => {
   const { chartRef, containerRef, countryItems, cityItems, geoMap, syncFnRef } = props
   const { bringIntoView, dispatchAction, getCountryPosition, updateGeo } = useEchartsUtils({ chartRef, containerRef })
   const indexRef = useRef<number>(-1)
-
-  const MOVE_SPEED = 8
-  const ZOOM_SPEED = 1.1
-  const MIN_ZOOM = 1.2
-  const MAX_ZOOM = 30
-  const MOVE_DELTA = {
-    [Keyboard.ARROW_LEFT]: [-1, 0],
-    [Keyboard.ARROW_RIGHT]: [1, 0],
-    [Keyboard.ARROW_UP]: [0, 1],
-    [Keyboard.ARROW_DOWN]: [0, -1],
-  }
-  const ZOOM_DELTA = {
-    [Keyboard.PLUS]: 1,
-    [Keyboard.EQUAL]: 1,
-    [Keyboard.MINUS]: -1,
-  }
-  const HANDLED_KEYS = [Keyboard.SPACE, Keyboard.ESCAPE, ...Object.keys(MOVE_DELTA), ...Object.keys(ZOOM_DELTA)]
 
   const geoCountryNames = useMemo(() => geoMap?.features.map((f) => f.properties.name) || [], [geoMap])
 
@@ -116,22 +100,25 @@ export const useEchartsA11y = (props: Props) => {
         return
       }
 
-      if (event.key in ZOOM_DELTA) {
+      if (event.key in ZOOM_KEY_DELTA) {
         const geoOpt = chartRef.current.getOption()?.geo as any[]
         const { zoom = 1, center } = geoOpt?.[0] ?? {}
         const newZoom = Math.min(
-          Math.max(ZOOM_DELTA[event.key] > 0 ? zoom * ZOOM_SPEED : zoom / ZOOM_SPEED, MIN_ZOOM),
+          Math.max(ZOOM_KEY_DELTA[event.key] > 0 ? zoom * ZOOM_SPEED : zoom / ZOOM_SPEED, MIN_ZOOM),
           MAX_ZOOM,
         )
         updateGeo({ center, zoom: newZoom })
         syncFnRef.current({ zoom: newZoom })
       }
 
-      if (event.key in MOVE_DELTA) {
+      if (event.key in MOVE_KEY_DELTA) {
         const geoOpt = chartRef.current.getOption()?.geo as any[]
         const { zoom = 1, center = [0, 0] } = geoOpt?.[0] ?? {}
         const step = MOVE_SPEED / zoom
-        const newCenter = [center[0] + MOVE_DELTA[event.key][0] * step, center[1] + MOVE_DELTA[event.key][1] * step]
+        const newCenter = [
+          center[0] + MOVE_KEY_DELTA[event.key][0] * step,
+          center[1] + MOVE_KEY_DELTA[event.key][1] * step,
+        ]
         updateGeo({ center: newCenter as [number, number] })
         syncFnRef.current({})
       }

@@ -1,23 +1,14 @@
 import { useCountries, useTranslation } from '@app-i18n'
+import { MAX_ZOOM, MIN_ZOOM, VIEW_CONFIGS } from '@app/shared/components/choropleth/_partials/constants'
 import { formatInt, formatNumber } from '@app/shared/utils/formatting'
 import { type ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { TextHighlight } from '../../text-highlight/text-highlight'
-import type { ChoroplethProps, ChoroView, EChartsOption, ECityItem, ECountryItem, EItem, EViewConfig } from '../_types'
+import { type ChoroplethProps, type EChartsOption, type ECityItem, type ECountryItem, type EItem } from '../_types'
 import { Tooltip } from './tooltip'
 import { useCities } from './use-cities'
 import { useEcharts } from './use-echarts'
 import { useStyles } from './use-styles'
-
-const VIEW_CONFIGS: Record<ChoroView, EViewConfig> = {
-  world: { center: [0, 13], zoom: 1.2 },
-  europe: { center: [15, 52.5], zoom: 4.75 },
-  'north-america': { center: [-100, 45], zoom: 2.3 },
-  'south-america': { center: [-60, -22], zoom: 2.6 },
-  africa: { center: [20, 1], zoom: 2.45 },
-  asia: { center: [80, 33], zoom: 1.95 },
-  oceania: { center: [140, -27], zoom: 4.1 },
-}
 
 export const Chart = (props: ChoroplethProps) => {
   const { data, view = 'world', queries = [], className } = props
@@ -170,6 +161,7 @@ export const Chart = (props: ChoroplethProps) => {
           ...VIEW_CONFIGS[view],
           map: 'world',
           roam: true,
+          scaleLimit: { min: MIN_ZOOM, max: MAX_ZOOM },
           itemStyle: styles.mapItem.landscape,
           emphasis: { itemStyle: styles.mapItem.hover, label: { show: false } },
           regions: countryItems,

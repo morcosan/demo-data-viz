@@ -13,6 +13,7 @@ export type ECoords = [number, number]
 export type ECountryValue = number
 export type ECityValue = [number, number, number]
 export type EViewConfig = { center: ECoords; zoom: number }
+export type EAreaCoords = { lng: [number, number]; lat: [number, number] }
 export type ECountryItem = EItem<ECountryValue>
 export type ECityItem = EItem<ECityValue>
 export type EItem<T = ECountryValue | ECityValue> = {
