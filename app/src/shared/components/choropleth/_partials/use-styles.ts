@@ -1,10 +1,11 @@
-import { getTokenValue_COLOR, getTokenValue_FONT_FAMILY, useThemeService } from '@ds/core'
+import { getTokenValue_COLOR, getTokenValue_FONT_FAMILY, useThemeService, useViewportService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
 import { useCallback, useMemo } from 'react'
 import { type EItemStyle, type ELegend, type ETooltip } from '../_types'
 
 export const useStyles = () => {
   const { colorTheme, isUiLight } = useThemeService()
+  const { isViewportMaxLG: isMobile } = useViewportService()
   const draggingClass = 'choropleth-dragging'
   const tooltipClass = 'choropleth-tooltip'
 
@@ -84,10 +85,10 @@ export const useStyles = () => {
           areaColor: 'inherit',
           borderColor: colors.borderHover,
           borderWidth: sizes.borderHover,
-          shadowColor: shadows.md.color,
-          shadowBlur: shadows.md.blur,
-          shadowOffsetX: shadows.md.offsetX,
-          shadowOffsetY: shadows.md.offsetY,
+          shadowColor: isMobile ? undefined : shadows.md.color,
+          shadowBlur: isMobile ? undefined : shadows.md.blur,
+          shadowOffsetX: isMobile ? undefined : shadows.md.offsetX,
+          shadowOffsetY: isMobile ? undefined : shadows.md.offsetY,
         },
       } satisfies Record<string, EItemStyle>,
       legend: {
@@ -108,7 +109,7 @@ export const useStyles = () => {
         className: tooltipClass,
       } satisfies ETooltip,
     }),
-    [colors, sizes, shadows],
+    [colors, sizes, shadows, isMobile],
   )
 
   const cssContainer: CSSObject = {

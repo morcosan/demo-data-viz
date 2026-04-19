@@ -1,13 +1,14 @@
 import { type WorldMapJson } from '@app/shared/utils/geo-data/types'
+import { useViewportService } from '@ds/core'
 import { MapChart, ScatterChart } from 'echarts/charts'
 import { GeoComponent, TooltipComponent, VisualMapComponent } from 'echarts/components'
 import * as echarts from 'echarts/core'
-import { SVGRenderer } from 'echarts/renderers'
+import { CanvasRenderer, SVGRenderer } from 'echarts/renderers'
 import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ECharts, ECityItem, ECountryItem, EGeoRoam, EGeoRoamParams, EItem } from '../_types'
 import { useEchartsA11y } from './use-echarts-a11y'
 
-echarts.use([GeoComponent, MapChart, SVGRenderer, ScatterChart, TooltipComponent, VisualMapComponent])
+echarts.use([CanvasRenderer, GeoComponent, MapChart, SVGRenderer, ScatterChart, TooltipComponent, VisualMapComponent])
 
 interface Props {
   containerRef: RefObject<HTMLDivElement | null>
@@ -19,6 +20,7 @@ interface Props {
 
 export const useEcharts = (props: Props) => {
   const { containerRef, countryItems, cityItems, toggleDragging, getCitySize } = props
+  const { isViewportMaxLG: isMobile } = useViewportService()
   const [geoMap, setGeoMap] = useState<WorldMapJson | null>(null)
   const chartRef = useRef<ECharts>(null)
   const syncFnRef = useRef<EGeoRoam>(() => {})
@@ -81,7 +83,7 @@ export const useEcharts = (props: Props) => {
     if (!container || !geoMap) return
 
     chartRef.current?.dispose()
-    chartRef.current = echarts.init(container, null, { renderer: 'svg' })
+    chartRef.current = echarts.init(container, null, { renderer: isMobile ? 'canvas' : 'svg' })
     chartRef.current.on('mouseover', handleMouseOver)
     chartRef.current.on('georoam', syncFnRef.current as (_: unknown) => void)
     container.addEventListener('keydown', handleKeyDown)
@@ -97,7 +99,7 @@ export const useEcharts = (props: Props) => {
       chartRef.current?.dispose()
       chartRef.current = null
     }
-  }, [geoMap, handleMouseOver, syncFnRef.current, handleMouseUp, handleKeyDown])
+  }, [geoMap, handleMouseOver, syncFnRef.current, handleMouseUp, handleKeyDown, isMobile])
 
   return { chartRef }
 }
