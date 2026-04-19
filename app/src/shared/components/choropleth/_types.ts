@@ -23,6 +23,7 @@ export type EItem<T = ECountryValue | ECityValue> = {
   status?: 'queried' | 'unqueried' | 'default'
   itemStyle?: EItemStyle
 } & Record<string, any>
+export type EGeoMoveParams = { zoom?: number; center?: [number, number] }
 export type EGeoRoam = (params: EGeoRoamParams) => void
 export type EGeoRoamParams = {
   type?: string

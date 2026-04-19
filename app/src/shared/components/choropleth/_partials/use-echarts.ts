@@ -39,14 +39,15 @@ export const useEcharts = (props: Props) => {
       const { zoom: zoomParam, type: typeParam, flush: flushParam } = params as EGeoRoamParams
       const isZoom = zoomParam !== undefined
       const isPointer = typeParam !== undefined
-      const geoOpt = chartRef.current?.getOption()?.geo as any[]
-      const { zoom } = geoOpt?.[0] ?? {}
-      const symbolSize = getCitySize(zoom ?? 1)
 
-      // Sync layers (countries + cities)
-      chartRef.current?.setOption({ series: [{}, { type: 'scatter', symbolSize }] }, { lazyUpdate: !flushParam })
-
-      isPointer && !isZoom && toggleDragging(true)
+      if (isZoom) {
+        const geoOpt = chartRef.current?.getOption()?.geo as any[]
+        const { zoom } = geoOpt?.[0] ?? {}
+        const symbolSize = getCitySize(zoom ?? 1)
+        chartRef.current?.setOption({ series: [{}, { type: 'scatter', symbolSize }] }, { lazyUpdate: !flushParam })
+      } else {
+        isPointer && toggleDragging(true)
+      }
     },
     [getCitySize, toggleDragging],
   )

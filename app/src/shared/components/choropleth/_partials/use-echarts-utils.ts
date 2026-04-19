@@ -1,6 +1,6 @@
 import * as echarts from 'echarts/core'
 import { type RefObject, useCallback } from 'react'
-import { type ECharts, type ECoords } from '../_types'
+import { type ECharts, type ECoords, type EGeoMoveParams } from '../_types'
 
 export type ItemLimits = { left: number; right: number; top: number; bottom: number }
 export type ItemPosition = {
@@ -22,6 +22,8 @@ interface Props {
 
 export const useEchartsUtils = (props: Props) => {
   const { chartRef, containerRef } = props
+
+  const updateGeo = useCallback((params: EGeoMoveParams) => chartRef.current?.setOption({ geo: [params] }), [chartRef])
 
   const getCountryPosition = useCallback((name: string): ItemPosition | undefined => {
     const features = (echarts.getMap('world')?.geoJSON as any)?.features
@@ -70,11 +72,11 @@ export const useEchartsUtils = (props: Props) => {
       const isOutside = px[0] < padding || px[0] > width - padding || px[1] < padding || px[1] > height - padding
 
       if (isOutside) {
-        chartRef.current.setOption({ geo: [{ center: item.center }] }, { lazyUpdate: false })
+        updateGeo({ center: item.center })
         return true
       }
     },
-    [chartRef, containerRef],
+    [chartRef, containerRef, updateGeo],
   )
 
   const dispatchAction = useCallback(
@@ -102,5 +104,6 @@ export const useEchartsUtils = (props: Props) => {
     bringIntoView,
     dispatchAction,
     getCountryPosition,
+    updateGeo,
   }
 }

@@ -5,8 +5,8 @@ import { type ECharts, type ECityItem, type ECountryItem, type EGeoRoam } from '
 import { type ActionItem, useEchartsUtils } from './use-echarts-utils'
 
 interface Props {
-  containerRef: RefObject<HTMLDivElement | null>
   chartRef: RefObject<ECharts | null>
+  containerRef: RefObject<HTMLDivElement | null>
   countryItems: ECountryItem[]
   cityItems: ECityItem[]
   geoMap: WorldMapJson | null
@@ -14,8 +14,8 @@ interface Props {
 }
 
 export const useEchartsA11y = (props: Props) => {
-  const { containerRef, chartRef, countryItems, cityItems, geoMap, syncFnRef } = props
-  const { bringIntoView, dispatchAction, getCountryPosition } = useEchartsUtils({ chartRef, containerRef })
+  const { chartRef, containerRef, countryItems, cityItems, geoMap, syncFnRef } = props
+  const { bringIntoView, dispatchAction, getCountryPosition, updateGeo } = useEchartsUtils({ chartRef, containerRef })
   const indexRef = useRef<number>(-1)
 
   const MOVE_SPEED = 8
@@ -123,7 +123,7 @@ export const useEchartsA11y = (props: Props) => {
           Math.max(ZOOM_DELTA[event.key] > 0 ? zoom * ZOOM_SPEED : zoom / ZOOM_SPEED, MIN_ZOOM),
           MAX_ZOOM,
         )
-        chartRef.current.setOption({ geo: [{ zoom: newZoom, center }, {}] }, { lazyUpdate: true })
+        updateGeo({ center, zoom: newZoom })
         syncFnRef.current({ zoom: newZoom })
       }
 
@@ -132,11 +132,11 @@ export const useEchartsA11y = (props: Props) => {
         const { zoom = 1, center = [0, 0] } = geoOpt?.[0] ?? {}
         const step = MOVE_SPEED / zoom
         const newCenter = [center[0] + MOVE_DELTA[event.key][0] * step, center[1] + MOVE_DELTA[event.key][1] * step]
-        chartRef.current.setOption({ geo: [{ center: newCenter }, {}] }, { lazyUpdate: true })
+        updateGeo({ center: newCenter as [number, number] })
         syncFnRef.current({})
       }
     },
-    [chartRef, syncFnRef, focusItem, resetItemFocus],
+    [chartRef, syncFnRef, focusItem, resetItemFocus, updateGeo],
   )
 
   return { handleKeyDown, resetItemFocus, dispatchAction }
