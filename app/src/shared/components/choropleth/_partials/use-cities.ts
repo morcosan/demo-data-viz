@@ -1,18 +1,7 @@
-import type { ChoroEntry } from '@app-components'
 import { type GeoCity, type GeoContinent } from '@app/shared/utils/geo-data/types'
 import { useCallback, useState } from 'react'
-
-type AreaCoords = { lng: [number, number]; lat: [number, number] }
-type CoordsByContinent = Record<GeoContinent, AreaCoords>
-
-const COORDS_BY_AREA: CoordsByContinent = {
-  europe: { lng: [-25, 45], lat: [34, 72] },
-  'north-america': { lng: [-170, -50], lat: [7, 83] },
-  'south-america': { lng: [-92, -30], lat: [-56, 13] },
-  africa: { lng: [-20, 55], lat: [-35, 37] },
-  asia: { lng: [25, 180], lat: [-10, 82] },
-  oceania: { lng: [110, 180], lat: [-50, 0] },
-} as const
+import { type ChoroEntry } from '../_types'
+import { COORDS_BY_AREA } from './constants'
 
 export const useCities = () => {
   const [geoCities, setGeoCities] = useState<GeoCity[]>([])

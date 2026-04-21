@@ -17,7 +17,7 @@ export default function DatasetsPage() {
     <div className="gap-xs-9 flex h-full w-full">
       {/* LEFT SIDE */}
       <div className={cx('lg:w-xl-0 min-w-xl-0 w-full flex-col', mobileView === 'listing' ? 'flex' : 'hidden lg:flex')}>
-        <h1 className="text-size-lg lg:text-size-xl font-weight-xl mb-xs-5 lg:mb-xs-7 ml-px">
+        <h1 className="text-size-lg lg:text-size-xl font-weight-xl mx-xs-5 my-xs-5 lg:mb-xs-7 pl-px">
           {t('dataViz.label.datasetsTitle')}
         </h1>
         <Suspense fallback={null}>

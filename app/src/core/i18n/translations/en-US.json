@@ -22,6 +22,7 @@
       "appTitle": "Demo Data Viz",
       "dataSize": "Data size",
       "datasetId": "Dataset ID",
+      "details": "Details",
       "dsStorybook": "Design System",
       "githubRepo": "GitHub Repo",
       "lastUpdate": "Last update",
@@ -34,6 +35,7 @@
       "theme": "Theme",
       "themeDark": "Dark",
       "themeLight": "Light",
+      "title": "Title",
       "unexpectedError": "Unexpected error",
       "unknown": "Unknown",
       "value": "Value"
@@ -54,8 +56,7 @@
   "dataViz": {
     "action": {
       "clearQuery": "Clear query",
-      "searchData": "Find data (use '{operator}' to query multiple values)",
-      "viewDetails": "View details"
+      "searchData": "Find data (use '{operator}' to query multiple values)"
     },
     "label": {
       "pivotQuery": "Split column query",
@@ -82,7 +83,8 @@
     },
     "notice": {
       "chartKeyboard": "Use Left/Right arrow keys (←,→) to navigate, Up/Down arrow keys (↑,↓) to scroll",
-      "mapAriaLabel": "World map showing data across {countryCount} countries and {cityCount} cities.",
+      "chartValueField": "Available only for chart and map views",
+      "mapAriaLabel": "World map showing data across {countries} countries and {cities} cities.",
       "mapKeyboard": "Use Arrow keys (←,↑,→,↓) to move, Plus/Minus keys (+,-) to zoom, Space/+Shift keys to navigate",
       "pivotQuery": "You can use '{operator}' operator to query multiple values"
     },

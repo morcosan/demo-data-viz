@@ -1,5 +1,6 @@
 import { defineMeta, loremArray, loremFalse, loremFullName } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
+import { useState } from 'react'
 import { SelectField, type SelectFieldProps, type SelectOption } from './select-field'
 
 const meta: Meta = {
@@ -17,11 +18,21 @@ const meta: Meta = {
       value: '0',
       placeholder: '',
       clearable: false,
+      disabled: false,
+      ariaDescription: '',
+      ariaDescribedBy: '',
       className: '',
       style: {},
     },
     events: ['onChange'],
     clearDefaults: ['options', 'value'],
+
+    render: (props: SelectFieldProps) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [value, setValue] = useState(props.value)
+
+      return <SelectField {...props} value={value} onChange={setValue} />
+    },
   }),
 }
 

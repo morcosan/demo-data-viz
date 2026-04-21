@@ -8,21 +8,21 @@ import { useTableStore } from '../../_hooks/use-table-store'
 import { type ChartViewProps } from './types'
 
 export const ChartView = (props: ChartViewProps) => {
-  const { data, colKey, queries, cellFn, toolbar, chartProps, className } = props
+  const { tableData, colKey, queries, cellFn, toolbar, chartProps, className } = props
   const { t } = useTranslation()
   const indexKey = useTableStore((s) => s.indexKey)
-  const indexCol = data.cols.find((col) => col.key === indexKey)
+  const indexCol = tableData.cols.find((col) => col.key === indexKey)
   const VALUE_KEY = 'value'
   const barNames = { [VALUE_KEY]: t('core.label.value') }
 
   const chartData = useMemo(
     (): BarChartData => ({
-      entries: data.rows.map((row) => ({
+      entries: tableData.rows.map((row) => ({
         [indexKey]: row[indexKey],
         [VALUE_KEY]: row[colKey || ''],
       })),
     }),
-    [data.rows, indexKey, colKey],
+    [tableData.rows, indexKey, colKey],
   )
   const hasData = chartData.entries.some((entry) => entry[VALUE_KEY] !== undefined)
 

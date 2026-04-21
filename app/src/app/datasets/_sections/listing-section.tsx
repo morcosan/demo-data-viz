@@ -8,7 +8,7 @@ import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
 import { TOKENS__SPACING } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import { useId, useMemo, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { DatasetItem } from '../_components/dataset-item'
 import { type BaseDataset, type ViewedDatasets } from '../_types'
@@ -19,6 +19,7 @@ interface Props extends ReactProps {
 
 export const ListingSection = ({ className, onClickDataset }: Props) => {
   const { t } = useTranslation()
+  const fieldId = useId()
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
   const searchParams = useSearchParams()
   const idParam = searchParams.get('id')
@@ -53,7 +54,7 @@ export const ListingSection = ({ className, onClickDataset }: Props) => {
     <LayoutPane className={cx('flex flex-col', className)}>
       <div className="shadow-below-sm z-sticky p-scrollbar-w relative">
         <SearchField
-          id="dataset-search"
+          id={`${fieldId}-search`}
           value={searchQuery}
           disabled={isLoading}
           label={t('dataViz.label.datasetSearch')}

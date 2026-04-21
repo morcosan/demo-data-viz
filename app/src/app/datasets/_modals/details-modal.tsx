@@ -20,6 +20,10 @@ export const DetailsModal = ({ opened, dataset, onClose }: Props) => {
       {/* METADATA */}
       <SettingSection header={t('dataViz.label.headerMetadata')}>
         <div>
+          <dt>{t('core.label.title')}</dt>
+          <dd>{dataset.title}</dd>
+        </div>
+        <div>
           <dt>{t('core.label.dataSize')}</dt>
           <dd>
             {formatNumber(dataset.stats?.colsCount)} x {formatNumber(dataset.stats?.rowsCount)}

@@ -1,5 +1,17 @@
 export const CHANGELOG = [
   {
+    version: 'v0.8.1',
+    date: '21-04-2026',
+    changes: {
+      tokens: ['Adjusted spacing tokens for button'],
+      components: [
+        'Added `ariaDescribedBy` prop to `TextField` component',
+        'Added `not-allowed` cursor to disabled `TextField` component',
+      ],
+      assets: ['Updated `info.svg` icon'],
+    },
+  },
+  {
     version: 'v0.8.0',
     date: '17-04-2026',
     changes: {

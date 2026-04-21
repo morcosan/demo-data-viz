@@ -107,6 +107,7 @@ export const useStyles = (props: Props) => {
     lineHeight: $lineHeight['md'],
     fontSize: size === 'sm' ? $fontSize['sm'] : $fontSize['md'],
     opacity: disabled ? 0.4 : 1,
+    cursor: disabled ? 'not-allowed' : undefined,
     resize: 'none',
 
     '&:focus-visible': {
