@@ -2,7 +2,7 @@ import type { TableData } from '@app/shared/types/table'
 import type { ReactNode } from 'react'
 
 export interface TableViewProps extends ReactProps {
-  data: TableData
+  tableData: TableData
   queries: string[]
   cellFn: (value: string, query: string, flip?: boolean) => ReactNode
 }

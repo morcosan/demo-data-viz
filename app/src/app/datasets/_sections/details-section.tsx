@@ -13,14 +13,15 @@ import {
 } from '@app/shared/utils/json-stat'
 import { getUrlParam, setUrlParam } from '@app/shared/utils/url-query'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
-import { ArrowBackSvg, Button, IconButton, PreviewSvg, useViewportService, wait } from '@ds/core'
+import { ArrowBackSvg, Button, IconButton, InfoSvg, useViewportService, wait } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
-import { memo, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
 import { DataPane, type DatasetPaneProps } from '../_components/data-pane'
 import { ViewToggle } from '../_components/view-toggle'
 import { useFullscreen } from '../_hooks/use-fullscreen'
 import { DetailsModal } from '../_modals/details-modal'
+import { FiltersModal } from '../_modals/filters-modal'
 import { type Dataset, type DataView, UrlKey, type ViewedDatasets } from '../_types'
 
 interface Props extends ReactProps {
@@ -29,7 +30,7 @@ interface Props extends ReactProps {
 
 export const DetailsSection = ({ onClickBack }: Props) => {
   const { t } = useTranslation()
-  const { isViewportMinLG, isViewportMinXL, isViewportMD } = useViewportService()
+  const { isViewportMinSM, isViewportMinLG } = useViewportService()
   const DATA_VIEW_VALUES = ['table', 'chart', 'map'] as const satisfies DataView[]
   const fullscreen = useFullscreen({ padding: 'var(--ds-spacing-xs-5)' })
   const storage = useLocalStorage<ViewedDatasets>(QueryKey.VIEWED_DATASETS)
@@ -37,6 +38,7 @@ export const DetailsSection = ({ onClickBack }: Props) => {
   const idParam = searchParams.get('id') || ''
   const [prevIdParam, setPrevIdParam] = useState(idParam)
   const [openedDetails, setOpenedDetails] = useState(false)
+  const [openedFilters, setOpenedFilters] = useState(false)
   const [dataView, setDataView] = useState<DataView>('table')
   const [dataset, datasetLoading, datasetError] = useQuery<Dataset>({
     queryKey: [QueryKey.EUROSTAT_DATASET, idParam],
@@ -48,7 +50,7 @@ export const DetailsSection = ({ onClickBack }: Props) => {
     if (col.key === EurostatConfig.GEO_KEY) return t('dataViz.label.eurostatGeo')
     return col.label
   }
-  const [tableData, tableLoading, tableError] = useQuery<JsonStatData>({
+  const [data, dataLoading, dataError] = useQuery<JsonStatData>({
     queryKey: [QueryKey.JSON_STAT_TABLE, idParam, dataset?.updatedAt],
     queryFn: async () => {
       const data = await convertJsonStatToTable(dataset!.jsonStatStr)
@@ -56,8 +58,8 @@ export const DetailsSection = ({ onClickBack }: Props) => {
     },
     enabled: Boolean(dataset),
   })
-  const loading = datasetLoading || tableLoading || prevIdParam !== idParam
-  const error = datasetError || tableError
+  const loading = datasetLoading || dataLoading || prevIdParam !== idParam
+  const error = datasetError || dataError
 
   const saveViewedDataset = (dataset: Dataset) => {
     storage.setItem({
@@ -69,10 +71,15 @@ export const DetailsSection = ({ onClickBack }: Props) => {
     })
   }
 
-  const onChangeDataView = (view: DataView) => {
-    setUrlParam(UrlKey.DATA_VIEW, view)
-    setDataView(view)
-  }
+  const handleDataViewChange = useCallback(
+    (view: DataView) => {
+      setUrlParam(UrlKey.DATA_VIEW, view)
+      setDataView(view)
+    },
+    [setDataView, setUrlParam],
+  )
+
+  const handleOpenFilters = useCallback(() => setOpenedFilters(true), [setOpenedFilters])
 
   const loadDataView = () => {
     const view = getUrlParam(UrlKey.DATA_VIEW) as DataView | null
@@ -91,7 +98,27 @@ export const DetailsSection = ({ onClickBack }: Props) => {
     loadDataView()
   }, [dataset])
 
-  if (loading || !tableData || !dataset) {
+  const statsCards = useMemo(() => {
+    return (
+      <>
+        <StatsCard label={t('core.label.dataSize')}>
+          {formatNumber(dataset?.stats?.colsCount)} x {formatNumber(dataset?.stats?.rowsCount)}
+        </StatsCard>
+        <StatsCard label={t('core.label.lastUpdate')}>{formatDate(dataset?.updatedAt)}</StatsCard>
+        <StatsCard label={t('core.label.source')}>
+          {dataset?.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
+          <span className="ml-xs-0">{dataset?.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
+        </StatsCard>
+      </>
+    )
+  }, [dataset])
+
+  const viewToggle = useMemo(
+    () => <ViewToggle view={dataView} onChange={handleDataViewChange} />,
+    [dataView, handleDataViewChange],
+  )
+
+  if (loading || !data || !dataset) {
     return (
       <LayoutPane className="flex-center flex w-full">
         {loading ? (
@@ -115,29 +142,34 @@ export const DetailsSection = ({ onClickBack }: Props) => {
       >
         {/* HEADER */}
         <div className="flex">
-          <IconButton tooltip={t('core.action.back')} size="sm" className="mr-xs-1 lg:hidden!" onClick={onClickBack}>
+          <IconButton
+            tooltip={t('core.action.back')}
+            size="sm"
+            className="mr-xs-1 -ml-xs-1 lg:hidden!"
+            onClick={onClickBack}
+          >
             <ArrowBackSvg className="h-xs-7" />
           </IconButton>
 
-          <h2 title={dataset.title} className="text-size-lg font-weight-md mr-xs-5 ml-px line-clamp-3">
+          <h2 title={dataset.title} className="text-size-lg font-weight-md mr-xs-5 ml-px truncate">
             {dataset.title}
           </h2>
 
           <div className="gap-xs-2 ml-auto flex">
-            {isViewportMinXL || isViewportMD ? (
+            {isViewportMinSM ? (
               <Button variant="text-default" size="sm" onClick={() => setOpenedDetails(true)}>
-                <PreviewSvg className="h-xs-8 mr-xs-2" />
-                {t('dataViz.action.viewDetails')}
+                <InfoSvg className="h-xs-8 mr-xs-2" />
+                {t('core.label.details')}
               </Button>
             ) : (
               <IconButton
-                tooltip={t('dataViz.action.viewDetails')}
+                tooltip={t('core.label.details')}
                 variant="text-default"
                 size="sm"
                 className="ml-auto"
                 onClick={() => setOpenedDetails(true)}
               >
-                <PreviewSvg className="h-xs-8" />
+                <InfoSvg className="h-xs-8" />
               </IconButton>
             )}
 
@@ -145,27 +177,19 @@ export const DetailsSection = ({ onClickBack }: Props) => {
           </div>
         </div>
 
-        {/* CARDS */}
-        <div className="gap-xs-5 my-xs-7 flex flex-wrap">
-          <StatsCard label={t('core.label.dataSize')}>
-            {formatNumber(dataset.stats?.colsCount)} x {formatNumber(dataset.stats?.rowsCount)}
-          </StatsCard>
-
-          <StatsCard label={t('core.label.lastUpdate')}>{formatDate(dataset.updatedAt)}</StatsCard>
-
-          <StatsCard label={t('core.label.source')}>
-            {dataset.source === 'eurostat' && <span className="fi fi-eu shadow-xs" />}
-            <span className="ml-xs-0">{dataset.source === 'eurostat' ? 'Eurostat' : 'Unknown'}</span>
-          </StatsCard>
-
-          <ViewToggle view={dataView} onChange={onChangeDataView} />
-        </div>
-
-        {/* TABLE */}
-        <DatasetPaneMemo data={tableData} view={dataView} className="min-h-0 flex-1" />
+        {/* DATA */}
+        <DataPaneMemo
+          data={data}
+          view={dataView}
+          statsCards={statsCards}
+          viewToggle={viewToggle}
+          className="min-h-0 flex-1"
+          onOpenFilters={handleOpenFilters}
+        />
 
         {/* MODAL */}
         <DetailsModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
+        <FiltersModal opened={openedFilters} data={data} view={dataView} onClose={() => setOpenedFilters(false)} />
       </LayoutPane>
     </div>
   )
@@ -175,6 +199,6 @@ export const DetailsSection = ({ onClickBack }: Props) => {
  * Memo
  */
 
-const DatasetPaneMemo = memo(function DatasetPaneMemo({ data, view }: DatasetPaneProps) {
-  return <DataPane data={data} view={view} className="min-h-0 flex-1" />
+const DataPaneMemo = memo(function DataPaneMemo(props: DatasetPaneProps) {
+  return <DataPane {...props} />
 })

@@ -16,6 +16,8 @@ export interface TextFieldProps {
   ariaLabel?: string
   /** Text used by screen reader as description for the field */
   ariaDescription?: string
+  /** Element ID used by screen reader as description for the field */
+  ariaDescribedBy?: string
   /** Content to be rendered inside the field, on the left */
   prefix?: ReactNode
   /** Content to be rendered inside the field, on the right */

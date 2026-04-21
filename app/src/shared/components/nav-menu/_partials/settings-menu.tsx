@@ -13,6 +13,7 @@ import {
   StorybookSvg,
   useThemeService,
 } from '@ds/core'
+import { useId } from 'react'
 
 interface Props {
   closeMenuFn: () => void
@@ -22,6 +23,7 @@ interface Props {
 export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
   const { t } = useTranslation()
   const { isUiLight, isUiDark, changeColorTheme } = useThemeService()
+  const fieldId = useId()
 
   const isPopup = !onClickBack
   const appStorybookUrl = `${ENV__BASE_PATH}/storybook`
@@ -45,9 +47,9 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
 
       {/* THEME */}
       <div className="px-button-px-item flex items-center justify-between">
-        <span id="ui-theme">{t('core.label.theme')}</span>
+        <span id={`${fieldId}-theme`}>{t('core.label.theme')}</span>
 
-        <div role="group" aria-labelledby="ui-theme" className="gap-xs-1 flex flex-col">
+        <div role="group" aria-labelledby={`${fieldId}-theme`} className="gap-xs-1 flex flex-col">
           <Button
             variant={isUiLight ? 'solid-secondary' : 'text-default'}
             size="xs"

@@ -7,7 +7,7 @@ import { useTableStore } from '../../_hooks/use-table-store'
 import type { ChartViewProps } from './types'
 
 export const MapView = (props: ChartViewProps) => {
-  const { data, colKey, queries, toolbar, chartProps, className } = props
+  const { tableData, colKey, queries, toolbar, chartProps, className } = props
   const { t } = useTranslation()
   const { getCountryIso2 } = useCountries()
   const indexKey = useTableStore((s) => s.indexKey)
@@ -39,11 +39,11 @@ export const MapView = (props: ChartViewProps) => {
   const mapData = useMemo((): ChoroData => {
     return hasGeoIndex
       ? {
-          countries: data.rows.map(mapRowToCountry).filter((item) => item.name && !isNaN(item.value)),
-          cities: data.rows.map(mapRowToCity).filter((item) => item.name && !isNaN(item.value)),
+          countries: tableData.rows.map(mapRowToCountry).filter((item) => item.name && !isNaN(item.value)),
+          cities: tableData.rows.map(mapRowToCity).filter((item) => item.name && !isNaN(item.value)),
         }
       : { countries: [], cities: [] }
-  }, [data.rows, mapRowToCountry, mapRowToCity, hasGeoIndex])
+  }, [tableData.rows, mapRowToCountry, mapRowToCity, hasGeoIndex])
 
   const hasData = mapData.countries.length > 0 || mapData.cities.length > 0
 

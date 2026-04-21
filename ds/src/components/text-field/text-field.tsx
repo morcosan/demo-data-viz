@@ -13,6 +13,7 @@ export type { TextFieldHandle, TextFieldProps, TextFieldSize, TextFieldVariant }
 export const TextField = (props: TextFieldProps) => {
   const {
     ariaDescription,
+    ariaDescribedBy,
     ariaLabel,
     className,
     disabled,
@@ -115,6 +116,7 @@ export const TextField = (props: TextFieldProps) => {
     placeholder: placeholder,
     'aria-label': ariaLabel,
     'aria-description': ariaDescription,
+    'aria-describedby': ariaDescribedBy,
     'aria-invalid': invalid,
     'aria-disabled': disabled,
     readOnly: isNoop,

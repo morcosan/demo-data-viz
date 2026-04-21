@@ -2,10 +2,11 @@
 
 import { useTranslation } from '@app-i18n'
 import { ClassNames, css } from '@emotion/react'
-import { Select, type ComboboxItem, type SelectProps as MantineSelectProps } from '@mantine/core'
+import { Select, type ComboboxItem, type SelectProps } from '@mantine/core'
 import '@mantine/core/styles/CloseButton.css'
 import '@mantine/core/styles/Combobox.css'
 import '@mantine/core/styles/Popover.css'
+import { useEffect, useImperativeHandle, useRef } from 'react'
 
 export type SelectOption = ComboboxItem
 export type SelectValue = string | null
@@ -16,19 +17,46 @@ export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
   value: SelectValue
   placeholder?: string
   clearable?: boolean
+  disabled?: boolean
+  ariaDescription?: string
+  ariaDescribedBy?: string
   onChange?: (value: string | null) => void
 }
 
 export const SelectField = (props: SelectFieldProps) => {
-  const { className, clearable, id, options, placeholder, ref, style, value, onChange, onFocus, onBlur } = props
+  const {
+    ariaDescribedBy,
+    ariaDescription,
+    className,
+    clearable,
+    disabled,
+    id,
+    onBlur,
+    onChange,
+    onFocus,
+    options,
+    placeholder,
+    ref,
+    style,
+    value,
+  } = props
   const { t } = useTranslation()
+  const innerRef = useRef<HTMLInputElement>(null)
 
-  const getSelectProps = (css: Function): MantineSelectProps => ({
+  useImperativeHandle(ref, () => innerRef.current as HTMLInputElement)
+
+  useEffect(() => {
+    if (disabled) innerRef.current?.setAttribute('aria-disabled', String(disabled))
+    if (ariaDescription) innerRef.current?.setAttribute('aria-description', ariaDescription)
+    if (ariaDescribedBy) innerRef.current?.setAttribute('aria-describedby', ariaDescribedBy)
+  }, [disabled, ariaDescribedBy, ariaDescription])
+
+  const getSelectProps = (css: Function): SelectProps => ({
     id: id,
     data: options,
     value: value,
     placeholder: placeholder,
-    clearable: clearable,
+    clearable: clearable && !disabled,
     allowDeselect: false,
     withScrollArea: false,
     comboboxProps: {
@@ -48,7 +76,7 @@ export const SelectField = (props: SelectFieldProps) => {
       root: css`
         ${cssField.styles}
       `,
-      input: clearable ? 'clearable' : undefined,
+      input: cx(clearable && !disabled && 'clearable', disabled && 'disabled'),
       dropdown: css`
         ${cssDropdown.styles}
       `,
@@ -57,9 +85,11 @@ export const SelectField = (props: SelectFieldProps) => {
     onChange: onChange,
     onFocus: onFocus,
     onBlur: onBlur,
+    onClickCapture: (event) => disabled && event.stopPropagation(),
+    onKeyDownCapture: (event) => disabled && event.stopPropagation(),
   })
 
-  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} ref={ref} />}</ClassNames>
+  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} ref={innerRef} />}</ClassNames>
 }
 
 /**********************************************************************************************************************
@@ -97,12 +127,17 @@ const cssField = css`
       padding-right: var(--ds-spacing-xs-8);
     }
 
-    &:focus {
+    &:not(.disabled):focus {
       border: 1px solid var(--ds-color-border-active);
     }
 
     &::placeholder {
       color: var(--ds-color-text-placeholder);
+    }
+
+    &.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
   }
 

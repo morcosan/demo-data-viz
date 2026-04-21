@@ -1,48 +1,25 @@
-import { SearchField, SelectField, type SelectOption, Tooltip } from '@app-components'
+import { SearchField, SelectField, Tooltip } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { FilterSvg } from '@app/shared/assets'
 import { QueryOperator } from '@app/shared/utils/formatting'
-import { type JsonStatData } from '@app/shared/utils/json-stat'
-import { Button, CloseSvg, IconButton, useViewportService } from '@ds/core'
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { JsonStatData } from '@app/shared/utils/json-stat'
+import { CloseSvg } from '@ds/core'
+import { memo, type ReactNode, useEffect, useId, useRef, useState } from 'react'
+import { useFilterUtils } from '../_hooks/use-filter-utils'
 import { useTableStore } from '../_hooks/use-table-store'
-import { FiltersModal } from '../_modals/filters-modal'
 
 interface Props {
   data: JsonStatData
   queries: string[]
+  filtersButton: ReactNode
   onChangeQueries: (value: string[]) => void
 }
 
 export const DataToolbar = (props: Props) => {
-  const { data, queries, onChangeQueries } = props
+  const { data, queries, filtersButton, onChangeQueries } = props
   const { t } = useTranslation()
-  const { isViewportMinXL, isViewportMD } = useViewportService()
-  const isMdOrLarger = isViewportMinXL || isViewportMD
-  const indexKey = useTableStore((s) => s.indexKey)
-  const pivotKey = useTableStore((s) => s.pivotKey)
-  const [openedModal, setOpenedModal] = useState(false)
-  const colKeys = useMemo(() => [...Object.keys(data.cellsByCol), ''], [data.cellsByCol])
-  const filterCount = (indexKey ? colKeys.length - (pivotKey ? 3 : 2) : 0) + (pivotKey ? 1 : 0)
-  const getColLabel = useCallback((key: string) => data.cols.find((col) => col.key === key)?.label || key, [data.cols])
+  const fieldId = useId()
   const [query, setQuery] = useState('')
   const isQueryDirty = useRef(false)
-
-  const indexOptions = useMemo((): SelectOption[] => {
-    return colKeys.map((key) => ({
-      value: key,
-      label: key ? getColLabel(key) : t('dataViz.label.emptyOptionForIndex'),
-      disabled: Boolean(key && key === pivotKey),
-    }))
-  }, [colKeys, pivotKey, t, getColLabel])
-
-  const pivotOptions = useMemo((): SelectOption[] => {
-    return colKeys.map((key) => ({
-      value: key,
-      label: key ? getColLabel(key) : t('dataViz.label.emptyOptionForPivot'),
-      disabled: Boolean(key && key === indexKey),
-    }))
-  }, [colKeys, indexKey, t, getColLabel])
 
   const handleQueryChange = (value: string) => {
     isQueryDirty.current = true
@@ -69,47 +46,20 @@ export const DataToolbar = (props: Props) => {
   return (
     <div
       className={cx(
-        'p-xs-2 gap-xs-2 flex flex-wrap items-center justify-between',
+        'p-xs-2 gap-xs-3 flex flex-wrap items-center justify-between',
         'border-color-border-subtle border-b',
       )}
     >
-      <div className="gap-xs-2 flex w-full items-center justify-between lg:w-fit">
-        <IndexPivotMemo indexOptions={indexOptions} pivotOptions={pivotOptions} />
-
-        {isMdOrLarger ? (
-          <Button variant="text-default" size="sm" onClick={() => setOpenedModal(true)}>
-            <FilterSvg className="h-xs-7 mr-xs-1" />
-            {t('dataViz.label.filtersModalButton', { count: filterCount })}
-          </Button>
-        ) : (
-          <IconButton
-            tooltip={t('dataViz.label.filtersModalButton', { count: filterCount })}
-            variant="text-default"
-            size="sm"
-            className="ml-auto"
-            onClick={() => setOpenedModal(true)}
-          >
-            <FilterSvg className="h-xs-7" />
-          </IconButton>
-        )}
-      </div>
+      {filtersButton && <IndexPivotMemo data={data} fieldId={fieldId} />}
+      {filtersButton}
 
       <SearchField
-        id="dataset-search"
+        id={`${fieldId}-search`}
         value={query}
         label={t('dataViz.action.searchData', { operator: QueryOperator.JOIN })}
-        className="lg:max-w-lg-9 w-full"
+        className="xl:max-w-lg-9 min-w-md-9 flex-1 lg:ml-auto"
         onChange={handleQueryChange}
         onBlur={resetQuery}
-      />
-
-      {/* MODAL */}
-      <FiltersModal
-        opened={openedModal}
-        data={data}
-        indexOptions={indexOptions}
-        pivotOptions={pivotOptions}
-        onClose={() => setOpenedModal(false)}
       />
     </div>
   )
@@ -120,24 +70,25 @@ export const DataToolbar = (props: Props) => {
  */
 
 interface RowColProps {
-  indexOptions: SelectOption[]
-  pivotOptions: SelectOption[]
+  data: JsonStatData
+  fieldId: string
 }
 
 const IndexPivotMemo = memo(function IndexPivotMemo(props: RowColProps) {
-  const { indexOptions, pivotOptions } = props
+  const { data, fieldId } = props
   const { t } = useTranslation()
+  const { indexOptions, pivotOptions } = useFilterUtils({ data })
   const indexKey = useTableStore((s) => s.indexKey)
   const pivotKey = useTableStore((s) => s.pivotKey)
   const setIndexKey = useTableStore((s) => s.setIndexKey)
   const setPivotKey = useTableStore((s) => s.setPivotKey)
-  const fieldClass = cx('xl:min-w-lg-0 max-w-lg-7 flex-1')
+  const fieldClass = cx('lg:min-w-lg-0 min-w-md-8 max-w-lg-5 flex-1')
 
   return (
-    <div className="flex flex-1 items-center">
+    <div className="flex max-w-fit flex-1 items-center">
       <Tooltip label={t('dataViz.label.fieldLabelForIndex')}>
         <SelectField
-          id="index-col"
+          id={`${fieldId}-index`}
           options={indexOptions}
           value={indexKey}
           className={fieldClass}
@@ -149,7 +100,7 @@ const IndexPivotMemo = memo(function IndexPivotMemo(props: RowColProps) {
 
       <Tooltip label={t('dataViz.label.fieldLabelForPivot')}>
         <SelectField
-          id="pivot-col"
+          id={`${fieldId}-pivot`}
           options={pivotOptions}
           value={pivotKey}
           className={fieldClass}
