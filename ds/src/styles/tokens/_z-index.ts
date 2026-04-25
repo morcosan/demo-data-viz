@@ -1,4 +1,4 @@
-import type { DesignTokenGroup } from './__types'
+import type { DesignTokenGroup } from './_utils/types'
 
 export const TOKENS__Z_INDEX = {
   lv1: { $value: 1000 },

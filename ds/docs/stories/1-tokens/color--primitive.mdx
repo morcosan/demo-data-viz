@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { CSS_PREFIX, getTokenValue_COLOR, TOKENS__COLOR } from '@ds/core'
+import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsColorSwatch } from '@ds/docs/core'
+
+export const tokens = Object.entries(TOKENS__COLOR).filter(([, token]) => !token.$ref)
+export const purples = Object.keys(TOKENS__COLOR).filter((name) => /^purple-\d+$/.test(name))
+export const yellows = Object.keys(TOKENS__COLOR).filter((name) => /^yellow-\d+$/.test(name))
+export const reds = Object.keys(TOKENS__COLOR).filter((name) => /^red-\d+$/.test(name))
+export const greens = Object.keys(TOKENS__COLOR).filter((name) => /^green-\d+$/.test(name))
+export const greys = Object.keys(TOKENS__COLOR).filter((name) => /^grey-\d+$/.test(name))
+export const blackAlphas = Object.keys(TOKENS__COLOR).filter((name) => /^black-alpha-\d+$/.test(name))
+export const whiteAlphas = Object.keys(TOKENS__COLOR).filter((name) => /^white-alpha-\d+$/.test(name))
+
+export const ColorSwatches = ({ tokens }) => (
+  <div className="flex flex-wrap gap-px">
+    {tokens.map((token) => (
+      <DocsColorSwatch key={token} token={token} />
+    ))}
+  </div>
+)
+
+export const ColorPalette = () => (
+  <DocsCanvas className="gap-xs-6 p-xs-9 flex flex-col">
+    <ColorSwatches tokens={purples} />
+    <ColorSwatches tokens={yellows} />
+    <ColorSwatches tokens={reds} />
+    <ColorSwatches tokens={greens} />
+    <ColorSwatches tokens={greys} />
+    <ColorSwatches tokens={blackAlphas} />
+    <ColorSwatches tokens={whiteAlphas} />
+  </DocsCanvas>
+)
+
+export const PrimitiveTokens = () => (
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th className="w-full">Value</th>
+        <th>Coding</th>
+      </tr>
+    </thead>
+    <tbody>
+      {tokens.map(([name]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <DocsColorToken value={getTokenValue_COLOR(name)} />
+          </td>
+          <td>
+            <DocsTokenCoding
+              tsVar={`$color['${name}']`}
+              twVars={[`bg-color-${name}`, `text-color-${name}`, `border-color-${name}`]}
+              cssVar={`${CSS_PREFIX.COLOR}${name}`}
+              tsSize="w-md-7"
+              twSize="w-md-7"
+              cssSize="w-md-7"
+              delay={1000}
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
+
+<Meta title="Design tokens / Color (primitive)" />
+
+# Primitive color tokens
+
+<ColorPalette />
+
+<PrimitiveTokens />

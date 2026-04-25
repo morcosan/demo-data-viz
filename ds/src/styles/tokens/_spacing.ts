@@ -1,7 +1,7 @@
-import type { DesignTokenGroup } from './__types'
+import type { DesignTokenGroup } from './_utils/types'
 
 export const TOKENS__SPACING = {
-  'xs-0': { $value: '2px' },
+  'xs-0': { $value: '2px' }, // Increment by 2px
   'xs-1': { $value: '4px' },
   'xs-2': { $value: '6px' },
   'xs-3': { $value: '8px' },
@@ -12,7 +12,7 @@ export const TOKENS__SPACING = {
   'xs-8': { $value: '18px' },
   'xs-9': { $value: '20px' },
 
-  'sm-0': { $value: '24px' },
+  'sm-0': { $value: '24px' }, // Increment by 4px
   'sm-1': { $value: '28px' },
   'sm-2': { $value: '32px' },
   'sm-3': { $value: '36px' },
@@ -23,7 +23,7 @@ export const TOKENS__SPACING = {
   'sm-8': { $value: '56px' },
   'sm-9': { $value: '60px' },
 
-  'md-0': { $value: '64px' },
+  'md-0': { $value: '64px' }, // Increment by 8px
   'md-1': { $value: '72px' },
   'md-2': { $value: '80px' },
   'md-3': { $value: '88px' },
@@ -34,7 +34,7 @@ export const TOKENS__SPACING = {
   'md-8': { $value: '128px' },
   'md-9': { $value: '136px' },
 
-  'lg-0': { $value: '140px' },
+  'lg-0': { $value: '140px' }, // Increment by 20px
   'lg-1': { $value: '160px' },
   'lg-2': { $value: '180px' },
   'lg-3': { $value: '200px' },
@@ -45,7 +45,7 @@ export const TOKENS__SPACING = {
   'lg-8': { $value: '300px' },
   'lg-9': { $value: '320px' },
 
-  'xl-0': { $value: '360px' },
+  'xl-0': { $value: '360px' }, // Increment by 40px
   'xl-1': { $value: '400px' },
   'xl-2': { $value: '440px' },
   'xl-3': { $value: '480px' },
@@ -56,7 +56,7 @@ export const TOKENS__SPACING = {
   'xl-8': { $value: '680px' },
   'xl-9': { $value: '720px' },
 
-  'xxl-0': { $value: '800px' },
+  'xxl-0': { $value: '800px' }, // Increment by 80px
   'xxl-1': { $value: '880px' },
   'xxl-2': { $value: '960px' },
   'xxl-3': { $value: '1040px' },

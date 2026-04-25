@@ -1,5 +1,3 @@
-import type { ColorTheme, DesignTokenThemeValue } from './__types'
-import { getTokenValue } from './__utils'
 import { TOKENS__BLUR } from './_blur'
 import { TOKENS__BREAKPOINT } from './_breakpoint'
 import { TOKENS__COLOR } from './_color'
@@ -10,6 +8,8 @@ import { TOKENS__LINE_HEIGHT } from './_line-height'
 import { TOKENS__RADIUS } from './_radius'
 import { TOKENS__SHADOW } from './_shadow'
 import { TOKENS__SPACING } from './_spacing'
+import { getTokenValue } from './_utils'
+import { type ColorTheme, type DesignTokenThemeValue } from './_utils/types'
 import { TOKENS__Z_INDEX } from './_z-index'
 
 type Blur = keyof typeof TOKENS__BLUR
@@ -68,7 +68,7 @@ const TOKENS = {
   Z_INDEX: TOKENS__Z_INDEX,
 }
 
-export * from './__types'
+export * from './_utils/types'
 export {
   CSS_PREFIX,
   getTokenValue,

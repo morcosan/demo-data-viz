@@ -19,10 +19,10 @@ jobs:
         uses: ./.github/actions/install-deps
 
       - name: Lint DS project
-        run: cd ds && pnpm run lint-all
+        run: cd ds && pnpm run code--lint
 
       - name: Lint app project
-        run: cd app && pnpm run lint-all
+        run: cd app && pnpm run code--lint
 
   test:
     name: Testing
@@ -41,7 +41,7 @@ jobs:
       - name: Test DS Storybook
         run: | # First attempt fails due to Vitest/Storybook issues
           cd ds
-          pnpm run ds--test || pnpm run ds--test || exit 1
+          pnpm run docs--test || pnpm run docs--test || exit 1
 
       - name: Install app Playwright browsers
         run: cd app && pnpm exec playwright install chromium

@@ -1,6 +1,18 @@
-export const CHANGELOG = [
+export const CHANGELOG: ChangelogItem[] = [
   {
-    version: 'v0.8.1',
+    version: '0.9.0',
+    date: '25-04-2026',
+    changes: {
+      docs: [
+        'Added indicator for current version in changelog page',
+        'Split color tokens page into two pages (primitive vs semantic)',
+        'Added `DocsColorSwatch` docs component',
+      ],
+      internal: ['Added pipeline for building token CSS files', 'Renamed package.json scripts'],
+    },
+  },
+  {
+    version: '0.8.1',
     date: '21-04-2026',
     changes: {
       tokens: ['Adjusted spacing tokens for button'],
@@ -12,7 +24,7 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.8.0',
+    version: '0.8.0',
     date: '17-04-2026',
     changes: {
       tokens: ['Added `blue-*`, `border-highlight` and `map-*` color tokens'],
@@ -21,7 +33,7 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.7.0',
+    version: '0.7.0',
     date: '06-04-2026',
     changes: {
       deprecated: ['Deprecated `useDefaults` utility hook'],
@@ -29,7 +41,7 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.6.0',
+    version: '0.6.0',
     date: '05-04-2026',
     changes: {
       tokens: ['Added `Geist` font files and updated font-family tokens'],
@@ -38,21 +50,21 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.5.0',
+    version: '0.5.0',
     date: '29-03-2026',
     changes: {
       tokens: ['Added `chart-bar-*` color tokens'],
     },
   },
   {
-    version: 'v0.4.1',
+    version: '0.4.1',
     date: '29-03-2026',
     changes: {
       components: ['Fixed width for `TextField` component'],
     },
   },
   {
-    version: 'v0.4.0',
+    version: '0.4.0',
     date: '20-03-2026',
     changes: {
       breaking: ['Renamed ref interface for `TextField` component'],
@@ -69,14 +81,14 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.3.1',
+    version: '0.3.1',
     date: '17-03-2026',
     changes: {
       components: ['Fixed text alignment inside `Button` component'],
     },
   },
   {
-    version: 'v0.3.0',
+    version: '0.3.0',
     date: '16-03-2026',
     changes: {
       tokens: [
@@ -92,14 +104,14 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.2.7',
+    version: '0.2.7',
     date: '14-03-2026',
     changes: {
       utils: ['Added `suffix-raw.d.ts` file'],
     },
   },
   {
-    version: 'v0.2.6',
+    version: '0.2.6',
     date: '11-03-2026',
     changes: {
       utils: ['Fixed eslint rule for DS paths'],
@@ -107,21 +119,21 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.2.5',
+    version: '0.2.5',
     date: '01-03-2026',
     changes: {
       assets: ['Added more icons'],
     },
   },
   {
-    version: 'v0.2.4',
+    version: '0.2.4',
     date: '27-02-2026',
     changes: {
       utils: ['Added `emotion.d.ts` file'],
     },
   },
   {
-    version: 'v0.2.3',
+    version: '0.2.3',
     date: '25-02-2026',
     changes: {
       components: ['Refactored `Modal` component with `h1` tag for title'],
@@ -129,28 +141,28 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.2.2',
+    version: '0.2.2',
     date: '13-02-2026',
     changes: {
       tokens: ['Added `bg-highlight` color token'],
     },
   },
   {
-    version: 'v0.2.1',
+    version: '0.2.1',
     date: '13-02-2026',
     changes: {
       docs: ['Added `PreviewMdxPage` component for Storybook stories'],
     },
   },
   {
-    version: 'v0.2.0',
+    version: '0.2.0',
     date: '12-02-2026',
     changes: {
       breaking: ['Renamed all `*.svg` assets to `*.svgr`', 'Reset import config for `*.svg` files to be url-based'],
     },
   },
   {
-    version: 'v0.1.3',
+    version: '0.1.3',
     date: '07-02-2026',
     changes: {
       breaking: ['Moved all asset files from `/dist` to `/src` folder'],
@@ -158,21 +170,21 @@ export const CHANGELOG = [
     },
   },
   {
-    version: 'v0.1.2',
+    version: '0.1.2',
     date: '06-02-2026',
     changes: {
       tokens: ['Updated semantic color for page'],
     },
   },
   {
-    version: 'v0.1.1',
+    version: '0.1.1',
     date: '01-02-2026',
     changes: {
       assets: ['Removed width and height from all svg files'],
     },
   },
   {
-    version: 'v0.1.0',
+    version: '0.1.0',
     date: '20-12-2025',
     changes: {
       tokens: ['Added basic tokens for color, elevation, radius, spacing and typography'],
@@ -186,4 +198,4 @@ export const CHANGELOG = [
       docs: ['Created basic Storybook docs for design tokens, web core and versioning'],
     },
   },
-] as const satisfies ChangelogItem[]
+] as const

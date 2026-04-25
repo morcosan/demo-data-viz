@@ -1,4 +1,4 @@
-import type { DesignTokenGroup, DesignTokenThemeValue } from './__types'
+import type { DesignTokenGroup, DesignTokenThemeValue } from './_utils/types'
 
 export const TOKENS__SHADOW = {
   inner: {

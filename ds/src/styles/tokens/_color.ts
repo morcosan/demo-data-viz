@@ -1,12 +1,13 @@
-import type { DesignTokenGroup } from './__types'
+import type { DesignTokenGroup } from './_utils/types'
 
 export const TOKENS__COLOR = {
   white: { $value: '#fff' },
   black: { $value: '#1c1a1d' },
 
+  // https://noeldelgado.github.io/shadowlord/#8a8391 with % 5.7
   'grey-1': { $value: '#fbfbfc' },
   'grey-2': { $value: '#f5f4f5' },
-  'grey-3': { $value: '#eeedef' },
+  'grey-3': { $value: '#eeedef' }, // Light page bg
   'grey-4': { $value: '#e7e6e9' },
   'grey-5': { $value: '#dad8dc' },
   'grey-6': { $value: '#cdcad0' },
@@ -22,7 +23,7 @@ export const TOKENS__COLOR = {
   'grey-16': { $value: '#434047' },
   'grey-17': { $value: '#3b383e' },
   'grey-18': { $value: '#333136' },
-  'grey-19': { $value: '#2c292e' },
+  'grey-19': { $value: '#2c292e' }, // Dark page bg
   'grey-20': { $value: '#242226' },
 
   'purple-1': { $value: '#e9d5ff' },
@@ -96,7 +97,7 @@ export const TOKENS__COLOR = {
   'bg-pane': { $ref: { light: 'grey-2', dark: 'grey-18' } },
   'bg-card': { $ref: { light: 'grey-1', dark: 'grey-17' } },
   'bg-menu': { $ref: { light: 'white', dark: 'grey-16' } },
-  'bg-coding': { $ref: { light: 'white', dark: 'grey-20' } },
+  'bg-coding': { $ref: { light: 'grey-5', dark: 'grey-20' } },
   'bg-field': { $ref: { light: 'black-alpha-1', dark: 'black-alpha-4' } },
   'bg-skeleton': { $ref: { light: 'black-alpha-3', dark: 'white-alpha-5' } },
   'bg-link': { $ref: { light: 'black-alpha-2', dark: 'black-alpha-5' } },

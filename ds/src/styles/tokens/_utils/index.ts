@@ -1,4 +1,4 @@
-import type { ColorTheme, DesignToken, DesignTokenGroup, DesignTokenThemeValue } from './__types'
+import type { ColorTheme, DesignToken, DesignTokenGroup, DesignTokenThemeValue } from './types'
 
 type Group<V> = DesignTokenGroup<V>
 
