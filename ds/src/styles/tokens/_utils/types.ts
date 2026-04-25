@@ -13,8 +13,6 @@ export type DesignToken<V = DesignTokenValue> =
       readonly $description?: string
     }
 export type DesignTokenGroup<V = DesignTokenValue> = {
-  readonly $description?: string
-} & {
   readonly [key: string]: DesignToken<V>
 }
 

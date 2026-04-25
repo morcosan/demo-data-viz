@@ -1,11 +1,29 @@
-@import './_blur.css';
-@import './_breakpoint.css';
-@import './_color.css';
-@import './_font-family.css';
-@import './_font-size.css';
-@import './_font-weight.css';
-@import './_line-height.css';
-@import './_radius.css';
-@import './_shadow.css';
-@import './_spacing.css';
-@import './_z-index.css';
+@import './_css/blur.css';
+@import './_css/breakpoint.css';
+@import './_css/color.css';
+@import './_css/font-family.css';
+@import './_css/font-size.css';
+@import './_css/font-weight.css';
+@import './_css/line-height.css';
+@import './_css/radius.css';
+@import './_css/shadow.css';
+@import './_css/spacing.css';
+@import './_css/z-index.css';
+
+@font-face {
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: extra-condensed normal;
+  src: url('../../assets/fonts/geist-variable.woff2') format('woff2-variations');
+  font-family: 'Geist';
+  font-display: swap;
+}
+
+@font-face {
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: extra-condensed normal;
+  src: url('../../assets/fonts/geist-mono-variable.woff2') format('woff2-variations');
+  font-family: 'Geist Mono';
+  font-display: swap;
+}

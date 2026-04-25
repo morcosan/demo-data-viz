@@ -16,7 +16,7 @@ export default function RootLayout({ children }: ReactProps) {
         <Providers>
           <AppNav appLogo={AppLogo} navMenu={NavMenu}>
             <ErrorBoundary>
-              <div className={cx('relative flex h-full w-full', 'lg:pt-xs-7 lg:px-sm-0')}>{children}</div>
+              <div className={cx('relative flex h-full w-full', 'lg:pt-xs-7 lg:pb-xs-5 lg:px-sm-0')}>{children}</div>
             </ErrorBoundary>
           </AppNav>
         </Providers>

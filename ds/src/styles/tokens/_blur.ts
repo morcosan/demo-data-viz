@@ -1,4 +1,4 @@
-import type { DesignTokenGroup } from './__types'
+import type { DesignTokenGroup } from './_utils/types'
 
 export const TOKENS__BLUR = {
   xs: { $value: '1px' },
