@@ -90,7 +90,7 @@ export const DesktopNav = (props: Props) => {
       <div className={isCollapsed || isPinned || false ? 'hidden' : 'absolute-overlay z-navbar backdrop-blur-subtle'} />
 
       {/* SIDEBAR WRAPPER */}
-      <div className="relative" style={isPinned ? expandedStyle : collapsedStyle}>
+      <div className="relative" style={isPinned ? expandedStyle : collapsedStyle} data-testid="sidebar">
         {/* FUNCTIONAL OVERLAY */}
         <div
           className={cx('absolute-overlay z-tooltip', !isCollapsed && 'hidden')}
@@ -116,6 +116,7 @@ export const DesktopNav = (props: Props) => {
             tooltip={isPinned ? t('core.action.unpinNavMenu') : t('core.action.pinNavMenu')}
             size="sm"
             className={cx('right-xs-2 top-xs-2 absolute!', isCollapsed && 'hidden!')}
+            data-testid="pin-button"
             onClick={() => handlePinClick(!isPinned)}
           >
             <PinSvg className={cx('h-xs-5', pinColorClass)} />

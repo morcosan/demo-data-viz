@@ -38,6 +38,7 @@ const meta: Meta = {
       invalid: false,
       className: '',
       style: {},
+      'data-prop': '',
     },
     events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
     inlineRadios: ['variant', 'size'],

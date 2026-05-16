@@ -2,20 +2,26 @@ import { type NextConfig } from 'next'
 import path from 'node:path'
 import { createBuildNumber } from '../ds/dist/scripts/utilities.ts'
 
-const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
+const env = process.env
+const IS_LOCAL = env.USE_LOCAL === 'true'
+const BASE_PATH = (IS_LOCAL ? env.LOCAL__BASE_PATH : env.PUBLIC__BASE_PATH) || ''
+const EUROSTAT_BASE_URL = (IS_LOCAL ? env.LOCAL__EUROSTAT_BASE_URL : env.PUBLIC__EUROSTAT_BASE_URL) || ''
+const OUT_DIR = env.NODE_ENV === 'development' ? undefined : env.LOCAL__APP_OUT_DIR
 const BUILD_NUMBER = createBuildNumber()
 
 const nextConfig: NextConfig = {
   output: 'export',
+  distDir: OUT_DIR,
   basePath: BASE_PATH,
   assetPrefix: BASE_PATH,
   env: {
     ENV__BASE_PATH: BASE_PATH,
     ENV__BUILD_NUMBER: BUILD_NUMBER,
-    ENV__EUROSTAT_BASE_URL: process.env.NEXT_PUBLIC__EUROSTAT_BASE_URL || '',
+    ENV__EUROSTAT_BASE_URL: EUROSTAT_BASE_URL,
   },
   compiler: { emotion: true },
   reactStrictMode: false, // StrictMode is added manually
+  devIndicators: { position: 'bottom-right' },
 
   turbopack: {
     root: path.resolve(__dirname, '..'), // Monorepo root

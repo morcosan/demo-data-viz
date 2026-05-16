@@ -5,7 +5,7 @@ import { baseConfig } from '../.config/base-eslint.config.ts'
 import { dsImports } from '../ds/dist/scripts/eslint.ts'
 
 export default defineConfig([
-  globalIgnores(['.next/**', 'out/**', 'out-sb/**', 'next-env.d.ts', '**/workers/*.js']),
+  globalIgnores(['.next/**', 'out-*/**', 'next-env.d.ts', '**/workers/*.js']),
   ...nextVitals, // Provides eslint-plugin-import
   ...nextTs,
   {

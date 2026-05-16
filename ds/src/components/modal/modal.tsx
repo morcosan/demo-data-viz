@@ -3,6 +3,7 @@
 import { useId } from 'react'
 import { CloseSvg } from '../../assets/icons'
 import { useI18nService } from '../../services/i18n-service'
+import { useDataProps } from '../../utilities/react-utils'
 import { Button } from '../button/button'
 import { IconButton } from '../icon-button/icon-button'
 import { type ModalProps } from './_types'
@@ -23,10 +24,11 @@ export const Modal = (props: ModalProps) => {
     stackIndex,
     width,
   })
+  const dataProps = useDataProps(props)
   const modalId = useId()
 
   return (
-    <div css={cssRoot}>
+    <div css={cssRoot} {...dataProps}>
       {/* OVERLAY */}
       <div css={cssOverlay} onClick={() => !noDismiss && onClose?.()} />
 

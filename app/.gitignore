@@ -39,15 +39,25 @@ lerna-debug.log*
 next-env.d.ts
 /public/workers
 
-# Output
-/.next
-/out
-/out-sb
-/build
-
 # Vercel
 .vercel
 
 # Storybook
 *storybook.log
 storybook-static
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Output
+/.next
+/out
+/out-app
+/out-sb
+/out-e2e
+/out-e2e-live
+/out-e2e-local

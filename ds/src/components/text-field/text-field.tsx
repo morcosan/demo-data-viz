@@ -2,7 +2,7 @@
 
 import '@mantine/core/styles/Input.css'
 import { useCallback, useEffect, useRef } from 'react'
-import { useRefHandle } from '../../utilities/react-utils'
+import { useDataProps, useRefHandle } from '../../utilities/react-utils'
 import { Keyboard } from '../../utilities/various-utils'
 import { type InputElement, type TextFieldProps } from './_types'
 import { useStyles } from './_use-styles'
@@ -37,6 +37,7 @@ export const TextField = (props: TextFieldProps) => {
     value,
     variant = 'default',
   } = props
+  const dataProps = useDataProps(props)
   const inputRef = useRef<InputElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const isNoop = Boolean(disabled || readonly)
@@ -128,7 +129,7 @@ export const TextField = (props: TextFieldProps) => {
   }
 
   return (
-    <div ref={wrapperRef} css={cssRoot} className={className} style={style}>
+    <div ref={wrapperRef} css={cssRoot} className={className} style={style} {...dataProps}>
       {Boolean(prefix) && <div css={cssPrefix}>{prefix}</div>}
 
       {multiline ? <textarea rows={minRowsProp} {...bindings} /> : <input type="text" {...bindings} />}

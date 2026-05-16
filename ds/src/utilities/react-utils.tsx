@@ -50,5 +50,9 @@ const useRefHandle = <T,>(ref: Ref<T> | undefined, nodeRef: NodeRef, handle: Par
   )
 }
 
+const useDataProps = (props: HtmlDataProps) => {
+  return Object.fromEntries(Object.entries(props).filter(([key]) => key.startsWith('data-')))
+}
+
 // eslint-disable-next-line react-refresh/only-export-components
-export { HocComposer, useDefaults, useRefHandle, type HOC }
+export { HocComposer, useDataProps, useDefaults, useRefHandle, type HOC }

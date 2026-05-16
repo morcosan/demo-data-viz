@@ -74,5 +74,5 @@ const useVirtualScroll = ({ rowCount, colCount, itemHeight, itemWidth }: Props) 
   }
 }
 
-export { type VirtualItem } from '@tanstack/virtual-core'
+export { type VirtualItem } from '@tanstack/react-virtual'
 export { useVirtualScroll }

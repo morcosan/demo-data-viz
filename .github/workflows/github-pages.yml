@@ -43,21 +43,30 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-deps
 
-      - name: Install DS Playwright browsers
+      - name: (DS) Install Playwright browsers
         run: cd ds && pnpm exec playwright install chromium
 
-      - name: Test DS Storybook
-        run: | # First attempt fails due to Vitest/Storybook issues
-          cd ds
-          pnpm run docs--test || pnpm run docs--test || exit 1
+      - name: (App) Install Playwright browsers
+        run: cd app && pnpm exec playwright install chromium firefox webkit --with-deps
 
-      - name: Install app Playwright browsers
-        run: cd app && pnpm exec playwright install chromium
+      - name: (DS) Test Storybook
+        run: cd ds && pnpm run docs--test || pnpm run docs--test # First attempt fails due to Vitest/Storybook issues
 
-      - name: Test app Storybook
-        run: | # First attempt fails due to Vitest/Storybook issues
-          cd app
-          pnpm run sb--test || pnpm run sb--test || exit 1
+      - name: (App) Test Storybook
+        run: cd app && pnpm run sb--test || pnpm run sb--test # First attempt fails due to Vitest/Storybook issues
+
+      - name: (App) Test e2e locally
+        run: cd app && pnpm run app--build && pnpm run app--test--ci-local
+        env:
+          USE_LOCAL: "true"
+
+      - name: Upload e2e report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: out-e2e-local
+          path: app/out-e2e-local
+          retention-days: 1
 
   build:
     name: Building
@@ -79,14 +88,22 @@ jobs:
       - name: Build app Storybook
         run: cd app && pnpm run sb--build
 
+      - name: Download e2e report
+        uses: actions/download-artifact@v4
+        with:
+          name: out-e2e-local
+          path: app/out-e2e-local
+
       - name: Prepare deployment directory
         run: |
           mkdir -p _deploy
-          cp -r app/out/* _deploy/
+          cp -r app/out-app/* _deploy/
           mkdir -p _deploy/storybook
           cp -r app/out-sb/* _deploy/storybook/
+          mkdir -p _deploy/e2e-tests
+          cp -r app/out-e2e-local/* _deploy/e2e-tests/
           mkdir -p _deploy/design-system
-          cp -r ds/out/* _deploy/design-system/
+          cp -r ds/out-docs/* _deploy/design-system/
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
@@ -107,3 +124,20 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  validate:
+    name: Validating
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Install Playwright browsers
+        run: cd app && pnpm exec playwright install chromium --with-deps
+
+      - name: Test e2e live
+        run: cd app && pnpm run app--test--ci-live

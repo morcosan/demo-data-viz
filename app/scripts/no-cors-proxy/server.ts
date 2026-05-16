@@ -1,8 +1,9 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http'
 import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
+import { initEnv } from '../env.ts'
 
-const PORT = 8666
+const PORT = Number(initEnv().LOCAL__EUROSTAT_PORT)
 
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   // CORS (allow everything)

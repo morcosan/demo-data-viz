@@ -1,3 +1,9 @@
 packages:
   - "app"
   - "ds"
+minimumReleaseAge: 20160 # 2 weeks
+allowBuilds:
+  "@parcel/watcher": true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

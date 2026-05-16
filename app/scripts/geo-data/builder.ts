@@ -1,16 +1,18 @@
 import i18nIso from 'i18n-iso-countries'
 import { writeFileSync } from 'node:fs'
-import path from 'node:path'
+import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { type GeoCity } from '../../src/shared/utils/geo-data/types.ts'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const worldMapUrl =
   'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
 const citiesUrl =
   'https://raw.githubusercontent.com/martynafford/natural-earth-geojson/master/10m/cultural/ne_10m_populated_places.json'
 
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
-const dirPath = path.join(dirname, '../../src/shared/utils/geo-data')
+const dirPath = path.join(__dirname, '../../src/shared/utils/geo-data')
 const worldMapFile = path.join(dirPath, 'world-map.json')
 const citiesFile = path.join(dirPath, 'cities.json')
 

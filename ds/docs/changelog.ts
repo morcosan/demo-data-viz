@@ -1,5 +1,15 @@
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: '0.10.0',
+    date: '16-05-2026',
+    changes: {
+      components: ['Added `data-*` props to all components'],
+      utils: ['Added `useDataProps` utility hook', 'Added `data-*` global type definition for html elements'],
+      docs: ['Added docs for `useRefHandle` and `useDataProps`'],
+      internal: ['Refactored `__dirname` in config files'],
+    },
+  },
+  {
     version: '0.9.0',
     date: '25-04-2026',
     changes: {

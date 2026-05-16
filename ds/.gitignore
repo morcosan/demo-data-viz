@@ -33,7 +33,7 @@ lerna-debug.log*
 *.pem
 
 # Output
-/out
+/out-docs
 
 # Storybook
 *storybook.log

@@ -1,3 +1,4 @@
+// @ts-ignore
 type Config = import('eslint').Linter.Config
 
 const baseConfig: Config[] = [
@@ -22,7 +23,7 @@ const baseConfig: Config[] = [
     },
   },
   {
-    files: ['**/*.d.ts', './*.ts', '.storybook/main.ts', '**/scripts/**/*.ts'],
+    files: ['**/*.d.ts', '**/*.config.ts', './*.ts', '.storybook/main.ts', '**/scripts/**/*.ts'],
     rules: {
       'import/extensions': ['error', 'ignorePackages', { ts: 'always' }],
     },

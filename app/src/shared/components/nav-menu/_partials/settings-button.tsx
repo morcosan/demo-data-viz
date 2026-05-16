@@ -14,6 +14,7 @@ export const SettingsButton = ({ iconWidth, collapsed, highlight, onClick, class
       variant="item-text-default"
       size="lg"
       className={cx('w-full', className)}
+      data-testid="settings-button"
       highlight={highlight}
       onClick={onClick}
     >

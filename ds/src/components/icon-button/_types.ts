@@ -13,7 +13,7 @@ export type IconButtonVariant =
   | 'ghost-secondary'
   | 'ghost-danger'
 
-export interface IconButtonProps {
+export interface IconButtonProps extends HtmlDataProps {
   /**
    * Slots
    */

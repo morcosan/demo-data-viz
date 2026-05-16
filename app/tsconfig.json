@@ -2,7 +2,8 @@
   "files": [],
   "references": [
     { "path": "./tsconfig-app.json" },
-    { "path": "./tsconfig-sb.json" }, // Must come before node config for Webstorm to work
-    { "path": "./tsconfig-node.json" }
+    { "path": "./tsconfig-sb.json" },
+    { "path": "./tsconfig-tests.json" },
+    { "path": "./tsconfig-node.json" } // Must be last for Webstorm to work
   ]
 }

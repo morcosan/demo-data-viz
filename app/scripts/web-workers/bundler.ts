@@ -1,11 +1,13 @@
 import { build, type BuildOptions, context, type OnResolveArgs, type Plugin } from 'esbuild'
 import { glob } from 'node:fs/promises'
-import path from 'node:path'
+import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
-const srcPath = path.join(dirname, '../../src')
-const dsPath = path.join(dirname, '../../../ds/dist')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const srcPath = path.join(__dirname, '../../src')
+const dsPath = path.join(__dirname, '../../../ds/dist')
 
 const aliasPlugin: Plugin = {
   name: 'alias-plugin',

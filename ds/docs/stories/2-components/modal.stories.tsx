@@ -19,6 +19,7 @@ const meta: Meta = {
       noDismiss: false,
       noClose: false,
       noFooter: false,
+      'data-prop': '',
     },
     events: ['onOpened', 'onClose', 'onClosed'],
     inlineRadios: ['width', 'height'],

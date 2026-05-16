@@ -20,6 +20,7 @@ const meta: Meta = {
       linkType: 'internal',
       className: '',
       style: {},
+      'data-prop': '',
     },
     events: ['onClick'],
     inlineRadios: ['size', 'variant', 'linkType'],
