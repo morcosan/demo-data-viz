@@ -24,6 +24,7 @@
       "datasetId": "Dataset ID",
       "details": "Details",
       "dsStorybook": "Design System",
+      "e2eTests": "E2E Test Report",
       "githubRepo": "GitHub Repo",
       "lastUpdate": "Last update",
       "navigationBar": "Navigation bar",

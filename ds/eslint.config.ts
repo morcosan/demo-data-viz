@@ -10,7 +10,7 @@ import { baseConfig } from '../.config/base-eslint.config.ts'
 import { dsImports } from './dist/scripts/eslint.ts'
 
 export default defineConfig([
-  globalIgnores(['out/**']),
+  globalIgnores(['out-docs/**']),
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

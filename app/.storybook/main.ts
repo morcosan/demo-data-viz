@@ -1,19 +1,21 @@
 import { type StorybookConfig } from '@storybook/nextjs-vite'
-import path from 'node:path'
+import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import remarkGfm from 'remark-gfm'
 import { type InlineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import { createBuildNumber, getDsVersion } from '../../ds/dist/scripts/utilities.ts'
 
-const BASE_PATH = process.env.NEXT_PUBLIC__BASE_PATH || ''
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
-const srcPath = path.join(dirname, '../src')
-const dsPath = path.join(dirname, '../../ds/dist')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const BASE_PATH = process.env.PUBLIC__BASE_PATH || ''
+const srcPath = path.join(__dirname, '../src')
+const dsPath = path.join(__dirname, '../../ds/dist')
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.@(mdx|stories.@(js|jsx|mjs|ts|tsx))'], // Must be a single regex
-  previewAnnotations: (entry = []) => [...entry, path.resolve(dirname, './preview/preview.tsx')],
+  previewAnnotations: (entry = []) => [...entry, path.resolve(__dirname, './preview/preview.tsx')],
   addons: [
     '@storybook/addon-vitest',
     '@storybook/addon-a11y',

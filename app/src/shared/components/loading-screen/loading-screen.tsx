@@ -48,7 +48,12 @@ export const LoadingScreen = (props: Props) => {
       </div>
 
       {/* OVERLAY */}
-      <div className="fixed-overlay flex-center z-tooltip bg-color-bg-page" css={cssOverlay} aria-hidden={isReady}>
+      <div
+        className="fixed-overlay flex-center z-tooltip bg-color-bg-page"
+        css={cssOverlay}
+        aria-hidden={isReady}
+        data-testid="loading-screen"
+      >
         <LogoSvg className="h-1/4 w-1/3 animate-pulse" aria-label={ariaLabel} />
       </div>
     </>

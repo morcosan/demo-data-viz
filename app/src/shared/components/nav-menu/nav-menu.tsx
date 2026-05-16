@@ -113,7 +113,7 @@ export const NavMenu = (props: NavMenuProps) => {
               className="mt-xs-1"
               onClick={handlePopupToggle}
             />
-            <div className={settingsMenuClass}>
+            <div className={settingsMenuClass} data-testid="settings-menu">
               <SettingsMenu closeMenuFn={closeMenu} />
             </div>
           </div>

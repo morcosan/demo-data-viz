@@ -1,6 +1,7 @@
 name: PR Status Checks
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -35,18 +36,19 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-deps
 
-      - name: Install DS Playwright browsers
+      - name: (DS) Install Playwright browsers
         run: cd ds && pnpm exec playwright install chromium
 
-      - name: Test DS Storybook
-        run: | # First attempt fails due to Vitest/Storybook issues
-          cd ds
-          pnpm run docs--test || pnpm run docs--test || exit 1
+      - name: (App) Install Playwright browsers
+        run: cd app && pnpm exec playwright install chromium firefox webkit --with-deps
 
-      - name: Install app Playwright browsers
-        run: cd app && pnpm exec playwright install chromium
+      - name: (DS) Test Storybook
+        run: cd ds && pnpm run docs--test || pnpm run docs--test # First attempt fails due to Vitest/Storybook issues
 
-      - name: Test app Storybook
-        run: | # First attempt fails due to Vitest/Storybook issues
-          cd app
-          pnpm run sb--test || pnpm run sb--test || exit 1
+      - name: (App) Test Storybook
+        run: cd app && pnpm run sb--test || pnpm run sb--test # First attempt fails due to Vitest/Storybook issues
+
+      - name: (App) Test e2e locally
+        run: cd app && pnpm run app--build && pnpm run app--test--ci-local
+        env:
+          USE_LOCAL: "true"

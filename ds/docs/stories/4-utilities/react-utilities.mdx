@@ -1,5 +1,4 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import { DocsCodeBlock } from '@ds/docs/core'
 
 <Meta title="Utilities / React Utilities" />
 
@@ -7,9 +6,11 @@ import { DocsCodeBlock } from '@ds/docs/core'
 
 React utilities provide reusable hooks and components for common React patterns. <br/>
 
-| Utility                     | Description                                                            |
-| --------------------------- | ---------------------------------------------------------------------- |
-| [HocComposer](#hoccomposer) | Component for composing multiple Higher-Order Components declaratively |
+| Utility                       | Description                                                                |
+| ----------------------------- | -------------------------------------------------------------------------- |
+| [HocComposer](#hoccomposer)   | Component for composing multiple Higher-Order Components declaratively     |
+| [useRefHandle](#userefhandle) | Hook for exposing ref attribute based on existing node with custom methods |
+| [useDataProps](#usedataprops) | Hook for extracting `data-*` props from given props                        |
 
 <br />
 
@@ -48,3 +49,13 @@ const App = ({ children }) => (
 - HOCs are applied from right to left (last HOC in array wraps innermost)
 - Useful for organizing multiple context providers in a clean, maintainable way
 - Props are spread onto each HOC component
+
+## useRefHandle
+
+Hook for exposing a ref handle on an existing DOM node with additional custom methods.
+Useful when you need to extend a component's ref API — for example, adding imperative methods alongside native DOM access.
+
+## useDataProps
+
+Hook for extracting `data-*` attributes from a props object.
+Useful when a component needs to forward `data-*` attributes to a DOM element while keeping its own typed props separate.

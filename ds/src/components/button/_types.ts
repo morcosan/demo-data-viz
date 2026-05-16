@@ -17,7 +17,7 @@ export type ButtonVariant =
   | 'item-text-danger'
 export type ButtonHighlight = 'default' | 'pressed' | 'selected'
 
-export interface ButtonProps {
+export interface ButtonProps extends HtmlDataProps {
   /**
    * Slots
    */

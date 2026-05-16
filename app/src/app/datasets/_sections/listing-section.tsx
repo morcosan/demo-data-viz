@@ -75,7 +75,11 @@ export const ListingSection = ({ className, onClickDataset }: Props) => {
           <EmptyState variant="error">{t('dataViz.error.fetchDatasets')}</EmptyState>
         </div>
       ) : (
-        <div ref={vScrollerRef} className="px-scrollbar-w py-a11y-scrollbar flex-1 overflow-y-auto">
+        <div
+          ref={vScrollerRef}
+          className="px-scrollbar-w py-a11y-scrollbar flex-1 overflow-y-auto"
+          data-testid="dataset-listing"
+        >
           <ul className="-mb-xs-1 relative" style={{ height: vTotalHeight }}>
             {vRowItems.map((vItem: VirtualItem) => (
               <DatasetItem

@@ -2,12 +2,9 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import react from '@vitejs/plugin-react'
 import { playwright } from '@vitest/browser-playwright'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import { createBuildNumber, getDsVersion } from './dist/scripts/utilities.ts'
-
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [react({ jsxImportSource: '@emotion/react' }), svgr({ include: '**/*.svgr' })],
@@ -15,7 +12,7 @@ export default defineConfig({
   resolve: {
     // Must use "postcss-url": { url: "rebase" } to resolve URLs relative to CSS files
     alias: {
-      '@ds': path.resolve(dirname, './dist'),
+      '@ds': path.resolve(__dirname, './dist'),
     },
   },
 
@@ -24,18 +21,19 @@ export default defineConfig({
     ENV__DS_VERSION: JSON.stringify(getDsVersion()),
   },
 
+  // Vitest config
   test: {
     projects: [
       {
         extends: true,
-        plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
+        plugins: [storybookTest({ configDir: path.join(__dirname, '.storybook') })],
         test: {
           name: 'storybook',
-          setupFiles: ['.storybook/preview/vitest.setup.ts'],
+          setupFiles: ['./.storybook/preview/vitest.setup.ts'],
           browser: {
             enabled: true,
-            headless: true,
             provider: playwright({}),
+            headless: true,
             instances: [{ browser: 'chromium' }],
           },
         },

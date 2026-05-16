@@ -139,6 +139,7 @@ export const DetailsSection = ({ onClickBack }: Props) => {
         ref={fullscreen.elemRef}
         className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')}
         style={fullscreen.elemStyle}
+        data-testid="dataset-details"
       >
         {/* HEADER */}
         <div className="flex">

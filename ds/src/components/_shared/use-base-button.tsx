@@ -3,6 +3,7 @@ import { Loader } from '@mantine/core'
 import '@mantine/core/styles/Loader.css'
 import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
+import { useDataProps } from '../../utilities/react-utils'
 import { type LinkType } from './types'
 import { useClickable } from './use-clickable'
 
@@ -35,7 +36,7 @@ const VARIANTS_SOLID: Variant[] = ['solid-primary', 'solid-secondary', 'solid-da
 const VARIANTS_SUBTLE: Variant[] = ['text-subtle']
 const VARIANTS_TEXT: Variant[] = ['text-default', 'text-subtle', 'text-danger', 'item-text-default', 'item-text-danger']
 
-interface BaseButtonProps {
+interface BaseButtonProps extends HtmlDataProps {
   // Slots
   children: ReactNode
   tooltip?: string
@@ -57,6 +58,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
   const { ariaDescription, children, className, highlight, loading, size, style, tooltip, variant } = props
   const { $color, $spacing } = useThemeService()
   const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
+  const dataProps = useDataProps(props)
 
   const isVDanger = VARIANTS_DANGER.includes(variant)
   const isVDefault = VARIANTS_DEFAULT.includes(variant)
@@ -192,6 +194,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     style: style,
     'aria-description': ariaDescription,
     css: cssBaseButton,
+    ...dataProps,
   }
 
   const spinnerSize = (() => {

@@ -1,12 +1,15 @@
 'use client'
 
+import { useDataProps } from '@ds/core'
 import { useImperativeHandle, useRef } from 'react'
 
 interface Handle {
   getBoundingClientRect: () => DOMRect | undefined
 }
 
-export const LayoutPane = ({ ref, children, className, style }: ReactProps<Handle>) => {
+export const LayoutPane = (props: ReactProps<Handle>) => {
+  const { ref, children, className, style } = props
+  const dataProps = useDataProps(props)
   const innerRef = useRef<HTMLDivElement>(null)
 
   useImperativeHandle(ref, () => ({
@@ -14,7 +17,7 @@ export const LayoutPane = ({ ref, children, className, style }: ReactProps<Handl
   }))
 
   return (
-    <div ref={innerRef} className={cx('bg-color-bg-pane rounded-md shadow-xs', className)} style={style}>
+    <div ref={innerRef} className={cx('bg-color-bg-pane rounded-md shadow-xs', className)} style={style} {...dataProps}>
       {children}
     </div>
   )

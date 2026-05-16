@@ -1,13 +1,15 @@
 import { rmSync } from 'fs'
 import _ from 'lodash'
-import path from 'node:path'
+import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import StyleDictionary from 'style-dictionary'
 import { TOKENS } from '../../src/styles/tokens/index.ts'
 import { FORMAT_NAME, formatTokens } from './_format.ts'
 
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
-const outDir = path.join(dirname, '../../src/styles/tokens/_css')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const outDir = path.join(__dirname, '../../src/styles/tokens/_css')
 
 // Clear folder
 rmSync(outDir, { recursive: true, force: true })

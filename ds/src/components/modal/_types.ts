@@ -3,7 +3,7 @@ import { type ReactNode } from 'react'
 export type ModalWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
 export type ModalHeight = 'fit' | 'full'
 
-export interface ModalProps {
+export interface ModalProps extends HtmlDataProps {
   /**
    * Slots
    */
