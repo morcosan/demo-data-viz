@@ -2,7 +2,7 @@
 
 import { BarChart, type BarChartData, EmptyState } from '@app-components'
 import { useTranslation } from '@app-i18n'
-import { TOKENS } from '@ds/core'
+import { getTokenValue, TOKENS } from '@ds/core'
 import { useMemo } from 'react'
 import { useTableStore } from '../../_hooks/use-table-store'
 import { type ChartViewProps } from './types'
@@ -43,7 +43,7 @@ export const ChartView = (props: ChartViewProps) => {
       entryKey={indexKey}
       entryName={indexCol?.label || ''}
       entryFn={entryFn}
-      entryWidth={parseFloat(TOKENS.SPACING['lg-1'].$value)}
+      entryWidth={parseFloat(getTokenValue(TOKENS.SPACING, 'lg-1'))}
       chartSize="sm"
       sortKey={VALUE_KEY}
       sortDir="desc"

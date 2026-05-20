@@ -74,11 +74,11 @@ export const SelectField = (props: SelectFieldProps) => {
     style: style,
     classNames: {
       root: css`
-        ${cssField.styles}
+        ${fieldCss.styles}
       `,
       input: cx(clearable && !disabled && 'clearable', disabled && 'disabled'),
       dropdown: css`
-        ${cssDropdown.styles}
+        ${dropdownCss.styles}
       `,
     },
     clearButtonProps: { title: t('core.action.clearSelection') },
@@ -96,7 +96,7 @@ export const SelectField = (props: SelectFieldProps) => {
  * CSS
  */
 
-const cssField = css`
+const fieldCss = css`
   border-radius: var(--ds-radius-sm);
 
   & .mantine-Input-wrapper {
@@ -153,7 +153,7 @@ const cssField = css`
   }
 `
 
-const cssDropdown = css`
+const dropdownCss = css`
   z-index: var(--ds-z-index-dropdown) !important;
   box-shadow: var(--ds-shadow-md) !important;
   border: 1px solid var(--ds-color-border-subtle) !important;

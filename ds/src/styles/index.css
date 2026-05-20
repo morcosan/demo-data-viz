@@ -6,16 +6,17 @@
 @import './_link.css';
 @import './_scrollbar.css';
 
-:root {
-  background-color: var(--ds-color-bg-page);
-  color: var(--ds-color-text-default);
-}
-
 body {
   margin: 0 !important;
+  background-color: var(--ds-color-bg-page);
   padding: 0 !important;
   width: unset !important;
+  color: var(--ds-color-text-default);
   font-family: var(--ds-font-family-sans);
+}
+
+[data-color-theme] {
+  color: var(--ds-color-text-default);
 }
 
 hr {

@@ -11,8 +11,8 @@ export type { ButtonHighlight, ButtonProps, ButtonSize, ButtonVariant } from './
 /** Fundamental component for user actions and navigation */
 export const Button = (props: ButtonProps) => {
   const { highlight = 'default', linkHref, linkType = 'internal', size = 'md', variant = 'solid-primary' } = props
-  const { $fontSize, $fontWeight, $radius, $spacing } = useThemeService()
-  const { baseTokens, bindings, content, cssBaseButton, isVDefault, isVItem } = useBaseButton({
+  const { tokens } = useThemeService()
+  const { baseCssVars, bindings, content, buttonBaseCss, isVDefault, isVItem } = useBaseButton({
     ...props,
     highlight,
     linkType,
@@ -20,47 +20,47 @@ export const Button = (props: ButtonProps) => {
     variant,
   })
 
-  const tokens = {
-    ...baseTokens,
+  const cssVars = {
+    ...baseCssVars,
     paddingX: (() => {
       // Subtract border from padding
-      if (isVItem) return `calc(${$spacing['button-px-item']} - 1px)`
-      if (size === 'xs') return `calc(${$spacing['button-px-xs']} - 1px)`
-      if (size === 'sm') return `calc(${$spacing['button-px-sm']} - 1px)`
-      if (size === 'md') return `calc(${$spacing['button-px-md']} - 1px)`
-      if (size === 'lg') return `calc(${$spacing['button-px-lg']} - 1px)`
+      if (isVItem) return `calc(${tokens.spacing['button-px-item']} - 1px)`
+      if (size === 'xs') return `calc(${tokens.spacing['button-px-xs']} - 1px)`
+      if (size === 'sm') return `calc(${tokens.spacing['button-px-sm']} - 1px)`
+      if (size === 'md') return `calc(${tokens.spacing['button-px-md']} - 1px)`
+      if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
     })(),
-    borderRadius: size === 'lg' ? $radius['md'] : $radius['sm'],
-    fontWeight: isVItem && isVDefault ? $fontWeight['sm'] : $fontWeight['md'],
+    borderRadius: size === 'lg' ? tokens.radius['md'] : tokens.radius['sm'],
+    fontWeight: isVItem && isVDefault ? tokens.fontWeight['sm'] : tokens.fontWeight['md'],
     fontSize: (() => {
       if (isVItem) return 'unset'
-      if (size === 'xs') return $fontSize['xs']
-      if (size === 'sm') return $fontSize['sm']
-      if (size === 'md') return $fontSize['md']
-      if (size === 'lg') return $fontSize['lg']
+      if (size === 'xs') return tokens.fontSize['xs']
+      if (size === 'sm') return tokens.fontSize['sm']
+      if (size === 'md') return tokens.fontSize['md']
+      if (size === 'lg') return tokens.fontSize['lg']
     })(),
   }
 
-  const cssButton: CSSObject = {
-    ...cssBaseButton,
+  const buttonCss: CSSObject = {
+    ...buttonBaseCss,
     minWidth: 'unset',
-    padding: `0 ${tokens.paddingX}`,
-    borderRadius: tokens.borderRadius,
-    fontSize: tokens.fontSize,
-    fontWeight: tokens.fontWeight,
+    padding: `0 ${cssVars.paddingX}`,
+    borderRadius: cssVars.borderRadius,
+    fontSize: cssVars.fontSize,
+    fontWeight: cssVars.fontWeight,
 
     '&::before, &::after': {
-      ...(cssBaseButton['&::before, &::after'] as CSSObject),
-      borderRadius: tokens.borderRadius,
+      ...(buttonBaseCss['&::before, &::after'] as CSSObject),
+      borderRadius: cssVars.borderRadius,
     },
   }
 
   return linkHref ? (
-    <a {...bindings} css={cssButton}>
+    <a {...bindings} css={buttonCss}>
       {content}
     </a>
   ) : (
-    <button type="button" {...bindings} css={cssButton}>
+    <button type="button" {...bindings} css={buttonCss}>
       {content}
     </button>
   )

@@ -1,0 +1,87 @@
+import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
+import { DocsTokenCoding } from '@ds/docs/core'
+import { Meta } from '@storybook/addon-docs/blocks'
+
+export const primitiveTokens = Object.entries(TOKENS.Z_INDEX).filter(([, token]) => !token.ref)
+export const semanticTokens = Object.entries(TOKENS.Z_INDEX).filter(([, token]) => token.ref)
+export const tsSize = 'w-lg-4'
+export const twSize = 'w-md-6'
+export const cssSize = 'w-lg-4'
+
+{/* ---------------------------------------------------------------------------------------------------------------- */}
+
+<Meta title="Atomic tokens / Z-Index" />
+
+# Z-Index tokens
+
+## Semantic tokens
+
+<table className="docs">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Reference</th>
+      <th className="w-full">Value</th>
+      <th>Coding</th>
+    </tr>
+  </thead>
+  <tbody>
+    {semanticTokens.map(([name, token]) => (
+      <tr key={name}>
+        <td>
+          <pre>{name}</pre>
+        </td>
+        <td>
+          <pre>{token.ref}</pre>
+        </td>
+        <td>
+          <code>{getTokenValue(TOKENS.Z_INDEX, token.ref)}</code>
+        </td>
+        <td>
+          <DocsTokenCoding
+            tsVar={`tokens.zIndex['${name}']`}
+            tsSize={tsSize}
+            twVars={[`z-${name}`]}
+            twSize={twSize}
+            cssVar={`${CSS_PREFIX.Z_INDEX}${name}`}
+            cssSize={cssSize}
+          />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+## Primitive tokens
+
+<table className="docs">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th className="w-full">Value</th>
+      <th>Coding</th>
+    </tr>
+  </thead>
+  <tbody>
+    {primitiveTokens.map(([name, token]) => (
+      <tr key={name}>
+        <td>
+          <pre>{name}</pre>
+        </td>
+        <td>
+          <code>{token.value}</code>
+        </td>
+        <td>
+          <DocsTokenCoding
+            tsVar={`tokens.zIndex['${name}']`}
+            tsSize={tsSize}
+            twVars={[`z-${name.replace('z-index-', '')}`]}
+            twSize={twSize}
+            cssVar={`${CSS_PREFIX.Z_INDEX}${name}`}
+            cssSize={cssSize}
+          />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>

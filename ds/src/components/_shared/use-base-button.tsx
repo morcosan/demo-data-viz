@@ -56,7 +56,7 @@ interface BaseButtonProps extends HtmlDataProps {
 
 export const useBaseButton = (props: BaseButtonProps) => {
   const { ariaDescription, children, className, highlight, loading, size, style, tooltip, variant } = props
-  const { $color, $spacing } = useThemeService()
+  const { tokens } = useThemeService()
   const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
   const dataProps = useDataProps(props)
 
@@ -70,99 +70,99 @@ export const useBaseButton = (props: BaseButtonProps) => {
   const isVSubtle = VARIANTS_SUBTLE.includes(variant)
   const isVText = VARIANTS_TEXT.includes(variant)
 
-  const baseTokens = {
+  const baseCssVars = {
     size: (() => {
-      if (size === 'xs') return $spacing['button-h-xs']
-      if (size === 'sm') return $spacing['button-h-sm']
-      if (size === 'md') return $spacing['button-h-md']
-      if (size === 'lg') return $spacing['button-h-lg']
+      if (size === 'xs') return tokens.spacing['button-h-xs']
+      if (size === 'sm') return tokens.spacing['button-h-sm']
+      if (size === 'md') return tokens.spacing['button-h-md']
+      if (size === 'lg') return tokens.spacing['button-h-lg']
       return ''
     })(),
     bgColor: (() => {
       if (isVSolid) {
-        if (isNoop) return $color['text-subtle']
-        if (isVPrimary) return $color['primary-button-bg']
-        if (isVSecondary) return $color['secondary-button-bg']
-        if (isVDanger) return $color['danger-button-bg']
+        if (isNoop) return tokens.color['text-subtle']
+        if (isVPrimary) return tokens.color['primary-button-bg']
+        if (isVSecondary) return tokens.color['secondary-button-bg']
+        if (isVDanger) return tokens.color['danger-button-bg']
       }
       return 'transparent'
     })(),
     borderColor: (() => {
       if (isVGhost) {
-        if (isNoop) return $color['text-subtle']
-        if (isVPrimary) return $color['primary-page-text']
-        if (isVSecondary) return $color['secondary-page-text']
-        if (isVDanger) return $color['danger-page-text']
+        if (isNoop) return tokens.color['text-subtle']
+        if (isVPrimary) return tokens.color['primary-page-text']
+        if (isVSecondary) return tokens.color['secondary-page-text']
+        if (isVDanger) return tokens.color['danger-page-text']
       }
       if (isVSolid) {
-        if (isNoop) return $color['text-subtle']
-        if (isVPrimary) return $color['primary-button-bg']
-        if (isVSecondary) return $color['secondary-button-bg']
-        if (isVDanger) return $color['danger-button-bg']
+        if (isNoop) return tokens.color['text-subtle']
+        if (isVPrimary) return tokens.color['primary-button-bg']
+        if (isVSecondary) return tokens.color['secondary-button-bg']
+        if (isVDanger) return tokens.color['danger-button-bg']
       }
       return 'transparent'
     })(),
     textColor: (() => {
       if (isVSolid) {
-        if (isNoop) return $color['white']
-        if (isVPrimary) return $color['primary-button-text']
-        if (isVSecondary) return $color['secondary-button-text']
-        if (isVDanger) return $color['danger-button-text']
+        if (isNoop) return tokens.color['white']
+        if (isVPrimary) return tokens.color['primary-button-text']
+        if (isVSecondary) return tokens.color['secondary-button-text']
+        if (isVDanger) return tokens.color['danger-button-text']
       }
-      if (isNoop) return $color['text-subtle']
+      if (isNoop) return tokens.color['text-subtle']
       if (isVGhost) {
-        if (isVPrimary) return $color['primary-page-text']
-        if (isVSecondary) return $color['secondary-page-text']
-        if (isVDanger) return $color['danger-page-text']
+        if (isVPrimary) return tokens.color['primary-page-text']
+        if (isVSecondary) return tokens.color['secondary-page-text']
+        if (isVDanger) return tokens.color['danger-page-text']
       }
-      if (isVDanger) return $color['danger-page-text']
-      if (isVDefault) return $color['text-default']
-      if (isVSubtle) return $color['text-subtle']
+      if (isVDanger) return tokens.color['danger-page-text']
+      if (isVDefault) return tokens.color['text-default']
+      if (isVSubtle) return tokens.color['text-subtle']
       return ''
     })(),
     hoverBgColor: (() => {
       if (isNoop) return 'transparent'
       if (highlight === 'default') {
-        if (isVText || isVGhost) return $color['hover-text-default']
-        if (isVPrimary) return $color['primary-hover-default']
-        if (isVSecondary) return $color['secondary-hover-default']
-        if (isVDanger) return $color['danger-hover-default']
+        if (isVText || isVGhost) return tokens.color['hover-text-default']
+        if (isVPrimary) return tokens.color['primary-hover-default']
+        if (isVSecondary) return tokens.color['secondary-hover-default']
+        if (isVDanger) return tokens.color['danger-hover-default']
       }
       return ''
     })(),
     pressBgColor: (() => {
       if (isNoop || highlight === 'selected') return 'transparent'
       if (isPressed || highlight === 'pressed') {
-        if (isVText || isVGhost) return $color['hover-text-pressed']
-        if (isVPrimary) return $color['primary-hover-pressed']
-        if (isVSecondary) return $color['secondary-hover-pressed']
-        if (isVDanger) return $color['danger-hover-pressed']
+        if (isVText || isVGhost) return tokens.color['hover-text-pressed']
+        if (isVPrimary) return tokens.color['primary-hover-pressed']
+        if (isVSecondary) return tokens.color['secondary-hover-pressed']
+        if (isVDanger) return tokens.color['danger-hover-pressed']
       }
       return ''
     })(),
     pressTransform: isPressed && highlight === 'default' ? 'translateY(1px)' : 'unset',
-    outlineOffset: `calc(1px + ${$spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
+    outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
   }
 
-  const cssBaseButton: CSSObject = {
+  const buttonBaseCss: CSSObject = {
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
     lineHeight: 1,
-    height: baseTokens.size,
-    minHeight: baseTokens.size,
-    border: `1px solid ${baseTokens.borderColor}`,
-    backgroundColor: baseTokens.bgColor,
-    opacity: baseTokens.opacity,
-    color: baseTokens.textColor,
+    height: baseCssVars.size,
+    minHeight: baseCssVars.size,
+    border: `1px solid ${baseCssVars.borderColor}`,
+    backgroundColor: baseCssVars.bgColor,
+    opacity: baseCssVars.opacity,
+    color: baseCssVars.textColor,
     fill: 'currentColor',
     stroke: 'currentColor',
-    outlineOffset: baseTokens.outlineOffset,
-    cursor: baseTokens.cursor,
+    outlineOffset: baseCssVars.outlineOffset,
+    cursor: baseCssVars.cursor,
     verticalAlign: 'middle',
-    transform: baseTokens.pressTransform,
+    transform: baseCssVars.pressTransform,
 
     '&::before, &::after': {
       content: `''`,
@@ -172,11 +172,11 @@ export const useBaseButton = (props: BaseButtonProps) => {
       right: '-1px',
       bottom: '-1px',
     },
-    '&::before': isVSolid && !isNoop ? { border: `1px solid ${$color['black-alpha-3']}` } : {},
-    '&::after': { backgroundColor: `${baseTokens.pressBgColor} !important` },
-    '&:hover::after, &:focus::after': { backgroundColor: baseTokens.hoverBgColor },
+    '&::before': isVSolid && !isNoop ? { border: `1px solid ${tokens.color['black-alpha-3']}` } : {},
+    '&::after': { backgroundColor: `${baseCssVars.pressBgColor} !important` },
+    '&:hover::after, &:focus::after': { backgroundColor: baseCssVars.hoverBgColor },
   }
-  const cssChildren: CSSObject = {
+  const childrenCss: CSSObject = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: isVItem ? 'unset' : 'center',
@@ -193,18 +193,18 @@ export const useBaseButton = (props: BaseButtonProps) => {
     className: className,
     style: style,
     'aria-description': ariaDescription,
-    css: cssBaseButton,
+    css: buttonBaseCss,
     ...dataProps,
   }
 
   const spinnerSize = (() => {
-    if (size === 'xs') return $spacing['xs-5']
-    if (size === 'sm') return $spacing['xs-7']
-    if (size === 'md') return $spacing['xs-9']
-    if (size === 'lg') return $spacing['sm-0']
+    if (size === 'xs') return tokens.spacing['xs-5']
+    if (size === 'sm') return tokens.spacing['xs-7']
+    if (size === 'md') return tokens.spacing['xs-9']
+    if (size === 'lg') return tokens.spacing['sm-0']
     return ''
   })()
-  const cssSpinner: CSSObject = {
+  const spinnerCss: CSSObject = {
     position: 'absolute',
     inset: 0,
     display: 'flex',
@@ -213,28 +213,28 @@ export const useBaseButton = (props: BaseButtonProps) => {
     pointerEvents: 'none',
     userSelect: 'none',
   }
-  const cssSpinnerIcon: CSSObject = {
+  const spinnerIconCss: CSSObject = {
     '--loader-size': `${spinnerSize} !important`,
-    '--loader-color': `${isVSolid ? $color['text-inverse'] : $color['text-subtle']} !important`,
+    '--loader-color': `${isVSolid ? tokens.color['text-inverse'] : tokens.color['text-subtle']} !important`,
   }
 
   const content = (
     <>
-      <span css={cssChildren}>{children}</span>
+      <span css={childrenCss}>{children}</span>
 
       {Boolean(loading) && (
-        <span css={cssSpinner}>
-          <Loader css={cssSpinnerIcon} />
+        <span css={spinnerCss}>
+          <Loader css={spinnerIconCss} />
         </span>
       )}
     </>
   )
 
   return {
-    baseTokens,
+    baseCssVars,
     bindings,
+    buttonBaseCss,
     content,
-    cssBaseButton,
     isNoop,
     isPressed,
     isVDanger,

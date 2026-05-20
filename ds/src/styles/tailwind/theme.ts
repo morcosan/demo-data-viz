@@ -7,7 +7,7 @@ const createTokens = (tokens: DTG, cssPrefix: string, twPrefix: string, direct?:
   return Object.fromEntries(
     Object.entries<DesignToken>(tokens).map(([tokenName, token]) => [
       twPrefix + tokenName,
-      direct ? (token.$value as string) : `var(${cssPrefix}${tokenName})`,
+      direct ? (token.value as string) : `var(${cssPrefix}${tokenName})`,
     ]),
   )
 }

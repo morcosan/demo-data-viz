@@ -55,7 +55,7 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
           role="group"
           aria-labelledby={`${fieldId}-theme`}
           className="gap-xs-1 flex flex-col"
-          data-testid="theme-toggle"
+          data-testid="color-theme-toggle"
         >
           <Button
             variant={isUiLight ? 'solid-secondary' : 'text-default'}

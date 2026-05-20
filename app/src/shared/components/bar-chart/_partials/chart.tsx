@@ -40,14 +40,14 @@ export const Chart = (props: Props) => {
     tooltipRef,
   } = props
   const { isViewportMinSM } = useViewportService()
-  const { $color, $fontSize } = useThemeService()
+  const { tokens } = useThemeService()
   const tooltipId = useId()
   const isTooltipVisible = isFocused || isHovered
   const minEntryValue = Math.min(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const maxEntryValue = Math.max(...entries.flatMap((entry) => barKeys.map((key) => Number(entry[key]) || 0)))
   const hasBothSides = minEntryValue < 0 && maxEntryValue > 0
   const sizes = useSizes({ entries, barKeys, minEntryValue, maxEntryValue, chartSize })
-  const axisColor = $color['text-placeholder']
+  const axisColor = tokens.color['text-placeholder']
 
   const lcQueries = useMemo(() => queries.map((query) => query.trim().toLowerCase()).filter(Boolean), [queries])
 
@@ -139,7 +139,7 @@ export const Chart = (props: Props) => {
         padding={isViewportMinSM ? { left: sizes.barMarginLeft, right: sizes.barMarginRight } : undefined}
         axisLine={{ stroke: axisColor }}
         tickLine={{ stroke: axisColor }}
-        tick={{ fontSize: $fontSize['sm'], fill: axisColor }}
+        tick={{ fontSize: tokens.fontSize['sm'], fill: axisColor }}
         tickFormatter={(value) => formatNumber(value)}
       />
       {hasBothSides && <Recharts.ReferenceLine x={0} stroke={axisColor} strokeDasharray="3 3" />}

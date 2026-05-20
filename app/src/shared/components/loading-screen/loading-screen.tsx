@@ -18,7 +18,7 @@ export const LoadingScreen = (props: Props) => {
   const ariaLabel = 'Loading...' // I18n is not loaded yet, so no translation
   const isReady = hasMaxTimeout || (hasMinTimeout && !loading && viewportWidth > 0)
 
-  const cssOverlay: CSSObject = {
+  const overlayCss: CSSObject = {
     animation: isReady ? 'fadeOut 1s forwards' : 'unset',
     pointerEvents: isReady ? 'none' : 'unset',
 
@@ -50,7 +50,7 @@ export const LoadingScreen = (props: Props) => {
       {/* OVERLAY */}
       <div
         className="fixed-overlay flex-center z-tooltip bg-color-bg-page"
-        css={cssOverlay}
+        css={overlayCss}
         aria-hidden={isReady}
         data-testid="loading-screen"
       >

@@ -1,0 +1,51 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
+import { DocsColorToken, DocsTokenCoding, DocsTokenThemeGrid } from '@ds/docs/core'
+
+export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => token.ref)
+
+{/* ---------------------------------------------------------------------------------------------------------------- */}
+
+<Meta title="Atomic tokens / Color (semantic)" />
+
+# Semantic color tokens
+
+<table className="docs">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Reference</th>
+      <th className="w-full">Value</th>
+      <th>Coding</th>
+    </tr>
+  </thead>
+  <tbody>
+    {tokens.map(([name, token]) => (
+      <tr key={name}>
+        <td>
+          <pre>{name}</pre>
+        </td>
+        <td>
+          <DocsTokenThemeGrid lightSlot={<pre>{token.ref.light}</pre>} darkSlot={<pre>{token.ref.dark}</pre>} />
+        </td>
+        <td>
+          <DocsTokenThemeGrid
+            lightSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR, name, 'light')} />}
+            darkSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR, name, 'dark')} />}
+          />
+        </td>
+        <td>
+          <DocsTokenCoding
+            tsVar={`tokens.color['${name}']`}
+            twVars={[`bg-color-${name}`, `text-color-${name}`, `border-color-${name}`]}
+            cssVar={`${CSS_PREFIX.COLOR}${name}`}
+            tsSize="w-md-7"
+            twSize="w-md-7"
+            cssSize="w-md-7"
+            delay={1000}
+          />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>

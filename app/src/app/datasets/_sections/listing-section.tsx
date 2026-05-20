@@ -6,7 +6,7 @@ import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app/shared/utils/formatting'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
 import { useVirtualScroll, type VirtualItem } from '@app/shared/utils/use-virtual-scroll'
-import { TOKENS__SPACING } from '@ds/core'
+import { getTokenValue, TOKENS } from '@ds/core'
 import { useSearchParams } from 'next/navigation'
 import { useId, useMemo, useState } from 'react'
 import { EurostatApi } from '../_api/eurostat-api'
@@ -43,8 +43,8 @@ export const ListingSection = ({ className, onClickDataset }: Props) => {
     }))
   }, [allDatasets, searchQuery, storage.data])
 
-  const itemHeight = parseInt(TOKENS__SPACING['md-2'].$value)
-  const gapSize = parseInt(TOKENS__SPACING['xs-1'].$value)
+  const itemHeight = parseInt(getTokenValue(TOKENS.SPACING, 'md-2'))
+  const gapSize = parseInt(getTokenValue(TOKENS.SPACING, 'xs-1'))
   const { vRowItems, vTotalHeight, vScrollerRef } = useVirtualScroll({
     rowCount: datasets.length,
     itemHeight: itemHeight + gapSize,

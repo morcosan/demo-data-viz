@@ -41,7 +41,7 @@ export const TextField = (props: TextFieldProps) => {
   const inputRef = useRef<InputElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const isNoop = Boolean(disabled || readonly)
-  const { cssInput, cssPrefix, cssRoot, cssSuffix } = useStyles({ ...props, isNoop, size, variant })
+  const { inputCss, prefixCss, rootCss, suffixCss } = useStyles({ ...props, isNoop, size, variant })
 
   const handleKeyDown = useCallback(
     (event: ReactKeyboardEvent) => event.key === Keyboard.ENTER && onSubmit?.(event),
@@ -121,7 +121,7 @@ export const TextField = (props: TextFieldProps) => {
     'aria-invalid': invalid,
     'aria-disabled': disabled,
     readOnly: isNoop,
-    css: cssInput,
+    css: inputCss,
     onFocus: onFocus,
     onBlur: onBlur,
     onKeyDown: handleKeyDown,
@@ -129,12 +129,12 @@ export const TextField = (props: TextFieldProps) => {
   }
 
   return (
-    <div ref={wrapperRef} css={cssRoot} className={className} style={style} {...dataProps}>
-      {Boolean(prefix) && <div css={cssPrefix}>{prefix}</div>}
+    <div ref={wrapperRef} css={rootCss} className={className} style={style} {...dataProps}>
+      {Boolean(prefix) && <div css={prefixCss}>{prefix}</div>}
 
       {multiline ? <textarea rows={minRowsProp} {...bindings} /> : <input type="text" {...bindings} />}
 
-      {Boolean(suffix) && <div css={cssSuffix}>{suffix}</div>}
+      {Boolean(suffix) && <div css={suffixCss}>{suffix}</div>}
     </div>
   )
 }

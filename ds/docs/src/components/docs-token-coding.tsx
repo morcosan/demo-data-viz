@@ -24,13 +24,6 @@ export const DocsTokenCoding = ({ tsVar, tsSize, twVars, twSize, cssVar, cssSize
 
   return (
     <div className="mr-xs-9 gap-xs-3 flex">
-      <DocsTokenCode
-        iconSvg={<TypescriptSvg className="aspect-square h-full" />}
-        value={tsVar}
-        size={tsSize}
-        loading={loading}
-      />
-
       {twVars.map((twVar: string) => (
         <DocsTokenCode
           key={twVar}
@@ -40,6 +33,13 @@ export const DocsTokenCoding = ({ tsVar, tsSize, twVars, twSize, cssVar, cssSize
           loading={loading}
         />
       ))}
+
+      <DocsTokenCode
+        iconSvg={<TypescriptSvg className="aspect-square h-full" />}
+        value={tsVar}
+        size={tsSize}
+        loading={loading}
+      />
 
       <DocsTokenCode
         iconSvg={<CssSvg className="aspect-square h-full" />}

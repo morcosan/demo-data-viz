@@ -14,7 +14,7 @@ export const Chart = (props: ChoroplethProps) => {
   const { data, view = 'world', queries = [], className } = props
   const { t } = useTranslation()
   const { getCountryNames, getCountryIso2 } = useCountries()
-  const { colors, styles, cssContainer, draggingClass, getCitySize, getItemStyle } = useStyles()
+  const { colors, styles, containerCss, draggingClass, getCitySize, getItemStyle } = useStyles()
   const { geoCities, loadCities, getGeoCity } = useCities()
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -188,7 +188,7 @@ export const Chart = (props: ChoroplethProps) => {
       role="application"
       aria-label={t('dataViz.notice.mapAriaLabel', { countries: data.countries.length, cities: data.cities.length })}
       className={className}
-      css={cssContainer}
+      css={containerCss}
     />
   )
 }

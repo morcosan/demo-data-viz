@@ -4,6 +4,7 @@ type Config = import('eslint').Linter.Config
 const baseConfig: Config[] = [
   {
     files: ['**/*.{ts,tsx}'],
+    linterOptions: { reportUnusedDisableDirectives: false },
     rules: {
       'max-lines': ['error', 300],
 

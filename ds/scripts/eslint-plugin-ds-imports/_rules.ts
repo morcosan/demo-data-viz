@@ -5,8 +5,8 @@ const enforceDistImports: Rule.RuleModule = {
   meta: {
     type: 'problem',
     fixable: 'code',
-    docs: { description: "Enforce DS imports to use '@ds/core.ts' or '/ds/dist/scripts/'" },
-    messages: { useDistImport: "DS imports must use '@ds/core.ts' or '/ds/dist/scripts/'" },
+    docs: { description: "Enforce DS imports to use '@ds/core' or '/ds/dist/scripts/'" },
+    messages: { invalid: "DS imports must use '@ds/core' or '/ds/dist/scripts/'" },
   },
   create: (context: Rule.RuleContext) => ({
     ImportDeclaration: (node: ImportDeclaration) => {
@@ -31,7 +31,7 @@ const enforceDistImports: Rule.RuleModule = {
       if (!isValid) {
         context.report({
           node,
-          messageId: 'useDistImport',
+          messageId: 'invalid',
           fix: (fixer) => fixer.replaceText(node.source, `'${validPath}'`),
         })
       }
