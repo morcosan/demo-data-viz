@@ -19,7 +19,7 @@ export const EmptyState = (props: Props) => {
       <div
         className={cx(
           'px-xs-5 py-xs-2 relative h-fit translate-y-[-20px]',
-          'border-color-border-subtle bg-color-bg-menu rounded-md border shadow-xs',
+          'border-color-border-subtle bg-color-bg-popup rounded-md border shadow-xs',
           "before:absolute before:content-[''] after:absolute after:content-['']",
           // Arrow border
           'before:bottom-[3px] before:left-[-9px]',
@@ -28,7 +28,7 @@ export const EmptyState = (props: Props) => {
           // Arrow fill
           'after:bottom-[4px] after:left-[-7px]',
           'after:border-y-[7px] after:border-y-transparent',
-          'after:border-r-color-bg-menu after:border-r-[7px]',
+          'after:border-r-color-bg-popup after:border-r-[7px]',
         )}
       >
         {children}

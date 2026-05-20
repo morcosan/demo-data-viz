@@ -23,7 +23,7 @@ interface Props {
 
 export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
   const { t } = useTranslation()
-  const { isUiLight, isUiDark, changeColorTheme } = useThemeService()
+  const { isUiLight, isUiDark, changeColorMode } = useThemeService()
   const fieldId = useId()
 
   const isPopup = !onClickBack
@@ -49,27 +49,27 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
 
       {/* THEME */}
       <div className="px-button-px-item flex items-center justify-between">
-        <span id={`${fieldId}-theme`}>{t('core.label.theme')}</span>
+        <span id={`${fieldId}-mode`}>{t('core.label.colorMode')}</span>
 
         <div
           role="group"
-          aria-labelledby={`${fieldId}-theme`}
+          aria-labelledby={`${fieldId}-mode`}
           className="gap-xs-1 flex flex-col"
-          data-testid="color-theme-toggle"
+          data-testid="color-mode-toggle"
         >
           <Button
             variant={isUiLight ? 'solid-secondary' : 'text-default'}
             size="xs"
-            onClick={() => changeColorTheme('light')}
+            onClick={() => changeColorMode('light')}
           >
-            ☀️ {t('core.label.themeLight')}&nbsp;
+            ☀️ {t('core.label.modeLight')}&nbsp;
           </Button>
           <Button
             variant={isUiDark ? 'solid-secondary' : 'text-default'}
             size="xs"
-            onClick={() => changeColorTheme('dark')}
+            onClick={() => changeColorMode('dark')}
           >
-            🌙 {t('core.label.themeDark')}&nbsp;
+            🌙 {t('core.label.modeDark')}&nbsp;
           </Button>
         </div>
       </div>

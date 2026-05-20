@@ -17,7 +17,7 @@ export const Tooltip = ({ name, nameFn, iso2, value }: Props) => {
     <div
       className={cx(
         'px-xs-5 py-xs-3 min-w-md-9 rounded-sm',
-        'bg-color-bg-menu border-color-border-shadow border shadow-md',
+        'bg-color-bg-popup border-color-border-shadow border shadow-md',
         'text-size-sm',
       )}
     >

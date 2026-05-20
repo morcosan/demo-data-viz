@@ -1,6 +1,6 @@
 import {
   A11yService,
-  type ColorTheme,
+  type ColorMode,
   ConfigService,
   type HOC,
   HocComposer,
@@ -19,11 +19,11 @@ interface GlobalConfig<T> {
   }
 }
 interface GlobalTypes {
-  colorTheme?: GlobalConfig<ColorTheme>
+  colorMode?: GlobalConfig<ColorMode>
   canvasBg?: GlobalConfig<DocsCanvasBg>
 }
 interface GlobalDefaults {
-  colorTheme?: ColorTheme | '_reset'
+  colorMode?: ColorMode | '_reset'
   canvasBg?: DocsCanvasBg | '_reset'
 }
 interface PreviewToolbar {
@@ -62,7 +62,7 @@ interface DocsComponentProps {
 }
 
 const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
-  const colorTheme = !globals.colorTheme || globals.colorTheme === '_reset' ? 'light' : globals.colorTheme
+  const colorMode = !globals.colorMode || globals.colorMode === '_reset' ? 'light' : globals.colorMode
   const canvasBg = !globals.canvasBg || globals.canvasBg === '_reset' ? 'grid' : globals.canvasBg
   const hoc = HocComposer.hoc
   return [
@@ -70,7 +70,7 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
     hoc(ConfigService, {}),
     hoc(A11yService, {}),
     hoc(ViewportService, {}),
-    hoc(ThemeService, { cookieKey: 'ds-color-theme', colorTheme }),
+    hoc(ThemeService, { cookieKeyMode: 'ds-color-mode', cookieKeyTheme: 'ds-color-theme', colorMode }),
     hoc(DocsCanvasService, { canvasBg }),
     ...providers,
   ]

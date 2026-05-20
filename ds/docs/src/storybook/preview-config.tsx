@@ -40,8 +40,8 @@ const argTypesEnhancers = [
 
 const toolbarConfig = {
   globalTypes: {
-    colorTheme: {
-      description: 'Change color theme',
+    colorMode: {
+      description: 'Change color mode',
       toolbar: {
         title: 'Light',
         icon: 'sun' as any,
@@ -65,7 +65,7 @@ const toolbarConfig = {
     },
   },
   initialGlobals: {
-    colorTheme: 'light',
+    colorMode: 'light',
     canvasBg: 'grid',
   },
 } satisfies PreviewToolbar

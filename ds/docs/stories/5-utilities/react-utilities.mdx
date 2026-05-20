@@ -27,7 +27,7 @@ import { HocComposer } from '@ds/core'
 const App = ({ children }) => (
 	<HocComposer
 		hocs={[
-			HocComposer.hoc(ThemeProvider, { theme: 'dark' }),
+			HocComposer.hoc(ThemeProvider, { mode: 'dark' }),
 			HocComposer.hoc(I18nProvider, { locale: 'en' }),
 			HocComposer.hoc(RouterProvider, { router })
 		]}

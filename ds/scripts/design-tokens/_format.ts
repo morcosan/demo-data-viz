@@ -48,9 +48,9 @@ StyleDictionary.registerFormat({
       return formattedVariables({ dictionary: { ...dictionary, allTokens }, ...formatOptions })
     }
     const darkVars = getVars('dark')
-    const lightSelector = darkVars ? `,\n[data-color-theme='light']` : ''
+    const lightSelector = darkVars ? `,\n[data-color-mode='light']` : ''
     const lightOutput = `:root,\n:host${lightSelector} {\n${getVars('light')}\n}\n`
-    const darkOutput = darkVars ? `\n[data-color-theme='dark'] {\n${darkVars}\n}\n` : ''
+    const darkOutput = darkVars ? `\n[data-color-mode='dark'] {\n${darkVars}\n}\n` : ''
     const output = NOTICE + lightOutput + darkOutput
 
     return await prettier.format(output, { ...prettierConfig, parser: 'css' })

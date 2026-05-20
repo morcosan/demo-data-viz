@@ -3,7 +3,7 @@
   --scrollbar-color-default: var(--ds-color-black-alpha-4);
   --scrollbar-color-hover: var(--ds-color-black-alpha-5);
 }
-[data-color-theme='dark'] {
+[data-color-mode='dark'] {
   --scrollbar-color-default: var(--ds-color-white-alpha-4);
   --scrollbar-color-hover: var(--ds-color-white-alpha-5);
 }

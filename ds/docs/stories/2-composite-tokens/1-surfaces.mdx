@@ -8,7 +8,7 @@ export const Example = ({ children }) => {
     <DocsCanvas className="text-size-xs flex flex-wrap">
       <div className={sectionClass}>
         <h3 className={titleClass}>Mode: Light</h3>
-        <div data-color-theme="light">{children}</div>
+        <div data-color-mode="light">{children}</div>
       </div>
       <div
         role="separator"
@@ -20,7 +20,7 @@ export const Example = ({ children }) => {
       />
       <div className={sectionClass}>
         <h3 className={titleClass}>Mode: Dark</h3>
-        <div data-color-theme="dark">{children}</div>
+        <div data-color-mode="dark">{children}</div>
       </div>
     </DocsCanvas>
   )
@@ -41,14 +41,14 @@ export const Surface = ({ title, children, className }) => (
 
 <Example>
   <Surface title="Page" className="bg-color-bg-page">
-    <Surface title="Sheet" className="bg-color-bg-pane">
+    <Surface title="Sheet" className="bg-color-bg-sheet">
       <Surface title="Card" className="bg-color-bg-card">
-        <Surface title="Popup" className="bg-color-bg-menu" />
+        <Surface title="Popup" className="bg-color-bg-popup" />
       </Surface>
     </Surface>
     <Surface title="Card" className="bg-color-bg-card mt-xs-5">
-      <Surface title="Popup" className="bg-color-bg-menu" />
+      <Surface title="Popup" className="bg-color-bg-popup" />
     </Surface>
-    <Surface title="Popup" className="bg-color-bg-menu mt-xs-5" />
+    <Surface title="Popup" className="bg-color-bg-popup mt-xs-5" />
   </Surface>
 </Example>

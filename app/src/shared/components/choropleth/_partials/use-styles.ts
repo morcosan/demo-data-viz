@@ -4,26 +4,26 @@ import { useCallback, useMemo } from 'react'
 import { type EItemStyle, type ELegend, type ETooltip } from '../_types'
 
 export const useStyles = () => {
-  const { colorTheme, isUiLight } = useThemeService()
+  const { colorMode, isUiLight } = useThemeService()
   const { isViewportMaxLG: isMobile } = useViewportService()
   const draggingClass = 'choropleth-dragging'
   const tooltipClass = 'choropleth-tooltip'
 
   const colors = useMemo(
     () => ({
-      text: getTokenValue(TOKENS.COLOR, 'text-default', colorTheme),
-      valueNone: getTokenValue(TOKENS.COLOR, 'map-value-none', colorTheme),
-      valueMin: getTokenValue(TOKENS.COLOR, 'map-value-min', colorTheme),
-      valueMax: getTokenValue(TOKENS.COLOR, 'map-value-max', colorTheme),
-      land: getTokenValue(TOKENS.COLOR, 'map-land', colorTheme),
-      ocean: getTokenValue(TOKENS.COLOR, 'map-ocean', colorTheme),
-      borderInactive: getTokenValue(TOKENS.COLOR, isUiLight ? 'border-subtle' : 'border-default', colorTheme),
-      borderActive: getTokenValue(TOKENS.COLOR, 'text-inverse', colorTheme),
-      borderQuery: getTokenValue(TOKENS.COLOR, 'border-highlight', colorTheme),
-      borderHover: getTokenValue(TOKENS.COLOR, 'border-highlight', colorTheme),
-      borderLegend: getTokenValue(TOKENS.COLOR, 'border-active', colorTheme),
+      text: getTokenValue(TOKENS.COLOR, 'text-default', colorMode),
+      valueNone: getTokenValue(TOKENS.COLOR, 'map-value-none', colorMode),
+      valueMin: getTokenValue(TOKENS.COLOR, 'map-value-min', colorMode),
+      valueMax: getTokenValue(TOKENS.COLOR, 'map-value-max', colorMode),
+      land: getTokenValue(TOKENS.COLOR, 'map-land', colorMode),
+      ocean: getTokenValue(TOKENS.COLOR, 'map-ocean', colorMode),
+      borderInactive: getTokenValue(TOKENS.COLOR, isUiLight ? 'border-subtle' : 'border-default', colorMode),
+      borderActive: getTokenValue(TOKENS.COLOR, 'text-inverse', colorMode),
+      borderQuery: getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode),
+      borderHover: getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode),
+      borderLegend: getTokenValue(TOKENS.COLOR, 'border-active', colorMode),
     }),
-    [colorTheme, isUiLight],
+    [colorMode, isUiLight],
   )
 
   const sizes = useMemo(

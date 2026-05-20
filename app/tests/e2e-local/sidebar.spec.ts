@@ -1,4 +1,4 @@
-import { type ColorTheme } from '@ds/core'
+import { type ColorMode } from '@ds/core'
 import { expect, test, type Locator, type Page } from '@playwright/test'
 import { enJson, openApp } from '../_utils'
 
@@ -16,8 +16,8 @@ test.describe('Sidebar', () => {
   let lightButton: Locator
   let darkButton: Locator
   const SIDEBAR_WIDTH = 100
-  const expectTheme = async (theme: ColorTheme) => {
-    return expect(_page.locator('html')).toHaveAttribute('data-color-theme', theme)
+  const expectMode = async (mode: ColorMode) => {
+    return expect(_page.locator('html')).toHaveAttribute('data-color-mode', mode)
   }
   const getSidebarWidth = () => sidebar.evaluate((el) => el.getBoundingClientRect().width)
   const expectCollapsed = () => expect.poll(getSidebarWidth).toBeLessThan(SIDEBAR_WIDTH)
@@ -37,9 +37,9 @@ test.describe('Sidebar', () => {
   test.beforeEach(async () => {
     sidebar = _page.getByTestId('sidebar')
     pinButton = _page.getByTestId('pin-button')
-    const toggle = _page.getByTestId('color-theme-toggle')
-    lightButton = toggle.locator('button', { hasText: enJson.core.label.themeLight })
-    darkButton = toggle.locator('button', { hasText: enJson.core.label.themeDark })
+    const toggle = _page.getByTestId('color-mode-toggle')
+    lightButton = toggle.locator('button', { hasText: enJson.core.label.modeLight })
+    darkButton = toggle.locator('button', { hasText: enJson.core.label.modeDark })
   })
 
   test('has logo', async () => {
@@ -89,44 +89,44 @@ test.describe('Sidebar', () => {
     }
   })
 
-  test('opens as light color theme', async () => {
-    await expectTheme('light')
+  test('opens as light color mode', async () => {
+    await expectMode('light')
   })
 
-  test('opens as light color theme when "prefers-color-scheme: light"', async ({ browser }) => {
+  test('opens as light color mode when "prefers-color-scheme: light"', async ({ browser }) => {
     await _page.context().close()
     const context = await browser.newContext({ colorScheme: 'light' })
     _page = await context.newPage()
     await _page.goto('/')
-    await expectTheme('light')
+    await expectMode('light')
   })
 
-  test('opens as dark color theme when "prefers-color-scheme: dark"', async ({ browser }) => {
+  test('opens as dark color mode when "prefers-color-scheme: dark"', async ({ browser }) => {
     await _page.context().close()
     const context = await browser.newContext({ colorScheme: 'dark' })
     _page = await context.newPage()
     await _page.goto('/')
-    await expectTheme('dark')
+    await expectMode('dark')
   })
 
-  test('can change color theme', async () => {
+  test('can change color mode', async () => {
     await openSettingsMenu()
     await darkButton.click()
-    await expectTheme('dark')
+    await expectMode('dark')
     await lightButton.click()
-    await expectTheme('light')
+    await expectMode('light')
   })
 
-  test('can change color theme and persist on refresh', async () => {
+  test('can change color mode and persist on refresh', async () => {
     await openSettingsMenu()
     await darkButton.click()
-    await expectTheme('dark')
+    await expectMode('dark')
     await _page.reload()
-    await expectTheme('dark')
+    await expectMode('dark')
     await openSettingsMenu()
     await lightButton.click()
-    await expectTheme('light')
+    await expectMode('light')
     await _page.reload()
-    await expectTheme('light')
+    await expectMode('light')
   })
 })

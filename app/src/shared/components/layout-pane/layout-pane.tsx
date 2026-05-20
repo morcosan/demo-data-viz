@@ -17,7 +17,12 @@ export const LayoutPane = (props: ReactProps<Handle>) => {
   }))
 
   return (
-    <div ref={innerRef} className={cx('bg-color-bg-pane rounded-md shadow-xs', className)} style={style} {...dataProps}>
+    <div
+      ref={innerRef}
+      className={cx('bg-color-bg-sheet rounded-md shadow-xs', className)}
+      style={style}
+      {...dataProps}
+    >
       {children}
     </div>
   )

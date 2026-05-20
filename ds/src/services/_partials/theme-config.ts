@@ -1,4 +1,4 @@
-import { type ColorTheme, CSS_PREFIX, type DesignTokenGroup, getTokenValue, TOKENS } from '../../styles/tokens'
+import { type ColorMode, CSS_PREFIX, type DesignTokenGroup, getTokenValue, TOKENS } from '../../styles/tokens'
 
 interface ThemeTokens {
   blur: Record<keyof typeof TOKENS.BLUR, string>
@@ -16,32 +16,32 @@ interface ThemeTokens {
 
 const ENV__USE_CSS_VARS = true
 
-const mapTokens = (tokenGroup: DesignTokenGroup, ccPrefix: string, theme: ColorTheme) => {
+const mapTokens = (tokenGroup: DesignTokenGroup, ccPrefix: string, mode: ColorMode) => {
   return Object.fromEntries(
     Object.keys(tokenGroup).map((tokenName: string) => [
       tokenName,
-      ENV__USE_CSS_VARS ? `var(${ccPrefix}${tokenName})` : String(getTokenValue(tokenGroup, tokenName, theme)),
+      ENV__USE_CSS_VARS ? `var(${ccPrefix}${tokenName})` : String(getTokenValue(tokenGroup, tokenName, mode)),
     ]),
   ) as Record<string, string>
 }
 
-const createTokens = (theme: ColorTheme): ThemeTokens => {
+const createTokens = (mode: ColorMode): ThemeTokens => {
   return {
-    blur: mapTokens(TOKENS.BLUR, CSS_PREFIX.BLUR, theme),
-    breakpoint: mapTokens(TOKENS.BREAKPOINT, CSS_PREFIX.BREAKPOINT, theme),
-    color: mapTokens(TOKENS.COLOR, CSS_PREFIX.COLOR, theme),
-    fontFamily: mapTokens(TOKENS.FONT_FAMILY, CSS_PREFIX.FONT_FAMILY, theme),
-    fontSize: mapTokens(TOKENS.FONT_SIZE, CSS_PREFIX.FONT_SIZE, theme),
-    fontWeight: mapTokens(TOKENS.FONT_WEIGHT, CSS_PREFIX.FONT_WEIGHT, theme),
-    lineHeight: mapTokens(TOKENS.LINE_HEIGHT, CSS_PREFIX.LINE_HEIGHT, theme),
-    radius: mapTokens(TOKENS.RADIUS, CSS_PREFIX.RADIUS, theme),
-    shadow: mapTokens(TOKENS.SHADOW, CSS_PREFIX.SHADOW, theme),
-    spacing: mapTokens(TOKENS.SPACING, CSS_PREFIX.SPACING, theme),
-    zIndex: mapTokens(TOKENS.Z_INDEX, CSS_PREFIX.Z_INDEX, theme),
+    blur: mapTokens(TOKENS.BLUR, CSS_PREFIX.BLUR, mode),
+    breakpoint: mapTokens(TOKENS.BREAKPOINT, CSS_PREFIX.BREAKPOINT, mode),
+    color: mapTokens(TOKENS.COLOR, CSS_PREFIX.COLOR, mode),
+    fontFamily: mapTokens(TOKENS.FONT_FAMILY, CSS_PREFIX.FONT_FAMILY, mode),
+    fontSize: mapTokens(TOKENS.FONT_SIZE, CSS_PREFIX.FONT_SIZE, mode),
+    fontWeight: mapTokens(TOKENS.FONT_WEIGHT, CSS_PREFIX.FONT_WEIGHT, mode),
+    lineHeight: mapTokens(TOKENS.LINE_HEIGHT, CSS_PREFIX.LINE_HEIGHT, mode),
+    radius: mapTokens(TOKENS.RADIUS, CSS_PREFIX.RADIUS, mode),
+    shadow: mapTokens(TOKENS.SHADOW, CSS_PREFIX.SHADOW, mode),
+    spacing: mapTokens(TOKENS.SPACING, CSS_PREFIX.SPACING, mode),
+    zIndex: mapTokens(TOKENS.Z_INDEX, CSS_PREFIX.Z_INDEX, mode),
   }
 }
 
-const lightThemeTokens = createTokens('light')
-const darkThemeTokens = createTokens('dark')
+const lightModeTokens = createTokens('light')
+const darkModeTokens = createTokens('dark')
 
-export { darkThemeTokens, lightThemeTokens, type ThemeTokens }
+export { darkModeTokens, lightModeTokens, type ThemeTokens }

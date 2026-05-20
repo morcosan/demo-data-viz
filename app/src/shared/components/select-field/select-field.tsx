@@ -157,7 +157,7 @@ const dropdownCss = css`
   z-index: var(--ds-z-index-dropdown) !important;
   box-shadow: var(--ds-shadow-md) !important;
   border: 1px solid var(--ds-color-border-subtle) !important;
-  background-color: var(--ds-color-bg-menu) !important;
+  background-color: var(--ds-color-bg-popup) !important;
   padding: var(--ds-spacing-xs-1) !important;
   overflow: auto !important;
 

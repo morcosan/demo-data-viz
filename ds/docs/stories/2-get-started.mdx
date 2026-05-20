@@ -99,7 +99,7 @@ Set up all required providers using `HocComposer`. Create a providers file:
 					hoc(ViewportService, {}),
 					hoc(RoutingService, { navigate }),
 					hoc(I18nService, { translate: t, loading: false }),
-					hoc(ThemeService, { cookieKey: 'app-color-theme' }),
+					hoc(ThemeService, { cookieKeyMode: 'app-color-mode', cookieKeyTheme: 'app-color-theme' }),
 				],
 				[navigate]
 			)

@@ -134,7 +134,7 @@ This service abstracts routing logic, making it easier to integrate with differe
 ## Theme Service
 
 Manages color themes and provides comprehensive access to design tokens. <br/>
-This service enables dark/light theme switching and exposes all design system tokens through CSS variables.
+This service enables dark/light mode switching and exposes all design system tokens through CSS variables.
 
 <DocsColumns>
   <div>
@@ -144,12 +144,12 @@ This service enables dark/light theme switching and exposes all design system to
 				import { useThemeService } from '@ds/core'
 				//
 				const App = () => {
-					const { tokens, colorTheme, isUiDark, isUiLight, changeColorTheme } = useThemeService()
+					const { tokens, colorMode, isUiDark, isUiLight, changeColorMode } = useThemeService()
 					return (
 						<button
-						  data-theme={colorTheme}
+						  data-mode={colorMode}
 						  style={{ color: tokens.color['black'] }}
-						  onClick={changeColorTheme}
+						  onClick={changeColorMode}
 						>
 							{isUiDark ? 'Dark' : isUiLight ? 'Light' : '??'}
 						</button>
@@ -165,24 +165,25 @@ This service enables dark/light theme switching and exposes all design system to
 				import { ThemeService } from '@ds/core'
 				//
 				const App = ({ children }) => (
-					<ThemeService cookieKey="color-theme">{children}</ThemeService>
+					<ThemeService cookieKey="color-mode">{children}</ThemeService>
 				)
 			`}
     />
   </div>
 </DocsColumns>
 
-| Property         | Type          | Params              | Return | Description                                       |
-| ---------------- | ------------- | ------------------- | ------ | ------------------------------------------------- |
-| colorTheme       | `ColorTheme`  | -                   | -      | Current color theme value (`'light'` or `'dark'`) |
-| isUiDark         | `boolean`     | -                   | -      | Indicates whether the current theme is dark       |
-| isUiLight        | `boolean`     | -                   | -      | Indicates whether the current theme is light      |
-| changeColorTheme | `function`    | `theme: ColorTheme` | -      | Changes the color theme to the specified value    |
-| tokens           | `ThemeTokens` | -                   | -      | Token collections mapped to CSS variable values   |
+| Property        | Type          | Params            | Return | Description                                          |
+| --------------- | ------------- | ----------------- | ------ | ---------------------------------------------------- |
+| colorMode       | `ColorMode`   | -                 | -      | Current color mode value (`'light'` or `'dark'`)     |
+| colorTheme      | `ColorTheme`  | -                 | -      | Current color theme value (`'simple'` or `'modern'`) |
+| isUiDark        | `boolean`     | -                 | -      | Indicates whether the current mode is dark           |
+| isUiLight       | `boolean`     | -                 | -      | Indicates whether the current mode is light          |
+| changeColorMode | `function`    | `mode: ColorMode` | -      | Changes the color mode to the specified value        |
+| tokens          | `ThemeTokens` | -                 | -      | Token collections mapped to CSS variable values      |
 
 **Usage notes:**
 
-- The `cookieKey` prop enables color theme persistence across sessions
+- The `cookieKey` prop enables coloor mode persistence across sessions
 - Design token objects (`tokens.color`, `tokens.spacing`, etc.) provide type-safe access to CSS variables
-- Use `isUiDark` and `isUiLight` for conditional rendering based on current color theme
-- All design tokens are automatically updated when the color theme changes
+- Use `isUiDark` and `isUiLight` for conditional rendering based on current color mode
+- All design tokens are automatically updated when the coolor mode changes

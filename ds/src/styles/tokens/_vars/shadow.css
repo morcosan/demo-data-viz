@@ -4,7 +4,7 @@
  */
 :root,
 :host,
-[data-color-theme='light'] {
+[data-color-mode='light'] {
   --ds-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.1);
   --ds-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.15);
   --ds-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.15), 0 1px 2px -1px rgb(0 0 0 / 0.15);
@@ -16,7 +16,7 @@
   --ds-shadow-below-lg: 0 14px 14px -14px rgb(0 0 0 / 0.15);
 }
 
-[data-color-theme='dark'] {
+[data-color-mode='dark'] {
   --ds-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.2);
   --ds-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
   --ds-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);

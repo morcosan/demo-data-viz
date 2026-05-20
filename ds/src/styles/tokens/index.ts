@@ -1,4 +1,4 @@
-import { type ColorTheme, type DesignToken, type DesignTokenGroup, type DesignTokenModeValue } from './_types'
+import { type ColorMode, type DesignToken, type DesignTokenGroup, type DesignTokenModeValue } from './_types'
 import { CSS_PREFIX__BLUR, TOKENS__BLUR } from './_vars/blur'
 import { CSS_PREFIX__BREAKPOINT, TOKENS__BREAKPOINT } from './_vars/breakpoint'
 import { CSS_PREFIX__COLOR, TOKENS__COLOR } from './_vars/color'
@@ -42,7 +42,7 @@ const CSS_PREFIX = {
 type Group = DesignTokenGroup<any>
 type Value<G> = G extends DesignTokenGroup<infer V> ? V : never
 
-const getTokenValue = <G extends Group = Group>(tokenGroup: G, tokenName: keyof G, mode?: ColorTheme): Value<G> => {
+const getTokenValue = <G extends Group = Group>(tokenGroup: G, tokenName: keyof G, mode?: ColorMode): Value<G> => {
   const token = tokenGroup[tokenName] as DesignToken<Value<G>>
   if (!token) return undefined as Value<G>
 
@@ -51,7 +51,7 @@ const getTokenValue = <G extends Group = Group>(tokenGroup: G, tokenName: keyof 
 
   if (token.value !== undefined) {
     if (typeof token.value === 'object') {
-      value = (token.value as DesignTokenModeValue<Value<G>>)[mode as ColorTheme]
+      value = (token.value as DesignTokenModeValue<Value<G>>)[mode as ColorMode]
       if (value === undefined) return undefined as Value<G>
     } else {
       value = token.value
@@ -60,7 +60,7 @@ const getTokenValue = <G extends Group = Group>(tokenGroup: G, tokenName: keyof 
 
   if (token.ref !== undefined) {
     if (typeof token.ref === 'object') {
-      ref = (token.ref as DesignTokenModeValue<string>)[mode as ColorTheme]
+      ref = (token.ref as DesignTokenModeValue<string>)[mode as ColorMode]
       if (ref === undefined) return undefined as Value<G>
     } else {
       ref = token.ref

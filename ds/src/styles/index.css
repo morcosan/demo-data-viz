@@ -15,7 +15,7 @@ body {
   font-family: var(--ds-font-family-sans);
 }
 
-[data-color-theme] {
+[data-color-mode] {
   color: var(--ds-color-text-default);
 }
 

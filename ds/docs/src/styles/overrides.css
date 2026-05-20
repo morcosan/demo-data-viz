@@ -55,7 +55,7 @@ pre.prismjs {
 
   & div:has(> .docblock-code-toggle),
   & .docblock-code-toggle {
-    background: var(--ds-color-bg-menu) !important;
+    background: var(--ds-color-bg-popup) !important;
     color: var(--ds-color-text-default) !important;
   }
 }

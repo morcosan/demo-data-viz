@@ -24,7 +24,7 @@ export const Tooltip = (props: TooltipProps) => {
       styles={{
         tooltip: {
           color: 'var(--ds-color-text-default)',
-          backgroundColor: 'var(--ds-color-bg-menu)',
+          backgroundColor: 'var(--ds-color-bg-popup)',
           boxShadow: 'var(--ds-shadow-sm)',
           border: '1px solid var(--ds-color-border-default)',
           padding: 'var(--ds-spacing-xs-1) var(--ds-spacing-xs-4) var(--ds-spacing-xs-0)',
