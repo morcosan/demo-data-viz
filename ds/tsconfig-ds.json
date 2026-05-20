@@ -9,9 +9,7 @@
     "types": ["vite/client"],
 
     /* Modules & Resolution */
-    "paths": {
-      "@ds/*": ["./dist/*"]
-    }
+    "paths": {}
   },
-  "include": ["src/**/*", "docs/**/*", ".storybook/preview/**/*"]
+  "include": ["src/**/*"]
 }

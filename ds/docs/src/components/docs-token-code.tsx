@@ -14,10 +14,10 @@ export const DocsTokenCode = ({ iconSvg, value, size, loading }: Props) => {
   const buttonClass = cx(
     'absolute-center origin-center cursor-pointer overflow-hidden',
     'border-color-border-default bg-color-bg-card rounded-xs border',
-    'px-xs-0 w-full min-w-full',
+    'w-full min-w-full',
     'hover:w-fit focus:w-fit',
     'hover:w-fit focus:w-fit',
-    'hover:px-xs-2 focus:px-xs-2',
+    'hover:px-xs-1 focus:px-xs-1',
     'hover:py-xs-1 focus:py-xs-1',
     'hover:z-popup focus:z-popup',
     'hover:shadow-md focus:shadow-md',

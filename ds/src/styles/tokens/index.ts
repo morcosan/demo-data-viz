@@ -1,58 +1,15 @@
-import { TOKENS__BLUR } from './_blur'
-import { TOKENS__BREAKPOINT } from './_breakpoint'
-import { TOKENS__COLOR } from './_color'
-import { TOKENS__FONT_FAMILY } from './_font-family'
-import { TOKENS__FONT_SIZE } from './_font-size'
-import { TOKENS__FONT_WEIGHT } from './_font-weight'
-import { TOKENS__LINE_HEIGHT } from './_line-height'
-import { TOKENS__RADIUS } from './_radius'
-import { TOKENS__SHADOW } from './_shadow'
-import { TOKENS__SPACING } from './_spacing'
-import { getTokenValue } from './_utils'
-import { type ColorTheme, type DesignTokenThemeValue } from './_utils/types'
-import { TOKENS__Z_INDEX } from './_z-index'
-
-type Blur = keyof typeof TOKENS__BLUR
-type Breakpoint = keyof typeof TOKENS__BREAKPOINT
-type Color = keyof typeof TOKENS__COLOR
-type FontFamily = keyof typeof TOKENS__FONT_FAMILY
-type FontSize = keyof typeof TOKENS__FONT_SIZE
-type FontWeight = keyof typeof TOKENS__FONT_WEIGHT
-type LineHeight = keyof typeof TOKENS__LINE_HEIGHT
-type Radius = keyof typeof TOKENS__RADIUS
-type Shadow = keyof typeof TOKENS__SHADOW
-type Spacing = keyof typeof TOKENS__SPACING
-type ZIndex = keyof typeof TOKENS__Z_INDEX
-type CT = ColorTheme
-type ThemeValue<V> = DesignTokenThemeValue<V>
-
-const gTV = getTokenValue
-
-const getTokenValue_BLUR = (k: Blur, cs?: CT) => gTV<Blur, string>(TOKENS__BLUR, k, cs)
-const getTokenValue_BREAKPOINT = (k: Breakpoint, cs?: CT) => gTV<Breakpoint, string>(TOKENS__BREAKPOINT, k, cs)
-const getTokenValue_COLOR = (k: Color, cs?: CT) => gTV<Color, string>(TOKENS__COLOR, k, cs)
-const getTokenValue_FONT_FAMILY = (k: FontFamily, cs?: CT) => gTV<FontFamily, string>(TOKENS__FONT_FAMILY, k, cs)
-const getTokenValue_FONT_SIZE = (k: FontSize, cs?: CT) => gTV<FontSize, string>(TOKENS__FONT_SIZE, k, cs)
-const getTokenValue_FONT_WEIGHT = (k: FontWeight, cs?: CT) => gTV<FontWeight, number>(TOKENS__FONT_WEIGHT, k, cs)
-const getTokenValue_LINE_HEIGHT = (k: LineHeight, cs?: CT) => gTV<LineHeight, number>(TOKENS__LINE_HEIGHT, k, cs)
-const getTokenValue_RADIUS = (k: Radius, cs?: CT) => gTV<Radius, string>(TOKENS__RADIUS, k, cs)
-const getTokenValue_SHADOW = (k: Shadow, cs?: CT) => gTV<Shadow, ThemeValue<string>>(TOKENS__SHADOW, k, cs)
-const getTokenValue_SPACING = (k: Spacing, cs?: CT) => gTV<Spacing, string>(TOKENS__SPACING, k, cs)
-const getTokenValue_Z_INDEX = (k: ZIndex, cs?: CT) => gTV<ZIndex, number>(TOKENS__Z_INDEX, k, cs)
-
-const CSS_PREFIX = {
-  BLUR: '--ds-blur-',
-  BREAKPOINT: '--ds-breakpoint-',
-  COLOR: '--ds-color-',
-  FONT_FAMILY: '--ds-font-family-',
-  FONT_SIZE: '--ds-font-size-',
-  FONT_WEIGHT: '--ds-font-weight-',
-  LINE_HEIGHT: '--ds-line-height-',
-  RADIUS: '--ds-radius-',
-  SHADOW: '--ds-shadow-',
-  SPACING: '--ds-spacing-',
-  Z_INDEX: '--ds-z-index-',
-}
+import { type ColorTheme, type DesignToken, type DesignTokenGroup, type DesignTokenModeValue } from './_types'
+import { CSS_PREFIX__BLUR, TOKENS__BLUR } from './_vars/blur'
+import { CSS_PREFIX__BREAKPOINT, TOKENS__BREAKPOINT } from './_vars/breakpoint'
+import { CSS_PREFIX__COLOR, TOKENS__COLOR } from './_vars/color'
+import { CSS_PREFIX__FONT_FAMILY, TOKENS__FONT_FAMILY } from './_vars/font-family'
+import { CSS_PREFIX__FONT_SIZE, TOKENS__FONT_SIZE } from './_vars/font-size'
+import { CSS_PREFIX__FONT_WEIGHT, TOKENS__FONT_WEIGHT } from './_vars/font-weight'
+import { CSS_PREFIX__LINE_HEIGHT, TOKENS__LINE_HEIGHT } from './_vars/line-height'
+import { CSS_PREFIX__RADIUS, TOKENS__RADIUS } from './_vars/radius'
+import { CSS_PREFIX__SHADOW, TOKENS__SHADOW } from './_vars/shadow'
+import { CSS_PREFIX__SPACING, TOKENS__SPACING } from './_vars/spacing'
+import { CSS_PREFIX__Z_INDEX, TOKENS__Z_INDEX } from './_vars/z-index'
 
 const TOKENS = {
   BLUR: TOKENS__BLUR,
@@ -68,31 +25,52 @@ const TOKENS = {
   Z_INDEX: TOKENS__Z_INDEX,
 }
 
-export * from './_utils/types'
-export {
-  CSS_PREFIX,
-  getTokenValue,
-  getTokenValue_BLUR,
-  getTokenValue_BREAKPOINT,
-  getTokenValue_COLOR,
-  getTokenValue_FONT_FAMILY,
-  getTokenValue_FONT_SIZE,
-  getTokenValue_FONT_WEIGHT,
-  getTokenValue_LINE_HEIGHT,
-  getTokenValue_RADIUS,
-  getTokenValue_SHADOW,
-  getTokenValue_SPACING,
-  getTokenValue_Z_INDEX,
-  TOKENS,
-  TOKENS__BLUR,
-  TOKENS__BREAKPOINT,
-  TOKENS__COLOR,
-  TOKENS__FONT_FAMILY,
-  TOKENS__FONT_SIZE,
-  TOKENS__FONT_WEIGHT,
-  TOKENS__LINE_HEIGHT,
-  TOKENS__RADIUS,
-  TOKENS__SHADOW,
-  TOKENS__SPACING,
-  TOKENS__Z_INDEX,
+const CSS_PREFIX = {
+  BLUR: CSS_PREFIX__BLUR,
+  BREAKPOINT: CSS_PREFIX__BREAKPOINT,
+  COLOR: CSS_PREFIX__COLOR,
+  FONT_FAMILY: CSS_PREFIX__FONT_FAMILY,
+  FONT_SIZE: CSS_PREFIX__FONT_SIZE,
+  FONT_WEIGHT: CSS_PREFIX__FONT_WEIGHT,
+  LINE_HEIGHT: CSS_PREFIX__LINE_HEIGHT,
+  RADIUS: CSS_PREFIX__RADIUS,
+  SHADOW: CSS_PREFIX__SHADOW,
+  SPACING: CSS_PREFIX__SPACING,
+  Z_INDEX: CSS_PREFIX__Z_INDEX,
 }
+
+type Group = DesignTokenGroup<any>
+type Value<G> = G extends DesignTokenGroup<infer V> ? V : never
+
+const getTokenValue = <G extends Group = Group>(tokenGroup: G, tokenName: keyof G, mode?: ColorTheme): Value<G> => {
+  const token = tokenGroup[tokenName] as DesignToken<Value<G>>
+  if (!token) return undefined as Value<G>
+
+  let value = undefined as Value<G>
+  let ref: string
+
+  if (token.value !== undefined) {
+    if (typeof token.value === 'object') {
+      value = (token.value as DesignTokenModeValue<Value<G>>)[mode as ColorTheme]
+      if (value === undefined) return undefined as Value<G>
+    } else {
+      value = token.value
+    }
+  }
+
+  if (token.ref !== undefined) {
+    if (typeof token.ref === 'object') {
+      ref = (token.ref as DesignTokenModeValue<string>)[mode as ColorTheme]
+      if (ref === undefined) return undefined as Value<G>
+    } else {
+      ref = token.ref
+    }
+
+    value = getTokenValue(tokenGroup, ref, mode)
+  }
+
+  return value
+}
+
+export * from './_types'
+export { CSS_PREFIX, getTokenValue, TOKENS }

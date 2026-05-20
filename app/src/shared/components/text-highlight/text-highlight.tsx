@@ -19,7 +19,7 @@ export const TextHighlight = ({ text, query, className }: Props) => {
     .filter((v: string) => v)
     .reduce((acc: string[], v: string) => (v === '\n' && acc[acc.length - 1] === '\n' ? acc : [...acc, v]), [])
 
-  const cssMarks: CSSObject = {
+  const rootCss: CSSObject = {
     '& mark': {
       borderRadius: 'var(--ds-radius-xs)',
       backgroundColor: 'var(--ds-color-bg-highlight)',
@@ -29,7 +29,7 @@ export const TextHighlight = ({ text, query, className }: Props) => {
   }
 
   return (
-    <span className={className} css={cssMarks}>
+    <span className={className} css={rootCss}>
       {parts.map((part: string, index: number) =>
         part.toLowerCase() === normalizedQuery ? (
           <mark key={index}>{part}</mark>

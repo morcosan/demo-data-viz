@@ -1,0 +1,54 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { DocsCanvas } from '@ds/docs/core'
+
+export const Example = ({ children }) => {
+  const sectionClass = cx('py-xs-5 px-xs-7 flex flex-1 flex-col')
+  const titleClass = cx('mb-xs-5! text-size-sm! text-color-text-placeholder mt-0!')
+  return (
+    <DocsCanvas className="text-size-xs flex flex-wrap">
+      <div className={sectionClass}>
+        <h3 className={titleClass}>Mode: Light</h3>
+        <div data-color-theme="light">{children}</div>
+      </div>
+      <div
+        role="separator"
+        className={cx(
+          'border-color-border-default',
+          'w-full border-t',
+          'md:w-auto md:self-stretch md:border-t-0 md:border-l',
+        )}
+      />
+      <div className={sectionClass}>
+        <h3 className={titleClass}>Mode: Dark</h3>
+        <div data-color-theme="dark">{children}</div>
+      </div>
+    </DocsCanvas>
+  )
+}
+
+export const Surface = ({ title, children, className }) => (
+  <div className={cx('py-xs-7 px-xs-9 border-color-border-subtle min-h-md-0 w-full rounded-md border', className)}>
+    <div className="mb-xs-4">{title}</div>
+    {children}
+  </div>
+)
+
+{/* ---------------------------------------------------------------------------------------------------------------- */}
+
+<Meta title="Composite tokens / Surface" />
+
+# Surface tokens
+
+<Example>
+  <Surface title="Page" className="bg-color-bg-page">
+    <Surface title="Sheet" className="bg-color-bg-pane">
+      <Surface title="Card" className="bg-color-bg-card">
+        <Surface title="Popup" className="bg-color-bg-menu" />
+      </Surface>
+    </Surface>
+    <Surface title="Card" className="bg-color-bg-card mt-xs-5">
+      <Surface title="Popup" className="bg-color-bg-menu" />
+    </Surface>
+    <Surface title="Popup" className="bg-color-bg-menu mt-xs-5" />
+  </Surface>
+</Example>

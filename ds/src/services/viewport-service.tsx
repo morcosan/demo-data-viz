@@ -2,7 +2,7 @@
 
 import { debounce } from 'lodash'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { type DesignToken, TOKENS__BREAKPOINT } from '../styles/tokens'
+import { type DesignToken, TOKENS } from '../styles/tokens'
 
 /**
  * Context
@@ -73,9 +73,9 @@ const ViewportService = ({ children }: ReactProps) => {
   }, [])
 
   const breakpoint = Object.fromEntries(
-    Object.entries(TOKENS__BREAKPOINT).map(([key, token]: [string, DesignToken]) => [
+    Object.entries(TOKENS.BREAKPOINT).map(([key, token]: [string, DesignToken]) => [
       key,
-      parseInt(token.$value as string),
+      parseInt(token.value as string),
     ]),
   )
 

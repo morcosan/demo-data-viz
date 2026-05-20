@@ -1,1 +1,1 @@
-export * from '../../scripts/eslint-plugin-ds-imports/index.ts'
+export * from '../../scripts/eslint-plugin-ds-imports/plugin.ts'

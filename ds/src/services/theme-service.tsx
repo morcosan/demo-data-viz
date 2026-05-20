@@ -14,14 +14,15 @@ const COLOR_THEMES: ColorTheme[] = ['light', 'dark']
 /**
  * Context
  */
-interface Store extends ThemeTokens {
+interface Store {
+  tokens: ThemeTokens
   colorTheme: ColorTheme
   isUiDark: boolean
   isUiLight: boolean
   changeColorTheme(theme: ColorTheme): void
 }
 const Context = createContext<Store>({
-  ...lightThemeTokens,
+  tokens: lightThemeTokens,
   colorTheme: 'light',
   isUiDark: false,
   isUiLight: true,
@@ -76,7 +77,7 @@ const ThemeService = (props: Props) => {
   }, [colorThemeProp])
 
   const store: Store = useMemo(
-    () => ({ ...tokens, colorTheme: colorTheme, isUiDark, isUiLight, changeColorTheme: changeUiTheme }),
+    () => ({ tokens, colorTheme, isUiDark, isUiLight, changeColorTheme: changeUiTheme }),
     [tokens, colorTheme, isUiDark, isUiLight, changeUiTheme],
   )
 
@@ -88,3 +89,4 @@ const ThemeService = (props: Props) => {
  */
 // eslint-disable-next-line react-refresh/only-export-components
 export { ATTR_KEY__COLOR_THEME, ThemeService, useThemeService }
+export type { ThemeTokens }

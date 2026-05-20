@@ -1,0 +1,69 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
+import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsColorSwatch } from '@ds/docs/core'
+
+export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => !token.ref)
+export const purples = Object.keys(TOKENS.COLOR).filter((name) => /^purple-\d+$/.test(name))
+export const yellows = Object.keys(TOKENS.COLOR).filter((name) => /^yellow-\d+$/.test(name))
+export const reds = Object.keys(TOKENS.COLOR).filter((name) => /^red-\d+$/.test(name))
+export const greens = Object.keys(TOKENS.COLOR).filter((name) => /^green-\d+$/.test(name))
+export const greys = Object.keys(TOKENS.COLOR).filter((name) => /^grey-\d+$/.test(name))
+export const blackAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^black-alpha-\d+$/.test(name))
+export const whiteAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^white-alpha-\d+$/.test(name))
+
+export const ColorSwatches = ({ colors }) => (
+  <div className="flex flex-wrap gap-px">
+    {colors.map((color) => (
+      <DocsColorSwatch key={color} color={color} />
+    ))}
+  </div>
+)
+
+{/* ---------------------------------------------------------------------------------------------------------------- */}
+
+<Meta title="Atomic tokens / Color (primitive)" />
+
+# Primitive color tokens
+
+<DocsCanvas className="gap-xs-6 p-xs-9 flex flex-col">
+  <ColorSwatches colors={purples} />
+  <ColorSwatches colors={yellows} />
+  <ColorSwatches colors={reds} />
+  <ColorSwatches colors={greens} />
+  <ColorSwatches colors={greys} />
+  <ColorSwatches colors={blackAlphas} />
+  <ColorSwatches colors={whiteAlphas} />
+</DocsCanvas>
+
+<table className="docs">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th className="w-full">Value</th>
+      <th>Coding</th>
+    </tr>
+  </thead>
+  <tbody>
+    {tokens.map(([name]) => (
+      <tr key={name}>
+        <td>
+          <pre>{name}</pre>
+        </td>
+        <td>
+          <DocsColorToken value={getTokenValue(TOKENS.COLOR, name)} />
+        </td>
+        <td>
+          <DocsTokenCoding
+            tsVar={`tokens.color['${name}']`}
+            twVars={[`bg-color-${name}`, `text-color-${name}`, `border-color-${name}`]}
+            cssVar={`${CSS_PREFIX.COLOR}${name}`}
+            tsSize="w-lg-1"
+            twSize="w-lg-1"
+            cssSize="w-lg-1"
+            delay={1000}
+          />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>

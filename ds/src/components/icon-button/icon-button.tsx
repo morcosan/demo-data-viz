@@ -11,9 +11,9 @@ export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_type
 /** Fundamental component for user actions and navigation, displayed as icon */
 export const IconButton = (props: IconButtonProps) => {
   const { linkHref, linkType = 'internal', pressed, size = 'md', variant = 'text-default' } = props
-  const { $fontSize, $radius } = useThemeService()
+  const { tokens } = useThemeService()
   const highlight = pressed ? 'pressed' : 'default'
-  const { baseTokens, bindings, content, cssBaseButton, isVText } = useBaseButton({
+  const { baseCssVars, bindings, content, buttonBaseCss, isVText } = useBaseButton({
     ...props,
     highlight,
     linkType,
@@ -21,31 +21,31 @@ export const IconButton = (props: IconButtonProps) => {
     variant,
   })
 
-  const tokens = {
-    ...baseTokens,
-    borderRadius: isVText ? $radius['full'] : $radius['sm'],
+  const cssVars = {
+    ...baseCssVars,
+    borderRadius: isVText ? tokens.radius['full'] : tokens.radius['sm'],
   }
 
-  const cssButton: CSSObject = {
-    ...cssBaseButton,
-    width: tokens.size,
-    minWidth: tokens.size,
+  const buttonCss: CSSObject = {
+    ...buttonBaseCss,
+    width: cssVars.size,
+    minWidth: cssVars.size,
     padding: 0,
-    borderRadius: tokens.borderRadius,
-    fontSize: $fontSize['md'],
+    borderRadius: cssVars.borderRadius,
+    fontSize: tokens.fontSize['md'],
 
     '&::before, &::after': {
-      ...(cssBaseButton['&::before, &::after'] as CSSObject),
-      borderRadius: tokens.borderRadius,
+      ...(buttonBaseCss['&::before, &::after'] as CSSObject),
+      borderRadius: cssVars.borderRadius,
     },
   }
 
   return linkHref ? (
-    <a {...bindings} css={cssButton}>
+    <a {...bindings} css={buttonCss}>
       {content}
     </a>
   ) : (
-    <button type="button" {...bindings} css={cssButton}>
+    <button type="button" {...bindings} css={buttonCss}>
       {content}
     </button>
   )

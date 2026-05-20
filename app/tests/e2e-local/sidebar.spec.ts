@@ -37,7 +37,7 @@ test.describe('Sidebar', () => {
   test.beforeEach(async () => {
     sidebar = _page.getByTestId('sidebar')
     pinButton = _page.getByTestId('pin-button')
-    const toggle = _page.getByTestId('theme-toggle')
+    const toggle = _page.getByTestId('color-theme-toggle')
     lightButton = toggle.locator('button', { hasText: enJson.core.label.themeLight })
     darkButton = toggle.locator('button', { hasText: enJson.core.label.themeDark })
   })
@@ -89,11 +89,11 @@ test.describe('Sidebar', () => {
     }
   })
 
-  test('opens as light theme', async () => {
+  test('opens as light color theme', async () => {
     await expectTheme('light')
   })
 
-  test('opens as light theme when "prefers-color-scheme: light"', async ({ browser }) => {
+  test('opens as light color theme when "prefers-color-scheme: light"', async ({ browser }) => {
     await _page.context().close()
     const context = await browser.newContext({ colorScheme: 'light' })
     _page = await context.newPage()
@@ -101,7 +101,7 @@ test.describe('Sidebar', () => {
     await expectTheme('light')
   })
 
-  test('opens as dark theme when "prefers-color-scheme: dark"', async ({ browser }) => {
+  test('opens as dark color theme when "prefers-color-scheme: dark"', async ({ browser }) => {
     await _page.context().close()
     const context = await browser.newContext({ colorScheme: 'dark' })
     _page = await context.newPage()

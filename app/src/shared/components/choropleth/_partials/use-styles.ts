@@ -1,4 +1,4 @@
-import { getTokenValue_COLOR, getTokenValue_FONT_FAMILY, useThemeService, useViewportService } from '@ds/core'
+import { getTokenValue, TOKENS, useThemeService, useViewportService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
 import { useCallback, useMemo } from 'react'
 import { type EItemStyle, type ELegend, type ETooltip } from '../_types'
@@ -11,19 +11,19 @@ export const useStyles = () => {
 
   const colors = useMemo(
     () => ({
-      text: getTokenValue_COLOR('text-default', colorTheme),
-      valueNone: getTokenValue_COLOR('map-value-none', colorTheme),
-      valueMin: getTokenValue_COLOR('map-value-min', colorTheme),
-      valueMax: getTokenValue_COLOR('map-value-max', colorTheme),
-      land: getTokenValue_COLOR('map-land', colorTheme),
-      ocean: getTokenValue_COLOR('map-ocean', colorTheme),
-      borderInactive: getTokenValue_COLOR(isUiLight ? 'border-subtle' : 'border-default', colorTheme),
-      borderActive: getTokenValue_COLOR('text-inverse', colorTheme),
-      borderQuery: getTokenValue_COLOR('border-highlight', colorTheme),
-      borderHover: getTokenValue_COLOR('border-highlight', colorTheme),
-      borderLegend: getTokenValue_COLOR('border-active', colorTheme),
+      text: getTokenValue(TOKENS.COLOR, 'text-default', colorTheme),
+      valueNone: getTokenValue(TOKENS.COLOR, 'map-value-none', colorTheme),
+      valueMin: getTokenValue(TOKENS.COLOR, 'map-value-min', colorTheme),
+      valueMax: getTokenValue(TOKENS.COLOR, 'map-value-max', colorTheme),
+      land: getTokenValue(TOKENS.COLOR, 'map-land', colorTheme),
+      ocean: getTokenValue(TOKENS.COLOR, 'map-ocean', colorTheme),
+      borderInactive: getTokenValue(TOKENS.COLOR, isUiLight ? 'border-subtle' : 'border-default', colorTheme),
+      borderActive: getTokenValue(TOKENS.COLOR, 'text-inverse', colorTheme),
+      borderQuery: getTokenValue(TOKENS.COLOR, 'border-highlight', colorTheme),
+      borderHover: getTokenValue(TOKENS.COLOR, 'border-highlight', colorTheme),
+      borderLegend: getTokenValue(TOKENS.COLOR, 'border-active', colorTheme),
     }),
-    [colorTheme],
+    [colorTheme, isUiLight],
   )
 
   const sizes = useMemo(
@@ -97,7 +97,7 @@ export const useStyles = () => {
         textGap: 6,
         textStyle: {
           color: colors.text,
-          fontFamily: getTokenValue_FONT_FAMILY('mono'),
+          fontFamily: getTokenValue(TOKENS.FONT_FAMILY, 'mono'),
           fontSize: '12px',
         },
       } satisfies ELegend,
@@ -112,7 +112,7 @@ export const useStyles = () => {
     [colors, sizes, shadows, isMobile],
   )
 
-  const cssContainer: CSSObject = {
+  const containerCss: CSSObject = {
     backgroundColor: colors.ocean,
 
     '& div': { cursor: 'unset !important' },
@@ -146,7 +146,7 @@ export const useStyles = () => {
 
   return {
     colors,
-    cssContainer,
+    containerCss,
     draggingClass,
     getCitySize,
     getItemStyle,

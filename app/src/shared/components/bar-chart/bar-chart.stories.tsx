@@ -1,4 +1,4 @@
-import { TOKENS } from '@ds/core'
+import { getTokenValue, TOKENS } from '@ds/core'
 import { defineMeta, loremArray, loremInt, loremLastName, loremTrue } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
 import { BarChart, type BarChartEntry, type BarChartProps } from './bar-chart'
@@ -39,7 +39,7 @@ const meta: Meta = {
       entryKey: 'label',
       entryName: 'Entity',
       entryFn: '' as any,
-      entryWidth: parseFloat(TOKENS.SPACING['md-5'].$value),
+      entryWidth: parseFloat(getTokenValue(TOKENS.SPACING, 'md-5')),
       chartSize: 'md',
       queries: [],
       sortKey: '',

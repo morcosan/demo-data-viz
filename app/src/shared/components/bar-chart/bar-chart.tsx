@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { TOKENS, wait } from '@ds/core'
+import { getTokenValue, TOKENS, wait } from '@ds/core'
 import { useEffect, useRef, useState } from 'react'
 import { EmptyState } from '../empty-state/empty-state'
 import { LoadingSpinner } from '../loading-spinner/loading-spinner'
@@ -25,7 +25,7 @@ export const BarChart = (props: BarChartProps) => {
     entryFn,
     entryKey,
     entryName,
-    entryWidth = parseFloat(TOKENS.SPACING['md-5'].$value),
+    entryWidth = parseFloat(getTokenValue(TOKENS.SPACING, 'md-5')),
     loading,
     queries = [],
     style,
