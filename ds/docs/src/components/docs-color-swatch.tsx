@@ -26,14 +26,14 @@ export const DocsColorSwatch = ({ color }: Props) => {
   return (
     <button
       type="button"
-      className="h-md-0 relative flex min-w-fit flex-1 cursor-pointer items-start justify-start whitespace-nowrap"
+      className="group h-md-0 relative flex min-w-fit flex-1 cursor-pointer items-start justify-start whitespace-nowrap"
       style={{ background: `var(${CSS_PREFIX.COLOR}${color})` }}
       onClick={handleClick}
     >
       <span className="bg-color-white-alpha-7 px-xs-1 text-color-black text-size-xs rounded-xs">{color}</span>
 
-      <span className="absolute-overlay bg-color focus-opacity-100 flex items-end opacity-0 hover:opacity-100">
-        <span className="bg-color-white-alpha-10 px-xs-1 text-size-xs">{hexValue}</span>
+      <span className="absolute-overlay flex items-end opacity-0 group-focus:opacity-100 hover:opacity-100">
+        <span className="bg-color-white-alpha-10 px-xs-1 text-size-xs flex">{hexValue}</span>
       </span>
 
       {Boolean(copied) && <span className={copiedClass}>Copied</span>}
