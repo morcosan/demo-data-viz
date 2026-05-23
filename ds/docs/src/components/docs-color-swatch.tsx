@@ -1,5 +1,6 @@
 import { CSS_PREFIX, getTokenValue, TOKENS, wait } from '@ds/core'
 import { useState } from 'react'
+import { oklchToHex } from '../utilities/color-utils'
 
 interface Props {
   color: keyof typeof TOKENS.COLOR
@@ -12,11 +13,12 @@ export const DocsColorSwatch = ({ color }: Props) => {
     'flex-center absolute-center bg-color-success-card-bg px-xs-1 rounded-xs',
     'text-size-xs text-color-success-card-text',
   )
+  const hexValue = oklchToHex(getTokenValue(TOKENS.COLOR, color))
 
   const handleClick = (event: ReactMouseEvent) => {
     const button = event.target as HTMLButtonElement
     button.blur()
-    navigator.clipboard.writeText(getTokenValue(TOKENS.COLOR, color))
+    navigator.clipboard.writeText(hexValue)
     setCopied(true)
     wait(600).then(() => setCopied(false))
   }
@@ -28,9 +30,13 @@ export const DocsColorSwatch = ({ color }: Props) => {
       style={{ background: `var(${CSS_PREFIX.COLOR}${color})` }}
       onClick={handleClick}
     >
-      <div className="bg-color-white-alpha-7 px-xs-1 text-color-black text-size-xs rounded-xs">{color}</div>
+      <span className="bg-color-white-alpha-7 px-xs-1 text-color-black text-size-xs rounded-xs">{color}</span>
 
-      {Boolean(copied) && <div className={copiedClass}>Copied</div>}
+      <span className="absolute-overlay bg-color focus-opacity-100 flex items-end opacity-0 hover:opacity-100">
+        <span className="bg-color-white-alpha-10 px-xs-1 text-size-xs">{hexValue}</span>
+      </span>
+
+      {Boolean(copied) && <span className={copiedClass}>Copied</span>}
     </button>
   )
 }

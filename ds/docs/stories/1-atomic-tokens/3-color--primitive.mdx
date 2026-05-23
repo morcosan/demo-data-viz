@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
-import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsColorSwatch } from '@ds/docs/core'
+import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsColorSwatch, oklchToHex } from '@ds/docs/core'
 
 export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => !token.ref)
 export const purples = Object.keys(TOKENS.COLOR).filter((name) => /^purple-\d+$/.test(name))
@@ -39,7 +39,8 @@ export const ColorSwatches = ({ colors }) => (
   <thead>
     <tr>
       <th>Token</th>
-      <th className="w-full">Value</th>
+      <th>Value</th>
+      <th className="w-full">Value (hex)</th>
       <th>Coding</th>
     </tr>
   </thead>
@@ -49,13 +50,16 @@ export const ColorSwatches = ({ colors }) => (
         <td>
           <pre>{name}</pre>
         </td>
-        <td>
+        <td className="pr-0!">
           <DocsColorToken value={getTokenValue(TOKENS.COLOR, name)} />
+        </td>
+        <td>
+          <DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR, name))} />
         </td>
         <td>
           <DocsTokenCoding
             tsVar={`tokens.color['${name}']`}
-            twVars={[`bg-color-${name}`, `text-color-${name}`, `border-color-${name}`]}
+            twVars={[`bg-color-${name}`, `text-color-${name}`]}
             cssVar={`${CSS_PREFIX.COLOR}${name}`}
             tsSize="w-lg-1"
             twSize="w-lg-1"
