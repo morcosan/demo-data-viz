@@ -87,7 +87,7 @@ StyleDictionary.registerFormat({
               : { value: { light: lightRef ?? value.$light, dark: darkRef ?? value.$dark } }
         } else {
           const ref = toRef(value)
-          current[leaf] = ref ? { ref: ref } : { value: token.$value }
+          current[leaf] = ref ? { ref } : { value: token.$value }
         }
       }
 

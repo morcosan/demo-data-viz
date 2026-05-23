@@ -4,13 +4,23 @@ import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import StyleDictionary from 'style-dictionary'
 import { FORMAT_NAME_CSS, FORMAT_NAME_TS } from './_format.ts'
+import { type TokenType } from './schema.ts'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const outDir = path.join(__dirname, '../../src/styles/tokens/_vars')
 const tokensFile = path.join(__dirname, '../../src/styles/tokens/_data/tokens.json')
-const tokensJson = JSON.parse(readFileSync(tokensFile, 'utf-8'))
+const rawTokensJson = JSON.parse(readFileSync(tokensFile, 'utf-8'))
+const isComposite = (token: TokenType) => '$type' in token && token.$type === 'composite'
+const tokensJson = Object.fromEntries(
+  Object.entries<Record<string, TokenType>>(rawTokensJson)
+    .map(([group, groupTokens]) => [
+      group,
+      Object.fromEntries(Object.entries<TokenType>(groupTokens).filter(([, token]) => !isComposite(token))),
+    ])
+    .filter(([, groupTokens]) => Object.keys(groupTokens).length > 0),
+)
 
 // Clear folder
 rmSync(outDir, { recursive: true, force: true })
