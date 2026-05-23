@@ -4,7 +4,7 @@ import { defineJsonValidation } from '../_utils/eslint-utils.ts'
 
 const TokenValue = z.union([
   z.object({ $value: z.union([z.string(), z.number()]) }).strict(),
-  z.object({ $value: z.object({ light: z.string(), dark: z.string() }).strict() }).strict(),
+  z.object({ $value: z.object({ $light: z.string(), $dark: z.string() }).strict() }).strict(),
 ])
 const TokensSchema = z
   .object({
@@ -19,6 +19,7 @@ const TokensSchema = z
     shadow: z.record(z.string(), TokenValue),
     spacing: z.record(z.string(), TokenValue),
     'z-index': z.record(z.string(), TokenValue),
+    surface: z.record(z.string(), TokenValue),
   })
   .strict()
 

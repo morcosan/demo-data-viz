@@ -3,7 +3,7 @@ import StyleDictionary, { type TransformedToken } from 'style-dictionary'
 import { type FormatFnArguments } from 'style-dictionary/types'
 import { formattedVariables } from 'style-dictionary/utils'
 
-type ColorMode = 'light' | 'dark'
+type TokenColorMode = '$light' | '$dark'
 
 const FORMAT_NAME_CSS = 'css/ds-format'
 const FORMAT_NAME_TS = 'ts/ds-format'
@@ -18,7 +18,7 @@ const NOTICE = [
 const prettierConfig = await prettier.resolveConfig(process.cwd() + '/package.json')
 
 const stripNamespace = (ref: string) => ref.slice(1, -1).split('.').slice(1).join('.')
-const hasColorMode = (value: unknown) => typeof value === 'object' && value && 'light' in value && 'dark' in value
+const hasColorMode = (value: unknown) => typeof value === 'object' && value && '$light' in value && '$dark' in value
 
 StyleDictionary.registerFormat({
   name: FORMAT_NAME_CSS,
@@ -28,9 +28,9 @@ StyleDictionary.registerFormat({
       format: 'css',
       outputReferences: options.outputReferences,
     }
-    const mapTokens = (tokens: TransformedToken[], mode: ColorMode) => {
+    const mapTokens = (tokens: TransformedToken[], mode: TokenColorMode) => {
       return tokens
-        .filter((token) => mode === 'light' || hasColorMode(token.$value))
+        .filter((token) => mode === '$light' || hasColorMode(token.$value))
         .map((token) => {
           const modeValue = hasColorMode(token.$value) ? token.$value[mode] : token.$value
           return {
@@ -43,13 +43,13 @@ StyleDictionary.registerFormat({
           }
         })
     }
-    const getVars = (mode: ColorMode) => {
+    const getVars = (mode: TokenColorMode) => {
       const allTokens = mapTokens(dictionary.allTokens, mode)
       return formattedVariables({ dictionary: { ...dictionary, allTokens }, ...formatOptions })
     }
-    const darkVars = getVars('dark')
+    const darkVars = getVars('$dark')
     const lightSelector = darkVars ? `,\n[data-color-mode='light']` : ''
-    const lightOutput = `:root,\n:host${lightSelector} {\n${getVars('light')}\n}\n`
+    const lightOutput = `:root,\n:host${lightSelector} {\n${getVars('$light')}\n}\n`
     const darkOutput = darkVars ? `\n[data-color-mode='dark'] {\n${darkVars}\n}\n` : ''
     const output = NOTICE + lightOutput + darkOutput
 
@@ -79,12 +79,12 @@ StyleDictionary.registerFormat({
         const value = token.original?.$value
 
         if (hasColorMode(value)) {
-          const lightRef = toRef(value.light)
-          const darkRef = toRef(value.dark)
+          const lightRef = toRef(value.$light)
+          const darkRef = toRef(value.$dark)
           current[leaf] =
             lightRef && darkRef
               ? { ref: { light: lightRef, dark: darkRef } }
-              : { value: { light: lightRef ?? value.light, dark: darkRef ?? value.dark } }
+              : { value: { light: lightRef ?? value.$light, dark: darkRef ?? value.$dark } }
         } else {
           const ref = toRef(value)
           current[leaf] = ref ? { ref: ref } : { value: token.$value }
