@@ -27,8 +27,8 @@ export const Example = ({ children }) => {
 }
 
 export const Surface = ({ title, children, className }) => (
-  <div className={cx('py-xs-7 px-xs-9 border-color-border-subtle min-h-md-0 w-full rounded-md border', className)}>
-    <div className="mb-xs-4">{title}</div>
+  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 w-full rounded-md shadow-xs', className)}>
+    <div className="mb-xs-5">{title}</div>
     {children}
   </div>
 )
