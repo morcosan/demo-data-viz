@@ -11,8 +11,8 @@ const __dirname = dirname(__filename)
 
 const FORMAT_NAME__CSS = 'css/ds-format'
 const FORMAT_NAME__TS = 'ts/ds-format'
-const outDir = path.join(__dirname, '../../src/styles/tokens/_vars')
-const tokensFile = path.join(__dirname, '../../src/styles/tokens/_data/tokens.json')
+const outDir = path.join(__dirname, '../../src/styles/tokens/_dist')
+const tokensFile = path.join(__dirname, '../../src/styles/tokens/_src/tokens.json')
 const tokensJson = JSON.parse(readFileSync(tokensFile, 'utf-8'))
 
 // Clear folder

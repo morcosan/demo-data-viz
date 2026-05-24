@@ -1,15 +1,15 @@
-@import './_vars/blur.css';
-@import './_vars/breakpoint.css';
-@import './_vars/color.css';
-@import './_vars/font-family.css';
-@import './_vars/font-size.css';
-@import './_vars/font-weight.css';
-@import './_vars/line-height.css';
-@import './_vars/radius.css';
-@import './_vars/shadow.css';
-@import './_vars/spacing.css';
-@import './_vars/surface.css';
-@import './_vars/z-index.css';
+@import './_dist/blur.css';
+@import './_dist/breakpoint.css';
+@import './_dist/color.css';
+@import './_dist/font-family.css';
+@import './_dist/font-size.css';
+@import './_dist/font-weight.css';
+@import './_dist/line-height.css';
+@import './_dist/radius.css';
+@import './_dist/shadow.css';
+@import './_dist/spacing.css';
+@import './_dist/surface.css';
+@import './_dist/z-index.css';
 
 @font-face {
   font-style: normal;

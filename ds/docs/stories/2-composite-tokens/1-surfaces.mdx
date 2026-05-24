@@ -27,7 +27,7 @@ export const Example = ({ children }) => {
 }
 
 export const Surface = ({ title, children, className }) => (
-  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 w-full rounded-md shadow-xs', className)}>
+  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 w-full', className)}>
     <div className="mb-xs-5">{title}</div>
     {children}
   </div>
@@ -40,15 +40,15 @@ export const Surface = ({ title, children, className }) => (
 # Surface tokens
 
 <Example>
-  <Surface title="Page" className="bg-color-bg-page">
-    <Surface title="Sheet" className="bg-color-bg-sheet">
-      <Surface title="Card" className="bg-color-bg-card">
-        <Surface title="Popup" className="bg-color-bg-popup" />
+  <Surface title="Page" className="ds-surface-page">
+    <Surface title="Sheet" className="ds-surface-sheet">
+      <Surface title="Card" className="ds-surface-card">
+        <Surface title="Popup" className="ds-surface-popup" />
       </Surface>
     </Surface>
-    <Surface title="Card" className="bg-color-bg-card mt-xs-5">
-      <Surface title="Popup" className="bg-color-bg-popup" />
+    <Surface title="Card" className="ds-surface-card mt-xs-5">
+      <Surface title="Popup" className="ds-surface-popup" />
     </Surface>
-    <Surface title="Popup" className="bg-color-bg-popup mt-xs-5" />
+    <Surface title="Popup" className="ds-surface-popup mt-xs-5" />
   </Surface>
 </Example>
