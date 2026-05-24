@@ -28,7 +28,6 @@ export * from '../../docs/src/components/docs-tooltip'
 /**
  * Utilities
  */
-export * from '../../docs/src/utilities/color-utils'
 export * from '../../docs/src/utilities/docs-utils'
 export * from '../../docs/src/utilities/lorem-utils'
 export * from '../../docs/src/utilities/window'

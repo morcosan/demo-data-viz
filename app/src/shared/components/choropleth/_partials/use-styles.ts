@@ -1,4 +1,4 @@
-import { getTokenValue, TOKENS, useThemeService, useViewportService } from '@ds/core'
+import { getTokenValue, oklchToHex, TOKENS, useThemeService, useViewportService } from '@ds/core'
 import { type CSSObject } from '@emotion/react'
 import { useCallback, useMemo } from 'react'
 import { type EItemStyle, type ELegend, type ETooltip } from '../_types'
@@ -11,17 +11,19 @@ export const useStyles = () => {
 
   const colors = useMemo(
     () => ({
-      text: getTokenValue(TOKENS.COLOR, 'text-default', colorMode),
-      valueNone: getTokenValue(TOKENS.COLOR, 'map-value-none', colorMode),
-      valueMin: getTokenValue(TOKENS.COLOR, 'map-value-min', colorMode),
-      valueMax: getTokenValue(TOKENS.COLOR, 'map-value-max', colorMode),
-      land: getTokenValue(TOKENS.COLOR, 'map-land', colorMode),
-      ocean: getTokenValue(TOKENS.COLOR, 'map-ocean', colorMode),
-      borderInactive: getTokenValue(TOKENS.COLOR, isUiLight ? 'border-subtle' : 'border-default', colorMode),
-      borderActive: getTokenValue(TOKENS.COLOR, 'text-inverse', colorMode),
-      borderQuery: getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode),
-      borderHover: getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode),
-      borderLegend: getTokenValue(TOKENS.COLOR, 'border-active', colorMode),
+      text: oklchToHex(getTokenValue(TOKENS.COLOR, 'text-default', colorMode)),
+      valueNone: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-value-none', colorMode)),
+      valueMin: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-value-min', colorMode)),
+      valueMax: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-value-max', colorMode)),
+      land: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-land', colorMode)),
+      ocean: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-ocean', colorMode)),
+      borderInactive: oklchToHex(
+        getTokenValue(TOKENS.COLOR, isUiLight ? 'border-subtle' : 'border-default', colorMode),
+      ),
+      borderActive: oklchToHex(getTokenValue(TOKENS.COLOR, 'text-inverse', colorMode)),
+      borderQuery: oklchToHex(getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode)),
+      borderHover: oklchToHex(getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode)),
+      borderLegend: oklchToHex(getTokenValue(TOKENS.COLOR, 'border-active', colorMode)),
     }),
     [colorMode, isUiLight],
   )

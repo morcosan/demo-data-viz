@@ -1,6 +1,5 @@
-import { CSS_PREFIX, getTokenValue, TOKENS, wait } from '@ds/core'
+import { CSS_PREFIX, getTokenValue, oklchToHex, TOKENS, wait } from '@ds/core'
 import { useState } from 'react'
-import { oklchToHex } from '../utilities/color-utils'
 
 interface Props {
   color: keyof typeof TOKENS.COLOR

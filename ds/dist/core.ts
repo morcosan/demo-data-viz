@@ -31,5 +31,6 @@ export * from '../src/services/viewport-service'
 /**
  * Utilities
  */
+export * from '../src/utilities/color-utils'
 export * from '../src/utilities/react-utils'
 export * from '../src/utilities/various-utils'
