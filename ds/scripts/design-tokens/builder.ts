@@ -26,7 +26,6 @@ const builder = new StyleDictionary({
   platforms: {
     css: {
       transformGroup: 'css',
-      prefix: 'ds',
       buildPath: outDir,
       options: { outputReferences: true },
       files: Object.keys(tokensJson).map((name: string) => ({
