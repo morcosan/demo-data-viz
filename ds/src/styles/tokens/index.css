@@ -8,6 +8,7 @@
 @import './_vars/radius.css';
 @import './_vars/shadow.css';
 @import './_vars/spacing.css';
+@import './_vars/surface.css';
 @import './_vars/z-index.css';
 
 @font-face {

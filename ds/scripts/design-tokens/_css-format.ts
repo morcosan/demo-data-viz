@@ -13,11 +13,15 @@ const cssFormat: Format = {
       format: 'css',
       outputReferences: options.outputReferences,
     }
-
-    // Separate composite tokens from regular tokens
     const compositeTokens = dictionary.allTokens.filter((token) => token.$type === 'composite')
     const atomicTokens = dictionary.allTokens.filter((token) => token.$type !== 'composite')
-
+    const renderComposites = (): string => {
+      const darkTokens = compositeTokens.filter((token) => Object.values(token.original.$value).some(hasColorMode))
+      const lightCode = compositeTokens.map((token) => renderClass(token, '$light')).join('\n\n')
+      const darkCode = darkTokens.map((token) => renderClass(token, '$dark')).join('\n\n')
+      const darkOutput = darkTokens.length ? `\n[data-color-mode='dark'] {\n${darkCode}\n}\n` : ''
+      return `\n@layer utilities {\n:where(html), [data-color-mode='light'] {\n${lightCode}\n}\n${darkOutput}\n}`
+    }
     const mapTokens = (tokens: TransformedToken[], mode: TokenColorMode) => {
       return tokens
         .filter((token) => mode === '$light' || hasColorMode(token.$value))
@@ -33,39 +37,9 @@ const cssFormat: Format = {
           }
         })
     }
-
     const renderCssVars = (mode: TokenColorMode) => {
       const allTokens = mapTokens(atomicTokens, mode)
       return formattedVariables({ dictionary: { ...dictionary, allTokens }, ...formatOptions })
-    }
-
-    const resolveRef = (value: string): string => {
-      return value.replace(/\{([^}]+)}/g, (_, path) => {
-        const varName = path.replace(/\./g, '-')
-        return `var(--ds-${varName})`
-      })
-    }
-
-    const getClassName = (token: TransformedToken): string => 'ds-' + token.path.join('-')
-
-    const renderClass = (token: TransformedToken, mode?: TokenColorMode) => {
-      const className = getClassName(token)
-      const rawValue = token.original.$value as CompositeValue
-      const props = Object.entries(rawValue)
-        .map(([prop, value]) => {
-          const resolved = hasColorMode(value) ? (value as ThemedValue)[mode ?? '$light'] : value
-          return `${prop}: ${resolveRef(String(resolved))};`
-        })
-        .join('\n')
-      return `.${className} {\n${props}\n}`
-    }
-
-    const renderComposites = (): string => {
-      const darkTokens = compositeTokens.filter((token) => Object.values(token.original.$value).some(hasColorMode))
-      const lightCode = compositeTokens.map((token) => renderClass(token, '$light')).join('\n\n')
-      const darkCode = darkTokens.map((token) => renderClass(token, '$dark')).join('\n\n')
-      const darkOutput = darkTokens.length ? `\n[data-color-mode='dark'] {\n${darkCode}\n}\n` : ''
-      return `\n${lightCode}\n` + darkOutput
     }
 
     const lightVarsCode = renderCssVars('$light')
@@ -78,6 +52,27 @@ const cssFormat: Format = {
 
     return await prettier.format(output, { ...prettierConfig, parser: 'css' })
   },
+}
+
+const resolveRef = (value: string): string => {
+  return value.replace(/\{([^}]+)}/g, (_, path) => {
+    const varName = path.replace(/\./g, '-')
+    return `var(--ds-${varName})`
+  })
+}
+
+const getClassName = (token: TransformedToken): string => 'ds-' + token.path.join('-')
+
+const renderClass = (token: TransformedToken, mode?: TokenColorMode) => {
+  const className = getClassName(token)
+  const rawValue = token.original.$value as CompositeValue
+  const props = Object.entries(rawValue)
+    .map(([prop, value]) => {
+      const resolved = hasColorMode(value) ? (value as ThemedValue)[mode ?? '$light'] : value
+      return `${prop}: ${resolveRef(String(resolved))};`
+    })
+    .join('\n')
+  return `.${className} {\n${props}\n}`
 }
 
 export { cssFormat }
