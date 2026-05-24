@@ -59,10 +59,18 @@ const defineJsonValidation = (schema: ZodArray | ZodObject, errorId: ErrorId) =>
   })
 }
 
-function flattenUnionIssues(issues: ZodIssue[]): ZodIssue[] {
+const getIssueSpecificity = (issues: ZodIssue[]) => {
+  const maxDepth = Math.max(...issues.map((i) => i.path.length), 0)
+  const hasMissingKey = issues.some((i) => i.code === 'invalid_type' && i.path.length > 0)
+  return maxDepth * 10 + (hasMissingKey ? 1 : 0)
+}
+
+const flattenUnionIssues = (issues: ZodIssue[]): ZodIssue[] => {
   return issues.flatMap((issue) => {
     if (issue.code === 'invalid_union') {
-      const bestBranch = issue.errors.reduce((best, current) => (current.length > best.length ? current : best))
+      const bestBranch = issue.errors.reduce((best, current) => {
+        return getIssueSpecificity(current) >= getIssueSpecificity(best) ? current : best
+      })
       return flattenUnionIssues(bestBranch.map((inner) => ({ ...inner, path: [...issue.path, ...inner.path] })))
     }
     return [issue]

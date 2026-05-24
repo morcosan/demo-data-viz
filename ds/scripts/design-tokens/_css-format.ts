@@ -34,7 +34,7 @@ const cssFormat: Format = {
         })
     }
 
-    const getVars = (mode: TokenColorMode) => {
+    const renderCssVars = (mode: TokenColorMode) => {
       const allTokens = mapTokens(atomicTokens, mode)
       return formattedVariables({ dictionary: { ...dictionary, allTokens }, ...formatOptions })
     }
@@ -46,49 +46,35 @@ const cssFormat: Format = {
       })
     }
 
-    const tokenToClassName = (token: TransformedToken): string => {
-      return 'ds-' + token.path.join('-')
+    const getClassName = (token: TransformedToken): string => 'ds-' + token.path.join('-')
+
+    const renderClass = (token: TransformedToken, mode?: TokenColorMode) => {
+      const className = getClassName(token)
+      const rawValue = token.original.$value as CompositeValue
+      const props = Object.entries(rawValue)
+        .map(([prop, value]) => {
+          const resolved = hasColorMode(value) ? (value as ThemedValue)[mode ?? '$light'] : value
+          return `${prop}: ${resolveRef(String(resolved))};`
+        })
+        .join('\n')
+      return `.${className} {\n${props}\n}`
     }
 
-    const generateCompositeClasses = (): string => {
-      if (compositeTokens.length === 0) return ''
-
-      const renderClass = (token: TransformedToken, mode?: TokenColorMode) => {
-        const className = tokenToClassName(token)
-        const rawValue = token.original.$value as CompositeValue
-
-        const props = Object.entries(rawValue)
-          .map(([prop, value]) => {
-            const resolved = hasColorMode(value) ? (value as ThemedValue)[mode ?? '$light'] : value
-            return `  ${prop}: ${resolveRef(String(resolved))};`
-          })
-          .join('\n')
-
-        return `.${className} {\n${props}\n}`
-      }
-
-      const lightClasses = compositeTokens.map((t) => renderClass(t, '$light')).join('\n\n')
-
-      const darkTokens = compositeTokens.filter((token) =>
-        Object.values(token.original.$value as Record<string, unknown>).some(hasColorMode),
-      )
-
-      if (darkTokens.length === 0) {
-        return '\n' + lightClasses + '\n'
-      }
-
-      const darkClasses = darkTokens.map((t) => renderClass(t, '$dark')).join('\n\n')
-
-      return '\n' + lightClasses + `\n\n[data-color-mode='dark'] {\n` + darkClasses + '\n}\n'
+    const renderComposites = (): string => {
+      const darkTokens = compositeTokens.filter((token) => Object.values(token.original.$value).some(hasColorMode))
+      const lightCode = compositeTokens.map((token) => renderClass(token, '$light')).join('\n\n')
+      const darkCode = darkTokens.map((token) => renderClass(token, '$dark')).join('\n\n')
+      const darkOutput = darkTokens.length ? `\n[data-color-mode='dark'] {\n${darkCode}\n}\n` : ''
+      return `\n${lightCode}\n` + darkOutput
     }
 
-    const lightVarsCode = getVars('$light')
-    const darkVarsCode = getVars('$dark')
+    const lightVarsCode = renderCssVars('$light')
+    const darkVarsCode = renderCssVars('$dark')
     const lightSelector = darkVarsCode ? `,\n[data-color-mode='light']` : ''
-    const lightOutput = lightVarsCode ? `\n:root,\n:host${lightSelector} {\n${lightVarsCode}\n}\n` : ''
-    const darkOutput = darkVarsCode ? `\n[data-color-mode='dark'] {\n${darkVarsCode}\n}\n` : ''
-    const compositeOutput = generateCompositeClasses()
-    const output = NOTICE + lightOutput + darkOutput + compositeOutput
+    const lightVarsOutput = lightVarsCode ? `\n:root,\n:host${lightSelector} {\n${lightVarsCode}\n}\n` : ''
+    const darkVarsOutput = darkVarsCode ? `\n[data-color-mode='dark'] {\n${darkVarsCode}\n}\n` : ''
+    const compositeOutput = compositeTokens.length ? renderComposites() : ''
+    const output = NOTICE + lightVarsOutput + darkVarsOutput + compositeOutput
 
     return await prettier.format(output, { ...prettierConfig, parser: 'css' })
   },
