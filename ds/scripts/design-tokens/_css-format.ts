@@ -20,7 +20,7 @@ const cssFormat: Format = {
       const lightCode = compositeTokens.map((token) => renderClass(token, '$light')).join('\n\n')
       const darkCode = darkTokens.map((token) => renderClass(token, '$dark')).join('\n\n')
       const darkOutput = darkTokens.length ? `\n[data-color-mode='dark'] {\n${darkCode}\n}\n` : ''
-      return `\n@layer utilities {\n:where(html), [data-color-mode='light'] {\n${lightCode}\n}\n${darkOutput}\n}`
+      return `\n:where(html), [data-color-mode='light'] {\n${lightCode}\n}\n${darkOutput}`
     }
     const mapTokens = (tokens: TransformedToken[], mode: TokenColorMode) => {
       return tokens
