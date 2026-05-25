@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { CLASS_PREFIX, TOKENS } from '@ds/core'
 import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsTokenThemeGrid } from '@ds/docs/core'
+import { kebabCase } from 'lodash'
 import { Fragment } from 'react'
 
 export const tokens = Object.entries(TOKENS.SURFACE)
@@ -82,7 +83,7 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
           <div className={gridClass}>
             {Object.entries(token.ref).map(([key, value]) => (
               <Fragment key={key}>
-                <pre className="text-color-text-subtle">{key}:</pre>
+                <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
                 {typeof value === 'object' ? (
                   <DocsTokenThemeGrid lightSlot={<code>{value.light}</code>} darkSlot={<code>{value.dark}</code>} />
                 ) : (
@@ -96,7 +97,7 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
           <div className={gridClass}>
             {Object.entries(token.value).map(([key, value]) => (
               <Fragment key={key}>
-                <pre className="text-color-text-subtle">{key}:</pre>
+                <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
                 {typeof value === 'object' ? (
                   <DocsTokenThemeGrid
                     lightSlot={<TokenValue value={value.light} />}
