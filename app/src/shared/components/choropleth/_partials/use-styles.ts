@@ -11,19 +11,19 @@ export const useStyles = () => {
 
   const colors = useMemo(
     () => ({
-      text: oklchToHex(getTokenValue(TOKENS.COLOR, 'text-default', colorMode)),
-      valueNone: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-value-none', colorMode)),
-      valueMin: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-value-min', colorMode)),
-      valueMax: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-value-max', colorMode)),
-      land: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-land', colorMode)),
-      ocean: oklchToHex(getTokenValue(TOKENS.COLOR, 'map-ocean', colorMode)),
+      text: oklchToHex(getTokenValue(TOKENS.COLOR['text-default'], colorMode)),
+      valueNone: oklchToHex(getTokenValue(TOKENS.COLOR['map-value-none'], colorMode)),
+      valueMin: oklchToHex(getTokenValue(TOKENS.COLOR['map-value-min'], colorMode)),
+      valueMax: oklchToHex(getTokenValue(TOKENS.COLOR['map-value-max'], colorMode)),
+      land: oklchToHex(getTokenValue(TOKENS.COLOR['map-land'], colorMode)),
+      ocean: oklchToHex(getTokenValue(TOKENS.COLOR['map-ocean'], colorMode)),
       borderInactive: oklchToHex(
-        getTokenValue(TOKENS.COLOR, isUiLight ? 'border-subtle' : 'border-default', colorMode),
+        getTokenValue(TOKENS.COLOR[isUiLight ? 'border-subtle' : 'border-default'], colorMode),
       ),
-      borderActive: oklchToHex(getTokenValue(TOKENS.COLOR, 'text-inverse', colorMode)),
-      borderQuery: oklchToHex(getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode)),
-      borderHover: oklchToHex(getTokenValue(TOKENS.COLOR, 'border-highlight', colorMode)),
-      borderLegend: oklchToHex(getTokenValue(TOKENS.COLOR, 'border-active', colorMode)),
+      borderActive: oklchToHex(getTokenValue(TOKENS.COLOR['text-inverse'], colorMode)),
+      borderQuery: oklchToHex(getTokenValue(TOKENS.COLOR['border-highlight'], colorMode)),
+      borderHover: oklchToHex(getTokenValue(TOKENS.COLOR['border-highlight'], colorMode)),
+      borderLegend: oklchToHex(getTokenValue(TOKENS.COLOR['border-active'], colorMode)),
     }),
     [colorMode, isUiLight],
   )
@@ -99,7 +99,7 @@ export const useStyles = () => {
         textGap: 6,
         textStyle: {
           color: colors.text,
-          fontFamily: getTokenValue(TOKENS.FONT_FAMILY, 'mono'),
+          fontFamily: getTokenValue(TOKENS.FONT_FAMILY['mono']),
           fontSize: '12px',
         },
       } satisfies ELegend,

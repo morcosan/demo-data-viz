@@ -43,8 +43,8 @@ export const ListingSection = ({ className, onClickDataset }: Props) => {
     }))
   }, [allDatasets, searchQuery, storage.data])
 
-  const itemHeight = parseInt(getTokenValue(TOKENS.SPACING, 'md-2'))
-  const gapSize = parseInt(getTokenValue(TOKENS.SPACING, 'xs-1'))
+  const itemHeight = parseInt(getTokenValue(TOKENS.SPACING['md-2']))
+  const gapSize = parseInt(getTokenValue(TOKENS.SPACING['xs-1']))
   const { vRowItems, vTotalHeight, vScrollerRef } = useVirtualScroll({
     rowCount: datasets.length,
     itemHeight: itemHeight + gapSize,

@@ -34,10 +34,10 @@ export const cssSize = 'w-lg-4'
             <pre>{name}</pre>
           </td>
           <td>
-            <pre>{token.ref}</pre>
+            <pre>{token.ref.replace('spacing.', '')}</pre>
           </td>
           <td>
-            <code>{getTokenValue(TOKENS.SPACING, token.ref)}</code>
+            <code>{getTokenValue(TOKENS.SPACING[token.ref.replace('spacing.', '')])}</code>
           </td>
           <td>
             <DocsTokenCoding

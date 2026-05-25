@@ -25,7 +25,7 @@ export const BarChart = (props: BarChartProps) => {
     entryFn,
     entryKey,
     entryName,
-    entryWidth = parseFloat(getTokenValue(TOKENS.SPACING, 'md-5')),
+    entryWidth = parseFloat(getTokenValue(TOKENS.SPACING['md-5'])),
     loading,
     queries = [],
     style,

@@ -32,10 +32,10 @@ export const cssSize = 'w-lg-4'
           <pre>{name}</pre>
         </td>
         <td>
-          <pre>{token.ref}</pre>
+          <pre>{token.ref.replace('z-index.', '')}</pre>
         </td>
         <td>
-          <code>{getTokenValue(TOKENS.Z_INDEX, token.ref)}</code>
+          <code>{getTokenValue(TOKENS.Z_INDEX[token.ref.replace('z-index.', '')])}</code>
         </td>
         <td>
           <DocsTokenCoding

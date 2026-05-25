@@ -12,7 +12,7 @@ export const DocsColorSwatch = ({ color }: Props) => {
     'flex-center absolute-center bg-color-success-card-bg px-xs-1 rounded-xs',
     'text-size-xs text-color-success-card-text',
   )
-  const hexValue = oklchToHex(getTokenValue(TOKENS.COLOR, color))
+  const hexValue = oklchToHex(getTokenValue(TOKENS.COLOR[color]))
 
   const handleClick = (event: ReactMouseEvent) => {
     const button = event.target as HTMLButtonElement

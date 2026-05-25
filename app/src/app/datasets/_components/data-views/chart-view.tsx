@@ -43,7 +43,7 @@ export const ChartView = (props: ChartViewProps) => {
       entryKey={indexKey}
       entryName={indexCol?.label || ''}
       entryFn={entryFn}
-      entryWidth={parseFloat(getTokenValue(TOKENS.SPACING, 'lg-1'))}
+      entryWidth={parseFloat(getTokenValue(TOKENS.SPACING['lg-1']))}
       chartSize="sm"
       sortKey={VALUE_KEY}
       sortDir="desc"

@@ -87,70 +87,268 @@ export const TOKENS__COLOR = {
   'white-alpha-8': { value: 'oklch(1 0 0 / 0.4)' },
   'white-alpha-9': { value: 'oklch(1 0 0 / 0.48)' },
   'white-alpha-10': { value: 'oklch(1 0 0 / 0.56)' },
-  'bg-page': { ref: { light: 'grey-3', dark: 'grey-19' } },
-  'bg-sheet': { ref: { light: 'grey-2', dark: 'grey-18' } },
-  'bg-card': { ref: { light: 'grey-1', dark: 'grey-17' } },
-  'bg-popup': { ref: { light: 'white', dark: 'grey-16' } },
-  'bg-coding': { ref: { light: 'grey-5', dark: 'grey-20' } },
-  'bg-field': { ref: { light: 'black-alpha-1', dark: 'black-alpha-4' } },
-  'bg-skeleton': { ref: { light: 'black-alpha-3', dark: 'white-alpha-5' } },
-  'bg-link': { ref: { light: 'black-alpha-2', dark: 'black-alpha-5' } },
-  'bg-blockquote': { ref: { light: 'black-alpha-1', dark: 'white-alpha-2' } },
-  'bg-highlight': { ref: { light: 'yellow-4', dark: 'yellow-6' } },
-  'border-active': { ref: { light: 'grey-12', dark: 'grey-8' } },
-  'border-hover': { ref: { light: 'grey-11', dark: 'grey-12' } },
-  'border-default': { ref: { light: 'grey-7', dark: 'grey-14' } },
-  'border-subtle': { ref: { light: 'black-alpha-3', dark: 'white-alpha-4' } },
-  'border-shadow': { ref: { light: 'grey-3', dark: 'grey-20' } },
-  'border-highlight': { ref: { light: 'yellow-3', dark: 'yellow-4' } },
-  'text-default': { ref: { light: 'black', dark: 'white' } },
-  'text-inverse': { ref: { light: 'white', dark: 'black' } },
-  'text-subtle': { ref: { light: 'grey-13', dark: 'grey-8' } },
-  'text-placeholder': { ref: { light: 'grey-11', dark: 'grey-11' } },
-  'text-link': { ref: { light: 'purple-8', dark: 'purple-1' } },
-  'hover-text-default': { ref: { light: 'black-alpha-2', dark: 'black-alpha-5' } },
-  'hover-text-pressed': { ref: { light: 'black-alpha-3', dark: 'black-alpha-6' } },
-  'hover-button-default': { ref: { light: 'black-alpha-5', dark: 'black-alpha-5' } },
-  'hover-button-pressed': { ref: { light: 'black-alpha-7', dark: 'black-alpha-7' } },
-  'primary-button-bg': { ref: { light: 'purple-6', dark: 'purple-5' } },
-  'primary-button-text': { ref: { light: 'white', dark: 'white' } },
-  'primary-hover-default': { ref: { light: 'hover-button-default', dark: 'hover-button-default' } },
-  'primary-hover-pressed': { ref: { light: 'hover-button-pressed', dark: 'hover-button-pressed' } },
-  'primary-card-bg': { ref: { light: 'purple-1', dark: 'purple-8' } },
-  'primary-card-text': { ref: { light: 'purple-8', dark: 'white' } },
-  'primary-card-subtext': { ref: { light: 'purple-7', dark: 'purple-3' } },
-  'primary-page-text': { ref: { light: 'purple-6', dark: 'purple-3' } },
-  'secondary-button-bg': { ref: { light: 'yellow-3', dark: 'yellow-2' } },
-  'secondary-button-text': { ref: { light: 'yellow-8', dark: 'yellow-7' } },
-  'secondary-hover-default': { ref: { light: 'black-alpha-4', dark: 'hover-button-default' } },
-  'secondary-hover-pressed': { ref: { light: 'black-alpha-5', dark: 'black-alpha-6' } },
-  'secondary-card-bg': { ref: { light: 'yellow-1', dark: 'yellow-6' } },
-  'secondary-card-text': { ref: { light: 'yellow-8', dark: 'white' } },
-  'secondary-card-subtext': { ref: { light: 'yellow-7', dark: 'yellow-1' } },
-  'secondary-page-text': { ref: { light: 'yellow-7', dark: 'yellow-2' } },
-  'danger-button-bg': { ref: { light: 'red-6', dark: 'red-5' } },
-  'danger-button-text': { ref: { light: 'white', dark: 'white' } },
-  'danger-hover-default': { ref: { light: 'hover-button-default', dark: 'hover-button-default' } },
-  'danger-hover-pressed': { ref: { light: 'hover-button-pressed', dark: 'hover-button-pressed' } },
-  'danger-card-bg': { ref: { light: 'red-1', dark: 'red-8' } },
-  'danger-card-text': { ref: { light: 'red-8', dark: 'white' } },
-  'danger-card-subtext': { ref: { light: 'red-7', dark: 'red-2' } },
-  'danger-page-text': { ref: { light: 'red-6', dark: 'red-3' } },
-  'success-button-bg': { ref: { light: 'green-6', dark: 'green-6' } },
-  'success-button-text': { ref: { light: 'white', dark: 'white' } },
-  'success-hover-default': { ref: { light: 'hover-button-default', dark: 'hover-button-default' } },
-  'success-hover-pressed': { ref: { light: 'hover-button-pressed', dark: 'hover-button-pressed' } },
-  'success-card-bg': { ref: { light: 'green-1', dark: 'green-8' } },
-  'success-card-text': { ref: { light: 'green-8', dark: 'white' } },
-  'success-card-subtext': { ref: { light: 'green-7', dark: 'green-3' } },
-  'success-page-text': { ref: { light: 'green-7', dark: 'green-3' } },
-  'modal-overlay-subtle': { ref: { light: 'black-alpha-7', dark: 'black-alpha-6' } },
-  'modal-overlay-strong': { ref: { light: 'black-alpha-9', dark: 'black-alpha-10' } },
-  'chart-bar-default': { ref: { light: 'grey-12', dark: 'grey-10' } },
-  'chart-bar-hover': { ref: { light: 'grey-14', dark: 'grey-8' } },
-  'map-ocean': { ref: { light: 'blue-1', dark: 'blue-8' } },
-  'map-land': { ref: { light: 'grey-1', dark: 'grey-18' } },
-  'map-value-none': { ref: { light: 'purple-1', dark: 'grey-14' } },
-  'map-value-min': { ref: { light: 'purple-2', dark: 'purple-7' } },
-  'map-value-max': { ref: { light: 'purple-8', dark: 'purple-1' } },
+  'bg-page': {
+    ref: { light: 'color.grey-3', dark: 'color.grey-19' },
+    value: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.2861 0.0099 308)' },
+  },
+  'bg-sheet': {
+    ref: { light: 'color.grey-2', dark: 'color.grey-18' },
+    value: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
+  },
+  'bg-card': {
+    ref: { light: 'color.grey-1', dark: 'color.grey-17' },
+    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
+  },
+  'bg-popup': {
+    ref: { light: 'color.white', dark: 'color.grey-16' },
+    value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
+  },
+  'bg-coding': {
+    ref: { light: 'color.grey-5', dark: 'color.grey-20' },
+    value: { light: 'oklch(0.885 0.0058 308)', dark: 'oklch(0.2558 0.0079 308)' },
+  },
+  'bg-field': {
+    ref: { light: 'color.black-alpha-1', dark: 'color.black-alpha-4' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.03)', dark: 'oklch(0.1068 0.0519 317 / 0.12)' },
+  },
+  'bg-skeleton': {
+    ref: { light: 'color.black-alpha-3', dark: 'color.white-alpha-5' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.09)', dark: 'oklch(1 0 0 / 0.16)' },
+  },
+  'bg-link': {
+    ref: { light: 'color.black-alpha-2', dark: 'color.black-alpha-5' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.06)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
+  },
+  'bg-blockquote': {
+    ref: { light: 'color.black-alpha-1', dark: 'color.white-alpha-2' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.03)', dark: 'oklch(1 0 0 / 0.06)' },
+  },
+  'bg-highlight': {
+    ref: { light: 'color.yellow-4', dark: 'color.yellow-6' },
+    value: { light: 'oklch(0.8606 0.1731 91.94)', dark: 'oklch(0.5735 0.1211 72.88)' },
+  },
+  'border-active': {
+    ref: { light: 'color.grey-12', dark: 'color.grey-8' },
+    value: { light: 'oklch(0.5683 0.0195 308)', dark: 'oklch(0.7548 0.0151 308)' },
+  },
+  'border-hover': {
+    ref: { light: 'color.grey-11', dark: 'color.grey-12' },
+    value: { light: 'oklch(0.6207 0.0223 308)', dark: 'oklch(0.5683 0.0195 308)' },
+  },
+  'border-default': {
+    ref: { light: 'color.grey-7', dark: 'color.grey-14' },
+    value: { light: 'oklch(0.7997 0.0103 308)', dark: 'oklch(0.461 0.0157 308)' },
+  },
+  'border-subtle': {
+    ref: { light: 'color.black-alpha-3', dark: 'color.white-alpha-4' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.09)', dark: 'oklch(1 0 0 / 0.12)' },
+  },
+  'border-shadow': {
+    ref: { light: 'color.grey-3', dark: 'color.grey-20' },
+    value: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.2558 0.0079 308)' },
+  },
+  'border-highlight': {
+    ref: { light: 'color.yellow-3', dark: 'color.yellow-4' },
+    value: { light: 'oklch(0.9185 0.1426 98.22)', dark: 'oklch(0.8606 0.1731 91.94)' },
+  },
+  'text-default': {
+    ref: { light: 'color.black', dark: 'color.white' },
+    value: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
+  },
+  'text-inverse': {
+    ref: { light: 'color.white', dark: 'color.black' },
+    value: { light: 'oklch(1 0 0)', dark: 'oklch(0.2213 0.0065 314.68)' },
+  },
+  'text-subtle': {
+    ref: { light: 'color.grey-13', dark: 'color.grey-8' },
+    value: { light: 'oklch(0.516 0.0186 308)', dark: 'oklch(0.7548 0.0151 308)' },
+  },
+  'text-placeholder': {
+    ref: { light: 'color.grey-11', dark: 'color.grey-11' },
+    value: { light: 'oklch(0.6207 0.0223 308)', dark: 'oklch(0.6207 0.0223 308)' },
+  },
+  'text-link': {
+    ref: { light: 'color.purple-8', dark: 'color.purple-1' },
+    value: { light: 'oklch(0.3442 0.1476 306)', dark: 'oklch(0.9024 0.0604 306)' },
+  },
+  'hover-text-default': {
+    ref: { light: 'color.black-alpha-2', dark: 'color.black-alpha-5' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.06)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
+  },
+  'hover-text-pressed': {
+    ref: { light: 'color.black-alpha-3', dark: 'color.black-alpha-6' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.09)', dark: 'oklch(0.1068 0.0519 317 / 0.24)' },
+  },
+  'hover-button-default': {
+    ref: { light: 'color.black-alpha-5', dark: 'color.black-alpha-5' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
+  },
+  'hover-button-pressed': {
+    ref: { light: 'color.black-alpha-7', dark: 'color.black-alpha-7' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
+  },
+  'primary-button-bg': {
+    ref: { light: 'color.purple-6', dark: 'color.purple-5' },
+    value: { light: 'oklch(0.5575 0.2525 306)', dark: 'oklch(0.5926 0.2335 306)' },
+  },
+  'primary-button-text': {
+    ref: { light: 'color.white', dark: 'color.white' },
+    value: { light: 'oklch(1 0 0)', dark: 'oklch(1 0 0)' },
+  },
+  'primary-hover-default': {
+    ref: { light: 'color.hover-button-default', dark: 'color.hover-button-default' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
+  },
+  'primary-hover-pressed': {
+    ref: { light: 'color.hover-button-pressed', dark: 'color.hover-button-pressed' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
+  },
+  'primary-card-bg': {
+    ref: { light: 'color.purple-1', dark: 'color.purple-8' },
+    value: { light: 'oklch(0.9024 0.0604 306)', dark: 'oklch(0.3442 0.1476 306)' },
+  },
+  'primary-card-text': {
+    ref: { light: 'color.purple-8', dark: 'color.white' },
+    value: { light: 'oklch(0.3442 0.1476 306)', dark: 'oklch(1 0 0)' },
+  },
+  'primary-card-subtext': {
+    ref: { light: 'color.purple-7', dark: 'color.purple-3' },
+    value: { light: 'oklch(0.4383 0.1983 306)', dark: 'oklch(0.7326 0.1697 306)' },
+  },
+  'primary-page-text': {
+    ref: { light: 'color.purple-6', dark: 'color.purple-3' },
+    value: { light: 'oklch(0.5575 0.2525 306)', dark: 'oklch(0.7326 0.1697 306)' },
+  },
+  'secondary-button-bg': {
+    ref: { light: 'color.yellow-3', dark: 'color.yellow-2' },
+    value: { light: 'oklch(0.9185 0.1426 98.22)', dark: 'oklch(0.9644 0.0817 101.79)' },
+  },
+  'secondary-button-text': {
+    ref: { light: 'color.yellow-8', dark: 'color.yellow-7' },
+    value: { light: 'oklch(0.5082 0.1114 65.39)', dark: 'oklch(0.5519 0.121 65.65)' },
+  },
+  'secondary-hover-default': {
+    ref: { light: 'color.black-alpha-4', dark: 'color.hover-button-default' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.12)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
+  },
+  'secondary-hover-pressed': {
+    ref: { light: 'color.black-alpha-5', dark: 'color.black-alpha-6' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.24)' },
+  },
+  'secondary-card-bg': {
+    ref: { light: 'color.yellow-1', dark: 'color.yellow-6' },
+    value: { light: 'oklch(0.9729 0.0693 103.19)', dark: 'oklch(0.5735 0.1211 72.88)' },
+  },
+  'secondary-card-text': {
+    ref: { light: 'color.yellow-8', dark: 'color.white' },
+    value: { light: 'oklch(0.5082 0.1114 65.39)', dark: 'oklch(1 0 0)' },
+  },
+  'secondary-card-subtext': {
+    ref: { light: 'color.yellow-7', dark: 'color.yellow-1' },
+    value: { light: 'oklch(0.5519 0.121 65.65)', dark: 'oklch(0.9729 0.0693 103.19)' },
+  },
+  'secondary-page-text': {
+    ref: { light: 'color.yellow-7', dark: 'color.yellow-2' },
+    value: { light: 'oklch(0.5519 0.121 65.65)', dark: 'oklch(0.9644 0.0817 101.79)' },
+  },
+  'danger-button-bg': {
+    ref: { light: 'color.red-6', dark: 'color.red-5' },
+    value: { light: 'oklch(0.5696 0.2145 23)', dark: 'oklch(0.5919 0.2063 23)' },
+  },
+  'danger-button-text': {
+    ref: { light: 'color.white', dark: 'color.white' },
+    value: { light: 'oklch(1 0 0)', dark: 'oklch(1 0 0)' },
+  },
+  'danger-hover-default': {
+    ref: { light: 'color.hover-button-default', dark: 'color.hover-button-default' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
+  },
+  'danger-hover-pressed': {
+    ref: { light: 'color.hover-button-pressed', dark: 'color.hover-button-pressed' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
+  },
+  'danger-card-bg': {
+    ref: { light: 'color.red-1', dark: 'color.red-8' },
+    value: { light: 'oklch(0.8845 0.0593 23)', dark: 'oklch(0.3958 0.1331 23)' },
+  },
+  'danger-card-text': {
+    ref: { light: 'color.red-8', dark: 'color.white' },
+    value: { light: 'oklch(0.3958 0.1331 23)', dark: 'oklch(1 0 0)' },
+  },
+  'danger-card-subtext': {
+    ref: { light: 'color.red-7', dark: 'color.red-2' },
+    value: { light: 'oklch(0.4991 0.1884 23)', dark: 'oklch(0.8077 0.1035 23)' },
+  },
+  'danger-page-text': {
+    ref: { light: 'color.red-6', dark: 'color.red-3' },
+    value: { light: 'oklch(0.5696 0.2145 23)', dark: 'oklch(0.7305 0.1593 23)' },
+  },
+  'success-button-bg': {
+    ref: { light: 'color.green-6', dark: 'color.green-6' },
+    value: { light: 'oklch(0.5475 0.1444 150)', dark: 'oklch(0.5475 0.1444 150)' },
+  },
+  'success-button-text': {
+    ref: { light: 'color.white', dark: 'color.white' },
+    value: { light: 'oklch(1 0 0)', dark: 'oklch(1 0 0)' },
+  },
+  'success-hover-default': {
+    ref: { light: 'color.hover-button-default', dark: 'color.hover-button-default' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
+  },
+  'success-hover-pressed': {
+    ref: { light: 'color.hover-button-pressed', dark: 'color.hover-button-pressed' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
+  },
+  'success-card-bg': {
+    ref: { light: 'color.green-1', dark: 'color.green-8' },
+    value: { light: 'oklch(0.9624 0.0434 150)', dark: 'oklch(0.3925 0.0896 150)' },
+  },
+  'success-card-text': {
+    ref: { light: 'color.green-8', dark: 'color.white' },
+    value: { light: 'oklch(0.3925 0.0896 150)', dark: 'oklch(1 0 0)' },
+  },
+  'success-card-subtext': {
+    ref: { light: 'color.green-7', dark: 'color.green-3' },
+    value: { light: 'oklch(0.5267 0.1394 150)', dark: 'oklch(0.8003 0.1821 150)' },
+  },
+  'success-page-text': {
+    ref: { light: 'color.green-7', dark: 'color.green-3' },
+    value: { light: 'oklch(0.5267 0.1394 150)', dark: 'oklch(0.8003 0.1821 150)' },
+  },
+  'modal-overlay-subtle': {
+    ref: { light: 'color.black-alpha-7', dark: 'color.black-alpha-6' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.24)' },
+  },
+  'modal-overlay-strong': {
+    ref: { light: 'color.black-alpha-9', dark: 'color.black-alpha-10' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.48)', dark: 'oklch(0.1068 0.0519 317 / 0.56)' },
+  },
+  'chart-bar-default': {
+    ref: { light: 'color.grey-12', dark: 'color.grey-10' },
+    value: { light: 'oklch(0.5683 0.0195 308)', dark: 'oklch(0.666 0.0201 308)' },
+  },
+  'chart-bar-hover': {
+    ref: { light: 'color.grey-14', dark: 'color.grey-8' },
+    value: { light: 'oklch(0.461 0.0157 308)', dark: 'oklch(0.7548 0.0151 308)' },
+  },
+  'map-ocean': {
+    ref: { light: 'color.blue-1', dark: 'color.blue-8' },
+    value: { light: 'oklch(0.9215 0.0348 260)', dark: 'oklch(0.2191 0.0494 260)' },
+  },
+  'map-land': {
+    ref: { light: 'color.grey-1', dark: 'color.grey-18' },
+    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.3171 0.0092 308)' },
+  },
+  'map-value-none': {
+    ref: { light: 'color.purple-1', dark: 'color.grey-14' },
+    value: { light: 'oklch(0.9024 0.0604 306)', dark: 'oklch(0.461 0.0157 308)' },
+  },
+  'map-value-min': {
+    ref: { light: 'color.purple-2', dark: 'color.purple-7' },
+    value: { light: 'oklch(0.8268 0.1082 306)', dark: 'oklch(0.4383 0.1983 306)' },
+  },
+  'map-value-max': {
+    ref: { light: 'color.purple-8', dark: 'color.purple-1' },
+    value: { light: 'oklch(0.3442 0.1476 306)', dark: 'oklch(0.9024 0.0604 306)' },
+  },
 } as const

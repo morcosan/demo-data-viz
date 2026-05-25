@@ -19,7 +19,7 @@ export const Toolbar = (props: Props) => {
   const barKeys = Object.keys(barNames)
 
   const cellClass = cx('gap-xs-0 flex items-center justify-end')
-  const entryWidth = entryWidthProp + parseFloat(getTokenValue(TOKENS.SPACING, 'button-h-sm'))
+  const entryWidth = entryWidthProp + parseFloat(getTokenValue(TOKENS.SPACING['button-h-sm']))
 
   const renderHeader = (key: string, name: string, className: string, width?: number) => {
     const sort = sortKey === key && sortDir

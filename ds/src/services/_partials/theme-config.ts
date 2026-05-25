@@ -20,7 +20,7 @@ const mapTokens = (tokenGroup: DesignTokenGroup, ccPrefix: string, mode: ColorMo
   return Object.fromEntries(
     Object.keys(tokenGroup).map((tokenName: string) => [
       tokenName,
-      ENV__USE_CSS_VARS ? `var(${ccPrefix}${tokenName})` : String(getTokenValue(tokenGroup, tokenName, mode)),
+      ENV__USE_CSS_VARS ? `var(${ccPrefix}${tokenName})` : String(getTokenValue(tokenGroup[tokenName], mode)),
     ]),
   ) as Record<string, string>
 }

@@ -39,7 +39,7 @@ const meta: Meta = {
       entryKey: 'label',
       entryName: 'Entity',
       entryFn: '' as any,
-      entryWidth: parseFloat(getTokenValue(TOKENS.SPACING, 'md-5')),
+      entryWidth: parseFloat(getTokenValue(TOKENS.SPACING['md-5'])),
       chartSize: 'md',
       queries: [],
       sortKey: '',

@@ -12,8 +12,6 @@ export const NOTICE = [
 
 export const prettierConfig = await prettier.resolveConfig(process.cwd() + '/package.json')
 
-export const stripNamespace = (ref: string) => ref.slice(1, -1).split('.').slice(1).join('.')
-
 export const hasColorMode = (value: unknown) => {
   return typeof value === 'object' && value && '$light' in value && '$dark' in value
 }

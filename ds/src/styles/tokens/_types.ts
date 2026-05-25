@@ -1,12 +1,7 @@
-export type DesignToken<V = DesignTokenValue> =
-  | {
-      readonly value: V
-      readonly ref?: undefined
-    }
-  | {
-      readonly ref: string | DesignTokenModeValue<string>
-      readonly value?: undefined
-    }
+export type DesignToken<V = DesignTokenValue> = {
+  readonly value: V
+  readonly ref?: string | DesignTokenModeValue<string>
+}
 
 export type DesignTokenGroup<V = DesignTokenValue> = {
   readonly [key: string]: DesignToken<V>

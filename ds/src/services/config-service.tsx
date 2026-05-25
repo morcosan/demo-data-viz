@@ -11,8 +11,8 @@ const fixOutlineCSS = (css?: string) => css?.replace(/^\s*(outline(?:-[^:\s]+)?\
 const ConfigService = ({ children }: ReactProps) => {
   // Nextjs cannot import ?raw, it will import files as CSS and give undefined vars
   const mantineTheme = createTheme({
-    fontFamily: getTokenValue(TOKENS.FONT_FAMILY, 'sans'),
-    fontFamilyMonospace: getTokenValue(TOKENS.FONT_FAMILY, 'mono'),
+    fontFamily: getTokenValue(TOKENS.FONT_FAMILY['sans']),
+    fontFamilyMonospace: getTokenValue(TOKENS.FONT_FAMILY['mono']),
   })
   const mantineCSS = `
 		${variablesCSS || ''}

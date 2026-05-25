@@ -51,10 +51,10 @@ export const ColorSwatches = ({ colors }) => (
           <pre>{name}</pre>
         </td>
         <td className="pr-0!">
-          <DocsColorToken value={getTokenValue(TOKENS.COLOR, name)} />
+          <DocsColorToken value={getTokenValue(TOKENS.COLOR[name])} />
         </td>
         <td>
-          <DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR, name))} />
+          <DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name]))} />
         </td>
         <td>
           <DocsTokenCoding

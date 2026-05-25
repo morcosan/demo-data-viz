@@ -27,19 +27,22 @@ export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => token.r
           <pre>{name}</pre>
         </td>
         <td className="pr-0!">
-          <DocsTokenThemeGrid lightSlot={<pre>{token.ref.light}</pre>} darkSlot={<pre>{token.ref.dark}</pre>} />
+          <DocsTokenThemeGrid
+            lightSlot={<pre>{token.ref.light.replace('color.', '')}</pre>}
+            darkSlot={<pre>{token.ref.dark.replace('color.', '')}</pre>}
+          />
         </td>
         <td className="pr-0!">
           <DocsTokenThemeGrid
-            lightSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR, name, 'light')} />}
-            darkSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR, name, 'dark')} />}
+            lightSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR[name], 'light')} />}
+            darkSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR[name], 'dark')} />}
             noLabel
           />
         </td>
         <td>
           <DocsTokenThemeGrid
-            lightSlot={<DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR, name, 'light'))} />}
-            darkSlot={<DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR, name, 'dark'))} />}
+            lightSlot={<DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'light'))} />}
+            darkSlot={<DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'dark'))} />}
             noLabel
           />
         </td>
