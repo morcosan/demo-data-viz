@@ -1,12 +1,13 @@
+import _ from 'lodash'
 import prettier from 'prettier'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { hasColorMode, NOTICE, prettierConfig, type TokenColorMode } from './_utils.ts'
-import { type ThemedValue } from './schema.ts'
+import { type CompositeValue, type ThemedValue } from './schema.ts'
 
 const tsFormat: Format = {
   name: '',
   format: async ({ dictionary }: FormatFnArguments) => {
-    const parseRef = (value: unknown) => {
+    const getRefPath = (value: unknown) => {
       return typeof value === 'string' && value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : null
     }
 
@@ -21,33 +22,42 @@ const tsFormat: Format = {
       return value
     }
 
-    const renderCompositeValue = (composite: Record<string, unknown>) => {
-      const result: Record<string, unknown> = {}
+    const renderComposite = (originalValue: CompositeValue, resolvedValue: CompositeValue) => {
+      const result = {
+        type: 'composite',
+        ref: {} as Record<string, unknown>,
+        value: {} as Record<string, unknown>,
+      }
 
-      for (const [prop, value] of Object.entries(composite)) {
-        if (hasColorMode(value)) {
-          const themedValue = value as ThemedValue
-          const lightRef = parseRef(themedValue.$light)
-          const darkRef = parseRef(themedValue.$dark)
+      for (const [prop, propValue] of Object.entries(originalValue)) {
+        const camelProp = _.camelCase(prop)
+
+        if (hasColorMode(propValue)) {
+          const themed = propValue as ThemedValue
+          const lightRef = getRefPath(themed.$light)
+          const darkRef = getRefPath(themed.$dark)
+
           if (lightRef && darkRef) {
-            result[prop] = {
-              ref: { light: lightRef, dark: darkRef },
-              value: {
-                light: resolveRef(lightRef, '$light') ?? themedValue.$light,
-                dark: resolveRef(darkRef, '$dark') ?? themedValue.$dark,
-              },
+            result.ref[camelProp] = { light: lightRef, dark: darkRef }
+            result.value[camelProp] = {
+              light: resolveRef(lightRef, '$light') ?? themed.$light,
+              dark: resolveRef(darkRef, '$dark') ?? themed.$dark,
             }
           } else {
-            result[prop] = {
-              value: {
-                light: lightRef ?? themedValue.$light,
-                dark: darkRef ?? themedValue.$dark,
-              },
-            }
+            result.value[camelProp] = { light: themed.$light, dark: themed.$dark }
           }
         } else {
-          const ref = parseRef(value)
-          result[prop] = ref ? { ref, value: resolveRef(ref) ?? value } : { value }
+          const ref = getRefPath(propValue)
+          const resolved = ref ? resolvedValue[prop] : propValue
+
+          if (hasColorMode(resolved)) {
+            const themed = resolved as ThemedValue
+            if (ref) result.ref[camelProp] = ref
+            result.value[camelProp] = { light: themed.$light, dark: themed.$dark }
+          } else {
+            result.ref[camelProp] = ref ?? propValue
+            result.value[camelProp] = resolved
+          }
         }
       }
 
@@ -67,27 +77,32 @@ const tsFormat: Format = {
         }
 
         const leaf = keys[keys.length - 1]
-        const value = token.original?.$value
+        const originalValue = token.original?.$value
+        const resolvedValue = token.$value
 
         if (token.original?.$type === 'composite') {
-          current[leaf] = { value: renderCompositeValue(value) }
-        } else if (hasColorMode(value)) {
-          const lightRef = parseRef(value.$light)
-          const darkRef = parseRef(value.$dark)
-          if (lightRef && darkRef) {
-            current[leaf] = {
-              ref: { light: lightRef, dark: darkRef },
-              value: {
-                light: resolveRef(lightRef, '$light') ?? value.$light,
-                dark: resolveRef(darkRef, '$dark') ?? value.$dark,
-              },
+          current[leaf] = renderComposite(originalValue, resolvedValue)
+        } else {
+          if (hasColorMode(originalValue)) {
+            const themed = originalValue as ThemedValue
+            const lightRef = getRefPath(themed.$light)
+            const darkRef = getRefPath(themed.$dark)
+
+            if (lightRef && darkRef) {
+              current[leaf] = {
+                ref: { light: lightRef, dark: darkRef },
+                value: {
+                  light: resolveRef(lightRef, '$light') ?? themed.$light,
+                  dark: resolveRef(darkRef, '$dark') ?? themed.$dark,
+                },
+              }
+            } else {
+              current[leaf] = { value: { light: themed.$light, dark: themed.$dark } }
             }
           } else {
-            current[leaf] = { value: { light: lightRef ?? value.$light, dark: darkRef ?? value.$dark } }
+            const ref = getRefPath(originalValue)
+            current[leaf] = ref ? { ref, value: token.$value } : { value: token.$value }
           }
-        } else {
-          const ref = parseRef(value)
-          current[leaf] = ref ? { ref, value: token.$value } : { value: token.$value }
         }
       }
 
@@ -100,8 +115,8 @@ const tsFormat: Format = {
     const json = JSON.stringify(varsCode, null, 2).replaceAll('\n', '')
     const output =
       NOTICE +
-      `export const CSS_PREFIX__${varName} = '--ds-${namespace}-'\n\n` +
-      `export const TOKENS__${varName} = ${json} as const\n`
+      `\nexport const CSS_PREFIX__${varName} = '--ds-${namespace}-'\n` +
+      `\nexport const TOKENS__${varName} = ${json} as const\n`
 
     return await prettier.format(output, { ...prettierConfig, parser: 'typescript' })
   },
