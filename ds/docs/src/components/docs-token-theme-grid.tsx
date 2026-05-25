@@ -1,18 +1,18 @@
 import { type ReactNode } from 'react'
+import { DarkModeSvg, LightModeSvg } from '../../../src/assets/icons'
 
 interface Props {
   lightSlot: ReactNode
   darkSlot: ReactNode
-  noLabel?: boolean
 }
 
-export const DocsTokenThemeGrid = ({ lightSlot, darkSlot, noLabel }: Props) => {
+export const DocsTokenThemeGrid = ({ lightSlot, darkSlot }: Props) => {
   return (
-    <div className={cx(noLabel ? '' : 'grid grid-cols-[45px_auto] items-center')}>
-      {!noLabel && <div className="text-size-sm font-weight-lg">Light:</div>}
+    <div className="gap-xs-0 grid grid-cols-[auto_1fr] items-center">
+      <LightModeSvg className="w-xs-7 mr-xs-1 text-color-text-subtle" aria-label="Light mode" />
       <div>{lightSlot}</div>
 
-      {!noLabel && <div className="text-size-sm font-weight-lg">Dark:</div>}
+      <DarkModeSvg className="w-xs-7 mr-xs-1 text-color-text-subtle" aria-label="Dark mode" />
       <div>{darkSlot}</div>
     </div>
   )
