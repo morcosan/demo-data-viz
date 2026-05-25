@@ -37,11 +37,14 @@ export const TOKENS__SURFACE = {
   },
   popup: {
     type: 'composite',
-    ref: { backgroundColor: 'color.bg-popup', borderRadius: 'radius.sm', boxShadow: 'shadow.xs' },
+    ref: { backgroundColor: 'color.bg-popup', borderRadius: 'radius.sm', boxShadow: 'shadow.sm' },
     value: {
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
       borderRadius: '6px',
-      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
+      boxShadow: {
+        light: '0 1px 3px 0 rgb(0 0 0 / 0.15), 0 1px 2px -1px rgb(0 0 0 / 0.15)',
+        dark: '0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)',
+      },
     },
   },
 } as const

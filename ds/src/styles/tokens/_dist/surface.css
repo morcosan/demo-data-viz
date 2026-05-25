@@ -22,7 +22,7 @@
   }
 
   .ds-surface-popup {
-    box-shadow: var(--ds-shadow-xs);
+    box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-sm);
     background-color: var(--ds-color-bg-popup);
   }
