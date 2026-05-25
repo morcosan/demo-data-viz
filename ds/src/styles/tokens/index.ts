@@ -1,15 +1,15 @@
-import { CSS_PREFIX__BLUR, TOKENS__BLUR } from './_dist/blur'
-import { CSS_PREFIX__BREAKPOINT, TOKENS__BREAKPOINT } from './_dist/breakpoint'
-import { CSS_PREFIX__COLOR, TOKENS__COLOR } from './_dist/color'
-import { CSS_PREFIX__FONT_FAMILY, TOKENS__FONT_FAMILY } from './_dist/font-family'
-import { CSS_PREFIX__FONT_SIZE, TOKENS__FONT_SIZE } from './_dist/font-size'
-import { CSS_PREFIX__FONT_WEIGHT, TOKENS__FONT_WEIGHT } from './_dist/font-weight'
-import { CSS_PREFIX__LINE_HEIGHT, TOKENS__LINE_HEIGHT } from './_dist/line-height'
-import { CSS_PREFIX__RADIUS, TOKENS__RADIUS } from './_dist/radius'
-import { CSS_PREFIX__SHADOW, TOKENS__SHADOW } from './_dist/shadow'
-import { CSS_PREFIX__SPACING, TOKENS__SPACING } from './_dist/spacing'
-import { CSS_PREFIX__SURFACE, TOKENS__SURFACE } from './_dist/surface'
-import { CSS_PREFIX__Z_INDEX, TOKENS__Z_INDEX } from './_dist/z-index'
+import { CLASS_PREFIX__BLUR, CSS_PREFIX__BLUR, TOKENS__BLUR } from './_dist/blur'
+import { CLASS_PREFIX__BREAKPOINT, CSS_PREFIX__BREAKPOINT, TOKENS__BREAKPOINT } from './_dist/breakpoint'
+import { CLASS_PREFIX__COLOR, CSS_PREFIX__COLOR, TOKENS__COLOR } from './_dist/color'
+import { CLASS_PREFIX__FONT_FAMILY, CSS_PREFIX__FONT_FAMILY, TOKENS__FONT_FAMILY } from './_dist/font-family'
+import { CLASS_PREFIX__FONT_SIZE, CSS_PREFIX__FONT_SIZE, TOKENS__FONT_SIZE } from './_dist/font-size'
+import { CLASS_PREFIX__FONT_WEIGHT, CSS_PREFIX__FONT_WEIGHT, TOKENS__FONT_WEIGHT } from './_dist/font-weight'
+import { CLASS_PREFIX__LINE_HEIGHT, CSS_PREFIX__LINE_HEIGHT, TOKENS__LINE_HEIGHT } from './_dist/line-height'
+import { CLASS_PREFIX__RADIUS, CSS_PREFIX__RADIUS, TOKENS__RADIUS } from './_dist/radius'
+import { CLASS_PREFIX__SHADOW, CSS_PREFIX__SHADOW, TOKENS__SHADOW } from './_dist/shadow'
+import { CLASS_PREFIX__SPACING, CSS_PREFIX__SPACING, TOKENS__SPACING } from './_dist/spacing'
+import { CLASS_PREFIX__SURFACE, CSS_PREFIX__SURFACE, TOKENS__SURFACE } from './_dist/surface'
+import { CLASS_PREFIX__Z_INDEX, CSS_PREFIX__Z_INDEX, TOKENS__Z_INDEX } from './_dist/z-index'
 import {
   type ColorMode,
   type DesignToken,
@@ -49,6 +49,21 @@ const CSS_PREFIX = {
   Z_INDEX: CSS_PREFIX__Z_INDEX,
 } satisfies Record<string, string>
 
+const CLASS_PREFIX = {
+  BLUR: CLASS_PREFIX__BLUR,
+  BREAKPOINT: CLASS_PREFIX__BREAKPOINT,
+  COLOR: CLASS_PREFIX__COLOR,
+  FONT_FAMILY: CLASS_PREFIX__FONT_FAMILY,
+  FONT_SIZE: CLASS_PREFIX__FONT_SIZE,
+  FONT_WEIGHT: CLASS_PREFIX__FONT_WEIGHT,
+  LINE_HEIGHT: CLASS_PREFIX__LINE_HEIGHT,
+  RADIUS: CLASS_PREFIX__RADIUS,
+  SHADOW: CLASS_PREFIX__SHADOW,
+  SPACING: CLASS_PREFIX__SPACING,
+  SURFACE: CLASS_PREFIX__SURFACE,
+  Z_INDEX: CLASS_PREFIX__Z_INDEX,
+} satisfies Record<string, string>
+
 type Token = DesignToken<DesignTokenValue>
 
 const getTokenValue = <V = string | number | DesignTokenComposite>(token: Token, mode?: ColorMode): V => {
@@ -69,4 +84,4 @@ const getTokenValue = <V = string | number | DesignTokenComposite>(token: Token,
 }
 
 export * from './_types'
-export { CSS_PREFIX, getTokenValue, TOKENS }
+export { CLASS_PREFIX, CSS_PREFIX, getTokenValue, TOKENS }

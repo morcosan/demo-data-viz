@@ -4,15 +4,15 @@ import { DocsTokenCode } from './docs-token-code'
 
 interface Props {
   tsVar: string
-  tsSize?: string
-  twVars: string[]
-  twSize?: string
   cssVar: string
+  twVars?: string[]
+  tsSize?: string
   cssSize?: string
+  twSize?: string
   delay?: number
 }
 
-export const DocsTokenCoding = ({ tsVar, tsSize, twVars, twSize, cssVar, cssSize, delay }: Props) => {
+export const DocsTokenCoding = ({ tsVar, cssVar, twVars, tsSize, cssSize, twSize, delay }: Props) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export const DocsTokenCoding = ({ tsVar, tsSize, twVars, twSize, cssVar, cssSize
 
   return (
     <div className="mr-xs-9 gap-xs-3 flex">
-      {twVars.map((twVar: string) => (
+      {twVars?.map((twVar: string) => (
         <DocsTokenCode
           key={twVar}
           iconSvg={<TailwindSvg className="aspect-square h-full" />}
