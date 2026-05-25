@@ -1,5 +1,9 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import { DocsCanvas } from '@ds/docs/core'
+import { CLASS_PREFIX, TOKENS } from '@ds/core'
+import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsTokenThemeGrid } from '@ds/docs/core'
+import { Fragment } from 'react'
+
+export const tokens = Object.entries(TOKENS.SURFACE)
 
 export const Example = ({ children }) => {
   const sectionClass = cx('py-xs-5 px-xs-7 flex flex-1 flex-col')
@@ -33,6 +37,12 @@ export const Surface = ({ title, children, className }) => (
   </div>
 )
 
+export const TokenValue = ({ value }) => {
+  return value.startsWith('oklch') ? <DocsColorToken value={value} /> : <code>{value}</code>
+}
+
+export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-[auto_1fr] items-center')
+
 {/* ---------------------------------------------------------------------------------------------------------------- */}
 
 <Meta title="Composite tokens / Surface" />
@@ -52,3 +62,63 @@ export const Surface = ({ title, children, className }) => (
     <Surface title="Popup" className="ds-surface-popup mt-xs-5" />
   </Surface>
 </Example>
+
+<table className="docs">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Reference</th>
+      <th className="w-full">Value</th>
+      <th>Coding</th>
+    </tr>
+  </thead>
+  <tbody>
+    {tokens.map(([name, token]) => (
+      <tr key={name}>
+        <td>
+          <pre>{name}</pre>
+        </td>
+        <td>
+          <div className={gridClass}>
+            {Object.entries(token.ref).map(([key, value]) => (
+              <Fragment key={key}>
+                <pre className="text-color-text-subtle">{key}:</pre>
+                {typeof value === 'object' ? (
+                  <DocsTokenThemeGrid lightSlot={<code>{value.light}</code>} darkSlot={<code>{value.dark}</code>} />
+                ) : (
+                  <code>{value}</code>
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </td>
+        <td>
+          <div className={gridClass}>
+            {Object.entries(token.value).map(([key, value]) => (
+              <Fragment key={key}>
+                <pre className="text-color-text-subtle">{key}:</pre>
+                {typeof value === 'object' ? (
+                  <DocsTokenThemeGrid
+                    lightSlot={<TokenValue value={value.light} />}
+                    darkSlot={<TokenValue value={value.dark} />}
+                  />
+                ) : (
+                  <code>{value}</code>
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </td>
+        <td>
+          <DocsTokenCoding
+            tsVar={`tokens.color['${name}']`}
+            cssVar={`${CLASS_PREFIX.SURFACE}${name}`}
+            tsSize="w-md-7"
+            cssSize="w-md-7"
+            delay={1000}
+          />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
