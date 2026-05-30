@@ -1,5 +1,5 @@
 import { en, Faker } from '@faker-js/faker'
-import { capitalize } from 'lodash'
+import { capitalize } from 'lodash-es'
 
 let _faker = new Faker({ locale: en })
 

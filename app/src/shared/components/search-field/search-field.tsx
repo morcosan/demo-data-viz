@@ -2,7 +2,7 @@
 
 import { useTranslation } from '@app-i18n'
 import { CloseSvg, IconButton, SearchSvg, TextField } from '@ds/core'
-import { debounce } from 'lodash'
+import { debounce } from 'lodash-es'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Tooltip } from '../tooltip/tooltip'
 

@@ -1,5 +1,5 @@
 import { readFileSync, rmSync } from 'fs'
-import _ from 'lodash'
+import { kebabCase } from 'lodash-es'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import StyleDictionary from 'style-dictionary'
@@ -29,7 +29,7 @@ const builder = new StyleDictionary({
       buildPath: outDir,
       options: { outputReferences: true },
       files: Object.keys(tokensJson).map((name: string) => ({
-        destination: `${_.kebabCase(name)}.css`,
+        destination: `${kebabCase(name)}.css`,
         format: FORMAT_NAME__CSS,
         filter: (token) => token.path[0] === name,
       })),
@@ -39,7 +39,7 @@ const builder = new StyleDictionary({
       buildPath: outDir,
       options: { outputReferences: false },
       files: Object.keys(tokensJson).map((name: string) => ({
-        destination: `${_.kebabCase(name)}.ts`,
+        destination: `${kebabCase(name)}.ts`,
         format: FORMAT_NAME__TS,
         filter: (token) => token.path[0] === name,
       })),

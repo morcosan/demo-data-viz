@@ -1,7 +1,7 @@
 'use client'
 
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { debounce } from 'lodash'
+import { debounce } from 'lodash-es'
 import { useEffect, useRef } from 'react'
 
 interface Props {

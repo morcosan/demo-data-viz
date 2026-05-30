@@ -1,5 +1,5 @@
 import { Keyboard } from '@ds/core'
-import { debounce } from 'lodash'
+import { debounce } from 'lodash-es'
 import { type RefObject, useMemo } from 'react'
 
 interface Props {

@@ -1,4 +1,4 @@
-import { camelCase, upperFirst } from 'lodash'
+import { camelCase, upperFirst } from 'lodash-es'
 import { type ComponentType, useEffect, useMemo, useState } from 'react'
 import { type DocsAsset } from '../components/docs-asset-item'
 

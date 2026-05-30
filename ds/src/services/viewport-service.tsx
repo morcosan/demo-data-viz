@@ -1,6 +1,6 @@
 'use client'
 
-import { debounce } from 'lodash'
+import { debounce } from 'lodash-es'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { type DesignToken, TOKENS } from '../styles/tokens'
 
