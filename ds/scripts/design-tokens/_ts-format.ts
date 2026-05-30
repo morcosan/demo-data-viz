@@ -4,6 +4,11 @@ import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { hasColorMode, NOTICE, prettierConfig, type TokenColorMode } from './_utils.ts'
 import { type CompositeValue, type ThemedValue } from './schema.ts'
 
+type ThemedOutput = {
+  light: string | number
+  dark: string | number
+}
+
 const tsFormat: Format = {
   name: '',
   format: async ({ dictionary }: FormatFnArguments) => {
@@ -25,8 +30,8 @@ const tsFormat: Format = {
     const renderComposite = (original: CompositeValue, resolved: CompositeValue) => {
       const result = {
         type: 'composite',
-        ref: {} as Record<string, unknown>,
-        value: {} as Record<string, unknown>,
+        ref: {} as Record<string, string | ThemedOutput>,
+        value: {} as Record<string, string | number | ThemedOutput>,
       }
 
       Object.keys(original).forEach((key) => {
@@ -39,9 +44,12 @@ const tsFormat: Format = {
           const themed = originalValue as ThemedValue
           const lightRef = getRefPath(themed.$light)
           const darkRef = getRefPath(themed.$dark)
-          result.ref[camelKey] = { light: lightRef, dark: darkRef }
+          result.ref[camelKey] = {} as ThemedOutput
+          if (lightRef) result.ref[camelKey].light = lightRef
+          if (darkRef) result.ref[camelKey].dark = darkRef
         } else {
-          result.ref[camelKey] = getRefPath(originalValue)
+          const ref = getRefPath(originalValue)
+          if (ref) result.ref[camelKey] = ref
         }
 
         // Compute result.value
@@ -52,7 +60,7 @@ const tsFormat: Format = {
             dark: hasColorMode(themed.$dark) ? (themed.$light as unknown as ThemedValue).$dark : themed.$dark,
           }
         } else {
-          result.value[camelKey] = resolvedValue
+          result.value[camelKey] = resolvedValue as string | number
         }
       })
 
@@ -75,9 +83,8 @@ const tsFormat: Format = {
         const originalValue = token.original?.$value
         const resolvedValue = token.$value
 
-        console.log('-----', leaf)
-
         if (token.original?.$type === 'composite') {
+          console.log('-----', leaf)
           current[leaf] = renderComposite(originalValue, resolvedValue)
         } else {
           if (hasColorMode(originalValue)) {
