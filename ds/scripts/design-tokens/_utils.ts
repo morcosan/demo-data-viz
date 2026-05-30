@@ -12,6 +12,6 @@ export const NOTICE = [
 
 export const prettierConfig = await prettier.resolveConfig(process.cwd() + '/package.json')
 
-export const hasColorMode = (value: unknown) => {
-  return typeof value === 'object' && value && '$light' in value && '$dark' in value
+export const hasColorMode = (value: unknown): boolean => {
+  return Boolean(typeof value === 'object' && value && '$light' in value && '$dark' in value)
 }

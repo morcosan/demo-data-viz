@@ -1,9 +1,18 @@
 import { camelCase } from 'lodash-es'
 import prettier from 'prettier'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
-import { hasColorMode, NOTICE, prettierConfig, type TokenColorMode } from './_utils.ts'
-import { type CompositeValue, type ThemedValue } from './schema.ts'
+import { hasColorMode, NOTICE, prettierConfig } from './_utils.ts'
+import { type AtomicValue, type CompositeValue, type ThemedValue } from './schema.ts'
 
+type AtomicOutput = {
+  value: string | number | ThemedOutput
+  ref?: string | ThemedOutput
+}
+type CompositeOutput = {
+  type: 'composite'
+  ref: Record<string, string | ThemedOutput>
+  value: Record<string, string | number | ThemedOutput>
+}
 type ThemedOutput = {
   light: string | number
   dark: string | number
@@ -12,27 +21,43 @@ type ThemedOutput = {
 const tsFormat: Format = {
   name: '',
   format: async ({ dictionary }: FormatFnArguments) => {
-    const getRefPath = (value: unknown) => {
+    const getRefPath = (value: unknown): string | null => {
       return typeof value === 'string' && value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : null
     }
 
-    const resolveRef = (refPath: string, mode?: TokenColorMode): unknown => {
-      const token = dictionary.allTokens.find((t) => t.path.join('.') === refPath)
-      if (!token) return null
-      const value = token.$value
-      if (hasColorMode(value)) {
-        const themed = value as ThemedValue
-        return mode ? themed[mode] : { light: themed.$light, dark: themed.$dark }
+    const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue): AtomicOutput => {
+      const result: AtomicOutput = {} as AtomicOutput
+
+      // Compute result.ref
+      if (hasColorMode(original)) {
+        const themed = original as unknown as ThemedValue
+        const lightRef = getRefPath(themed.$light)
+        const darkRef = getRefPath(themed.$dark)
+        const ref = {} as ThemedOutput
+        if (lightRef) ref.light = lightRef
+        if (darkRef) ref.dark = darkRef
+        if (lightRef || darkRef) result.ref = ref
+      } else {
+        const ref = getRefPath(original)
+        if (ref) result.ref = ref
       }
-      return value
+
+      // Compute result.value
+      if (hasColorMode(resolved)) {
+        const themed = resolved as unknown as ThemedValue
+        result.value = {
+          light: hasColorMode(themed.$light) ? (themed.$light as unknown as ThemedValue).$light : themed.$light,
+          dark: hasColorMode(themed.$dark) ? (themed.$dark as unknown as ThemedValue).$dark : themed.$dark,
+        }
+      } else {
+        result.value = resolved as string | number
+      }
+
+      return result
     }
 
-    const renderComposite = (original: CompositeValue, resolved: CompositeValue) => {
-      const result = {
-        type: 'composite',
-        ref: {} as Record<string, string | ThemedOutput>,
-        value: {} as Record<string, string | number | ThemedOutput>,
-      }
+    const renderCompositeToken = (original: CompositeValue, resolved: CompositeValue): CompositeOutput => {
+      const result: CompositeOutput = { type: 'composite', ref: {}, value: {} }
 
       Object.keys(original).forEach((key) => {
         const camelKey = camelCase(key)
@@ -44,9 +69,10 @@ const tsFormat: Format = {
           const themed = originalValue as ThemedValue
           const lightRef = getRefPath(themed.$light)
           const darkRef = getRefPath(themed.$dark)
-          result.ref[camelKey] = {} as ThemedOutput
-          if (lightRef) result.ref[camelKey].light = lightRef
-          if (darkRef) result.ref[camelKey].dark = darkRef
+          const ref = {} as ThemedOutput
+          if (lightRef) ref.light = lightRef
+          if (darkRef) ref.dark = darkRef
+          if (lightRef || darkRef) result.ref[camelKey] = ref
         } else {
           const ref = getRefPath(originalValue)
           if (ref) result.ref[camelKey] = ref
@@ -57,7 +83,7 @@ const tsFormat: Format = {
           const themed = resolvedValue as ThemedValue
           result.value[camelKey] = {
             light: hasColorMode(themed.$light) ? (themed.$light as unknown as ThemedValue).$light : themed.$light,
-            dark: hasColorMode(themed.$dark) ? (themed.$light as unknown as ThemedValue).$dark : themed.$dark,
+            dark: hasColorMode(themed.$dark) ? (themed.$dark as unknown as ThemedValue).$dark : themed.$dark,
           }
         } else {
           result.value[camelKey] = resolvedValue as string | number
@@ -67,7 +93,7 @@ const tsFormat: Format = {
       return result
     }
 
-    const renderTsVars = (tokens: typeof dictionary.allTokens) => {
+    const renderTokens = (tokens: typeof dictionary.allTokens) => {
       const result: Record<string, unknown> = {}
 
       for (const token of tokens) {
@@ -80,34 +106,17 @@ const tsFormat: Format = {
         }
 
         const leaf = keys[keys.length - 1]
-        const originalValue = token.original?.$value
-        const resolvedValue = token.$value
 
-        if (token.original?.$type === 'composite') {
-          console.log('-----', leaf)
-          current[leaf] = renderComposite(originalValue, resolvedValue)
-        } else {
-          if (hasColorMode(originalValue)) {
-            const themed = originalValue as ThemedValue
-            const lightRef = getRefPath(themed.$light)
-            const darkRef = getRefPath(themed.$dark)
-
-            if (lightRef && darkRef) {
-              current[leaf] = {
-                ref: { light: lightRef, dark: darkRef },
-                value: {
-                  light: resolveRef(lightRef, '$light') ?? themed.$light,
-                  dark: resolveRef(darkRef, '$dark') ?? themed.$dark,
-                },
-              }
-            } else {
-              current[leaf] = { value: { light: themed.$light, dark: themed.$dark } }
-            }
-          } else {
-            const ref = getRefPath(originalValue)
-            current[leaf] = ref ? { ref, value: token.$value } : { value: token.$value }
-          }
+        if (leaf === 'secondary-hover-default') {
+          console.log('-------', leaf)
+          console.log(token.original?.$value)
+          console.log(token.$value)
         }
+
+        current[leaf] =
+          token.original?.$type === 'composite'
+            ? renderCompositeToken(token.original?.$value, token.$value)
+            : renderAtomicToken(token.original?.$value, token.$value)
       }
 
       return result
@@ -115,7 +124,7 @@ const tsFormat: Format = {
 
     const namespace = dictionary.allTokens[0]?.path[0] ?? 'unknown'
     const varName = namespace.toUpperCase().replaceAll('-', '_')
-    const varsCode = renderTsVars(dictionary.allTokens)
+    const varsCode = renderTokens(dictionary.allTokens)
     const json = JSON.stringify(varsCode, null, 2).replaceAll('\n', '')
     const output =
       NOTICE +
