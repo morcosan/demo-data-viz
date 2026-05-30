@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { camelCase } from 'lodash-es'
 import prettier from 'prettier'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { hasColorMode, NOTICE, prettierConfig, type TokenColorMode } from './_utils.ts'
@@ -22,44 +22,39 @@ const tsFormat: Format = {
       return value
     }
 
-    const renderComposite = (originalValue: CompositeValue, resolvedValue: CompositeValue) => {
+    const renderComposite = (original: CompositeValue, resolved: CompositeValue) => {
       const result = {
         type: 'composite',
         ref: {} as Record<string, unknown>,
         value: {} as Record<string, unknown>,
       }
 
-      for (const [prop, propValue] of Object.entries(originalValue)) {
-        const camelProp = _.camelCase(prop)
+      Object.keys(original).forEach((key) => {
+        const camelKey = camelCase(key)
+        const originalValue = original[key]
+        const resolvedValue = resolved[key]
 
-        if (hasColorMode(propValue)) {
-          const themed = propValue as ThemedValue
+        // Compute result.ref
+        if (hasColorMode(originalValue)) {
+          const themed = originalValue as ThemedValue
           const lightRef = getRefPath(themed.$light)
           const darkRef = getRefPath(themed.$dark)
+          result.ref[camelKey] = { light: lightRef, dark: darkRef }
+        } else {
+          result.ref[camelKey] = getRefPath(originalValue)
+        }
 
-          if (lightRef && darkRef) {
-            result.ref[camelProp] = { light: lightRef, dark: darkRef }
-            result.value[camelProp] = {
-              light: resolveRef(lightRef, '$light') ?? themed.$light,
-              dark: resolveRef(darkRef, '$dark') ?? themed.$dark,
-            }
-          } else {
-            result.value[camelProp] = { light: themed.$light, dark: themed.$dark }
+        // Compute result.value
+        if (hasColorMode(resolvedValue)) {
+          const themed = resolvedValue as ThemedValue
+          result.value[camelKey] = {
+            light: hasColorMode(themed.$light) ? (themed.$light as unknown as ThemedValue).$light : themed.$light,
+            dark: hasColorMode(themed.$dark) ? (themed.$light as unknown as ThemedValue).$dark : themed.$dark,
           }
         } else {
-          const ref = getRefPath(propValue)
-          const resolved = ref ? resolvedValue[prop] : propValue
-
-          if (hasColorMode(resolved)) {
-            const themed = resolved as ThemedValue
-            if (ref) result.ref[camelProp] = ref
-            result.value[camelProp] = { light: themed.$light, dark: themed.$dark }
-          } else {
-            result.ref[camelProp] = ref ?? propValue
-            result.value[camelProp] = resolved
-          }
+          result.value[camelKey] = resolvedValue
         }
-      }
+      })
 
       return result
     }
@@ -79,6 +74,8 @@ const tsFormat: Format = {
         const leaf = keys[keys.length - 1]
         const originalValue = token.original?.$value
         const resolvedValue = token.$value
+
+        console.log('-----', leaf)
 
         if (token.original?.$type === 'composite') {
           current[leaf] = renderComposite(originalValue, resolvedValue)

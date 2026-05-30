@@ -30,7 +30,7 @@ export const TOKENS__SURFACE = {
       boxShadow: 'shadow.xs',
     },
     value: {
-      backgroundColor: { light: '{color.bg-card}', dark: '{color.bg-card}' },
+      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
       borderRadius: '8px',
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
