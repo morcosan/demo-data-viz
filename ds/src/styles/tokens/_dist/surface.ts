@@ -10,8 +10,10 @@ export const CSS_PREFIX__SURFACE = '--ds-surface-'
 export const TOKENS__SURFACE = {
   page: {
     type: 'composite',
-    ref: { backgroundColor: 'color.bg-page' },
-    value: { backgroundColor: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.2861 0.0099 308)' } },
+    ref: {},
+    value: {
+      background: 'linear-gradient(to bottom right, oklch(0.9215 0.0348 260), [object Object], [object Object])',
+    },
   },
   sheet: {
     type: 'composite',

@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { CSS_PREFIX, getTokenValue, oklchToHex, TOKENS } from '@ds/core'
-import { DocsColorToken, DocsTokenCoding, DocsTokenThemeGrid } from '@ds/docs/core'
+import { DocsToken, DocsTokenCodeGrid, DocsTokenThemeGrid } from '@ds/docs/core'
 
 export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => token.ref)
 
@@ -34,20 +34,20 @@ export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => token.r
         </td>
         <td className="pr-0!">
           <DocsTokenThemeGrid
-            lightSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR[name], 'light')} />}
-            darkSlot={<DocsColorToken value={getTokenValue(TOKENS.COLOR[name], 'dark')} />}
+            lightSlot={<DocsToken value={getTokenValue(TOKENS.COLOR[name], 'light')} type="color" />}
+            darkSlot={<DocsToken value={getTokenValue(TOKENS.COLOR[name], 'dark')} type="color" />}
             noLabel
           />
         </td>
         <td>
           <DocsTokenThemeGrid
-            lightSlot={<DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'light'))} />}
-            darkSlot={<DocsColorToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'dark'))} />}
+            lightSlot={<DocsToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'light'))} type="color" />}
+            darkSlot={<DocsToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'dark'))} type="color" />}
             noLabel
           />
         </td>
         <td>
-          <DocsTokenCoding
+          <DocsTokenCodeGrid
             tsVar={`tokens.color['${name}']`}
             twVars={[`bg-color-${name}`, `text-color-${name}`]}
             cssVar={`${CSS_PREFIX.COLOR}${name}`}

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: ReactProps) {
   return (
     <html lang={DEFAULT_LOCALE}>
-      <body className="h-screen">
+      <body className="ds-surface-page h-screen">
         <Providers>
           <AppNav appLogo={AppLogo} navMenu={NavMenu}>
             <ErrorBoundary>

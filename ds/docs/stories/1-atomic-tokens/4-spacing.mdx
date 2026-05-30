@@ -1,5 +1,5 @@
 import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
-import { DocsTokenCoding } from '@ds/docs/core'
+import { DocsTokenCodeGrid } from '@ds/docs/core'
 import { Fragment } from 'react'
 import { Meta } from '@storybook/addon-docs/blocks'
 
@@ -40,7 +40,7 @@ export const cssSize = 'w-lg-4'
             <code>{getTokenValue(TOKENS.SPACING[token.ref.replace('spacing.', '')])}</code>
           </td>
           <td>
-            <DocsTokenCoding
+            <DocsTokenCodeGrid
               tsVar={`tokens.spacing['${name}']`}
               tsSize={tsSize}
               twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}
@@ -84,7 +84,7 @@ export const cssSize = 'w-lg-4'
             <code>{token.value}</code>
           </td>
           <td>
-            <DocsTokenCoding
+            <DocsTokenCodeGrid
               tsVar={`tokens.spacing['${name}']`}
               tsSize={tsSize}
               twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}

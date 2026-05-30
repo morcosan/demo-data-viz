@@ -12,7 +12,7 @@ interface Props {
   delay?: number
 }
 
-export const DocsTokenCoding = ({ tsVar, cssVar, twVars, tsSize, cssSize, twSize, delay }: Props) => {
+export const DocsTokenCodeGrid = ({ tsVar, cssVar, twVars, tsSize, cssSize, twSize, delay }: Props) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

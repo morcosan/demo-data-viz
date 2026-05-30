@@ -1,5 +1,5 @@
 import { CSS_PREFIX, getTokenValue, SettingsSvg, TOKENS } from '@ds/core'
-import { DocsTokenCoding } from '@ds/docs/core'
+import { DocsTokenCodeGrid } from '@ds/docs/core'
 import { Meta } from '@storybook/addon-docs/blocks'
 
 export const primitiveTokens = Object.entries(TOKENS.BLUR).filter(([, token]) => !token.ref)
@@ -45,7 +45,7 @@ export const cssSize = 'w-lg-3'
           </div>
         </td>
         <td>
-          <DocsTokenCoding
+          <DocsTokenCodeGrid
             tsVar={`tokens.blur['${name}']`}
             tsSize={tsSize}
             twVars={[`blur-${name}`]}
@@ -86,7 +86,7 @@ export const cssSize = 'w-lg-3'
           </div>
         </td>
         <td>
-          <DocsTokenCoding
+          <DocsTokenCodeGrid
             tsVar={`tokens.blur['${name}']`}
             tsSize={tsSize}
             twVars={[`blur-${name}`]}

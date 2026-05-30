@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { CLASS_PREFIX, TOKENS } from '@ds/core'
-import { DocsCanvas, DocsColorToken, DocsTokenCoding, DocsTokenThemeGrid } from '@ds/docs/core'
+import { DocsCanvas, DocsToken, DocsTokenCodeGrid, DocsTokenThemeGrid } from '@ds/docs/core'
 import { kebabCase } from 'lodash-es'
 import { Fragment } from 'react'
 
@@ -39,7 +39,7 @@ export const Surface = ({ title, children, className }) => (
 )
 
 export const TokenValue = ({ value }) => {
-  return value.startsWith('oklch') ? <DocsColorToken value={value} /> : <code>{value}</code>
+  return <DocsToken value={value} type={value.startsWith('oklch') ? 'color' : undefined} />
 }
 
 export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-[auto_1fr] items-center')
@@ -104,14 +104,14 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
                     darkSlot={<TokenValue value={value.dark} />}
                   />
                 ) : (
-                  <code>{value}</code>
+                  <DocsToken value={value} />
                 )}
               </Fragment>
             ))}
           </div>
         </td>
         <td>
-          <DocsTokenCoding
+          <DocsTokenCodeGrid
             tsVar={`tokens.color['${name}']`}
             cssVar={`${CLASS_PREFIX.SURFACE}${name}`}
             tsSize="w-md-7"

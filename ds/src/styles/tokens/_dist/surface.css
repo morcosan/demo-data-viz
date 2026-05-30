@@ -6,7 +6,12 @@
 :where(html),
 [data-color-mode='light'] {
   .ds-surface-page {
-    background-color: var(--ds-color-bg-page);
+    background: linear-gradient(
+      to bottom right,
+      var(--ds-color-blue-1),
+      var(--ds-color-bg-page),
+      var(--ds-color-bg-page)
+    );
   }
 
   .ds-surface-sheet {
