@@ -44,6 +44,8 @@ export const TokenValue = ({ value }) => {
 
 export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-[auto_1fr] items-center')
 
+export const parseRef = (ref) => ref.replace(/^{/g, '').replace(/}$/g, '')
+
 {/* ---------------------------------------------------------------------------------------------------------------- */}
 
 <Meta title="Composite tokens / Surface" />
@@ -86,11 +88,11 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
                 <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
                 {typeof value === 'object' ? (
                   <DocsTokenThemeGrid
-                    lightSlot={<DocsToken value={value.light} />}
-                    darkSlot={<DocsToken value={value.dark} />}
+                    lightSlot={<DocsToken value={parseRef(value.light)} />}
+                    darkSlot={<DocsToken value={parseRef(value.dark)} />}
                   />
                 ) : (
-                  <DocsToken value={value} />
+                  <DocsToken value={parseRef(value)} />
                 )}
               </Fragment>
             ))}
