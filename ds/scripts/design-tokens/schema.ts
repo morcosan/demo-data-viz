@@ -1,10 +1,11 @@
 import { z } from 'zod'
 
-const AtomicValueSchema = z.union([z.string(), z.number()])
-const ThemedValueSchema = z.object({ $light: AtomicValueSchema, $dark: AtomicValueSchema }).strict()
-const CompositeValueSchema = z.record(z.string(), z.union([AtomicValueSchema, ThemedValueSchema]))
+const BaseValueSchema = z.union([z.string(), z.number()])
+const ThemedValueSchema = z.object({ $light: BaseValueSchema, $dark: BaseValueSchema }).strict()
+const AtomicValueSchema = z.union([BaseValueSchema, ThemedValueSchema])
+const CompositeValueSchema = z.record(z.string(), z.union([BaseValueSchema, ThemedValueSchema]))
 const TokenSchema = z.union([
-  z.object({ $value: AtomicValueSchema }).strict(),
+  z.object({ $value: BaseValueSchema }).strict(),
   z.object({ $value: ThemedValueSchema }).strict(),
   z.object({ $type: z.literal('composite'), $value: CompositeValueSchema }).strict(),
 ])
@@ -27,9 +28,10 @@ const TokensJsonSchema = z
 
 type Token = z.infer<typeof TokenSchema>
 type TokensJson = z.infer<typeof TokensJsonSchema>
+type BaseValue = z.infer<typeof BaseValueSchema>
+type ThemedValue = z.infer<typeof ThemedValueSchema>
 type AtomicValue = z.infer<typeof AtomicValueSchema>
 type CompositeValue = z.infer<typeof CompositeValueSchema>
-type ThemedValue = z.infer<typeof ThemedValueSchema>
 
 export { TokensJsonSchema }
-export type { AtomicValue, CompositeValue, ThemedValue, Token, TokensJson }
+export type { AtomicValue, BaseValue, CompositeValue, ThemedValue, Token, TokensJson }
