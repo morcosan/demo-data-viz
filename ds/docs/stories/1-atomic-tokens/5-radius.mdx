@@ -1,5 +1,5 @@
 import { CSS_PREFIX, TOKENS } from '@ds/core'
-import { DocsTokenCodeGrid } from '@ds/docs/core'
+import { DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
 import { Meta } from '@storybook/addon-docs/blocks'
 
 export const previewClass = cx('h-sm-4 bg-color-bg-sheet', 'border-color-text-default border-2 border-r-0 border-b-0')
@@ -26,7 +26,7 @@ export const previewClass = cx('h-sm-4 bg-color-bg-sheet', 'border-color-text-de
           <pre>{name}</pre>
         </td>
         <td>
-          <code>{token.value}</code>
+          <DocsToken value={token.value} />
         </td>
         <td>
           <div className="gap-xs-9 flex items-center">

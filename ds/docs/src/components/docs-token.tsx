@@ -16,7 +16,7 @@ export const DocsToken = ({ value, type }: Props) => {
           <div className="h-full w-full" style={{ background: value }} />
         </div>
       )}
-      <code className="max-w-xl-1 overflow-auto">{value}</code>
+      <code className="max-w-xl-0 overflow-auto">{value}</code>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
-import { DocsTokenCodeGrid } from '@ds/docs/core'
+import { DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
 import { Fragment } from 'react'
 import { Meta } from '@storybook/addon-docs/blocks'
 
@@ -8,6 +8,7 @@ export const semanticTokens = Object.entries(TOKENS.SPACING).filter(([, token]) 
 export const tsSize = 'w-lg-3'
 export const twSize = 'w-md-4'
 export const cssSize = 'w-lg-4'
+export const parseRef = (ref) => ref.replace('spacing.', '').replace(/[{}]/g, '')
 
 {/* ---------------------------------------------------------------------------------------------------------------- */}
 
@@ -34,10 +35,10 @@ export const cssSize = 'w-lg-4'
             <pre>{name}</pre>
           </td>
           <td>
-            <pre>{token.ref.replace('spacing.', '')}</pre>
+            <DocsToken value={parseRef(token.ref)} />
           </td>
           <td>
-            <code>{getTokenValue(TOKENS.SPACING[token.ref.replace('spacing.', '')])}</code>
+            <code>{getTokenValue(TOKENS.SPACING[parseRef(token.ref)])}</code>
           </td>
           <td>
             <DocsTokenCodeGrid

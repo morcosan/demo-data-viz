@@ -19,8 +19,9 @@ type ThemedOutput = {
   dark: string | number
 }
 
-const getRefPath = (value: unknown): string | null => {
-  return typeof value === 'string' && value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : null
+const parseRef = (value: unknown): string | null => {
+  if (typeof value !== 'string') return null
+  return /\{.*?}/s.test(value) ? value : null
 }
 
 const renderCompositeToken = (original: CompositeValue, resolved: CompositeValue): CompositeOutput => {
@@ -42,14 +43,14 @@ const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue): Atomic
   // Compute result.ref
   if (hasColorMode(original)) {
     const themed = original as unknown as ThemedValue
-    const lightRef = getRefPath(themed.$light)
-    const darkRef = getRefPath(themed.$dark)
+    const lightRef = parseRef(themed.$light)
+    const darkRef = parseRef(themed.$dark)
     const ref = {} as ThemedOutput
     if (lightRef) ref.light = lightRef
     if (darkRef) ref.dark = darkRef
     if (lightRef || darkRef) result.ref = ref
   } else {
-    const ref = getRefPath(original)
+    const ref = parseRef(original)
     if (ref) result.ref = ref
   }
 

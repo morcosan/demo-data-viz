@@ -12,6 +12,6 @@ export const TOKENS__BLUR = {
   sm: { value: '2px' },
   md: { value: '4px' },
   lg: { value: '6px' },
-  subtle: { ref: 'blur.sm', value: '2px' },
-  default: { ref: 'blur.md', value: '4px' },
+  subtle: { ref: '{blur.sm}', value: '2px' },
+  default: { ref: '{blur.md}', value: '4px' },
 } as const

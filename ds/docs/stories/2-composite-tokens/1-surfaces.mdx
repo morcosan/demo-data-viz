@@ -85,9 +85,12 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
               <Fragment key={key}>
                 <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
                 {typeof value === 'object' ? (
-                  <DocsTokenThemeGrid lightSlot={<code>{value.light}</code>} darkSlot={<code>{value.dark}</code>} />
+                  <DocsTokenThemeGrid
+                    lightSlot={<DocsToken value={value.light} />}
+                    darkSlot={<DocsToken value={value.dark} />}
+                  />
                 ) : (
-                  <code>{value}</code>
+                  <DocsToken value={value} />
                 )}
               </Fragment>
             ))}

@@ -6,12 +6,7 @@
 :where(html),
 [data-color-mode='light'] {
   .ds-surface-page {
-    background: linear-gradient(
-      to bottom right,
-      var(--ds-color-blue-1),
-      var(--ds-color-bg-page),
-      var(--ds-color-bg-page)
-    );
+    background: linear-gradient(135deg, var(--ds-color-blue-1), var(--ds-color-bg-page), var(--ds-color-bg-page));
   }
 
   .ds-surface-sheet {
@@ -34,6 +29,10 @@
 }
 
 [data-color-mode='dark'] {
+  .ds-surface-page {
+    background: linear-gradient(135deg, var(--ds-color-blue-8), var(--ds-color-bg-page), var(--ds-color-bg-page));
+  }
+
   .ds-surface-card {
     box-shadow: var(--ds-shadow-xs);
     border-radius: var(--ds-radius-md);

@@ -1,5 +1,5 @@
 import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
-import { DocsTokenCodeGrid } from '@ds/docs/core'
+import { DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
 import { Meta } from '@storybook/addon-docs/blocks'
 
 export const primitiveTokens = Object.entries(TOKENS.Z_INDEX).filter(([, token]) => !token.ref)
@@ -7,6 +7,7 @@ export const semanticTokens = Object.entries(TOKENS.Z_INDEX).filter(([, token]) 
 export const tsSize = 'w-lg-4'
 export const twSize = 'w-md-6'
 export const cssSize = 'w-lg-4'
+export const parseRef = (ref) => ref.replace('z-index.', '').replace(/[{}]/g, '')
 
 {/* ---------------------------------------------------------------------------------------------------------------- */}
 
@@ -32,10 +33,10 @@ export const cssSize = 'w-lg-4'
           <pre>{name}</pre>
         </td>
         <td>
-          <pre>{token.ref.replace('z-index.', '')}</pre>
+          <DocsToken value={parseRef(token.ref)} />
         </td>
         <td>
-          <code>{getTokenValue(TOKENS.Z_INDEX[token.ref.replace('z-index.', '')])}</code>
+          <DocsToken value={getTokenValue(TOKENS.Z_INDEX[parseRef(token.ref)])} />
         </td>
         <td>
           <DocsTokenCodeGrid
@@ -69,7 +70,7 @@ export const cssSize = 'w-lg-4'
           <pre>{name}</pre>
         </td>
         <td>
-          <code>{token.value}</code>
+          <DocsToken value={token.value} />
         </td>
         <td>
           <DocsTokenCodeGrid

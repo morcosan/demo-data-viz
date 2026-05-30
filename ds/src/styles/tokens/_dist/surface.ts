@@ -10,14 +10,22 @@ export const CSS_PREFIX__SURFACE = '--ds-surface-'
 export const TOKENS__SURFACE = {
   page: {
     type: 'composite',
-    ref: {},
+    ref: {
+      background: {
+        light: 'linear-gradient(135deg, {color.blue-1}, {color.bg-page}, {color.bg-page})',
+        dark: 'linear-gradient(135deg, {color.blue-8}, {color.bg-page}, {color.bg-page})',
+      },
+    },
     value: {
-      background: 'linear-gradient(to bottom right, oklch(0.9215 0.0348 260), [object Object], [object Object])',
+      background: {
+        light: 'linear-gradient(135deg, oklch(0.9215 0.0348 260), [object Object], [object Object])',
+        dark: 'linear-gradient(135deg, oklch(0.2191 0.0494 260), [object Object], [object Object])',
+      },
     },
   },
   sheet: {
     type: 'composite',
-    ref: { backgroundColor: 'color.bg-sheet', borderRadius: 'radius.md', boxShadow: 'shadow.xs' },
+    ref: { backgroundColor: '{color.bg-sheet}', borderRadius: '{radius.md}', boxShadow: '{shadow.xs}' },
     value: {
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
       borderRadius: '8px',
@@ -27,9 +35,9 @@ export const TOKENS__SURFACE = {
   card: {
     type: 'composite',
     ref: {
-      backgroundColor: { light: 'color.bg-card', dark: 'color.bg-card' },
-      borderRadius: 'radius.md',
-      boxShadow: 'shadow.xs',
+      backgroundColor: { light: '{color.bg-card}', dark: '{color.bg-card}' },
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.xs}',
     },
     value: {
       backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
@@ -39,7 +47,7 @@ export const TOKENS__SURFACE = {
   },
   popup: {
     type: 'composite',
-    ref: { backgroundColor: 'color.bg-popup', borderRadius: 'radius.sm', boxShadow: 'shadow.sm' },
+    ref: { backgroundColor: '{color.bg-popup}', borderRadius: '{radius.sm}', boxShadow: '{shadow.sm}' },
     value: {
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
       borderRadius: '6px',
