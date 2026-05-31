@@ -6,7 +6,6 @@
 
 /* Make docs full width and bg */
 .sbdocs-wrapper {
-  background-color: var(--ds-color-bg-page) !important;
   padding: var(--ds-spacing-sm-2) var(--ds-spacing-sm-3) !important;
 }
 .sbdocs-content {

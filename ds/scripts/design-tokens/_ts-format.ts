@@ -98,7 +98,7 @@ const tsFormat: Format = {
     const json = JSON.stringify(varCode, null, 2).replaceAll('\n', '')
     const output =
       NOTICE +
-      `\nexport const CLASS_PREFIX__${varName} = '.ds-${namespace}-'\n` +
+      `\nexport const CLASS_PREFIX__${varName} = 'ds-${namespace}-'\n` +
       `\nexport const CSS_PREFIX__${varName} = '--ds-${namespace}-'\n` +
       `\nexport const TOKENS__${varName} = ${json} as const\n`
 

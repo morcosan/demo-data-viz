@@ -1,6 +1,6 @@
 import { type HOC, HocComposer } from '@ds/core'
 import { DocsContainer } from '@storybook/addon-docs/blocks'
-import { type ComponentType } from 'react'
+import { type ComponentType, useEffect } from 'react'
 import { fn } from 'storybook/test'
 import { DocsCodeBlock } from '../components/docs-code-block'
 import { DocsPage } from '../components/docs-page'
@@ -73,17 +73,24 @@ const toolbarConfig = {
 const getStoryConfig = (providers: HOC[]) => {
   return {
     decorators: [
-      (Story: ComponentType, { globals, tags, viewMode, parameters }: StoryContext) => (
-        <HocComposer hocs={computeServices(providers, globals)}>
-          {tags.includes('autodocs') || tags.includes('controls') ? (
-            <DocsPage type={viewMode === 'docs' ? 'autodocs' : 'component'} shortcuts={parameters.shortcuts}>
+      (Story: ComponentType, { globals, tags, viewMode, parameters }: StoryContext) => {
+        useEffect(() => {
+          const wrapper = document.querySelector('.sbdocs-wrapper')
+          wrapper?.classList.add('ds-surface-page')
+        }, [])
+
+        return (
+          <HocComposer hocs={computeServices(providers, globals)}>
+            {tags.includes('autodocs') || tags.includes('controls') ? (
+              <DocsPage type={viewMode === 'docs' ? 'autodocs' : 'component'} shortcuts={parameters.shortcuts}>
+                <Story />
+              </DocsPage>
+            ) : (
               <Story />
-            </DocsPage>
-          ) : (
-            <Story />
-          )}
-        </HocComposer>
-      ),
+            )}
+          </HocComposer>
+        )
+      },
     ],
   } satisfies PreviewStory
 }
@@ -111,6 +118,12 @@ const getDocsConfig = (providers: HOC[]) => {
       const isAutodocs = context.attachedCSFFiles?.size > 0
 
       fixBrokenCSS()
+
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() => {
+        const wrapper = document.querySelector('.sbdocs-wrapper')
+        wrapper?.classList.add('ds-surface-page')
+      }, [])
 
       return isAutodocs ? (
         <DocsContainer {...(props as any)} />
