@@ -1,23 +1,21 @@
-export type DesignToken<V = string | number> =
+export type TokenGroup = Record<string, Token>
+export type Token =
   | {
-      value: DesignTokenValue<V>
-      ref?: string | DesignTokenModeValue<string>
+      value: TokenAtomicValue
+      ref?: TokenAtomicValue<string>
       type?: undefined
     }
   | {
       type: 'composite'
-      value: DesignTokenComposite
-      ref: DesignTokenComposite
+      value: TokenCompositeValue
+      ref?: TokenCompositeValue<string>
     }
 
-export type DesignTokenGroup<V = DesignTokenValue> = {
-  [key: string]: DesignToken<V>
-}
-
-export type DesignTokenModeValue<V = string | number> = Record<ColorMode, V>
-export type DesignTokenValue<V = string | number> = V | DesignTokenModeValue<V>
-
-export type DesignTokenComposite = Record<string, DesignTokenValue>
+export type TokenScalar = string | number
+export type TokenScalarValue<T = TokenScalar> = T | T[]
+export type TokenColoredValue<T = TokenScalar> = Record<ColorMode, TokenScalarValue<T>>
+export type TokenAtomicValue<T = TokenScalar> = TokenScalarValue<T> | TokenColoredValue<T>
+export type TokenCompositeValue<T = TokenScalar> = Record<string, TokenAtomicValue<T>>
 
 export type ColorMode = 'light' | 'dark'
 export type ColorTheme = 'simple' | 'modern'

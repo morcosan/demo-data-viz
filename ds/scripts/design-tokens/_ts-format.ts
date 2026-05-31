@@ -3,20 +3,20 @@ import prettier from 'prettier'
 import { type TransformedToken } from 'style-dictionary'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { hasColorMode, NOTICE, prettierConfig } from './_utils.ts'
-import { type AtomicValue, type CompositeValue, type ThemedValue } from './schema.ts'
+import type { TokenAtomicValue, TokenColoredValue, TokenCompositeValue, TokenScalarValue } from './schema.ts'
 
 type AtomicOutput = {
-  value: string | number | ThemedOutput
-  ref?: string | ThemedOutput
+  value: TokenScalarValue | ColoredOutput
+  ref?: string | ColoredOutput
 }
 type CompositeOutput = {
   type: 'composite'
-  ref: Record<string, string | ThemedOutput>
-  value: Record<string, string | number | ThemedOutput>
+  ref: Record<string, string | string[] | ColoredOutput>
+  value: Record<string, TokenScalarValue | ColoredOutput>
 }
-type ThemedOutput = {
-  light: string | number
-  dark: string | number
+type ColoredOutput = {
+  light: TokenScalarValue
+  dark: TokenScalarValue
 }
 
 const parseRef = (value: unknown): string | null => {
@@ -24,7 +24,7 @@ const parseRef = (value: unknown): string | null => {
   return /\{.*?}/s.test(value) ? value : null
 }
 
-const renderCompositeToken = (original: CompositeValue, resolved: CompositeValue): CompositeOutput => {
+const renderCompositeToken = (original: TokenCompositeValue, resolved: TokenCompositeValue): CompositeOutput => {
   const result: CompositeOutput = { type: 'composite', ref: {}, value: {} }
 
   Object.keys(original).forEach((key) => {
@@ -37,15 +37,15 @@ const renderCompositeToken = (original: CompositeValue, resolved: CompositeValue
   return result
 }
 
-const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue): AtomicOutput => {
+const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValue): AtomicOutput => {
   const result: AtomicOutput = {} as AtomicOutput
 
   // Compute result.ref
   if (hasColorMode(original)) {
-    const themed = original as unknown as ThemedValue
+    const themed = original as unknown as TokenColoredValue
     const lightRef = parseRef(themed.$light)
     const darkRef = parseRef(themed.$dark)
-    const ref = {} as ThemedOutput
+    const ref = {} as ColoredOutput
     if (lightRef) ref.light = lightRef
     if (darkRef) ref.dark = darkRef
     if (lightRef || darkRef) result.ref = ref
@@ -56,10 +56,10 @@ const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue): Atomic
 
   // Compute result.value
   if (hasColorMode(resolved)) {
-    const themed = resolved as unknown as ThemedValue
+    const themed = resolved as unknown as TokenColoredValue
     result.value = {
-      light: hasColorMode(themed.$light) ? (themed.$light as unknown as ThemedValue).$light : themed.$light,
-      dark: hasColorMode(themed.$dark) ? (themed.$dark as unknown as ThemedValue).$dark : themed.$dark,
+      light: hasColorMode(themed.$light) ? (themed.$light as unknown as TokenColoredValue).$light : themed.$light,
+      dark: hasColorMode(themed.$dark) ? (themed.$dark as unknown as TokenColoredValue).$dark : themed.$dark,
     }
   } else {
     result.value = resolved as string | number

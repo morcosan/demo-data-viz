@@ -1,13 +1,13 @@
 import { z } from 'zod'
 
-const BaseValueSchema = z.union([z.string(), z.number()])
-const ThemedValueSchema = z.object({ $light: BaseValueSchema, $dark: BaseValueSchema }).strict()
-const AtomicValueSchema = z.union([BaseValueSchema, ThemedValueSchema])
-const CompositeValueSchema = z.record(z.string(), z.union([BaseValueSchema, ThemedValueSchema]))
+const ScalarSchema = z.union([z.string(), z.number()])
+const ScalarValueSchema = z.union([ScalarSchema, z.array(ScalarSchema)])
+const ColoredValueSchema = z.object({ $light: ScalarValueSchema, $dark: ScalarValueSchema }).strict()
+const AtomicValueSchema = z.union([ScalarValueSchema, ColoredValueSchema])
+const CompositeValueSchema = z.record(z.string(), z.union([ScalarValueSchema, ColoredValueSchema]))
 const TokenSchema = z.union([
-  z.object({ $value: BaseValueSchema }).strict(),
-  z.object({ $value: ThemedValueSchema }).strict(),
-  z.object({ $type: z.literal('composite'), $value: CompositeValueSchema }).strict(),
+  z.object({ $value: AtomicValueSchema }).strict(),
+  z.object({ $value: CompositeValueSchema, $type: z.literal('composite') }).strict(),
 ])
 const TokensJsonSchema = z
   .object({
@@ -28,10 +28,19 @@ const TokensJsonSchema = z
 
 type Token = z.infer<typeof TokenSchema>
 type TokensJson = z.infer<typeof TokensJsonSchema>
-type BaseValue = z.infer<typeof BaseValueSchema>
-type ThemedValue = z.infer<typeof ThemedValueSchema>
-type AtomicValue = z.infer<typeof AtomicValueSchema>
-type CompositeValue = z.infer<typeof CompositeValueSchema>
+type TokenScalar = z.infer<typeof ScalarSchema>
+type TokenScalarValue = z.infer<typeof ScalarValueSchema>
+type TokenColoredValue = z.infer<typeof ColoredValueSchema>
+type TokenAtomicValue = z.infer<typeof AtomicValueSchema>
+type TokenCompositeValue = z.infer<typeof CompositeValueSchema>
 
 export { TokensJsonSchema }
-export type { AtomicValue, BaseValue, CompositeValue, ThemedValue, Token, TokensJson }
+export type {
+  Token,
+  TokenAtomicValue,
+  TokenColoredValue,
+  TokenCompositeValue,
+  TokenScalar,
+  TokenScalarValue,
+  TokensJson,
+}

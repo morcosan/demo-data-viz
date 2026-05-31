@@ -12,11 +12,11 @@ import { CLASS_PREFIX__SURFACE, CSS_PREFIX__SURFACE, TOKENS__SURFACE } from './_
 import { CLASS_PREFIX__Z_INDEX, CSS_PREFIX__Z_INDEX, TOKENS__Z_INDEX } from './_dist/z-index'
 import {
   type ColorMode,
-  type DesignToken,
-  type DesignTokenComposite,
-  type DesignTokenGroup,
-  type DesignTokenModeValue,
-  type DesignTokenValue,
+  type Token,
+  type TokenColoredValue,
+  type TokenCompositeValue,
+  type TokenGroup,
+  type TokenScalarValue,
 } from './_types'
 
 const TOKENS = {
@@ -32,7 +32,7 @@ const TOKENS = {
   SPACING: TOKENS__SPACING,
   SURFACE: TOKENS__SURFACE,
   Z_INDEX: TOKENS__Z_INDEX,
-} satisfies Record<string, DesignTokenGroup>
+} satisfies Record<string, TokenGroup>
 
 const CSS_PREFIX = {
   BLUR: CSS_PREFIX__BLUR,
@@ -64,22 +64,20 @@ const CLASS_PREFIX = {
   Z_INDEX: CLASS_PREFIX__Z_INDEX,
 } satisfies Record<string, string>
 
-type Token = DesignToken<DesignTokenValue>
-
-const getTokenValue = <V = string | number | DesignTokenComposite>(token: Token, mode?: ColorMode): V => {
+const getTokenValue = <V = TokenScalarValue | TokenCompositeValue>(token: Token, mode?: ColorMode): V => {
   if (token.type === 'composite') {
-    const result: Record<string, string | number> = {}
+    const result: Record<string, TokenScalarValue> = {}
     for (const key in token.value) {
       result[key] =
         typeof token.value[key] === 'object'
-          ? (token.value[key] as DesignTokenModeValue)[mode || 'light']
+          ? (token.value[key] as TokenColoredValue)[mode || 'light']
           : token.value[key]
     }
     return result as V
   }
 
-  return typeof token.value === 'object'
-    ? (token.value as DesignTokenModeValue<V>)[mode || 'light']
+  return typeof token.value === 'object' && !Array.isArray(token.value)
+    ? (token.value[mode || 'light'] as V)
     : (token.value as V)
 }
 

@@ -1,11 +1,10 @@
-import { CSS_PREFIX, type DesignToken, type DesignTokenGroup, TOKENS } from '../tokens'
+import { CSS_PREFIX, type Token, type TokenGroup, TOKENS } from '../tokens'
 
-type DTG = DesignTokenGroup
-type RSS = Record<string, string>
+type Output = Record<string, string>
 
-const createTokens = (tokens: DTG, cssPrefix: string, twPrefix: string, direct?: boolean): RSS => {
+const createTokens = (tokens: TokenGroup, cssPrefix: string, twPrefix: string, direct?: boolean): Output => {
   return Object.fromEntries(
-    Object.entries<DesignToken>(tokens).map(([tokenName, token]) => [
+    Object.entries<Token>(tokens).map(([tokenName, token]) => [
       twPrefix + tokenName,
       direct ? (token.value as string) : `var(${cssPrefix}${tokenName})`,
     ]),

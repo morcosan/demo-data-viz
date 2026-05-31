@@ -11,16 +11,19 @@ export const TOKENS__SURFACE = {
   page: {
     type: 'composite',
     ref: {
-      background: {
-        light: 'linear-gradient(135deg, {color.blue-1}, {color.grey-3}, {color.grey-3})',
-        dark: 'linear-gradient(135deg, {color.blue-8}, {color.grey-19}, {color.grey-19})',
+      backgroundImage: {
+        light:
+          'radial-gradient({color.grey-8} 2px, transparent 2px), linear-gradient(120deg, {color.blue-1}, {color.grey-3}, {color.grey-3})',
+        dark: 'radial-gradient({color.grey-14} 2px, transparent 2px), linear-gradient(120deg, {color.blue-8}, {color.grey-19}, {color.grey-19})',
       },
     },
     value: {
-      background: {
-        light: 'linear-gradient(135deg, oklch(0.9215 0.0348 260), oklch(0.9474 0.0029 308), oklch(0.9474 0.0029 308))',
-        dark: 'linear-gradient(135deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308), oklch(0.2861 0.0099 308))',
+      backgroundImage: {
+        light:
+          'radial-gradient(oklch(0.7548 0.0151 308) 2px, transparent 2px), linear-gradient(120deg, oklch(0.9215 0.0348 260), oklch(0.9474 0.0029 308), oklch(0.9474 0.0029 308))',
+        dark: 'radial-gradient(oklch(0.461 0.0157 308) 2px, transparent 2px), linear-gradient(120deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308), oklch(0.2861 0.0099 308))',
       },
+      backgroundSize: '10px 10px, cover',
     },
   },
   sheet: {

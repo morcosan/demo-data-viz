@@ -1,4 +1,4 @@
-import { type ColorMode, CSS_PREFIX, type DesignTokenGroup, getTokenValue, TOKENS } from '../../styles/tokens'
+import { type ColorMode, CSS_PREFIX, getTokenValue, type TokenGroup, TOKENS } from '../../styles/tokens'
 
 interface ThemeTokens {
   blur: Record<keyof typeof TOKENS.BLUR, string>
@@ -16,7 +16,7 @@ interface ThemeTokens {
 
 const ENV__USE_CSS_VARS = true
 
-const mapTokens = (tokenGroup: DesignTokenGroup, ccPrefix: string, mode: ColorMode) => {
+const mapTokens = (tokenGroup: TokenGroup, ccPrefix: string, mode: ColorMode) => {
   return Object.fromEntries(
     Object.keys(tokenGroup).map((tokenName: string) => [
       tokenName,

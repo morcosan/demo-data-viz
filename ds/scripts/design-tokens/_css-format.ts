@@ -3,7 +3,7 @@ import { type TransformedToken } from 'style-dictionary'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { formattedVariables } from 'style-dictionary/utils'
 import { hasColorMode, NOTICE, prettierConfig, type TokenColorMode } from './_utils.ts'
-import { type CompositeValue, type ThemedValue } from './schema.ts'
+import { type TokenColoredValue, type TokenCompositeValue } from './schema.ts'
 
 const CSS_PREFIX = '--ds-'
 const CLASS_PREFIX = 'ds-'
@@ -21,10 +21,10 @@ const getClassName = (token: TransformedToken): string => CLASS_PREFIX + token.p
 
 const renderClass = (token: TransformedToken, mode?: TokenColorMode) => {
   const className = getClassName(token)
-  const rawValue = token.original.$value as CompositeValue
+  const rawValue = token.original.$value as TokenCompositeValue
   const props = Object.entries(rawValue)
     .map(([prop, value]) => {
-      const resolved = hasColorMode(value) ? (value as ThemedValue)[mode ?? '$light'] : value
+      const resolved = hasColorMode(value) ? (value as TokenColoredValue)[mode ?? '$light'] : value
       return `${prop}: ${resolveRef(String(resolved))};`
     })
     .join('\n')
