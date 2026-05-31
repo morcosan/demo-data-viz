@@ -120,10 +120,11 @@ export const parseRef = (ref) => (typeof ref === 'string' ? ref.replace(/^{/g, '
         <td>
           <DocsTokenCodeGrid
             tsVar={`tokens.color['${name}']`}
-            cssVar={`${CLASS_PREFIX.SURFACE}${name}`}
-            tsSize="w-md-7"
-            cssSize="w-md-7"
+            classVar={`${CLASS_PREFIX.SURFACE}${name}`}
+            tsSize="w-lg-3"
+            classSize="w-lg-3"
             delay={1000}
+            vertical
           />
         </td>
       </tr>

@@ -8,7 +8,6 @@
 
 body {
   margin: 0 !important;
-  background-color: var(--ds-color-bg-page);
   padding: 0 !important;
   width: unset !important;
   color: var(--ds-color-text-default);
