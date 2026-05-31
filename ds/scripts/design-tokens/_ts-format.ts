@@ -7,21 +7,28 @@ import type { TokenAtomicValue, TokenColoredValue, TokenCompositeValue, TokenSca
 
 type AtomicOutput = {
   value: TokenScalarValue | ColoredOutput
-  ref?: string | ColoredOutput
+  ref?: string | string[] | ColoredRefOutput
 }
 type CompositeOutput = {
   type: 'composite'
-  ref: Record<string, string | string[] | ColoredOutput>
+  ref: Record<string, string | string[] | ColoredRefOutput>
   value: Record<string, TokenScalarValue | ColoredOutput>
 }
 type ColoredOutput = {
   light: TokenScalarValue
   dark: TokenScalarValue
 }
+type ColoredRefOutput = {
+  light: string | string[]
+  dark: string | string[]
+}
 
-const parseRef = (value: unknown): string | null => {
-  if (typeof value !== 'string') return null
-  return /\{.*?}/s.test(value) ? value : null
+const parseRef = (value: unknown): string | string[] | null => {
+  if (typeof value === 'string' && /\{.*?}/s.test(value)) return value
+  if (Array.isArray(value)) {
+    if (value.some((entry: unknown) => typeof entry === 'string' && /\{.*?}/s.test(entry))) return value
+  }
+  return null
 }
 
 const renderCompositeToken = (original: TokenCompositeValue, resolved: TokenCompositeValue): CompositeOutput => {
@@ -45,7 +52,7 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
     const themed = original as unknown as TokenColoredValue
     const lightRef = parseRef(themed.$light)
     const darkRef = parseRef(themed.$dark)
-    const ref = {} as ColoredOutput
+    const ref = {} as ColoredRefOutput
     if (lightRef) ref.light = lightRef
     if (darkRef) ref.dark = darkRef
     if (lightRef || darkRef) result.ref = ref

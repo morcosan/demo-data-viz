@@ -17,7 +17,7 @@ export const DocsCanvas = (props: Props) => {
 
   const rootClass = cx('border-color-border-default rounded-md border', canvasBgClass, className)
   const focusClass = cx(
-    'w-md-3 bg-color-bg-page py-xs-0 absolute right-0',
+    'w-md-3 bg-color-transparent py-xs-0 absolute right-0',
     'text-size-xs text-color-text-subtle text-center',
   )
   const shortcutClass = cx('absolute left-0 cursor-default', 'text-size-xs text-color-text-subtle text-center')

@@ -49,7 +49,7 @@ export const LoadingScreen = (props: Props) => {
 
       {/* OVERLAY */}
       <div
-        className="fixed-overlay flex-center z-tooltip bg-color-bg-page"
+        className="fixed-overlay flex-center z-tooltip bg-color-bg-card"
         css={overlayCss}
         aria-hidden={isReady}
         data-testid="loading-screen"

@@ -10,15 +10,26 @@ export const CSS_PREFIX__SURFACE = '--ds-surface-'
 export const TOKENS__SURFACE = {
   page: {
     type: 'composite',
-    ref: {},
+    ref: {
+      backgroundImage: {
+        light: [
+          'radial-gradient(circle, {color.black-alpha-3} 0.8px, transparent 0.8px)',
+          'linear-gradient(120deg, {color.blue-1}, {color.grey-2}, {color.grey-2})',
+        ],
+        dark: [
+          'radial-gradient(circle, {color.white-alpha-3} 0.8px, transparent 0.8px)',
+          'linear-gradient(120deg, {color.blue-8}, {color.grey-19}, {color.grey-19})',
+        ],
+      },
+    },
     value: {
       backgroundImage: {
         light: [
-          'radial-gradient(circle, oklch(0.7548 0.0151 308) 1px, transparent 1px)',
-          'linear-gradient(120deg, oklch(0.9215 0.0348 260), oklch(0.9474 0.0029 308), oklch(0.9474 0.0029 308))',
+          'radial-gradient(circle, oklch(0.1068 0.0519 317 / 0.09) 0.8px, transparent 0.8px)',
+          'linear-gradient(120deg, oklch(0.9215 0.0348 260), oklch(0.9682 0.0017 308), oklch(0.9682 0.0017 308))',
         ],
         dark: [
-          'radial-gradient(circle, oklch(0.461 0.0157 308) 1px, transparent 1px)',
+          'radial-gradient(circle, oklch(1 0 0 / 0.09) 0.8px, transparent 0.8px)',
           'linear-gradient(120deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308), oklch(0.2861 0.0099 308))',
         ],
       },
