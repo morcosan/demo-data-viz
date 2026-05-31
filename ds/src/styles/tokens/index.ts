@@ -77,7 +77,7 @@ const getTokenValue = <V = TokenScalarValue | TokenCompositeValue>(token: Token,
   }
 
   return typeof token.value === 'object' && !Array.isArray(token.value)
-    ? (token.value[mode || 'light'] as V)
+    ? ((token.value as TokenColoredValue)[mode || 'light'] as V)
     : (token.value as V)
 }
 

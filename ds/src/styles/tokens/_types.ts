@@ -12,7 +12,7 @@ export type Token =
     }
 
 export type TokenScalar = string | number
-export type TokenScalarValue<T = TokenScalar> = T | T[]
+export type TokenScalarValue<T = TokenScalar> = T | readonly T[]
 export type TokenColoredValue<T = TokenScalar> = Record<ColorMode, TokenScalarValue<T>>
 export type TokenAtomicValue<T = TokenScalar> = TokenScalarValue<T> | TokenColoredValue<T>
 export type TokenCompositeValue<T = TokenScalar> = Record<string, TokenAtomicValue<T>>
