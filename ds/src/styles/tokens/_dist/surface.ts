@@ -14,11 +14,11 @@ export const TOKENS__SURFACE = {
       backgroundImage: {
         light: [
           'radial-gradient(circle, {color.black-alpha-4} 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, {color.blue-1}, {color.grey-2}, {color.grey-2})',
+          'linear-gradient(100deg, {color.blue-1}, {color.grey-2} 20% 80%, {color.yellow-1})',
         ],
         dark: [
           'radial-gradient(circle, {color.white-alpha-4} 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, {color.blue-8}, {color.grey-19}, {color.grey-19})',
+          'linear-gradient(100deg, {color.blue-8}, {color.grey-19} 20% 80%, {color.yellow-8})',
         ],
       },
     },
@@ -26,14 +26,15 @@ export const TOKENS__SURFACE = {
       backgroundImage: {
         light: [
           'radial-gradient(circle, oklch(0.1068 0.0519 317 / 0.12) 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, oklch(0.9215 0.0348 260), oklch(0.9682 0.0017 308), oklch(0.9682 0.0017 308))',
+          'linear-gradient(100deg, oklch(0.9215 0.0348 260), oklch(0.9682 0.0017 308) 20% 80%, oklch(0.9729 0.0693 103.19))',
         ],
         dark: [
           'radial-gradient(circle, oklch(1 0 0 / 0.12) 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308), oklch(0.2861 0.0099 308))',
+          'linear-gradient(100deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308) 20% 80%, oklch(0.5082 0.1114 65.39))',
         ],
       },
       backgroundSize: '20px 20px, cover',
+      backgroundAttachment: 'fixed',
     },
   },
   sheet: {

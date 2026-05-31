@@ -8,10 +8,11 @@
   .ds-surface-page {
     background-image:
       radial-gradient(circle, var(--ds-color-black-alpha-4) 0.8px, transparent 0.8px),
-      linear-gradient(100deg, var(--ds-color-blue-1), var(--ds-color-grey-2), var(--ds-color-grey-2));
+      linear-gradient(100deg, var(--ds-color-blue-1), var(--ds-color-grey-2) 20% 80%, var(--ds-color-yellow-1));
     background-size:
       20px 20px,
       cover;
+    background-attachment: fixed;
   }
 
   .ds-surface-sheet {
@@ -37,10 +38,11 @@
   .ds-surface-page {
     background-image:
       radial-gradient(circle, var(--ds-color-white-alpha-4) 0.8px, transparent 0.8px),
-      linear-gradient(100deg, var(--ds-color-blue-8), var(--ds-color-grey-19), var(--ds-color-grey-19));
+      linear-gradient(100deg, var(--ds-color-blue-8), var(--ds-color-grey-19) 20% 80%, var(--ds-color-yellow-8));
     background-size:
       20px 20px,
       cover;
+    background-attachment: fixed;
   }
 
   .ds-surface-card {
