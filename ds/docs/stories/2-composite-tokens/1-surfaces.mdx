@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { CLASS_PREFIX, TOKENS } from '@ds/core'
-import { DocsCanvas, DocsToken, DocsTokenCodeGrid, DocsTokenThemeGrid } from '@ds/docs/core'
+import { DocsCanvas, DocsToken, DocsTokenCodeGrid, DocsTokenGrid } from '@ds/docs/core'
 import { kebabCase } from 'lodash-es'
 import { Fragment } from 'react'
 
@@ -39,7 +39,7 @@ export const Surface = ({ title, children, className }) => (
 )
 
 export const TokenValue = ({ value }) => {
-  return <DocsToken value={value} type={value.startsWith('oklch') ? 'color' : undefined} />
+  return <DocsToken value={value} type={typeof value === 'string' && value.startsWith('oklch') ? 'color' : undefined} />
 }
 
 export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-[auto_1fr] items-center')
@@ -87,7 +87,7 @@ export const parseRef = (ref) => ref.replace(/^{/g, '').replace(/}$/g, '')
               <Fragment key={key}>
                 <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
                 {typeof value === 'object' ? (
-                  <DocsTokenThemeGrid
+                  <DocsTokenGrid
                     lightSlot={<DocsToken value={parseRef(value.light)} />}
                     darkSlot={<DocsToken value={parseRef(value.dark)} />}
                   />
@@ -104,9 +104,10 @@ export const parseRef = (ref) => ref.replace(/^{/g, '').replace(/}$/g, '')
               <Fragment key={key}>
                 <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
                 {typeof value === 'object' ? (
-                  <DocsTokenThemeGrid
+                  <DocsTokenGrid
                     lightSlot={<TokenValue value={value.light} />}
                     darkSlot={<TokenValue value={value.dark} />}
+                    large={Array.isArray(value.light) && Array.isArray(value.dark)}
                   />
                 ) : (
                   <DocsToken value={value} />

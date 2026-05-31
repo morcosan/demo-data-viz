@@ -22,7 +22,7 @@ export * from '../../docs/src/components/docs-page'
 export * from '../../docs/src/components/docs-token'
 export * from '../../docs/src/components/docs-token-code'
 export * from '../../docs/src/components/docs-token-code-grid'
-export * from '../../docs/src/components/docs-token-theme-grid'
+export * from '../../docs/src/components/docs-token-grid'
 export * from '../../docs/src/components/docs-tooltip'
 
 /**

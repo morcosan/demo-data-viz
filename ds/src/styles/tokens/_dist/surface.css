@@ -7,10 +7,10 @@
 [data-color-mode='light'] {
   .ds-surface-page {
     background-image:
-      radial-gradient(var(--ds-color-grey-8) 2px, transparent 2px),
+      radial-gradient(circle, var(--ds-color-grey-8) 1px, transparent 1px),
       linear-gradient(120deg, var(--ds-color-blue-1), var(--ds-color-grey-3), var(--ds-color-grey-3));
     background-size:
-      10px 10px,
+      12px 12px,
       cover;
   }
 
@@ -36,10 +36,10 @@
 [data-color-mode='dark'] {
   .ds-surface-page {
     background-image:
-      radial-gradient(var(--ds-color-grey-14) 2px, transparent 2px),
+      radial-gradient(circle, var(--ds-color-grey-14) 1px, transparent 1px),
       linear-gradient(120deg, var(--ds-color-blue-8), var(--ds-color-grey-19), var(--ds-color-grey-19));
     background-size:
-      10px 10px,
+      12px 12px,
       cover;
   }
 

@@ -16,7 +16,19 @@ export const DocsToken = ({ value, type }: Props) => {
           <div className="h-full w-full" style={{ background: value }} />
         </div>
       )}
-      <code className="max-w-xl-0 overflow-auto">{value}</code>
+      <div>
+        {Array.isArray(value) ? (
+          <div className="gap-xs-0 flex flex-col">
+            {value.map((entry) => (
+              <code key={entry} className="max-w-xl-0 overflow-auto">
+                {entry}
+              </code>
+            ))}
+          </div>
+        ) : (
+          <code className="max-w-xl-0 overflow-auto">{value}</code>
+        )}
+      </div>
     </div>
   )
 }

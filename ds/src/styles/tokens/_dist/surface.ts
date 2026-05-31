@@ -10,20 +10,19 @@ export const CSS_PREFIX__SURFACE = '--ds-surface-'
 export const TOKENS__SURFACE = {
   page: {
     type: 'composite',
-    ref: {
-      backgroundImage: {
-        light:
-          'radial-gradient({color.grey-8} 2px, transparent 2px), linear-gradient(120deg, {color.blue-1}, {color.grey-3}, {color.grey-3})',
-        dark: 'radial-gradient({color.grey-14} 2px, transparent 2px), linear-gradient(120deg, {color.blue-8}, {color.grey-19}, {color.grey-19})',
-      },
-    },
+    ref: {},
     value: {
       backgroundImage: {
-        light:
-          'radial-gradient(oklch(0.7548 0.0151 308) 2px, transparent 2px), linear-gradient(120deg, oklch(0.9215 0.0348 260), oklch(0.9474 0.0029 308), oklch(0.9474 0.0029 308))',
-        dark: 'radial-gradient(oklch(0.461 0.0157 308) 2px, transparent 2px), linear-gradient(120deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308), oklch(0.2861 0.0099 308))',
+        light: [
+          'radial-gradient(circle, oklch(0.7548 0.0151 308) 1px, transparent 1px)',
+          'linear-gradient(120deg, oklch(0.9215 0.0348 260), oklch(0.9474 0.0029 308), oklch(0.9474 0.0029 308))',
+        ],
+        dark: [
+          'radial-gradient(circle, oklch(0.461 0.0157 308) 1px, transparent 1px)',
+          'linear-gradient(120deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308), oklch(0.2861 0.0099 308))',
+        ],
       },
-      backgroundSize: '10px 10px, cover',
+      backgroundSize: '12px 12px, cover',
     },
   },
   sheet: {
@@ -55,8 +54,8 @@ export const TOKENS__SURFACE = {
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
       borderRadius: '6px',
       boxShadow: {
-        light: '0 1px 3px 0 rgb(0 0 0 / 0.15), 0 1px 2px -1px rgb(0 0 0 / 0.15)',
-        dark: '0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)',
+        light: ['0 1px 3px 0 rgb(0 0 0 / 0.15)', '0 1px 2px -1px rgb(0 0 0 / 0.15)'],
+        dark: ['0 1px 3px 0 rgb(0 0 0 / 0.4)', '0 1px 2px -1px rgb(0 0 0 / 0.4)'],
       },
     },
   },
