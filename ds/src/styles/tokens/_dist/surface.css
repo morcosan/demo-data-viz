@@ -12,7 +12,6 @@
     background-size:
       24px 24px,
       cover;
-    background-attachment: fixed;
   }
 
   .ds-surface-sheet {
@@ -45,7 +44,6 @@
     background-size:
       24px 24px,
       cover;
-    background-attachment: fixed;
   }
 
   .ds-surface-card {

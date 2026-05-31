@@ -34,7 +34,6 @@ export const TOKENS__SURFACE = {
         ],
       },
       backgroundSize: '24px 24px, cover',
-      backgroundAttachment: 'fixed',
     },
   },
   sheet: {

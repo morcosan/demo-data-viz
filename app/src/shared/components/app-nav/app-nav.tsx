@@ -55,7 +55,7 @@ export const AppNav = (props: AppNavProps) => {
       </ErrorBoundary>
 
       {/* PAGE CONTENT */}
-      <main className="h-full w-full flex-1 overflow-x-hidden">{children}</main>
+      <main className="ds-surface-page h-full w-full flex-1 overflow-x-hidden">{children}</main>
     </div>
   )
 }
