@@ -8,29 +8,27 @@
   .ds-surface-page {
     background-image:
       radial-gradient(circle, var(--ds-color-black-alpha-4) 0.8px, transparent 0.8px),
-      linear-gradient(100deg, var(--ds-color-blue-1), var(--ds-color-grey-2) 20% 80%, var(--ds-color-yellow-1));
+      linear-gradient(100deg, var(--ds-color-blue-1), var(--ds-color-grey-3) 20% 80%, var(--ds-color-yellow-1));
     background-size:
       24px 24px,
       cover;
+    background-attachment: fixed;
   }
 
   .ds-surface-sheet {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-sheet);
   }
 
   .ds-surface-card {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
   }
 
   .ds-surface-popup {
     box-shadow: var(--ds-shadow-sm);
-    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-sm);
     background-color: var(--ds-color-bg-popup);
   }
@@ -44,11 +42,11 @@
     background-size:
       24px 24px,
       cover;
+    background-attachment: fixed;
   }
 
   .ds-surface-card {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
   }

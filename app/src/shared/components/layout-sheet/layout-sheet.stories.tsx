@@ -1,10 +1,10 @@
 import { defineMeta, loremLongText } from '@ds/docs/core'
 import { type Meta, type StoryObj } from '@storybook/nextjs-vite'
-import { LayoutPane } from './layout-pane'
+import { LayoutSheet } from './layout-sheet'
 
 const meta: Meta = {
-  title: 'Components / LayoutPane',
-  ...defineMeta(LayoutPane, {
+  title: 'Components / LayoutSheet',
+  ...defineMeta(LayoutSheet, {
     slots: {
       children: loremLongText(),
     },
@@ -14,7 +14,7 @@ const meta: Meta = {
   }),
 }
 
-const Default: StoryObj<typeof LayoutPane> = {
+const Default: StoryObj<typeof LayoutSheet> = {
   tags: ['controls', 'autodocs'],
 }
 

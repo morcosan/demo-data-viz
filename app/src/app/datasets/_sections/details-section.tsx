@@ -1,7 +1,7 @@
 'use client'
 
 import { QueryKey, useQuery } from '@app-api'
-import { EmptyState, LayoutPane, LoadingSpinner, StatsCard } from '@app-components'
+import { EmptyState, LayoutSheet, LoadingSpinner, StatsCard } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { type TableCol } from '@app/shared/types/table'
 import { formatDate, formatNumber } from '@app/shared/utils/formatting'
@@ -120,7 +120,7 @@ export const DetailsSection = ({ onClickBack }: Props) => {
 
   if (loading || !data || !dataset) {
     return (
-      <LayoutPane className="flex-center flex w-full">
+      <LayoutSheet className="flex-center flex w-full">
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
@@ -128,14 +128,14 @@ export const DetailsSection = ({ onClickBack }: Props) => {
         ) : (
           <EmptyState>{t('dataViz.error.noDatasetSelected')}</EmptyState>
         )}
-      </LayoutPane>
+      </LayoutSheet>
     )
   }
 
   return (
     <div className="flex w-full">
       {fullscreen.Overlay}
-      <LayoutPane
+      <LayoutSheet
         ref={fullscreen.elemRef}
         className={cx('py-xs-5 px-xs-5 lg:px-xs-8 flex w-full flex-col')}
         style={fullscreen.elemStyle}
@@ -191,7 +191,7 @@ export const DetailsSection = ({ onClickBack }: Props) => {
         {/* MODAL */}
         <DetailsModal opened={openedDetails} dataset={dataset} onClose={() => setOpenedDetails(false)} />
         <FiltersModal opened={openedFilters} data={data} view={dataView} onClose={() => setOpenedFilters(false)} />
-      </LayoutPane>
+      </LayoutSheet>
     </div>
   )
 }

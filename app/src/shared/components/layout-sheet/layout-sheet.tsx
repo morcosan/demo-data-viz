@@ -7,7 +7,7 @@ interface Handle {
   getBoundingClientRect: () => DOMRect | undefined
 }
 
-export const LayoutPane = (props: ReactProps<Handle>) => {
+export const LayoutSheet = (props: ReactProps<Handle>) => {
   const { ref, children, className, style } = props
   const dataProps = useDataProps(props)
   const innerRef = useRef<HTMLDivElement>(null)
@@ -17,12 +17,7 @@ export const LayoutPane = (props: ReactProps<Handle>) => {
   }))
 
   return (
-    <div
-      ref={innerRef}
-      className={cx('bg-color-bg-sheet rounded-md shadow-xs', className)}
-      style={style}
-      {...dataProps}
-    >
+    <div ref={innerRef} className={cx('ds-surface-sheet', className)} style={style} {...dataProps}>
       {children}
     </div>
   )

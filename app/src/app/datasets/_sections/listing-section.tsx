@@ -1,7 +1,7 @@
 'use client'
 
 import { QueryKey, useQuery } from '@app-api'
-import { EmptyState, LayoutPane, LoadingSpinner, SearchField } from '@app-components'
+import { EmptyState, LayoutSheet, LoadingSpinner, SearchField } from '@app-components'
 import { useTranslation } from '@app-i18n'
 import { formatNumber } from '@app/shared/utils/formatting'
 import { useLocalStorage } from '@app/shared/utils/use-local-storage'
@@ -51,7 +51,7 @@ export const ListingSection = ({ className, onClickDataset }: Props) => {
   })
 
   return (
-    <LayoutPane className={cx('flex flex-col', className)}>
+    <LayoutSheet className={cx('flex flex-col', className)}>
       <div className="shadow-below-sm z-sticky p-scrollbar-w relative">
         <SearchField
           id={`${fieldId}-search`}
@@ -96,6 +96,6 @@ export const ListingSection = ({ className, onClickDataset }: Props) => {
           </ul>
         </div>
       )}
-    </LayoutPane>
+    </LayoutSheet>
   )
 }

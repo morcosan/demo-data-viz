@@ -14,7 +14,7 @@ export const TOKENS__SURFACE = {
       backgroundImage: {
         light: [
           'radial-gradient(circle, {color.black-alpha-4} 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, {color.blue-1}, {color.grey-2} 20% 80%, {color.yellow-1})',
+          'linear-gradient(100deg, {color.blue-1}, {color.grey-3} 20% 80%, {color.yellow-1})',
         ],
         dark: [
           'radial-gradient(circle, {color.white-alpha-4} 0.8px, transparent 0.8px)',
@@ -26,7 +26,7 @@ export const TOKENS__SURFACE = {
       backgroundImage: {
         light: [
           'radial-gradient(circle, oklch(0.1068 0.0519 317 / 0.12) 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, oklch(0.9215 0.0348 260), oklch(0.9682 0.0017 308) 20% 80%, oklch(0.9729 0.0693 103.19))',
+          'linear-gradient(100deg, oklch(0.9215 0.0348 260), oklch(0.9474 0.0029 308) 20% 80%, oklch(0.9729 0.0693 103.19))',
         ],
         dark: [
           'radial-gradient(circle, oklch(1 0 0 / 0.12) 0.8px, transparent 0.8px)',
@@ -34,19 +34,14 @@ export const TOKENS__SURFACE = {
         ],
       },
       backgroundSize: '24px 24px, cover',
+      backgroundAttachment: 'fixed',
     },
   },
   sheet: {
     type: 'composite',
-    ref: {
-      backgroundColor: '{color.bg-sheet}',
-      border: '1px solid {color.border-shadow}',
-      borderRadius: '{radius.md}',
-      boxShadow: '{shadow.xs}',
-    },
+    ref: { backgroundColor: '{color.bg-sheet}', borderRadius: '{radius.md}', boxShadow: '{shadow.xs}' },
     value: {
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
-      border: '1px solid [object Object]',
       borderRadius: '8px',
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
@@ -55,28 +50,20 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       backgroundColor: { light: '{color.bg-card}', dark: '{color.bg-card}' },
-      border: '1px solid {color.border-shadow}',
       borderRadius: '{radius.md}',
       boxShadow: '{shadow.xs}',
     },
     value: {
       backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
-      border: '1px solid [object Object]',
       borderRadius: '8px',
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
   },
   popup: {
     type: 'composite',
-    ref: {
-      backgroundColor: '{color.bg-popup}',
-      border: '1px solid {color.border-shadow}',
-      borderRadius: '{radius.sm}',
-      boxShadow: '{shadow.sm}',
-    },
+    ref: { backgroundColor: '{color.bg-popup}', borderRadius: '{radius.sm}', boxShadow: '{shadow.sm}' },
     value: {
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
-      border: '1px solid [object Object]',
       borderRadius: '6px',
       boxShadow: {
         light: ['0 1px 3px 0 rgb(0 0 0 / 0.15)', '0 1px 2px -1px rgb(0 0 0 / 0.15)'],
