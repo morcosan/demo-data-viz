@@ -1,6 +1,6 @@
 import { type HOC, HocComposer } from '@ds/core'
 import { DocsContainer } from '@storybook/addon-docs/blocks'
-import { type ComponentType, useEffect } from 'react'
+import { type ComponentType } from 'react'
 import { fn } from 'storybook/test'
 import { DocsCodeBlock } from '../components/docs-code-block'
 import { DocsPage } from '../components/docs-page'
@@ -16,6 +16,7 @@ import {
   type PreviewStory,
   type PreviewToolbar,
   type StoryContext,
+  usePageSurface,
 } from './_preview-utils'
 
 type ArgType = {
@@ -74,11 +75,7 @@ const getStoryConfig = (providers: HOC[]) => {
   return {
     decorators: [
       (Story: ComponentType, { globals, tags, viewMode, parameters }: StoryContext) => {
-        useEffect(() => {
-          const wrapper = document.querySelector('.sbdocs-wrapper')
-          wrapper?.classList.add('ds-surface-page')
-        }, [])
-
+        usePageSurface()
         return (
           <HocComposer hocs={computeServices(providers, globals)}>
             {tags.includes('autodocs') || tags.includes('controls') ? (
@@ -113,17 +110,12 @@ const getDocsConfig = (providers: HOC[]) => {
       },
     },
 
-    container: (props: DocsContainerProps) => {
+    container: function Story(props: DocsContainerProps) {
       const { children, context } = props
       const isAutodocs = context.attachedCSFFiles?.size > 0
 
+      usePageSurface()
       fixBrokenCSS()
-
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        const wrapper = document.querySelector('.sbdocs-wrapper')
-        wrapper?.classList.add('ds-surface-page')
-      }, [])
 
       return isAutodocs ? (
         <DocsContainer {...(props as any)} />

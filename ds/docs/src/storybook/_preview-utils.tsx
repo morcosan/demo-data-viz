@@ -7,7 +7,7 @@ import {
   ThemeService,
   ViewportService,
 } from '@ds/core'
-import { type ComponentType, type ReactNode, StrictMode } from 'react'
+import { type ComponentType, type ReactNode, StrictMode, useEffect } from 'react'
 import { type DocsCanvasBg, DocsCanvasService } from '../services/docs-canvas-service'
 
 interface GlobalConfig<T> {
@@ -76,7 +76,14 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
   ]
 }
 
-export { computeServices }
+const usePageSurface = () => {
+  useEffect(() => {
+    const wrapper = document.querySelector('.sbdocs-wrapper')
+    wrapper?.classList.add('ds-surface-page')
+  }, [])
+}
+
+export { computeServices, usePageSurface }
 export type {
   DocsComponentProps,
   DocsContainerProps,
