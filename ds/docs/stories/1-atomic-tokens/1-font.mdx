@@ -1,5 +1,5 @@
 import { CSS_PREFIX, TOKENS } from '@ds/core'
-import { DocsTokenCodeGrid } from '@ds/docs/core'
+import { DocsCard, DocsTokenCodeGrid } from '@ds/docs/core'
 import { Meta } from '@storybook/addon-docs/blocks'
 
 export const SAMPLE_TEXT = `The quick brown fox jumps over the lazy dog 0123456789 !@#$%&*().,;:?'"`
@@ -15,169 +15,177 @@ export const cssSize = 'w-lg-3'
 
 ## Font family tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Value</th>
-      <th className="w-full">Sample</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {Object.entries(TOKENS.FONT_FAMILY).map(([name, token]) => (
-      <tr key={name}>
-        <td>
-          <pre>{name}</pre>
-        </td>
-        <td>
-          <code className="block whitespace-pre!">{token.value.split(',').join('\n')}</code>
-        </td>
-        <td style={{ fontFamily: `var(${CSS_PREFIX.FONT_FAMILY}${name})` }}>
-          {name === 'sans' ? (
-            <>
-              <div>{SAMPLE_TEXT}</div>
-              <div className="italic">{SAMPLE_TEXT}</div>
-            </>
-          ) : (
-            SAMPLE_TEXT
-          )}
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.fontFamily['${name}']`}
-            tsSize={tsSize}
-            twVars={[`font-family-${name}`]}
-            twSize={twSize}
-            cssVar={`${CSS_PREFIX.FONT_FAMILY}${name}`}
-            cssSize={cssSize}
-          />
-        </td>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th className="w-full">Sample</th>
+        <th>Coding</th>
       </tr>
-    ))}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS.FONT_FAMILY).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <code className="block whitespace-pre!">{token.value.split(',').join('\n')}</code>
+          </td>
+          <td style={{ fontFamily: `var(${CSS_PREFIX.FONT_FAMILY}${name})` }}>
+            {name === 'sans' ? (
+              <>
+                <div>{SAMPLE_TEXT}</div>
+                <div className="italic">{SAMPLE_TEXT}</div>
+              </>
+            ) : (
+              SAMPLE_TEXT
+            )}
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.fontFamily['${name}']`}
+              tsSize={tsSize}
+              twVars={[`font-family-${name}`]}
+              twSize={twSize}
+              cssVar={`${CSS_PREFIX.FONT_FAMILY}${name}`}
+              cssSize={cssSize}
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>
 
 ## Font size tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Value</th>
-      <th className="whitespace-nowrap">Value (px)</th>
-      <th className="w-full">Sample</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {Object.entries(TOKENS.FONT_SIZE).map(([name, token]) => (
-      <tr key={name}>
-        <td>
-          <pre>{name}</pre>
-        </td>
-        <td>
-          <code>{token.value}</code>
-        </td>
-        <td>
-          <code>{Number(token.value.replace('rem', '')) * 16}px</code>
-        </td>
-        <td
-          style={{
-            fontSize: `var(${CSS_PREFIX.FONT_SIZE}${name})`,
-            fontFamily: `var(${CSS_PREFIX.FONT_FAMILY}${name.includes('-mono') ? 'mono' : 'sans'})`,
-          }}
-        >
-          {SAMPLE_TEXT}
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.fontSize['${name}']`}
-            tsSize={tsSize}
-            twVars={[`text-size-${name}`]}
-            twSize={twSize}
-            cssVar={`${CSS_PREFIX.FONT_SIZE}${name}`}
-            cssSize={cssSize}
-          />
-        </td>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th className="whitespace-nowrap">Value (px)</th>
+        <th className="w-full">Sample</th>
+        <th>Coding</th>
       </tr>
-    ))}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS.FONT_SIZE).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <code>{token.value}</code>
+          </td>
+          <td>
+            <code>{Number(token.value.replace('rem', '')) * 16}px</code>
+          </td>
+          <td
+            style={{
+              fontSize: `var(${CSS_PREFIX.FONT_SIZE}${name})`,
+              fontFamily: `var(${CSS_PREFIX.FONT_FAMILY}${name.includes('-mono') ? 'mono' : 'sans'})`,
+            }}
+          >
+            {SAMPLE_TEXT}
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.fontSize['${name}']`}
+              tsSize={tsSize}
+              twVars={[`text-size-${name}`]}
+              twSize={twSize}
+              cssVar={`${CSS_PREFIX.FONT_SIZE}${name}`}
+              cssSize={cssSize}
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>
 
 ## Font weight tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Value</th>
-      <th className="w-full">Sample</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {Object.entries(TOKENS.FONT_WEIGHT).map(([name, token]) => (
-      <tr key={name}>
-        <td>
-          <pre>{name}</pre>
-        </td>
-        <td>
-          <code>{token.value}</code>
-        </td>
-        <td style={{ fontWeight: `var(${CSS_PREFIX.FONT_WEIGHT}${name})` }}>
-          <div className="font-family-sans">{SAMPLE_TEXT}</div>
-          <div className="font-family-mono">{SAMPLE_TEXT}</div>
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.fontWeight['${name}']`}
-            tsSize={tsSize}
-            twVars={[`font-weight-${name}`]}
-            twSize={twSize}
-            cssVar={`${CSS_PREFIX.FONT_WEIGHT}${name}`}
-            cssSize={cssSize}
-          />
-        </td>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th className="w-full">Sample</th>
+        <th>Coding</th>
       </tr>
-    ))}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS.FONT_WEIGHT).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <code>{token.value}</code>
+          </td>
+          <td style={{ fontWeight: `var(${CSS_PREFIX.FONT_WEIGHT}${name})` }}>
+            <div className="font-family-sans">{SAMPLE_TEXT}</div>
+            <div className="font-family-mono">{SAMPLE_TEXT}</div>
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.fontWeight['${name}']`}
+              tsSize={tsSize}
+              twVars={[`font-weight-${name}`]}
+              twSize={twSize}
+              cssVar={`${CSS_PREFIX.FONT_WEIGHT}${name}`}
+              cssSize={cssSize}
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>
 
 ## Line height tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Value</th>
-      <th className="w-full">Sample</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {Object.entries(TOKENS.LINE_HEIGHT).map(([name, token]) => (
-      <tr key={name}>
-        <td>
-          <pre>{name}</pre>
-        </td>
-        <td>
-          <code>{token.value}</code>
-        </td>
-        <td style={{ lineHeight: `var(${CSS_PREFIX.LINE_HEIGHT}${name})` }}>
-          <div className="border-color-primary-page-text border">{SAMPLE_TEXT}</div>
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.lineHeight['${name}']`}
-            tsSize={tsSize}
-            twVars={[`leading-${name}`]}
-            twSize={twSize}
-            cssVar={`${CSS_PREFIX.LINE_HEIGHT}${name}`}
-            cssSize={cssSize}
-          />
-        </td>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th className="w-full">Sample</th>
+        <th>Coding</th>
       </tr>
-    ))}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS.LINE_HEIGHT).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <code>{token.value}</code>
+          </td>
+          <td style={{ lineHeight: `var(${CSS_PREFIX.LINE_HEIGHT}${name})` }}>
+            <div className="border-color-primary-page-text border">{SAMPLE_TEXT}</div>
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.lineHeight['${name}']`}
+              tsSize={tsSize}
+              twVars={[`leading-${name}`]}
+              twSize={twSize}
+              cssVar={`${CSS_PREFIX.LINE_HEIGHT}${name}`}
+              cssSize={cssSize}
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>

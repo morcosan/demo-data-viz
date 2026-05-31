@@ -33,7 +33,7 @@ export const TOKENS__SURFACE = {
           'linear-gradient(100deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308) 20% 80%, oklch(0.5082 0.1114 65.39))',
         ],
       },
-      backgroundSize: '20px 20px, cover',
+      backgroundSize: '24px 24px, cover',
       backgroundAttachment: 'fixed',
     },
   },

@@ -10,7 +10,7 @@
       radial-gradient(circle, var(--ds-color-black-alpha-4) 0.8px, transparent 0.8px),
       linear-gradient(100deg, var(--ds-color-blue-1), var(--ds-color-grey-2) 20% 80%, var(--ds-color-yellow-1));
     background-size:
-      20px 20px,
+      24px 24px,
       cover;
     background-attachment: fixed;
   }
@@ -40,7 +40,7 @@
       radial-gradient(circle, var(--ds-color-white-alpha-4) 0.8px, transparent 0.8px),
       linear-gradient(100deg, var(--ds-color-blue-8), var(--ds-color-grey-19) 20% 80%, var(--ds-color-yellow-8));
     background-size:
-      20px 20px,
+      24px 24px,
       cover;
     background-attachment: fixed;
   }
