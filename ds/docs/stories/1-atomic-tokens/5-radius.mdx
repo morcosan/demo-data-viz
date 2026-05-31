@@ -1,5 +1,5 @@
 import { CSS_PREFIX, TOKENS } from '@ds/core'
-import { DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
+import { DocsCard, DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
 import { Meta } from '@storybook/addon-docs/blocks'
 
 export const previewClass = cx('h-sm-4 bg-color-bg-sheet', 'border-color-text-default border-2 border-r-0 border-b-0')
@@ -10,40 +10,48 @@ export const previewClass = cx('h-sm-4 bg-color-bg-sheet', 'border-color-text-de
 
 # Radius tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Value</th>
-      <th className="w-full">Preview</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {Object.entries(TOKENS.RADIUS).map(([name, token]) => (
-      <tr key={name}>
-        <td>
-          <pre>{name}</pre>
-        </td>
-        <td>
-          <DocsToken value={token.value} />
-        </td>
-        <td>
-          <div className="gap-xs-9 flex items-center">
-            <div className={cx('w-sm-4', previewClass)} style={{ borderRadius: `var(${CSS_PREFIX.RADIUS}${name})` }} />
-            <div className={cx('w-sm-9', previewClass)} style={{ borderRadius: `var(${CSS_PREFIX.RADIUS}${name})` }} />
-          </div>
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.radius['${name}']`}
-            tsSize="w-lg-3"
-            twVars={[`rounded-${name}`]}
-            cssVar={`${CSS_PREFIX.RADIUS}${name}`}
-            cssSize="w-lg-3"
-          />
-        </td>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th className="w-full">Preview</th>
+        <th>Coding</th>
       </tr>
-    ))}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS.RADIUS).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <DocsToken value={token.value} />
+          </td>
+          <td>
+            <div className="gap-xs-9 flex items-center">
+              <div
+                className={cx('w-sm-4', previewClass)}
+                style={{ borderRadius: `var(${CSS_PREFIX.RADIUS}${name})` }}
+              />
+              <div
+                className={cx('w-sm-9', previewClass)}
+                style={{ borderRadius: `var(${CSS_PREFIX.RADIUS}${name})` }}
+              />
+            </div>
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.radius['${name}']`}
+              tsSize="w-lg-3"
+              twVars={[`rounded-${name}`]}
+              cssVar={`${CSS_PREFIX.RADIUS}${name}`}
+              cssSize="w-lg-3"
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>

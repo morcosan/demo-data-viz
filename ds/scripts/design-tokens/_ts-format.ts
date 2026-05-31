@@ -63,10 +63,10 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
 
   // Compute result.value
   if (hasColorMode(resolved)) {
-    const themed = resolved as unknown as TokenColoredValue
+    const colored = resolved as unknown as TokenColoredValue
     result.value = {
-      light: hasColorMode(themed.$light) ? (themed.$light as unknown as TokenColoredValue).$light : themed.$light,
-      dark: hasColorMode(themed.$dark) ? (themed.$dark as unknown as TokenColoredValue).$dark : themed.$dark,
+      light: hasColorMode(colored.$light) ? (colored.$light as unknown as TokenColoredValue).$light : colored.$light,
+      dark: hasColorMode(colored.$dark) ? (colored.$dark as unknown as TokenColoredValue).$dark : colored.$dark,
     }
   } else {
     result.value = resolved as string | number

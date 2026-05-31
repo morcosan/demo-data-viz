@@ -1,5 +1,5 @@
 import { CSS_PREFIX, DesktopSvg, LaptopSvg, PhoneSvg, TabletSvg, TOKENS, WidescreenSvg } from '@ds/core'
-import { DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
+import { DocsCard, DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
 import { Meta } from '@storybook/addon-docs/blocks'
 
 export const breakpointMap = {
@@ -19,40 +19,42 @@ export const breakpointMap = {
 
 ## Breakpoint tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th className="w-full">Value</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {Object.entries(TOKENS.BREAKPOINT).map(([name, token]) => (
-      <tr key={name}>
-        <td>
-          <div className="gap-xs-4 text-color-text-subtle flex items-center">
-            <div className="flex-center w-sm-5">{breakpointMap[name].icon}</div>
-            <div className="flex flex-col leading-1 whitespace-nowrap">
-              <pre>{name}</pre>
-              <div className="text-size-xs text-color-text-subtle">{breakpointMap[name].title}</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <DocsToken value={token.value} />
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.breakpoint['${name}']`}
-            tsSize="w-lg-3"
-            twVars={[`${name}:___`]}
-            twSize="w-md-3"
-            cssVar={`${CSS_PREFIX.BREAKPOINT}${name}`}
-            cssSize="w-lg-4"
-          />
-        </td>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th className="w-full">Value</th>
+        <th>Coding</th>
       </tr>
-    ))}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {Object.entries(TOKENS.BREAKPOINT).map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <div className="gap-xs-4 text-color-text-subtle flex items-center">
+              <div className="flex-center w-sm-5">{breakpointMap[name].icon}</div>
+              <div className="flex flex-col leading-1 whitespace-nowrap">
+                <pre>{name}</pre>
+                <div className="text-size-xs text-color-text-subtle">{breakpointMap[name].title}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <DocsToken value={token.value} />
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.breakpoint['${name}']`}
+              tsSize="w-lg-3"
+              twVars={[`${name}:___`]}
+              twSize="w-md-3"
+              cssVar={`${CSS_PREFIX.BREAKPOINT}${name}`}
+              cssSize="w-lg-4"
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>

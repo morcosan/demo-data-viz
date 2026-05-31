@@ -1,5 +1,5 @@
 import { CSS_PREFIX, getTokenValue, TOKENS } from '@ds/core'
-import { DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
+import { DocsCard, DocsToken, DocsTokenCodeGrid } from '@ds/docs/core'
 import { Fragment } from 'react'
 import { Meta } from '@storybook/addon-docs/blocks'
 
@@ -18,92 +18,96 @@ export const parseRef = (ref) => ref.replace('spacing.', '').replace(/[{}]/g, ''
 
 ## Semantic tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Reference</th>
-      <th className="w-full">Value</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {semanticTokens.map(([name, token]) => (
-      <Fragment key={name}>
-        <tr key={name} className="border-b-0!">
-          <td>
-            <pre>{name}</pre>
-          </td>
-          <td>
-            <DocsToken value={parseRef(token.ref)} />
-          </td>
-          <td>
-            <code>{getTokenValue(TOKENS.SPACING[parseRef(token.ref)])}</code>
-          </td>
-          <td>
-            <DocsTokenCodeGrid
-              tsVar={`tokens.spacing['${name}']`}
-              tsSize={tsSize}
-              twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}
-              twSize={twSize}
-              cssVar={`${CSS_PREFIX.SPACING}${name}`}
-              cssSize={cssSize}
-            />
-          </td>
-        </tr>
-        <tr className="border-t-0!">
-          <td colSpan={4} className="relative py-0!">
-            <div
-              className="h-xs-1 bg-color-text-subtle absolute bottom-0 left-0"
-              style={{ width: `var(${CSS_PREFIX.SPACING}${name})` }}
-            />
-          </td>
-        </tr>
-      </Fragment>
-    ))}
-  </tbody>
-</table>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Reference</th>
+        <th className="w-full">Value</th>
+        <th>Coding</th>
+      </tr>
+    </thead>
+    <tbody>
+      {semanticTokens.map(([name, token]) => (
+        <Fragment key={name}>
+          <tr key={name} className="border-b-0!">
+            <td>
+              <pre>{name}</pre>
+            </td>
+            <td>
+              <DocsToken value={parseRef(token.ref)} />
+            </td>
+            <td>
+              <code>{getTokenValue(TOKENS.SPACING[parseRef(token.ref)])}</code>
+            </td>
+            <td>
+              <DocsTokenCodeGrid
+                tsVar={`tokens.spacing['${name}']`}
+                tsSize={tsSize}
+                twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}
+                twSize={twSize}
+                cssVar={`${CSS_PREFIX.SPACING}${name}`}
+                cssSize={cssSize}
+              />
+            </td>
+          </tr>
+          <tr className="border-t-0!">
+            <td colSpan={4} className="relative py-0!">
+              <div
+                className="h-xs-1 bg-color-text-subtle absolute bottom-0 left-0"
+                style={{ width: `var(${CSS_PREFIX.SPACING}${name})` }}
+              />
+            </td>
+          </tr>
+        </Fragment>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>
 
 ## Primitive tokens
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th className="w-full">Value</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {primitiveTokens.map(([name, token]) => (
-      <Fragment key={name}>
-        <tr key={name} className="border-b-0!">
-          <td>
-            <pre>{name}</pre>
-          </td>
-          <td>
-            <code>{token.value}</code>
-          </td>
-          <td>
-            <DocsTokenCodeGrid
-              tsVar={`tokens.spacing['${name}']`}
-              tsSize={tsSize}
-              twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}
-              twSize={twSize}
-              cssVar={`${CSS_PREFIX.SPACING}${name}`}
-              cssSize={cssSize}
-            />
-          </td>
-        </tr>
-        <tr className="border-t-0!">
-          <td colSpan={4} className="relative py-0!">
-            <div
-              className="h-xs-1 bg-color-text-subtle absolute bottom-0 left-0"
-              style={{ width: `var(${CSS_PREFIX.SPACING}${name})` }}
-            />
-          </td>
-        </tr>
-      </Fragment>
-    ))}
-  </tbody>
-</table>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th className="w-full">Value</th>
+        <th>Coding</th>
+      </tr>
+    </thead>
+    <tbody>
+      {primitiveTokens.map(([name, token]) => (
+        <Fragment key={name}>
+          <tr key={name} className="border-b-0!">
+            <td>
+              <pre>{name}</pre>
+            </td>
+            <td>
+              <code>{token.value}</code>
+            </td>
+            <td>
+              <DocsTokenCodeGrid
+                tsVar={`tokens.spacing['${name}']`}
+                tsSize={tsSize}
+                twVars={[`w-${name}`, `h-${name}`, `m-${name}`, `p-${name}`]}
+                twSize={twSize}
+                cssVar={`${CSS_PREFIX.SPACING}${name}`}
+                cssSize={cssSize}
+              />
+            </td>
+          </tr>
+          <tr className="border-t-0!">
+            <td colSpan={4} className="relative py-0!">
+              <div
+                className="h-xs-1 bg-color-text-subtle absolute bottom-0 left-0"
+                style={{ width: `var(${CSS_PREFIX.SPACING}${name})` }}
+              />
+            </td>
+          </tr>
+        </Fragment>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>
