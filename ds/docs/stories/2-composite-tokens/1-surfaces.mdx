@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { CLASS_PREFIX, TOKENS } from '@ds/core'
-import { DocsCanvas, DocsToken, DocsTokenCodeGrid, DocsTokenGrid } from '@ds/docs/core'
+import { DocsCard, DocsCanvas, DocsToken, DocsTokenCodeGrid, DocsTokenGrid } from '@ds/docs/core'
 import { kebabCase } from 'lodash-es'
 import { Fragment } from 'react'
 
@@ -66,68 +66,70 @@ export const parseRef = (ref) => (typeof ref === 'string' ? ref.replace(/^{/g, '
   </Surface>
 </Example>
 
-<table className="docs">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Reference</th>
-      <th className="w-full">Value</th>
-      <th>Coding</th>
-    </tr>
-  </thead>
-  <tbody>
-    {tokens.map(([name, token]) => (
-      <tr key={name}>
-        <td>
-          <pre>{name}</pre>
-        </td>
-        <td>
-          <div className={gridClass}>
-            {Object.entries(token.ref).map(([key, value]) => (
-              <Fragment key={key}>
-                <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
-                {typeof value === 'object' && !Array.isArray(value) ? (
-                  <DocsTokenGrid
-                    lightSlot={<DocsToken value={parseRef(value.light)} />}
-                    darkSlot={<DocsToken value={parseRef(value.dark)} />}
-                    large={Array.isArray(value.light) && Array.isArray(value.dark)}
-                  />
-                ) : (
-                  <DocsToken value={parseRef(value)} />
-                )}
-              </Fragment>
-            ))}
-          </div>
-        </td>
-        <td>
-          <div className={gridClass}>
-            {Object.entries(token.value).map(([key, value]) => (
-              <Fragment key={key}>
-                <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
-                {typeof value === 'object' && !Array.isArray(value) ? (
-                  <DocsTokenGrid
-                    lightSlot={<TokenValue value={value.light} />}
-                    darkSlot={<TokenValue value={value.dark} />}
-                    large={Array.isArray(value.light) && Array.isArray(value.dark)}
-                  />
-                ) : (
-                  <DocsToken value={value} />
-                )}
-              </Fragment>
-            ))}
-          </div>
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.color['${name}']`}
-            classVar={`${CLASS_PREFIX.SURFACE}${name}`}
-            tsSize="w-lg-2"
-            classSize="w-lg-2"
-            delay={1000}
-            vertical
-          />
-        </td>
+<DocsCard>
+  <table className="docs">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Reference</th>
+        <th className="w-full">Value</th>
+        <th>Coding</th>
       </tr>
-    ))}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {tokens.map(([name, token]) => (
+        <tr key={name}>
+          <td>
+            <pre>{name}</pre>
+          </td>
+          <td>
+            <div className={gridClass}>
+              {Object.entries(token.ref).map(([key, value]) => (
+                <Fragment key={key}>
+                  <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
+                  {typeof value === 'object' && !Array.isArray(value) ? (
+                    <DocsTokenGrid
+                      lightSlot={<DocsToken value={parseRef(value.light)} />}
+                      darkSlot={<DocsToken value={parseRef(value.dark)} />}
+                      large={Array.isArray(value.light) && Array.isArray(value.dark)}
+                    />
+                  ) : (
+                    <DocsToken value={parseRef(value)} />
+                  )}
+                </Fragment>
+              ))}
+            </div>
+          </td>
+          <td className="pr-0!">
+            <div className={gridClass}>
+              {Object.entries(token.value).map(([key, value]) => (
+                <Fragment key={key}>
+                  <pre className="text-color-text-subtle">{kebabCase(key)}:</pre>
+                  {typeof value === 'object' && !Array.isArray(value) ? (
+                    <DocsTokenGrid
+                      lightSlot={<TokenValue value={value.light} />}
+                      darkSlot={<TokenValue value={value.dark} />}
+                      large={Array.isArray(value.light) && Array.isArray(value.dark)}
+                    />
+                  ) : (
+                    <DocsToken value={value} />
+                  )}
+                </Fragment>
+              ))}
+            </div>
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.color['${name}']`}
+              classVar={`${CLASS_PREFIX.SURFACE}${name}`}
+              tsSize="w-lg-2"
+              classSize="w-lg-2"
+              delay={1000}
+              vertical
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DocsCard>

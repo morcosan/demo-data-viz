@@ -78,8 +78,8 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
 
 const usePageSurface = () => {
   useEffect(() => {
-    const wrapper = document.querySelector('.sbdocs-wrapper')
-    wrapper?.classList.add('ds-surface-page')
+    const ids = ['#storybook-docs', '#storybook-root']
+    ids.forEach((id) => document.querySelector(id)?.classList.add('ds-surface-page'))
   }, [])
 }
 

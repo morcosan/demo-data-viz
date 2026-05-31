@@ -39,9 +39,15 @@ export const TOKENS__SURFACE = {
   },
   sheet: {
     type: 'composite',
-    ref: { backgroundColor: '{color.bg-sheet}', borderRadius: '{radius.md}', boxShadow: '{shadow.xs}' },
+    ref: {
+      backgroundColor: '{color.bg-sheet}',
+      border: '1px solid {color.border-shadow}',
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.xs}',
+    },
     value: {
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
+      border: '1px solid [object Object]',
       borderRadius: '8px',
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
@@ -50,20 +56,28 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       backgroundColor: { light: '{color.bg-card}', dark: '{color.bg-card}' },
+      border: '1px solid {color.border-shadow}',
       borderRadius: '{radius.md}',
       boxShadow: '{shadow.xs}',
     },
     value: {
       backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
+      border: '1px solid [object Object]',
       borderRadius: '8px',
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
   },
   popup: {
     type: 'composite',
-    ref: { backgroundColor: '{color.bg-popup}', borderRadius: '{radius.sm}', boxShadow: '{shadow.sm}' },
+    ref: {
+      backgroundColor: '{color.bg-popup}',
+      border: '1px solid {color.border-shadow}',
+      borderRadius: '{radius.sm}',
+      boxShadow: '{shadow.sm}',
+    },
     value: {
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
+      border: '1px solid [object Object]',
       borderRadius: '6px',
       boxShadow: {
         light: ['0 1px 3px 0 rgb(0 0 0 / 0.15)', '0 1px 2px -1px rgb(0 0 0 / 0.15)'],

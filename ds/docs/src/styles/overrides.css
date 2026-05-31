@@ -6,7 +6,9 @@
 
 /* Make docs full width and bg */
 .sbdocs-wrapper {
-  padding: var(--ds-spacing-sm-2) var(--ds-spacing-sm-3) !important;
+  background: none !important;
+  padding: var(--ds-spacing-sm-1) var(--ds-spacing-sm-1) !important;
+  padding-right: var(--ds-spacing-sm-0) !important;
 }
 .sbdocs-content {
   max-width: 100% !important;

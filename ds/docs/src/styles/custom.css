@@ -71,14 +71,18 @@ table.docs {
   width: fit-content;
 
   tbody tr {
-    border-top: 1px solid var(--ds-color-border-default);
+    border-top: 1px solid var(--ds-color-border-subtle);
+
+    &:first-child {
+      border-color: var(--ds-color-border-default);
+    }
   }
 
   th,
   td {
     vertical-align: middle;
     border: 0;
-    padding: var(--ds-spacing-xs-4) var(--ds-spacing-xs-9);
+    padding: var(--ds-spacing-xs-5) var(--ds-spacing-xs-9);
     text-align: left;
 
     &:first-child {

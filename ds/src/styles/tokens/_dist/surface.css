@@ -17,18 +17,21 @@
 
   .ds-surface-sheet {
     box-shadow: var(--ds-shadow-xs);
+    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-sheet);
   }
 
   .ds-surface-card {
     box-shadow: var(--ds-shadow-xs);
+    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
   }
 
   .ds-surface-popup {
     box-shadow: var(--ds-shadow-sm);
+    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-sm);
     background-color: var(--ds-color-bg-popup);
   }
@@ -47,6 +50,7 @@
 
   .ds-surface-card {
     box-shadow: var(--ds-shadow-xs);
+    border: 1px solid var(--ds-color-border-shadow);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
   }
