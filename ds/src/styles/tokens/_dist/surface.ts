@@ -12,14 +12,14 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       background: {
-        light: 'linear-gradient(135deg, {color.blue-1}, {color.bg-page}, {color.bg-page})',
-        dark: 'linear-gradient(135deg, {color.blue-8}, {color.bg-page}, {color.bg-page})',
+        light: 'linear-gradient(135deg, {color.blue-1}, {color.grey-3}, {color.grey-3})',
+        dark: 'linear-gradient(135deg, {color.blue-8}, {color.grey-19}, {color.grey-19})',
       },
     },
     value: {
       background: {
-        light: 'linear-gradient(135deg, oklch(0.9215 0.0348 260), [object Object], [object Object])',
-        dark: 'linear-gradient(135deg, oklch(0.2191 0.0494 260), [object Object], [object Object])',
+        light: 'linear-gradient(135deg, oklch(0.9215 0.0348 260), oklch(0.9474 0.0029 308), oklch(0.9474 0.0029 308))',
+        dark: 'linear-gradient(135deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308), oklch(0.2861 0.0099 308))',
       },
     },
   },
