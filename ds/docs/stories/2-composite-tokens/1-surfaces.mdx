@@ -6,33 +6,8 @@ import { Fragment } from 'react'
 
 export const tokens = Object.entries(TOKENS.SURFACE)
 
-export const SurfaceCanvas = ({ children }) => {
-  const sectionClass = cx('py-xs-5 px-xs-7 flex flex-1 flex-col')
-  const titleClass = cx('mb-xs-5! text-size-sm! text-color-text-placeholder mt-0!')
-  return (
-    <DocsCanvas className="text-size-xs flex flex-wrap">
-      <div className={sectionClass}>
-        <h3 className={titleClass}>Mode: Light</h3>
-        <div data-color-mode="light">{children}</div>
-      </div>
-      <div
-        role="separator"
-        className={cx(
-          'border-color-border-default',
-          'w-full border-t',
-          'md:w-auto md:self-stretch md:border-t-0 md:border-l',
-        )}
-      />
-      <div className={sectionClass}>
-        <h3 className={titleClass}>Mode: Dark</h3>
-        <div data-color-mode="dark">{children}</div>
-      </div>
-    </DocsCanvas>
-  )
-}
-
 export const Surface = ({ title, children, className }) => (
-  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 w-full', className)}>
+  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 h-fit w-full', className)}>
     <div className="mb-xs-5">{title}</div>
     {children}
   </div>
@@ -44,7 +19,9 @@ export const TokenValue = ({ value }) => {
 
 export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-[auto_1fr] items-center')
 
-export const parseRef = (ref) => (typeof ref === 'string' ? ref.replace(/^{/g, '').replace(/}$/g, '') : ref)
+export const parseRef = (ref) => {
+  return typeof ref === 'string' && ref.startsWith('{') && ref.endsWith('}') ? ref.slice(1, -1) : ref
+}
 
 {/* ---------------------------------------------------------------------------------------------------------------- */}
 
@@ -52,7 +29,7 @@ export const parseRef = (ref) => (typeof ref === 'string' ? ref.replace(/^{/g, '
 
 # Surface tokens
 
-<SurfaceCanvas>
+<DocsCanvas className="p-xs-9 gap-xs-9 grid lg:grid-cols-2">
   <Surface title="Page" className="ds-surface-page">
     <Surface title="Sheet" className="ds-surface-sheet">
       <Surface title="Card" className="ds-surface-card">
@@ -64,7 +41,12 @@ export const parseRef = (ref) => (typeof ref === 'string' ? ref.replace(/^{/g, '
     </Surface>
     <Surface title="Popup" className="ds-surface-popup mt-xs-5" />
   </Surface>
-</SurfaceCanvas>
+
+  <div className="flex gap-xs-9">
+    <Surface title="Card" className="ds-surface-card" />
+    <Surface title="Card Hover" className="ds-surface-card-hover" />
+  </div>
+</DocsCanvas>
 
 <DocsCard>
   <table className="docs">

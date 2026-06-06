@@ -94,12 +94,14 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
   }
 
   // Compute result.value
-  if (hasColorMode(resolved)) {
-    result.value = isBrokenToken(resolved)
-      ? { light: resolveOriginal(original, '$light'), dark: resolveOriginal(original, '$dark') }
-      : { light: unwrapValue(resolved.$light, '$light'), dark: unwrapValue(resolved.$dark, '$dark') }
+  if (isBrokenToken(resolved)) {
+    result.value = { light: resolveOriginal(original, '$light'), dark: resolveOriginal(original, '$dark') }
   } else {
-    result.value = resolved as string | number
+    if (hasColorMode(resolved)) {
+      result.value = { light: unwrapValue(resolved.$light, '$light'), dark: unwrapValue(resolved.$dark, '$dark') }
+    } else {
+      result.value = resolved as string | number
+    }
   }
 
   return result
