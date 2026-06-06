@@ -79,7 +79,7 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
 const usePageSurface = () => {
   useEffect(() => {
     const ids = ['#storybook-docs', '#storybook-root']
-    ids.forEach((id) => document.querySelector(id)?.classList.add('ds-surface-page'))
+    ids.forEach((id) => document.querySelector(id)?.classList.add('ds-surface-page', 'bg-fixed'))
   }, [])
 }
 

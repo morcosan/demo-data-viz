@@ -6,7 +6,7 @@ import { Fragment } from 'react'
 
 export const tokens = Object.entries(TOKENS.SURFACE)
 
-export const Example = ({ children }) => {
+export const SurfaceCanvas = ({ children }) => {
   const sectionClass = cx('py-xs-5 px-xs-7 flex flex-1 flex-col')
   const titleClass = cx('mb-xs-5! text-size-sm! text-color-text-placeholder mt-0!')
   return (
@@ -32,7 +32,7 @@ export const Example = ({ children }) => {
 }
 
 export const Surface = ({ title, children, className }) => (
-  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 w-full bg-scroll!', className)}>
+  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 w-full', className)}>
     <div className="mb-xs-5">{title}</div>
     {children}
   </div>
@@ -52,7 +52,7 @@ export const parseRef = (ref) => (typeof ref === 'string' ? ref.replace(/^{/g, '
 
 # Surface tokens
 
-<Example>
+<SurfaceCanvas>
   <Surface title="Page" className="ds-surface-page">
     <Surface title="Sheet" className="ds-surface-sheet">
       <Surface title="Card" className="ds-surface-card">
@@ -64,7 +64,7 @@ export const parseRef = (ref) => (typeof ref === 'string' ? ref.replace(/^{/g, '
     </Surface>
     <Surface title="Popup" className="ds-surface-popup mt-xs-5" />
   </Surface>
-</Example>
+</SurfaceCanvas>
 
 <DocsCard>
   <table className="docs">
