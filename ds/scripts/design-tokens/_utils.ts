@@ -1,4 +1,5 @@
 import prettier from 'prettier'
+import { type TokenColoredValue } from './schema.ts'
 
 export const NOTICE = [
   '/* eslint-disable max-lines */',
@@ -10,6 +11,6 @@ export const NOTICE = [
 
 export const prettierConfig = await prettier.resolveConfig(process.cwd() + '/package.json')
 
-export const hasColorMode = (value: unknown): boolean => {
+export const hasColorMode = (value: unknown): value is TokenColoredValue => {
   return Boolean(typeof value === 'object' && value && '$light' in value && '$dark' in value)
 }
