@@ -44,10 +44,4 @@
       cover;
     background-color: var(--ds-color-bg-page);
   }
-
-  .ds-surface-card {
-    box-shadow: var(--ds-shadow-xs);
-    border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-bg-card);
-  }
 }

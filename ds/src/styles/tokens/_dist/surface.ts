@@ -49,11 +49,7 @@ export const TOKENS__SURFACE = {
   },
   card: {
     type: 'composite',
-    ref: {
-      backgroundColor: { light: '{color.bg-card}', dark: '{color.bg-card}' },
-      borderRadius: '{radius.md}',
-      boxShadow: '{shadow.xs}',
-    },
+    ref: { backgroundColor: '{color.bg-card}', borderRadius: '{radius.md}', boxShadow: '{shadow.xs}' },
     value: {
       backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
       borderRadius: '8px',
