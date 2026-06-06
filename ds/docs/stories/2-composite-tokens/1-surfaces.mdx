@@ -35,41 +35,60 @@ export const parseRef = (ref) => {
 # Surface tokens
 
 <DocsCanvas className="p-xs-9 gap-xs-9 grid lg:grid-cols-2">
-  <Surface title="Page" className="ds-surface-page">
-    <Surface title="Sheet" className="ds-surface-sheet">
-      <Surface title="Card" className="ds-surface-card">
-        <Surface title="Popup" className="ds-surface-popup" />
+  <Surface title="page" className="ds-surface-page">
+    <Surface title="sheet" className="ds-surface-sheet">
+      <Surface title="card" className="ds-surface-card">
+        <Surface title="popup" className="ds-surface-popup" />
       </Surface>
     </Surface>
-    <Surface title="Card" className="ds-surface-card mt-xs-5">
-      <Surface title="Popup" className="ds-surface-popup" />
+    <Surface title="card" className="ds-surface-card mt-xs-5">
+      <Surface title="popup" className="ds-surface-popup" />
     </Surface>
-    <Surface title="Popup" className="ds-surface-popup mt-xs-5" />
+    <Surface title="popup" className="ds-surface-popup mt-xs-5" />
   </Surface>
   <div className="gap-xs-9 flex flex-col">
     <div className="gap-xs-9 flex">
-      <Surface title="Card" className="ds-surface-card" />
-      <Surface title="Card Hover" className="ds-surface-card-hovered" />
-      <Surface title="Card + Hover" className="ds-surface-card hover:ds-surface-card-hovered" />
+      <Surface title="card" className="ds-surface-card" />
+      <Surface title="card-hovered" className="ds-surface-card-hovered" />
+      <Surface title="card + hover" className="ds-surface-card hover:ds-surface-card-hovered" />
     </div>
     <div className="gap-xs-9 flex">
-      <Surface title="Button Solid" className="ds-surface-button-solid" />
-      <Surface title="Button Solid Hover" className="ds-surface-button-solid-hovered" />
-      <Surface title="Button Solid + Hover" className="ds-surface-button-solid hover:ds-surface-button-solid-hovered" />
-    </div>
-    <div className="gap-xs-9 flex">
-      <Surface title="Button Danger" className="ds-surface-button-danger" />
-      <Surface title="Button Danger Hover" className="ds-surface-button-danger-hovered" />
+      <Surface title="button-primary" className="ds-surface-button-primary" />
+      <Surface title="button-primary-hovered" className="ds-surface-button-primary-hovered" />
       <Surface
-        title="Button Danger + Hover"
+        title="button-primary + hover"
+        className="ds-surface-button-primary hover:ds-surface-button-primary-hovered"
+      />
+    </div>
+    <div className="gap-xs-9 flex">
+      <Surface title="button-secondary" className="ds-surface-button-secondary" />
+      <Surface title="button-secondary-hovered" className="ds-surface-button-secondary-hovered" />
+      <Surface
+        title="button-secondary + hover"
+        className="ds-surface-button-secondary hover:ds-surface-button-secondary-hovered"
+      />
+    </div>
+    <div className="gap-xs-9 flex">
+      <Surface title="button-optional" className="ds-surface-button-optional" />
+      <Surface title="button-optional-hovered" className="ds-surface-button-optional-hovered" />
+      <Surface
+        title="button-optional + hover"
+        className="ds-surface-button-optional hover:ds-surface-button-optional-hovered"
+      />
+    </div>
+    <div className="gap-xs-9 flex">
+      <Surface title="button-danger" className="ds-surface-button-danger" />
+      <Surface title="button-danger-hovered" className="ds-surface-button-danger-hovered" />
+      <Surface
+        title="button-danger + hover"
         className="ds-surface-button-danger hover:ds-surface-button-danger-hovered"
       />
     </div>
     <div className="gap-xs-9 flex">
-      <Surface title="Button Caution" className="ds-surface-button-caution" />
-      <Surface title="Button Caution Hover" className="ds-surface-button-caution-hovered" />
+      <Surface title="button-caution" className="ds-surface-button-caution" />
+      <Surface title="button-caution-hovered" className="ds-surface-button-caution-hovered" />
       <Surface
-        title="Button Caution + Hover"
+        title="button-caution + hover"
         className="ds-surface-button-caution hover:ds-surface-button-caution-hovered"
       />
     </div>

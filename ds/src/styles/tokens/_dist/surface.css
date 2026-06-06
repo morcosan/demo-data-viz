@@ -67,11 +67,9 @@
   }
 }
 
-@utility ds-surface-button-solid {
+@utility ds-surface-button-primary {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-xs);
     border: 1px solid var(--ds-color-blue-6);
     border-radius: var(--ds-radius-md);
@@ -80,16 +78,59 @@
   }
 }
 
-@utility ds-surface-button-solid-hovered {
+@utility ds-surface-button-primary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-5px);
+    transform: scale(1.02) translateY(-3px);
     transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-blue-5);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-blue-4);
     color: var(--ds-color-white);
+  }
+}
+
+@utility ds-surface-button-secondary {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
+    border: 1px solid var(--ds-color-blue-6);
+    border-radius: var(--ds-radius-md);
+    color: var(--ds-color-blue-6);
+  }
+}
+
+@utility ds-surface-button-secondary-hovered {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-3px);
+    transition: transform 0.3s ease;
+    box-shadow: var(--ds-shadow-md);
+    border: 2px solid var(--ds-color-blue-5);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-blue-1);
+    color: var(--ds-color-blue-6);
+  }
+}
+
+@utility ds-surface-button-optional {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    color: var(--ds-color-text-default);
+  }
+}
+
+@utility ds-surface-button-optional-hovered {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-3px);
+    transition: transform 0.3s ease;
+    box-shadow: var(--ds-shadow-md);
+    border: 2px solid var(--ds-color-yellow-3);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-yellow-1);
+    color: var(--ds-color-text-default);
   }
 }
 
@@ -120,7 +161,6 @@
 @utility ds-surface-button-caution {
   :where(html) &,
   [data-color-mode='light'] & {
-    border-radius: var(--ds-radius-md);
     color: var(--ds-color-red-6);
   }
 }
