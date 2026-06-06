@@ -45,6 +45,7 @@ const builder = new StyleDictionary({
       })),
     },
   },
+  log: { verbosity: 'verbose' },
 })
 
 await builder.buildAllPlatforms()

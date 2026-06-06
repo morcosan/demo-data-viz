@@ -88,6 +88,7 @@
   --ds-color-white-alpha-8: oklch(1 0 0 / 0.4);
   --ds-color-white-alpha-9: oklch(1 0 0 / 0.48);
   --ds-color-white-alpha-10: oklch(1 0 0 / 0.56);
+  --ds-color-bg-page: var(--ds-color-grey-3);
   --ds-color-bg-sheet: var(--ds-color-grey-2);
   --ds-color-bg-card: var(--ds-color-grey-1);
   --ds-color-bg-popup: var(--ds-color-white);
@@ -156,6 +157,7 @@
 }
 
 [data-color-mode='dark'] {
+  --ds-color-bg-page: var(--ds-color-grey-19);
   --ds-color-bg-sheet: var(--ds-color-grey-18);
   --ds-color-bg-card: var(--ds-color-grey-17);
   --ds-color-bg-popup: var(--ds-color-grey-16);
