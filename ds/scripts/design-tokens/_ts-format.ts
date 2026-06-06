@@ -12,9 +12,6 @@ import type {
   TokenScalarValue,
 } from './schema.ts'
 
-type TokenMap = Record<string, TransformedToken>
-type AtomicValue = TokenAtomicValue
-type CompoValue = TokenCompositeValue
 type AtomicOutput = {
   value: TokenScalarValue | ColoredOutput
   ref?: string | string[] | ColoredRefOutput
@@ -32,6 +29,8 @@ type ColoredRefOutput = {
   light: string | string[]
   dark: string | string[]
 }
+
+let _globalTokenMap: Record<string, TransformedToken>
 
 const isRef = (value: unknown): value is string => typeof value === 'string' && /\{.*?}/s.test(value)
 const parseRef = (value: unknown): string | string[] | null => {
@@ -52,46 +51,34 @@ const unwrapValue = (value: TokenColoredValue | TokenScalarValue, mode: TokenCol
   return hasColorMode(value) ? value[mode] : (value as TokenScalarValue)
 }
 
-const renderCompositeToken = (original: CompoValue, resolved: CompoValue, tokenMap: TokenMap): CompositeOutput => {
-  const result: CompositeOutput = { type: 'composite', ref: {}, value: {} }
-
-  Object.keys(original).forEach((key) => {
-    const camelKey = camelCase(key)
-    const output = renderAtomicToken(original[key], resolved[key], tokenMap)
-    if (output.ref) result.ref[camelKey] = output.ref
-    if (output.value) result.value[camelKey] = output.value
+const resolveScalar = (value: TokenScalar, mode: TokenColorMode, seen = new Set<string>()): TokenScalar => {
+  if (typeof value !== 'string') return value
+  return value.replace(/\{([^}]+)}/g, (_, path) => {
+    if (seen.has(path)) return path
+    const token = _globalTokenMap[path]
+    const tokenValue = token?.$value
+    const resolved = hasColorMode(tokenValue) ? tokenValue[mode] : tokenValue
+    return resolveScalar(resolved, mode, new Set([...seen, path])) as string
   })
-
-  return result
+}
+const resolveOriginal = (original: TokenAtomicValue, mode: TokenColorMode): TokenScalarValue => {
+  if (typeof original === 'number') return original
+  if (typeof original === 'string') return resolveScalar(original, mode)
+  if (Array.isArray(original)) return original.map((value) => resolveScalar(value, mode))
+  if (hasColorMode(original)) {
+    const result = Object.fromEntries(
+      Object.entries(original).map(([key, value]) => [
+        key,
+        Array.isArray(value) ? value.map((value) => resolveScalar(value, mode)) : resolveScalar(value, mode),
+      ]),
+    )
+    return result[mode]
+  }
+  return ''
 }
 
-const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue, tokenMap: TokenMap): AtomicOutput => {
+const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValue): AtomicOutput => {
   const result: AtomicOutput = {} as AtomicOutput
-
-  const resolveOriginal = (original: AtomicValue, mode: TokenColorMode): TokenScalarValue => {
-    const resolveScalar = (value: TokenScalar): TokenScalar => {
-      return typeof value === 'string'
-        ? value.replace(/\{([^}]+)}/g, (_, path) => {
-            const token = tokenMap[path]
-            const value = token?.$value
-            return hasColorMode(value) ? value[mode] : value
-          })
-        : value
-    }
-    if (typeof original === 'number') return original
-    if (typeof original === 'string') return resolveScalar(original)
-    if (Array.isArray(original)) return original.map(resolveScalar)
-    if (hasColorMode(original)) {
-      const result = Object.fromEntries(
-        Object.entries(original).map(([key, value]) => [
-          key,
-          Array.isArray(value) ? value.map(resolveScalar) : resolveScalar(value as TokenScalar),
-        ]),
-      )
-      return result[mode]
-    }
-    return ''
-  }
 
   // Compute result.ref
   if (hasColorMode(original)) {
@@ -118,18 +105,28 @@ const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue, tokenMa
   return result
 }
 
-const renderTokens = (tokens: TransformedToken[], tokenMap: TokenMap) => {
+const renderCompositeToken = (original: TokenCompositeValue, resolved: TokenCompositeValue): CompositeOutput => {
+  const result: CompositeOutput = { type: 'composite', ref: {}, value: {} }
+
+  Object.keys(original).forEach((key) => {
+    const camelKey = camelCase(key)
+    const output = renderAtomicToken(original[key], resolved[key])
+    if (output.ref) result.ref[camelKey] = output.ref
+    if (output.value) result.value[camelKey] = output.value
+  })
+
+  return result
+}
+
+const renderTokens = (tokens: TransformedToken[]) => {
   const result = {} as Record<string, AtomicOutput | CompositeOutput>
 
   for (const token of tokens) {
     const [leaf] = token.path.slice(1)
-
-    if (token.path.includes('surface')) console.log('\n\n-------------------', leaf)
-
     result[leaf] =
       token.original?.$type === 'composite'
-        ? renderCompositeToken(token.original?.$value, token.$value, tokenMap)
-        : renderAtomicToken(token.original?.$value, token.$value, tokenMap)
+        ? renderCompositeToken(token.original?.$value, token.$value)
+        : renderAtomicToken(token.original?.$value, token.$value)
   }
 
   return result
@@ -139,10 +136,12 @@ const createTsFormat = (sd: StyleDictionary): Format => {
   return {
     name: '',
     format: async ({ dictionary }: FormatFnArguments) => {
+      if (!_globalTokenMap) {
+        _globalTokenMap = Object.fromEntries(sd.allTokens.map((token) => [token.key?.replace(/[{}]/g, ''), token]))
+      }
       const namespace = dictionary.allTokens[0]?.path[0] ?? 'unknown'
       const varName = namespace.toUpperCase().replaceAll('-', '_')
-      const tokenMap = Object.fromEntries(sd.allTokens.map((token) => [token.key?.replace(/[{}]/g, ''), token]))
-      const varCode = renderTokens(dictionary.allTokens, tokenMap)
+      const varCode = renderTokens(dictionary.allTokens)
       const json = JSON.stringify(varCode, null, 2).replaceAll('\n', '')
       const output =
         NOTICE +
