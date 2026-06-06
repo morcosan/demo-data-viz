@@ -19,16 +19,14 @@ const resolveRef = (value: string): string => {
 
 const getClassName = (token: TransformedToken): string => CLASS_PREFIX + token.path.join('-')
 
-const renderClass = (token: TransformedToken, mode?: TokenColorMode) => {
-  const className = getClassName(token)
+const renderClassProps = (token: TransformedToken, mode?: TokenColorMode) => {
   const rawValue = token.original.$value as TokenCompositeValue
-  const props = Object.entries(rawValue)
+  return Object.entries(rawValue)
     .map(([prop, value]) => {
       const resolved = hasColorMode(value) ? value[mode ?? '$light'] : value
       return `${prop}: ${resolveRef(String(resolved))};`
     })
     .join('\n')
-  return `.${className} {\n${props}\n}`
 }
 
 const createCssFormat = (): Format => {
@@ -45,10 +43,13 @@ const createCssFormat = (): Format => {
       const atomicTokens = dictionary.allTokens.filter((token) => token.$type !== 'composite')
       const renderComposites = (): string => {
         const darkTokens = compositeTokens.filter((token) => Object.values(token.original.$value).some(hasColorMode))
-        const lightCode = compositeTokens.map((token) => renderClass(token, '$light')).join('\n\n')
-        const darkCode = darkTokens.map((token) => renderClass(token, '$dark')).join('\n\n')
-        const darkOutput = darkTokens.length ? `\n${DARK_SELECTOR}{${darkCode}}\n` : ''
-        return `\n:where(html),${LIGHT_SELECTOR}{${lightCode}}\n${darkOutput}`
+        const utilities = compositeTokens.map((token) => {
+          const className = getClassName(token)
+          const lightCode = `:where(html) &,${LIGHT_SELECTOR} &{${renderClassProps(token, '$light')}}`
+          const darkCode = darkTokens.includes(token) ? `${DARK_SELECTOR} &{${renderClassProps(token, '$dark')}}` : ''
+          return `@utility ${className} {${lightCode}\n\n${darkCode}}`
+        })
+        return `\n${utilities.join('\n\n')}`
       }
       const mapTokens = (tokens: TransformedToken[], mode: TokenColorMode) => {
         return tokens

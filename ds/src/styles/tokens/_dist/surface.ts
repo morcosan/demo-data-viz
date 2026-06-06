@@ -72,17 +72,17 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       backgroundColor: '{color.bg-card}',
-      border: '1px solid {color.white}',
+      border: '1px solid {color.border-highlight}',
       borderRadius: '{radius.md}',
-      boxShadow: '{shadow.sm}',
+      boxShadow: '{shadow.md}',
     },
     value: {
       backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
-      border: '1px solid oklch(1 0 0)',
+      border: { light: '1px solid oklch(0.9185 0.1426 98.22)', dark: '1px solid oklch(0.8606 0.1731 91.94)' },
       borderRadius: '8px',
       boxShadow: {
-        light: ['0 1px 3px 0 rgb(0 0 0 / 0.15)', '0 1px 2px -1px rgb(0 0 0 / 0.15)'],
-        dark: ['0 1px 3px 0 rgb(0 0 0 / 0.4)', '0 1px 2px -1px rgb(0 0 0 / 0.4)'],
+        light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
+        dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
     },
   },
