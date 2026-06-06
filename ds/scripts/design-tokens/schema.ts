@@ -28,6 +28,7 @@ const TokensJsonSchema = z
 
 type Token = z.infer<typeof TokenSchema>
 type TokensJson = z.infer<typeof TokensJsonSchema>
+type TokenColorMode = '$light' | '$dark'
 type TokenScalar = z.infer<typeof ScalarSchema>
 type TokenScalarValue = z.infer<typeof ScalarValueSchema>
 type TokenColoredValue = z.infer<typeof ColoredValueSchema>
@@ -39,6 +40,7 @@ export type {
   Token,
   TokenAtomicValue,
   TokenColoredValue,
+  TokenColorMode,
   TokenCompositeValue,
   TokenScalar,
   TokenScalarValue,

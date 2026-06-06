@@ -3,8 +3,17 @@ import prettier from 'prettier'
 import { type TransformedToken } from 'style-dictionary'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { hasColorMode, NOTICE, prettierConfig } from './_utils.ts'
-import type { TokenAtomicValue, TokenColoredValue, TokenCompositeValue, TokenScalarValue } from './schema.ts'
+import type {
+  TokenAtomicValue,
+  TokenColoredValue,
+  TokenColorMode,
+  TokenCompositeValue,
+  TokenScalarValue,
+} from './schema.ts'
 
+type TokenMap = Record<string, TransformedToken>
+type AtomicValue = TokenAtomicValue
+type CompoValue = TokenCompositeValue
 type AtomicOutput = {
   value: TokenScalarValue | ColoredOutput
   ref?: string | string[] | ColoredRefOutput
@@ -23,20 +32,12 @@ type ColoredRefOutput = {
   dark: string | string[]
 }
 
-const parseRef = (value: unknown): string | string[] | null => {
-  if (typeof value === 'string' && /\{.*?}/s.test(value)) return value
-  if (Array.isArray(value)) {
-    if (value.some((entry: unknown) => typeof entry === 'string' && /\{.*?}/s.test(entry))) return value
-  }
-  return null
-}
-
-const renderCompositeToken = (original: TokenCompositeValue, resolved: TokenCompositeValue): CompositeOutput => {
+const renderCompositeToken = (original: CompoValue, resolved: CompoValue, tokenMap: TokenMap): CompositeOutput => {
   const result: CompositeOutput = { type: 'composite', ref: {}, value: {} }
 
   Object.keys(original).forEach((key) => {
     const camelKey = camelCase(key)
-    const output = renderAtomicToken(original[key], resolved[key])
+    const output = renderAtomicToken(original[key], resolved[key], tokenMap)
     if (output.ref) result.ref[camelKey] = output.ref
     if (output.value) result.value[camelKey] = output.value
   })
@@ -44,14 +45,35 @@ const renderCompositeToken = (original: TokenCompositeValue, resolved: TokenComp
   return result
 }
 
-const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValue): AtomicOutput => {
+const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue, tokenMap: TokenMap): AtomicOutput => {
   const result: AtomicOutput = {} as AtomicOutput
+
+  const isRef = (value: unknown): value is string => typeof value === 'string' && /\{.*?}/s.test(value)
+  const parseRef = (value: unknown): string | string[] | null => {
+    if (isRef(value)) return value
+    if (Array.isArray(value) && value.some(isRef)) return value
+    return null
+  }
+
+  const isValueBroken = (value: AtomicValue) => typeof value === 'string' && value.includes('[object Object]')
+  const resolveValue = (mode: TokenColorMode): string => {
+    return typeof original === 'string'
+      ? original.replace(/\{([^}]+)}/g, (_, path) => {
+          const token = tokenMap[path]
+          const value = token?.$value
+          return hasColorMode(value) ? value[mode] : value
+        })
+      : ''
+  }
+  const unwrapValue = (value: TokenColoredValue | TokenScalarValue, mode: TokenColorMode): TokenScalarValue => {
+    return hasColorMode(value) ? (value as TokenColoredValue)[mode] : (value as TokenScalarValue)
+  }
 
   // Compute result.ref
   if (hasColorMode(original)) {
-    const themed = original as unknown as TokenColoredValue
-    const lightRef = parseRef(themed.$light)
-    const darkRef = parseRef(themed.$dark)
+    const { $light, $dark } = original as TokenColoredValue
+    const lightRef = parseRef($light)
+    const darkRef = parseRef($dark)
     const ref = {} as ColoredRefOutput
     if (lightRef) ref.light = lightRef
     if (darkRef) ref.dark = darkRef
@@ -63,11 +85,12 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
 
   // Compute result.value
   if (hasColorMode(resolved)) {
-    const colored = resolved as unknown as TokenColoredValue
-    result.value = {
-      light: hasColorMode(colored.$light) ? (colored.$light as unknown as TokenColoredValue).$light : colored.$light,
-      dark: hasColorMode(colored.$dark) ? (colored.$dark as unknown as TokenColoredValue).$dark : colored.$dark,
-    }
+    const { $light, $dark } = resolved as TokenColoredValue
+    console.log($light, $dark, isValueBroken(resolved))
+
+    result.value = isValueBroken(resolved)
+      ? { light: resolveValue('$light'), dark: resolveValue('$dark') }
+      : { light: unwrapValue($light, '$light'), dark: unwrapValue($dark, '$dark') }
   } else {
     result.value = resolved as string | number
   }
@@ -75,15 +98,18 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
   return result
 }
 
-const renderTokens = (tokens: TransformedToken[]) => {
+const renderTokens = (tokens: TransformedToken[], tokenMap: TokenMap) => {
   const result = {} as Record<string, AtomicOutput | CompositeOutput>
 
   for (const token of tokens) {
     const [leaf] = token.path.slice(1)
+
+    if (token.path.includes('surface')) console.log('\n-------', leaf)
+
     result[leaf] =
       token.original?.$type === 'composite'
-        ? renderCompositeToken(token.original?.$value, token.$value)
-        : renderAtomicToken(token.original?.$value, token.$value)
+        ? renderCompositeToken(token.original?.$value, token.$value, tokenMap)
+        : renderAtomicToken(token.original?.$value, token.$value, tokenMap)
   }
 
   return result
@@ -94,7 +120,8 @@ const tsFormat: Format = {
   format: async ({ dictionary }: FormatFnArguments) => {
     const namespace = dictionary.allTokens[0]?.path[0] ?? 'unknown'
     const varName = namespace.toUpperCase().replaceAll('-', '_')
-    const varCode = renderTokens(dictionary.allTokens)
+    const tokenMap = Object.fromEntries(dictionary.allTokens.map((token) => [token.path.join('.'), token]))
+    const varCode = renderTokens(dictionary.allTokens, tokenMap)
     const json = JSON.stringify(varCode, null, 2).replaceAll('\n', '')
     const output =
       NOTICE +

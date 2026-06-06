@@ -1,7 +1,5 @@
 import prettier from 'prettier'
 
-export type TokenColorMode = '$light' | '$dark'
-
 export const NOTICE = [
   '/* eslint-disable max-lines */',
   '/**',
