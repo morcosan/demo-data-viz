@@ -68,22 +68,24 @@ export const TOKENS__SURFACE = {
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
   },
-  'card-hover': {
+  'card-hovered': {
     type: 'composite',
     ref: {
-      backgroundColor: '{color.bg-card}',
-      border: '1px solid {color.border-highlight}',
+      backgroundColor: '{color.yellow-1}',
+      border: '2px solid {color.yellow-3}',
       borderRadius: '{radius.md}',
       boxShadow: '{shadow.md}',
     },
     value: {
-      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
-      border: { light: '1px solid oklch(0.9185 0.1426 98.22)', dark: '1px solid oklch(0.8606 0.1731 91.94)' },
+      backgroundColor: 'oklch(0.9729 0.0693 103.19)',
+      border: '2px solid oklch(0.9185 0.1426 98.22)',
       borderRadius: '8px',
       boxShadow: {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
+      transform: 'scale(1.02) translateY(-3px)',
+      transition: 'transform 0.3s ease',
     },
   },
   popup: {
@@ -96,6 +98,111 @@ export const TOKENS__SURFACE = {
         light: ['0 1px 3px 0 rgb(0 0 0 / 0.15)', '0 1px 2px -1px rgb(0 0 0 / 0.15)'],
         dark: ['0 1px 3px 0 rgb(0 0 0 / 0.4)', '0 1px 2px -1px rgb(0 0 0 / 0.4)'],
       },
+    },
+  },
+  'button-solid': {
+    type: 'composite',
+    ref: {
+      color: '{color.white}',
+      backgroundColor: '{color.blue-6}',
+      border: '1px solid {color.blue-6}',
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.xs}',
+    },
+    value: {
+      color: 'oklch(1 0 0)',
+      backgroundColor: 'oklch(0.5303 0.1572 260)',
+      border: '1px solid oklch(0.5303 0.1572 260)',
+      borderRadius: '8px',
+      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
+      transform: 'scale(1.02) translateY(-3px)',
+      transition: 'transform 0.3s ease',
+    },
+  },
+  'button-solid-hovered': {
+    type: 'composite',
+    ref: {
+      color: '{color.white}',
+      backgroundColor: '{color.blue-4}',
+      border: '2px solid {color.blue-5}',
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.md}',
+    },
+    value: {
+      color: 'oklch(1 0 0)',
+      backgroundColor: 'oklch(0.6923 0.1502 260)',
+      border: '2px solid oklch(0.6231 0.188 260)',
+      borderRadius: '8px',
+      boxShadow: {
+        light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
+        dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
+      },
+      transform: 'scale(1.02) translateY(-5px)',
+      transition: 'transform 0.3s ease',
+    },
+  },
+  'button-danger': {
+    type: 'composite',
+    ref: {
+      color: '{color.white}',
+      backgroundColor: '{color.red-6}',
+      border: '1px solid {color.red-6}',
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.xs}',
+    },
+    value: {
+      color: 'oklch(1 0 0)',
+      backgroundColor: 'oklch(0.5696 0.2145 23)',
+      border: '1px solid oklch(0.5696 0.2145 23)',
+      borderRadius: '8px',
+      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
+    },
+  },
+  'button-danger-hovered': {
+    type: 'composite',
+    ref: {
+      color: '{color.white}',
+      backgroundColor: '{color.red-4}',
+      border: '2px solid {color.red-5}',
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.md}',
+    },
+    value: {
+      color: 'oklch(1 0 0)',
+      backgroundColor: 'oklch(0.7106 0.1661 23)',
+      border: '2px solid oklch(0.5919 0.2063 23)',
+      borderRadius: '8px',
+      boxShadow: {
+        light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
+        dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
+      },
+      transform: 'scale(1.02) translateY(-3px)',
+      transition: 'transform 0.3s ease',
+    },
+  },
+  'button-caution': {
+    type: 'composite',
+    ref: { color: '{color.red-6}', borderRadius: '{radius.md}' },
+    value: { color: 'oklch(0.5696 0.2145 23)', borderRadius: '8px' },
+  },
+  'button-caution-hovered': {
+    type: 'composite',
+    ref: {
+      color: '{color.red-6}',
+      backgroundColor: '{color.red-1}',
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.md}',
+    },
+    value: {
+      color: 'oklch(0.5696 0.2145 23)',
+      backgroundColor: 'oklch(0.8845 0.0593 23)',
+      borderRadius: '8px',
+      boxShadow: {
+        light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
+        dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
+      },
+      transform: 'scale(1.02) translateY(-3px)',
+      transition: 'transform 0.3s ease',
     },
   },
 } as const

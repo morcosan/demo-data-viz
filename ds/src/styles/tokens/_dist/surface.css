@@ -46,13 +46,15 @@
   }
 }
 
-@utility ds-surface-card-hover {
+@utility ds-surface-card-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-3px);
+    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
-    border: 1px solid var(--ds-color-border-highlight);
+    border: 2px solid var(--ds-color-yellow-3);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-bg-card);
+    background-color: var(--ds-color-yellow-1);
   }
 }
 
@@ -62,5 +64,75 @@
     box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-sm);
     background-color: var(--ds-color-bg-popup);
+  }
+}
+
+@utility ds-surface-button-solid {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-3px);
+    transition: transform 0.3s ease;
+    box-shadow: var(--ds-shadow-xs);
+    border: 1px solid var(--ds-color-blue-6);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-blue-6);
+    color: var(--ds-color-white);
+  }
+}
+
+@utility ds-surface-button-solid-hovered {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-5px);
+    transition: transform 0.3s ease;
+    box-shadow: var(--ds-shadow-md);
+    border: 2px solid var(--ds-color-blue-5);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-blue-4);
+    color: var(--ds-color-white);
+  }
+}
+
+@utility ds-surface-button-danger {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
+    border: 1px solid var(--ds-color-red-6);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-red-6);
+    color: var(--ds-color-white);
+  }
+}
+
+@utility ds-surface-button-danger-hovered {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-3px);
+    transition: transform 0.3s ease;
+    box-shadow: var(--ds-shadow-md);
+    border: 2px solid var(--ds-color-red-5);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-red-4);
+    color: var(--ds-color-white);
+  }
+}
+
+@utility ds-surface-button-caution {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border-radius: var(--ds-radius-md);
+    color: var(--ds-color-red-6);
+  }
+}
+
+@utility ds-surface-button-caution-hovered {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-3px);
+    transition: transform 0.3s ease;
+    box-shadow: var(--ds-shadow-md);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-red-1);
+    color: var(--ds-color-red-6);
   }
 }

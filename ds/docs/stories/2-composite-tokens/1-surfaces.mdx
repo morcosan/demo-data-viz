@@ -7,8 +7,13 @@ import { Fragment } from 'react'
 export const tokens = Object.entries(TOKENS.SURFACE)
 
 export const Surface = ({ title, children, className }) => (
-  <div className={cx('py-xs-7 px-sm-0 min-h-md-0 h-fit w-full', className)}>
-    <div className="mb-xs-5">{title}</div>
+  <div
+    className={cx(
+      'py-xs-7 px-sm-0 min-h-md-0 gap-xs-5 text-size-sm flex h-fit w-full flex-col justify-center',
+      className,
+    )}
+  >
+    <div>{title}</div>
     {children}
   </div>
 )
@@ -41,11 +46,33 @@ export const parseRef = (ref) => {
     </Surface>
     <Surface title="Popup" className="ds-surface-popup mt-xs-5" />
   </Surface>
-
-  <div className="flex gap-xs-9">
-    <Surface title="Card" className="ds-surface-card" />
-    <Surface title="Card Hover" className="ds-surface-card-hover" />
-    <Surface title="Card + Card Hover" className="ds-surface-card hover:ds-surface-card-hover" />
+  <div className="gap-xs-9 flex flex-col">
+    <div className="gap-xs-9 flex">
+      <Surface title="Card" className="ds-surface-card" />
+      <Surface title="Card Hover" className="ds-surface-card-hovered" />
+      <Surface title="Card + Hover" className="ds-surface-card hover:ds-surface-card-hovered" />
+    </div>
+    <div className="gap-xs-9 flex">
+      <Surface title="Button Solid" className="ds-surface-button-solid" />
+      <Surface title="Button Solid Hover" className="ds-surface-button-solid-hovered" />
+      <Surface title="Button Solid + Hover" className="ds-surface-button-solid hover:ds-surface-button-solid-hovered" />
+    </div>
+    <div className="gap-xs-9 flex">
+      <Surface title="Button Danger" className="ds-surface-button-danger" />
+      <Surface title="Button Danger Hover" className="ds-surface-button-danger-hovered" />
+      <Surface
+        title="Button Danger + Hover"
+        className="ds-surface-button-danger hover:ds-surface-button-danger-hovered"
+      />
+    </div>
+    <div className="gap-xs-9 flex">
+      <Surface title="Button Caution" className="ds-surface-button-caution" />
+      <Surface title="Button Caution Hover" className="ds-surface-button-caution-hovered" />
+      <Surface
+        title="Button Caution + Hover"
+        className="ds-surface-button-caution hover:ds-surface-button-caution-hovered"
+      />
+    </div>
   </div>
 </DocsCanvas>
 
