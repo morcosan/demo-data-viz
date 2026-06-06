@@ -3,8 +3,8 @@ import { kebabCase } from 'lodash-es'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import StyleDictionary from 'style-dictionary'
-import { cssFormat } from './_css-format.ts'
-import { tsFormat } from './_ts-format.ts'
+import { createCssFormat } from './_css-format.ts'
+import { createTsFormat } from './_ts-format.ts'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -18,10 +18,7 @@ const tokensJson = JSON.parse(readFileSync(tokensFile, 'utf-8'))
 // Clear folder
 rmSync(outDir, { recursive: true, force: true })
 
-StyleDictionary.registerFormat({ ...cssFormat, name: FORMAT_NAME__CSS })
-StyleDictionary.registerFormat({ ...tsFormat, name: FORMAT_NAME__TS })
-
-const builder = new StyleDictionary({
+const sd = new StyleDictionary({
   tokens: tokensJson,
   platforms: {
     css: {
@@ -48,4 +45,7 @@ const builder = new StyleDictionary({
   log: { verbosity: 'verbose' },
 })
 
-await builder.buildAllPlatforms()
+sd.registerFormat({ ...createCssFormat(), name: FORMAT_NAME__CSS })
+sd.registerFormat({ ...createTsFormat(sd), name: FORMAT_NAME__TS })
+
+await sd.buildAllPlatforms()

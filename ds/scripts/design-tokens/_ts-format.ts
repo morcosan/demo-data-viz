@@ -1,6 +1,6 @@
 import { camelCase } from 'lodash-es'
 import prettier from 'prettier'
-import { type TransformedToken } from 'style-dictionary'
+import StyleDictionary, { type TransformedToken } from 'style-dictionary'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { hasColorMode, NOTICE, prettierConfig } from './_utils.ts'
 import type {
@@ -74,7 +74,6 @@ const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue, tokenMa
         ? value.replace(/\{([^}]+)}/g, (_, path) => {
             const token = tokenMap[path]
             const value = token?.$value
-            console.log(mode, '--path, token', path, token)
             return hasColorMode(value) ? value[mode] : value
           })
         : value
@@ -122,8 +121,6 @@ const renderAtomicToken = (original: AtomicValue, resolved: AtomicValue, tokenMa
 const renderTokens = (tokens: TransformedToken[], tokenMap: TokenMap) => {
   const result = {} as Record<string, AtomicOutput | CompositeOutput>
 
-  console.log(tokenMap)
-
   for (const token of tokens) {
     const [leaf] = token.path.slice(1)
 
@@ -138,22 +135,24 @@ const renderTokens = (tokens: TransformedToken[], tokenMap: TokenMap) => {
   return result
 }
 
-const tsFormat: Format = {
-  name: '',
-  format: async ({ dictionary }: FormatFnArguments) => {
-    const namespace = dictionary.allTokens[0]?.path[0] ?? 'unknown'
-    const varName = namespace.toUpperCase().replaceAll('-', '_')
-    const tokenMap = Object.fromEntries(dictionary.allTokens.map((token) => [token.path.join('.'), token]))
-    const varCode = renderTokens(dictionary.allTokens, tokenMap)
-    const json = JSON.stringify(varCode, null, 2).replaceAll('\n', '')
-    const output =
-      NOTICE +
-      `\nexport const CLASS_PREFIX__${varName} = 'ds-${namespace}-'\n` +
-      `\nexport const CSS_PREFIX__${varName} = '--ds-${namespace}-'\n` +
-      `\nexport const TOKENS__${varName} = ${json} as const\n`
+const createTsFormat = (sd: StyleDictionary): Format => {
+  return {
+    name: '',
+    format: async ({ dictionary }: FormatFnArguments) => {
+      const namespace = dictionary.allTokens[0]?.path[0] ?? 'unknown'
+      const varName = namespace.toUpperCase().replaceAll('-', '_')
+      const tokenMap = Object.fromEntries(sd.allTokens.map((token) => [token.key?.replace(/[{}]/g, ''), token]))
+      const varCode = renderTokens(dictionary.allTokens, tokenMap)
+      const json = JSON.stringify(varCode, null, 2).replaceAll('\n', '')
+      const output =
+        NOTICE +
+        `\nexport const CLASS_PREFIX__${varName} = 'ds-${namespace}-'\n` +
+        `\nexport const CSS_PREFIX__${varName} = '--ds-${namespace}-'\n` +
+        `\nexport const TOKENS__${varName} = ${json} as const\n`
 
-    return await prettier.format(output, { ...prettierConfig, parser: 'typescript' })
-  },
+      return await prettier.format(output, { ...prettierConfig, parser: 'typescript' })
+    },
+  }
 }
 
-export { tsFormat }
+export { createTsFormat }
