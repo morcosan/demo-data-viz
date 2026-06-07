@@ -12,10 +12,10 @@ export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_type
 export const IconButton = (props: IconButtonProps) => {
   const { linkHref, linkType = 'internal', pressed, size = 'md', variant = 'text-default' } = props
   const { tokens } = useThemeService()
-  const highlight = pressed ? 'pressed' : 'default'
+  const state = pressed ? 'pressed' : 'default'
   const { baseCssVars, bindings, content, buttonBaseCss, isVText } = useBaseButton({
     ...props,
-    highlight,
+    state,
     linkType,
     size,
     variant,

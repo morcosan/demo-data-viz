@@ -15,7 +15,7 @@ export type ButtonVariant =
   | 'item-solid-secondary'
   | 'item-text-default'
   | 'item-text-danger'
-export type ButtonHighlight = 'default' | 'pressed' | 'selected'
+export type ButtonState = 'default' | 'pressed' | 'selected'
 
 export interface ButtonProps extends HtmlDataProps {
   /**
@@ -35,8 +35,8 @@ export interface ButtonProps extends HtmlDataProps {
   size?: ButtonSize
   /** Property that determines color and highlight */
   variant?: ButtonVariant
-  /** Property for enforcing a specific button highlight */
-  highlight?: ButtonHighlight
+  /** Property for enforcing a specific button state */
+  state?: ButtonState
   /**
 	 - Flag for enabling loading state (non-interactive)
 	 - It has priority over `disabled` prop

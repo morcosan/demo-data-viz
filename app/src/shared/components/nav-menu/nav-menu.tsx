@@ -92,7 +92,7 @@ export const NavMenu = (props: NavMenuProps) => {
                   key={item.path}
                   linkHref={item.path}
                   variant={selected ? 'item-solid-secondary' : 'item-text-default'}
-                  highlight={selected ? 'selected' : 'default'}
+                  state={selected ? 'selected' : 'default'}
                   size="lg"
                   className="w-full"
                   onClick={closeMenu}

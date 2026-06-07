@@ -8,7 +8,7 @@ import { type LinkType } from './types'
 import { useClickable } from './use-clickable'
 
 export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
-export type BaseButtonHighlight = 'default' | 'pressed' | 'selected'
+export type BaseButtonState = 'default' | 'pressed' | 'selected'
 
 export type BaseVariant =
   | 'solid-primary'
@@ -45,7 +45,7 @@ interface BaseButtonProps extends HtmlDataProps {
   // Props
   size?: BaseButtonSize
   variant?: BaseVariant
-  highlight?: BaseButtonHighlight
+  state?: BaseButtonState
   loading?: boolean
   disabled?: boolean
   linkHref?: string
@@ -55,7 +55,7 @@ interface BaseButtonProps extends HtmlDataProps {
 }
 
 export const useBaseButton = (props: BaseButtonProps) => {
-  const { ariaDescription, children, className, highlight, loading, size, style, tooltip, variant } = props
+  const { ariaDescription, children, className, state, loading, size, style, tooltip, variant } = props
   const { tokens } = useThemeService()
   const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
   const dataProps = useDataProps(props)
@@ -122,7 +122,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     })(),
     hoverBgColor: (() => {
       if (isNoop) return 'transparent'
-      if (highlight === 'default') {
+      if (state === 'default') {
         if (isVText || isVGhost) return tokens.color['hover-text-default']
         if (isVPrimary) return tokens.color['primary-hover-default']
         if (isVSecondary) return tokens.color['secondary-hover-default']
@@ -131,8 +131,8 @@ export const useBaseButton = (props: BaseButtonProps) => {
       return ''
     })(),
     pressBgColor: (() => {
-      if (isNoop || highlight === 'selected') return 'transparent'
-      if (isPressed || highlight === 'pressed') {
+      if (isNoop || state === 'selected') return 'transparent'
+      if (isPressed || state === 'pressed') {
         if (isVText || isVGhost) return tokens.color['hover-text-pressed']
         if (isVPrimary) return tokens.color['primary-hover-pressed']
         if (isVSecondary) return tokens.color['secondary-hover-pressed']
@@ -140,7 +140,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
       }
       return ''
     })(),
-    pressTransform: isPressed && highlight === 'default' ? 'translateY(1px)' : 'unset',
+    pressTransform: isPressed && state === 'default' ? 'translateY(1px)' : 'unset',
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',

@@ -13,7 +13,7 @@ const meta: Meta = {
     props: {
       size: 'md',
       variant: 'solid-primary',
-      highlight: 'default',
+      state: 'default',
       loading: false,
       disabled: false,
       linkHref: '',
@@ -23,7 +23,7 @@ const meta: Meta = {
       'data-prop': '',
     },
     events: ['onClick'],
-    inlineRadios: ['size', 'variant', 'highlight', 'linkType'],
+    inlineRadios: ['size', 'variant', 'state', 'linkType'],
   }),
 }
 
@@ -57,10 +57,10 @@ const Variants: StoryObj<typeof Button> = {
               <Button variant={variant} className="w-lg-4">
                 {svg} {variant}
               </Button>
-              <Button variant={variant} highlight="pressed">
+              <Button variant={variant} state="pressed">
                 {svg} pressed
               </Button>
-              <Button variant={variant} highlight="selected">
+              <Button variant={variant} state="selected">
                 {svg} selected
               </Button>
               <Button variant={variant} loading>

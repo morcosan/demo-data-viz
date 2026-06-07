@@ -6,15 +6,15 @@ import { useBaseButton } from '../_shared/use-base-button'
 import { type ButtonProps } from './_types'
 
 export type { LinkType } from '../_shared/types'
-export type { ButtonHighlight, ButtonProps, ButtonSize, ButtonVariant } from './_types'
+export type { ButtonProps, ButtonSize, ButtonState, ButtonVariant } from './_types'
 
 /** Fundamental component for user actions and navigation */
 export const Button = (props: ButtonProps) => {
-  const { highlight = 'default', linkHref, linkType = 'internal', size = 'md', variant = 'solid-primary' } = props
+  const { state = 'default', linkHref, linkType = 'internal', size = 'md', variant = 'solid-primary' } = props
   const { tokens } = useThemeService()
   const { baseCssVars, bindings, content, buttonBaseCss, isVDefault, isVItem } = useBaseButton({
     ...props,
-    highlight,
+    state,
     linkType,
     size,
     variant,

@@ -1,10 +1,10 @@
-import { Button, type ButtonHighlight, SettingsSvg } from '@ds/core'
+import { Button, type ButtonState, SettingsSvg } from '@ds/core'
 import { t } from 'i18next'
 
 interface Props extends ReactProps {
   iconWidth: string
   collapsed?: boolean
-  highlight?: ButtonHighlight
+  highlight?: ButtonState
   onClick?: () => void
 }
 
@@ -15,7 +15,7 @@ export const SettingsButton = ({ iconWidth, collapsed, highlight, onClick, class
       size="lg"
       className={cx('w-full', className)}
       data-testid="settings-button"
-      highlight={highlight}
+      state={highlight}
       onClick={onClick}
     >
       <SettingsSvg className="h-xs-9" style={{ minWidth: iconWidth }} />
