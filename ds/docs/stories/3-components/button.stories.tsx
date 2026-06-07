@@ -42,22 +42,23 @@ const Variants: StoryObj<typeof Button> = {
       'menu-default',
       'menu-caution',
     ]
+    const widthClass = cx('w-lg-2')
 
     return (
       <DocsPage type="component">
         <div className="gap-xs-7 p-xs-8 flex flex-col">
           {variants.map((variant) => (
             <div key={variant} className="gap-xs-6 flex flex-wrap items-center">
-              <Button variant={variant} className="w-lg-4">
+              <Button variant={variant} className={widthClass}>
                 {svg} {variant}
               </Button>
-              <Button variant={variant} state="pressed">
+              <Button variant={variant} state="pressed" className={widthClass}>
                 {svg} pressed
               </Button>
-              <Button variant={variant} state="loading">
+              <Button variant={variant} state="loading" className={widthClass}>
                 {svg} loading
               </Button>
-              <Button variant={variant} state="disabled">
+              <Button variant={variant} state="disabled" className={widthClass}>
                 {svg} disabled
               </Button>
               <Button variant={variant} size="xs">

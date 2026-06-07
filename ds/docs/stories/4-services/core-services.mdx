@@ -144,14 +144,14 @@ This service enables dark/light mode switching and exposes all design system tok
 				import { useThemeService } from '@ds/core'
 				//
 				const App = () => {
-					const { tokens, colorMode, isUiDark, isUiLight, changeColorMode } = useThemeService()
+					const { tokens, colorMode, isDarkMode, isLightMode, changeColorMode } = useThemeService()
 					return (
 						<button
 						  data-mode={colorMode}
 						  style={{ color: tokens.color['black'] }}
 						  onClick={changeColorMode}
 						>
-							{isUiDark ? 'Dark' : isUiLight ? 'Light' : '??'}
+							{isDarkMode ? 'Dark' : isLightMode ? 'Light' : '??'}
 						</button>
 					)
 				}
@@ -176,8 +176,8 @@ This service enables dark/light mode switching and exposes all design system tok
 | --------------- | ------------- | ----------------- | ------ | ---------------------------------------------------- |
 | colorMode       | `ColorMode`   | -                 | -      | Current color mode value (`'light'` or `'dark'`)     |
 | colorTheme      | `ColorTheme`  | -                 | -      | Current color theme value (`'simple'` or `'modern'`) |
-| isUiDark        | `boolean`     | -                 | -      | Indicates whether the current mode is dark           |
-| isUiLight       | `boolean`     | -                 | -      | Indicates whether the current mode is light          |
+| isDarkMode      | `boolean`     | -                 | -      | Indicates whether the current mode is dark           |
+| isLightMode     | `boolean`     | -                 | -      | Indicates whether the current mode is light          |
 | changeColorMode | `function`    | `mode: ColorMode` | -      | Changes the color mode to the specified value        |
 | tokens          | `ThemeTokens` | -                 | -      | Token collections mapped to CSS variable values      |
 
@@ -185,5 +185,5 @@ This service enables dark/light mode switching and exposes all design system tok
 
 - The `cookieKey` prop enables coloor mode persistence across sessions
 - Design token objects (`tokens.color`, `tokens.spacing`, etc.) provide type-safe access to CSS variables
-- Use `isUiDark` and `isUiLight` for conditional rendering based on current color mode
+- Use `isDarkMode` and `isLightMode` for conditional rendering based on current color mode
 - All design tokens are automatically updated when the coolor mode changes

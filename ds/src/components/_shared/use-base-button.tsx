@@ -89,8 +89,8 @@ export const useBaseButton = (props: BaseButtonProps) => {
   })()
   const noopProps = ((): CSSObject => {
     const noopColor = tokens.color['text-subtle']
-    if (isSolid) return { backgroundColor: noopColor }
-    if (isOutline) return { borderColor: noopColor, color: noopColor }
+    if (isSolid) return { backgroundColor: noopColor, borderColor: noopColor }
+    if (isOutline) return { color: noopColor, backgroundColor: 'transparent', borderColor: noopColor }
     if (isTextOnly || isMenuItem) return { color: noopColor }
     return {}
   })()

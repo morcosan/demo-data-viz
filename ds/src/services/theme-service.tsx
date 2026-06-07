@@ -19,16 +19,16 @@ interface Store {
   tokens: ThemeTokens
   colorMode: ColorMode
   // colorTheme: ColorTheme
-  isUiDark: boolean
-  isUiLight: boolean
+  isDarkMode: boolean
+  isLightMode: boolean
   changeColorMode(mode: ColorMode): void
 }
 const Context = createContext<Store>({
   tokens: lightModeTokens,
   colorMode: 'light',
   // colorTheme: 'simple',
-  isUiDark: false,
-  isUiLight: true,
+  isDarkMode: false,
+  isLightMode: true,
   changeColorMode() {},
 })
 const useThemeService = () => useContext(Context)
@@ -47,8 +47,8 @@ const ThemeService = (props: Props) => {
   const [colorMode, setColorMode] = useState<ColorMode>('light')
   const [tokens, setTokens] = useState<ThemeTokens>(lightModeTokens)
 
-  const isUiDark = colorMode === 'dark'
-  const isUiLight = colorMode === 'light'
+  const isDarkMode = colorMode === 'dark'
+  const isLightMode = colorMode === 'light'
 
   const setModeHtmlAttr = (mode: ColorMode) => document.documentElement.setAttribute(ATTR_KEY__COLOR_MODE, mode)
   const setModeCookie = (mode: ColorMode) => localStorage.setItem(cookieKeyMode, mode)
@@ -81,8 +81,8 @@ const ThemeService = (props: Props) => {
   }, [colorModeProp])
 
   const store: Store = useMemo(
-    () => ({ tokens, colorMode, isUiDark, isUiLight, changeColorMode }),
-    [tokens, colorMode, isUiDark, isUiLight, changeColorMode],
+    () => ({ tokens, colorMode, isDarkMode, isLightMode, changeColorMode }),
+    [tokens, colorMode, isDarkMode, isLightMode, changeColorMode],
   )
 
   return <Context.Provider value={store}>{children}</Context.Provider>

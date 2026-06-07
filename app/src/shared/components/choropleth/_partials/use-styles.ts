@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react'
 import { type EItemStyle, type ELegend, type ETooltip } from '../_types'
 
 export const useStyles = () => {
-  const { colorMode, isUiLight } = useThemeService()
+  const { colorMode, isLightMode } = useThemeService()
   const { isViewportMaxLG: isMobile } = useViewportService()
   const draggingClass = 'choropleth-dragging'
   const tooltipClass = 'choropleth-tooltip'
@@ -18,14 +18,14 @@ export const useStyles = () => {
       land: oklchToHex(getTokenValue(TOKENS.COLOR['map-land'], colorMode)),
       ocean: oklchToHex(getTokenValue(TOKENS.COLOR['map-ocean'], colorMode)),
       borderInactive: oklchToHex(
-        getTokenValue(TOKENS.COLOR[isUiLight ? 'border-subtle' : 'border-default'], colorMode),
+        getTokenValue(TOKENS.COLOR[isLightMode ? 'border-subtle' : 'border-default'], colorMode),
       ),
       borderActive: oklchToHex(getTokenValue(TOKENS.COLOR['text-inverse'], colorMode)),
       borderQuery: oklchToHex(getTokenValue(TOKENS.COLOR['border-highlight'], colorMode)),
       borderHover: oklchToHex(getTokenValue(TOKENS.COLOR['border-highlight'], colorMode)),
       borderLegend: oklchToHex(getTokenValue(TOKENS.COLOR['border-active'], colorMode)),
     }),
-    [colorMode, isUiLight],
+    [colorMode, isLightMode],
   )
 
   const sizes = useMemo(
@@ -42,19 +42,19 @@ export const useStyles = () => {
   const shadows = useMemo(
     () => ({
       sm: {
-        color: isUiLight ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.7)',
-        blur: isUiLight ? 3 : 4,
+        color: isLightMode ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.7)',
+        blur: isLightMode ? 3 : 4,
         offsetX: 0,
-        offsetY: isUiLight ? 1 : 2,
+        offsetY: isLightMode ? 1 : 2,
       },
       md: {
-        color: isUiLight ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.6)',
+        color: isLightMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.6)',
         blur: 6,
         offsetX: 0,
         offsetY: 4,
       },
     }),
-    [isUiLight],
+    [isLightMode],
   )
 
   const styles = useMemo(

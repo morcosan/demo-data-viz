@@ -23,7 +23,7 @@ interface Props {
 
 export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
   const { t } = useTranslation()
-  const { isUiLight, isUiDark, changeColorMode } = useThemeService()
+  const { isLightMode, isDarkMode, changeColorMode } = useThemeService()
   const fieldId = useId()
 
   const isPopup = !onClickBack
@@ -58,14 +58,14 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
           data-testid="color-mode-toggle"
         >
           <Button
-            variant={isUiLight ? 'solid-secondary' : 'text-default'}
+            variant={isLightMode ? 'solid-secondary' : 'text-default'}
             size="xs"
             onClick={() => changeColorMode('light')}
           >
             ☀️ {t('core.label.modeLight')}&nbsp;
           </Button>
           <Button
-            variant={isUiDark ? 'solid-secondary' : 'text-default'}
+            variant={isDarkMode ? 'solid-secondary' : 'text-default'}
             size="xs"
             onClick={() => changeColorMode('dark')}
           >
@@ -99,8 +99,8 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
 
       {/* REPO */}
       <Button linkHref="https://github.com/morcosan/demo-data-viz" linkType="external" variant="item-text-default">
-        {Boolean(isUiLight) && <GithubBlackSvg className={actionIconClass} />}
-        {Boolean(isUiDark) && <GithubWhiteSvg className={actionIconClass} />}
+        {Boolean(isLightMode) && <GithubBlackSvg className={actionIconClass} />}
+        {Boolean(isDarkMode) && <GithubWhiteSvg className={actionIconClass} />}
         {t('core.label.githubRepo')}
         <NewTabSvg className={newTabIconClass} />
       </Button>

@@ -13,27 +13,15 @@ export const TOKENS__SURFACE = {
     ref: {
       backgroundColor: '{color.bg-page}',
       backgroundImage: {
-        light: [
-          'radial-gradient(circle, {color.blue-2} 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, {color.blue-4}, {color.bg-page} 20% 80%, {color.yellow-3})',
-        ],
-        dark: [
-          'radial-gradient(circle, {color.blue-16} 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, {color.blue-16}, {color.bg-page} 20% 80%, {color.yellow-16})',
-        ],
+        light: 'radial-gradient(circle, {color.white-alpha-10} 1px, transparent 1px)',
+        dark: 'radial-gradient(circle, {color.white-alpha-2} 1px, transparent 1px)',
       },
     },
     value: {
-      backgroundColor: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.2861 0.0099 308)' },
+      backgroundColor: { light: 'oklch(0.9500 0.0200 260)', dark: 'oklch(0.2558 0.0079 308)' },
       backgroundImage: {
-        light: [
-          'radial-gradient(circle, oklch(0.9215 0.0348 260) 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, oklch(0.8434 0.0715 260), oklch(0.9474 0.0029 308) 20% 80%, oklch(0.9800 0.0520 102.50))',
-        ],
-        dark: [
-          'radial-gradient(circle, oklch(0.2191 0.0494 260) 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308) 20% 80%, oklch(0.2600 0.0580 60.00))',
-        ],
+        light: 'radial-gradient(circle, oklch(1 0 0 / 0.56) 1px, transparent 1px)',
+        dark: 'radial-gradient(circle, oklch(1 0 0 / 0.06) 1px, transparent 1px)',
       },
       backgroundSize: '12px 12px, cover',
     },
@@ -117,8 +105,8 @@ export const TOKENS__SURFACE = {
     },
     value: {
       color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5767 0.1726 260)',
-      border: '2px solid oklch(0.5767 0.1726 260)',
+      backgroundColor: 'oklch(0.4500 0.1600 260)',
+      border: '2px solid oklch(0.4500 0.1600 260)',
       borderRadius: '8px',
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
@@ -134,17 +122,17 @@ export const TOKENS__SURFACE = {
     },
     value: {
       color: 'oklch(0.9880 0.0320 103.00)',
-      backgroundColor: 'oklch(0.6577 0.1691 260)',
-      border: '2px solid oklch(0.5767 0.1726 260)',
+      backgroundColor: 'oklch(0.5900 0.1620 260)',
+      border: '2px solid oklch(0.4500 0.1600 260)',
       borderRadius: '8px',
       boxShadow: {
         light: [
-          '0 0 4px 0 oklch(0.6577 0.1691 260)',
+          '0 0 4px 0 oklch(0.5900 0.1620 260)',
           '0 4px 6px -1px rgb(0 0 0 / 0.15)',
           '0 2px 4px -2px rgb(0 0 0 / 0.15)',
         ],
         dark: [
-          '0 0 4px 0 oklch(0.6577 0.1691 260)',
+          '0 0 4px 0 oklch(0.5900 0.1620 260)',
           '0 4px 6px -1px rgb(0 0 0 / 0.4)',
           '0 2px 4px -2px rgb(0 0 0 / 0.4)',
         ],
@@ -162,16 +150,16 @@ export const TOKENS__SURFACE = {
     },
     value: {
       color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5303 0.1572 260)',
-      border: '2px solid oklch(0.4646 0.1410 260)',
+      backgroundColor: 'oklch(0.3900 0.1420 260)',
+      border: '2px solid oklch(0.3300 0.1200 260)',
       borderRadius: '8px',
       boxShadow: {
         light: [
-          '0 0 4px 0 oklch(0.6577 0.1691 260)',
+          '0 0 4px 0 oklch(0.5900 0.1620 260)',
           '0 1px 3px 0 rgb(0 0 0 / 0.15)',
           '0 1px 2px -1px rgb(0 0 0 / 0.15)',
         ],
-        dark: ['0 0 4px 0 oklch(0.6577 0.1691 260)', '0 1px 3px 0 rgb(0 0 0 / 0.4)', '0 1px 2px -1px rgb(0 0 0 / 0.4)'],
+        dark: ['0 0 4px 0 oklch(0.5900 0.1620 260)', '0 1px 3px 0 rgb(0 0 0 / 0.4)', '0 1px 2px -1px rgb(0 0 0 / 0.4)'],
       },
     },
   },
@@ -185,9 +173,9 @@ export const TOKENS__SURFACE = {
       boxShadow: '{shadow.xs}',
     },
     value: {
-      color: 'oklch(0.5767 0.1726 260)',
+      color: 'oklch(0.4500 0.1600 260)',
       backgroundColor: 'oklch(0.9500 0.0200 260)',
-      border: '2px solid oklch(0.6577 0.1691 260)',
+      border: '2px solid oklch(0.5900 0.1620 260)',
       borderRadius: '8px',
       boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
@@ -202,9 +190,9 @@ export const TOKENS__SURFACE = {
       boxShadow: ['0 0 6px 1px {color.blue-2}', '{shadow.md}'],
     },
     value: {
-      color: 'oklch(0.6231 0.1880 260)',
+      color: 'oklch(0.5200 0.1750 260)',
       backgroundColor: 'oklch(0.9215 0.0348 260)',
-      border: '2px solid oklch(0.7294 0.1308 260)',
+      border: '2px solid oklch(0.7100 0.1280 260)',
       borderRadius: '8px',
       boxShadow: {
         light: [
@@ -230,9 +218,9 @@ export const TOKENS__SURFACE = {
       boxShadow: ['0 0 6px 1px {color.blue-2}', '{shadow.sm}'],
     },
     value: {
-      color: 'oklch(0.5767 0.1726 260)',
+      color: 'oklch(0.4500 0.1600 260)',
       backgroundColor: 'oklch(0.8825 0.0531 260)',
-      border: '2px solid oklch(0.6923 0.1502 260)',
+      border: '2px solid oklch(0.6500 0.1450 260)',
       borderRadius: '8px',
       boxShadow: {
         light: [

@@ -26,7 +26,7 @@ export const parseRef = (ref) => ref.replace('color.', '').replace(/[{}]/g, '')
     <tbody>
       {tokens.map(([name, token]) => (
         <tr key={name}>
-          <td>
+          <td className="pr-0!">
             <pre>{name}</pre>
           </td>
           <td className="pr-0!">
@@ -42,7 +42,7 @@ export const parseRef = (ref) => ref.replace('color.', '').replace(/[{}]/g, '')
               noLabel
             />
           </td>
-          <td>
+          <td className="pr-0!">
             <DocsTokenGrid
               lightSlot={<DocsToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'light'))} type="color" />}
               darkSlot={<DocsToken value={oklchToHex(getTokenValue(TOKENS.COLOR[name], 'dark'))} type="color" />}
