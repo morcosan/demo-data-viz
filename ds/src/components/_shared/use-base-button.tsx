@@ -11,18 +11,14 @@ export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type BaseButtonState = 'default' | 'pressed' | 'selected'
 
 export type BaseVariant =
-  | 'solid-primary'
-  | 'solid-secondary'
-  | 'solid-danger'
-  | 'ghost-primary'
-  | 'ghost-secondary'
-  | 'ghost-danger'
-  | 'text-default'
-  | 'text-subtle'
-  | 'text-danger'
-  | 'item-solid-secondary'
-  | 'item-text-default'
-  | 'item-text-danger'
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'optional'
+  | 'danger'
+  | 'caution'
+  | 'tertiary-item'
+  | 'caution-item'
 
 type Variant = BaseVariant | undefined
 
@@ -60,15 +56,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
   const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
   const dataProps = useDataProps(props)
 
-  const isVDanger = VARIANTS_DANGER.includes(variant)
-  const isVDefault = VARIANTS_DEFAULT.includes(variant)
-  const isVGhost = VARIANTS_GHOST.includes(variant)
-  const isVItem = VARIANTS_ITEM.includes(variant)
-  const isVPrimary = VARIANTS_PRIMARY.includes(variant)
-  const isVSecondary = VARIANTS_SECONDARY.includes(variant)
-  const isVSolid = VARIANTS_SOLID.includes(variant)
-  const isVSubtle = VARIANTS_SUBTLE.includes(variant)
-  const isVText = VARIANTS_TEXT.includes(variant)
+  const isVSolid = variant === 'primary'
 
   const baseCssVars = {
     size: (() => {
@@ -79,12 +67,8 @@ export const useBaseButton = (props: BaseButtonProps) => {
       return ''
     })(),
     bgColor: (() => {
-      if (isVSolid) {
-        if (isNoop) return tokens.color['text-subtle']
-        if (isVPrimary) return tokens.color['primary-button-bg']
-        if (isVSecondary) return tokens.color['secondary-button-bg']
-        if (isVDanger) return tokens.color['danger-button-bg']
-      }
+      if (isVSolid && isNoop) return tokens.color['text-subtle']
+      if (variant === 'primary') return tokens.surface['button-primary'].value.backgroundColor
       return 'transparent'
     })(),
     borderColor: (() => {

@@ -176,10 +176,37 @@ export const TOKENS__SURFACE = {
       transition: 'transform 0.3s ease',
     },
   },
-  'button-optional': {
+  'button-tertiary': {
     type: 'composite',
     ref: { color: '{color.text-default}' },
     value: { color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' } },
+  },
+  'button-optional-tertiary': {
+    type: 'composite',
+    ref: {
+      color: '{color.text-default}',
+      backgroundColor: '{color.yellow-1}',
+      border: '2px solid {color.yellow-3}',
+      borderRadius: '{radius.md}',
+      boxShadow: '{shadow.md}',
+    },
+    value: {
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
+      backgroundColor: 'oklch(0.9729 0.0693 103.19)',
+      border: '2px solid oklch(0.9185 0.1426 98.22)',
+      borderRadius: '8px',
+      boxShadow: {
+        light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
+        dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
+      },
+      transform: 'scale(1.02) translateY(-3px)',
+      transition: 'transform 0.3s ease',
+    },
+  },
+  'button-optional': {
+    type: 'composite',
+    ref: { color: '{color.text-subtle}' },
+    value: { color: { light: 'oklch(0.516 0.0186 308)', dark: 'oklch(0.7548 0.0151 308)' } },
   },
   'button-optional-hovered': {
     type: 'composite',

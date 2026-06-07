@@ -2,16 +2,7 @@ import { type CSSProperties, type ReactNode } from 'react'
 import { type LinkType } from '../_shared/types'
 
 export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg'
-export type IconButtonVariant =
-  | 'text-default'
-  | 'text-subtle'
-  | 'text-danger'
-  | 'solid-primary'
-  | 'solid-secondary'
-  | 'solid-danger'
-  | 'ghost-primary'
-  | 'ghost-secondary'
-  | 'ghost-danger'
+export type IconButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'optional' | 'danger' | 'caution'
 
 export interface IconButtonProps extends HtmlDataProps {
   /**

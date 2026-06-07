@@ -114,10 +114,30 @@
   }
 }
 
-@utility ds-surface-button-optional {
+@utility ds-surface-button-tertiary {
   :where(html) &,
   [data-color-mode='light'] & {
     color: var(--ds-color-text-default);
+  }
+}
+
+@utility ds-surface-button-optional-tertiary {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    transform: scale(1.02) translateY(-3px);
+    transition: transform 0.3s ease;
+    box-shadow: var(--ds-shadow-md);
+    border: 2px solid var(--ds-color-yellow-3);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-yellow-1);
+    color: var(--ds-color-text-default);
+  }
+}
+
+@utility ds-surface-button-optional {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    color: var(--ds-color-text-subtle);
   }
 }
 

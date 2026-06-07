@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { type ColorMode, type ColorTheme } from '../styles/tokens'
+import { type ColorMode } from '../styles/tokens'
 import { darkModeTokens, lightModeTokens, type ThemeTokens } from './_partials/theme-config'
 
 /**
@@ -18,7 +18,7 @@ const COLOR_THEMES: ColorMode[] = ['light', 'dark']
 interface Store {
   tokens: ThemeTokens
   colorMode: ColorMode
-  colorTheme: ColorTheme
+  // colorTheme: ColorTheme
   isUiDark: boolean
   isUiLight: boolean
   changeColorMode(mode: ColorMode): void
@@ -26,7 +26,7 @@ interface Store {
 const Context = createContext<Store>({
   tokens: lightModeTokens,
   colorMode: 'light',
-  colorTheme: 'simple',
+  // colorTheme: 'simple',
   isUiDark: false,
   isUiLight: true,
   changeColorMode() {},
@@ -38,14 +38,13 @@ const useThemeService = () => useContext(Context)
  */
 interface Props extends ReactProps {
   cookieKeyMode: string
-  cookieKeyTheme: string
+  // cookieKeyTheme: string
   colorMode?: ColorMode
 }
 
 const ThemeService = (props: Props) => {
-  const { colorMode: colorModeProp, cookieKeyMode, cookieKeyTheme, children } = props
+  const { colorMode: colorModeProp, cookieKeyMode, children } = props
   const [colorMode, setColorMode] = useState<ColorMode>('light')
-  const [colorTheme, setColorTheme] = useState<ColorTheme>('simple')
   const [tokens, setTokens] = useState<ThemeTokens>(lightModeTokens)
 
   const isUiDark = colorMode === 'dark'
@@ -54,10 +53,6 @@ const ThemeService = (props: Props) => {
   const setModeHtmlAttr = (mode: ColorMode) => document.documentElement.setAttribute(ATTR_KEY__COLOR_MODE, mode)
   const setModeCookie = (mode: ColorMode) => localStorage.setItem(cookieKeyMode, mode)
   const getModeCookie = () => localStorage.getItem(cookieKeyMode) as ColorMode | null
-
-  const setThemeHtmlAttr = (mode: ColorTheme) => document.documentElement.setAttribute(ATTR_KEY__COLOR_THEME, mode)
-  const setThemeCookie = (mode: ColorTheme) => localStorage.setItem(cookieKeyTheme, mode)
-  const getThemeCookie = () => localStorage.getItem(cookieKeyTheme) as ColorTheme | null
 
   const changeColorMode = (mode: ColorMode) => {
     setModeCookie(mode)
@@ -86,8 +81,8 @@ const ThemeService = (props: Props) => {
   }, [colorModeProp])
 
   const store: Store = useMemo(
-    () => ({ tokens, colorMode, colorTheme, isUiDark, isUiLight, changeColorMode }),
-    [tokens, colorMode, colorTheme, isUiDark, isUiLight, changeColorMode],
+    () => ({ tokens, colorMode, isUiDark, isUiLight, changeColorMode }),
+    [tokens, colorMode, isUiDark, isUiLight, changeColorMode],
   )
 
   return <Context.Provider value={store}>{children}</Context.Provider>
