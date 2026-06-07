@@ -84,8 +84,6 @@ export const TOKENS__SURFACE = {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
-      transform: 'scale(1.02) translateY(-3px)',
-      transition: 'transform 0.3s ease',
     },
   },
   popup: {
@@ -135,8 +133,6 @@ export const TOKENS__SURFACE = {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
-      transform: 'scale(1.02) translateY(-3px)',
-      transition: 'transform 0.3s ease',
     },
   },
   'button-secondary': {
@@ -172,8 +168,6 @@ export const TOKENS__SURFACE = {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
-      transform: 'scale(1.02) translateY(-3px)',
-      transition: 'transform 0.3s ease',
     },
   },
   'button-tertiary': {
@@ -199,8 +193,6 @@ export const TOKENS__SURFACE = {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
-      transform: 'scale(1.02) translateY(-3px)',
-      transition: 'transform 0.3s ease',
     },
   },
   'button-optional': {
@@ -226,8 +218,6 @@ export const TOKENS__SURFACE = {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
-      transform: 'scale(1.02) translateY(-3px)',
-      transition: 'transform 0.3s ease',
     },
   },
   'button-danger': {
@@ -265,8 +255,6 @@ export const TOKENS__SURFACE = {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
-      transform: 'scale(1.02) translateY(-3px)',
-      transition: 'transform 0.3s ease',
     },
   },
   'button-caution': { type: 'composite', ref: { color: '{color.red-6}' }, value: { color: 'oklch(0.5696 0.2145 23)' } },
@@ -286,8 +274,6 @@ export const TOKENS__SURFACE = {
         light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
         dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
       },
-      transform: 'scale(1.02) translateY(-3px)',
-      transition: 'transform 0.3s ease',
     },
   },
 } as const

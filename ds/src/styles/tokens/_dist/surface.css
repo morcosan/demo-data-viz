@@ -49,8 +49,6 @@
 @utility ds-surface-card-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-yellow-3);
     border-radius: var(--ds-radius-md);
@@ -81,8 +79,6 @@
 @utility ds-surface-button-primary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-blue-5);
     border-radius: var(--ds-radius-md);
@@ -104,8 +100,6 @@
 @utility ds-surface-button-secondary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-blue-5);
     border-radius: var(--ds-radius-md);
@@ -124,8 +118,6 @@
 @utility ds-surface-button-tertiary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-yellow-3);
     border-radius: var(--ds-radius-md);
@@ -144,8 +136,6 @@
 @utility ds-surface-button-optional-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-yellow-3);
     border-radius: var(--ds-radius-md);
@@ -168,8 +158,6 @@
 @utility ds-surface-button-danger-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-red-5);
     border-radius: var(--ds-radius-md);
@@ -188,8 +176,6 @@
 @utility ds-surface-button-caution-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    transform: scale(1.02) translateY(-3px);
-    transition: transform 0.3s ease;
     box-shadow: var(--ds-shadow-md);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-red-1);

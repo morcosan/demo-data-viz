@@ -90,25 +90,25 @@ export const useBaseButton = (props: BaseButtonProps) => {
   const surface = isPressed || state === 'pressed' ? surfacePress : surfaceDefault
 
   const buttonBaseCss: CSSObject = {
+    ...surface,
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
+    verticalAlign: 'middle',
     lineHeight: 1,
-    height: height,
-    minHeight: height,
-    border: surface.border || 'transparent',
-    backgroundColor: surface.backgroundColor || 'transparent',
-    opacity: isNoop ? 0.4 : 1,
-    color: surface.color,
     fill: 'currentColor',
     stroke: 'currentColor',
+    height: height,
+    minHeight: height,
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
+    opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    verticalAlign: 'middle',
-    transform: isPressed && state === 'default' ? 'translateY(1px)' : 'unset',
+    transition: 'all 0.3s ease',
     '&:hover, &:focus': {
-      backgroundColor: surfaceHover.backgroundColor,
+      ...surfaceHover,
+      transform: isPressed && state === 'default' ? 'translateY(-1px)' : 'translateY(-2px)',
     },
+    // TODO: Fix blur effect from scale()
   }
   const childrenCss: CSSObject = {
     display: 'flex',
