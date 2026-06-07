@@ -4,21 +4,23 @@ import { useRoutingService } from '../../services/routing-service'
 import { Keyboard } from '../../utilities/various-utils'
 import { type LinkType } from './types'
 
+export type ClickableState = 'default' | 'pressed' | 'loading' | 'disabled'
+
 export interface ClickableProps {
-  loading?: boolean
-  disabled?: boolean
+  state: ClickableState
   linkHref?: string
   linkType?: LinkType
   onClick?: (event: ReactMouseEvent) => void
 }
 
 export const useClickable = (props: ClickableProps) => {
-  const { disabled, linkHref, linkType, loading, onClick } = props
+  const { linkHref, linkType, state, onClick } = props
   const { navigate } = useRoutingService()
-  const [isPressed, setIsPressed] = useState(false)
+  const [pressing, setPressing] = useState(false)
 
   const linkTarget = linkType === 'internal' ? '_self' : '_blank'
-  const isNoop = disabled || loading
+  const isNoop = state === 'disabled' || state === 'loading'
+  const isPressed = pressing || state === 'pressed'
 
   const handleClick = useCallback(
     (event: ReactMouseEvent) => {
@@ -39,15 +41,15 @@ export const useClickable = (props: ClickableProps) => {
     [isNoop, linkType, linkHref, onClick, navigate],
   )
 
-  const handleMouseDown = () => !isNoop && setIsPressed(true)
-  const handleMouseLeave = () => setIsPressed(false)
-  const handleMouseUp = () => setIsPressed(false)
+  const handleMouseDown = () => !isNoop && setPressing(true)
+  const handleMouseLeave = () => setPressing(false)
+  const handleMouseUp = () => setPressing(false)
 
   const handleKeyDown = (event: ReactKeyboardEvent) => {
     if (isNoop) return
     if (event.key === Keyboard.SPACE || event.key === Keyboard.ENTER) {
       event.preventDefault()
-      setIsPressed(true)
+      setPressing(true)
     }
   }
 
@@ -56,12 +58,12 @@ export const useClickable = (props: ClickableProps) => {
     if (event.key === Keyboard.SPACE || event.key === Keyboard.ENTER) {
       const elem = event.target as HTMLButtonElement
       elem.click()
-      setIsPressed(false)
+      setPressing(false)
     }
   }
 
   useEffect(() => {
-    setIsPressed(false)
+    setPressing(false)
   }, [isNoop])
 
   const bindings = (() => {
@@ -87,6 +89,7 @@ export const useClickable = (props: ClickableProps) => {
     isNoop,
     isPressed,
     linkTarget,
+    pressing,
     handleClick,
     handleKeyDown,
     handleKeyUp,

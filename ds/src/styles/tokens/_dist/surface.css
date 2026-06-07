@@ -40,7 +40,7 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-bg-card);
+    border: 2px solid var(--ds-color-bg-card);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
   }
@@ -71,7 +71,7 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-blue-11);
+    border: 2px solid var(--ds-color-blue-11);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-blue-11);
     color: var(--ds-color-white);
@@ -87,6 +87,19 @@
     border: 2px solid var(--ds-color-blue-11);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-blue-9);
+    color: var(--ds-color-yellow-2);
+  }
+}
+
+@utility ds-surface-button-primary-pressed {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    box-shadow:
+      0 0 4px 0 var(--ds-color-blue-9),
+      var(--ds-shadow-sm);
+    border: 2px solid var(--ds-color-blue-13);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-blue-12);
     color: var(--ds-color-white);
   }
 }
@@ -95,7 +108,7 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-blue-11);
+    border: 2px solid var(--ds-color-blue-9);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-blue-1);
     color: var(--ds-color-blue-11);
@@ -111,6 +124,19 @@
     border: 2px solid var(--ds-color-blue-7);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-blue-2);
+    color: var(--ds-color-blue-10);
+  }
+}
+
+@utility ds-surface-button-secondary-pressed {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    box-shadow:
+      0 0 6px 1px var(--ds-color-blue-2),
+      var(--ds-shadow-sm);
+    border: 2px solid var(--ds-color-blue-8);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-blue-3);
     color: var(--ds-color-blue-11);
   }
 }
@@ -118,6 +144,7 @@
 @utility ds-surface-button-tertiary {
   :where(html) &,
   [data-color-mode='light'] & {
+    border: 2px solid transparent;
     color: var(--ds-color-text-default);
   }
 }
@@ -131,13 +158,14 @@
     border: 2px solid var(--ds-color-yellow-4);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-text-default);
+    color: var(--ds-color-yellow-14);
   }
 }
 
 @utility ds-surface-button-optional {
   :where(html) &,
   [data-color-mode='light'] & {
+    border: 2px solid transparent;
     color: var(--ds-color-text-subtle);
   }
 }
@@ -151,7 +179,7 @@
     border: 2px solid var(--ds-color-yellow-4);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-text-default);
+    color: var(--ds-color-yellow-13);
   }
 }
 
@@ -159,7 +187,7 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-red-11);
+    border: 2px solid var(--ds-color-red-11);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-red-11);
     color: var(--ds-color-white);
@@ -175,13 +203,14 @@
     border: 2px solid var(--ds-color-red-10);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-red-9);
-    color: var(--ds-color-white);
+    color: var(--ds-color-yellow-2);
   }
 }
 
 @utility ds-surface-button-caution {
   :where(html) &,
   [data-color-mode='light'] & {
+    border: 2px solid transparent;
     color: var(--ds-color-red-11);
   }
 }
@@ -195,6 +224,6 @@
     border: 2px solid var(--ds-color-red-4);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-red-1);
-    color: var(--ds-color-red-11);
+    color: var(--ds-color-red-10);
   }
 }

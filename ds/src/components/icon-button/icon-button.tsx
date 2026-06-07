@@ -10,13 +10,13 @@ export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_type
 
 /** Fundamental component for user actions and navigation, displayed as icon */
 export const IconButton = (props: IconButtonProps) => {
-  const { linkHref, linkType = 'internal', state = 'default', size = 'md', variant = 'primary' } = props
+  const { linkHref, linkType = 'internal', size = 'md', variant = 'primary', state = 'default' } = props
   const { tokens } = useThemeService()
   const { bindings, buttonBaseCss, content, height } = useBaseButton({
     ...props,
-    state,
     linkType,
     size,
+    state,
     variant,
   })
 

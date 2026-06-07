@@ -5,9 +5,9 @@ import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
 import { useDataProps } from '../../utilities/react-utils'
 import { type LinkType } from './types'
-import { useClickable } from './use-clickable'
+import { type ClickableState, useClickable } from './use-clickable'
 
-export type BaseButtonState = 'default' | 'pressed' | 'loading' | 'disabled'
+export type BaseButtonState = ClickableState
 export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type BaseVariant =
   | 'primary'
@@ -26,11 +26,9 @@ interface BaseButtonProps extends HtmlDataProps {
   ariaDescription?: string
 
   // Props
-  size?: BaseButtonSize
-  variant?: BaseVariant
-  state?: BaseButtonState
-  loading?: boolean
-  disabled?: boolean
+  size: BaseButtonSize
+  variant: BaseVariant
+  state: BaseButtonState
   linkHref?: string
   linkType?: LinkType
   className?: string
@@ -38,12 +36,14 @@ interface BaseButtonProps extends HtmlDataProps {
 }
 
 export const useBaseButton = (props: BaseButtonProps) => {
-  const { ariaDescription, children, className, state, loading, size, style, tooltip, variant } = props
+  const { ariaDescription, children, className, size, style, tooltip, state, variant } = props
   const { tokens } = useThemeService()
-  const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
+  const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
 
   const isSolid = variant === 'primary' || variant === 'danger'
+  const isOutline = variant === 'secondary'
+  const isTextOnly = variant === 'tertiary' || variant === 'optional' || variant === 'caution'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
 
   const height = (() => {
@@ -77,8 +77,8 @@ export const useBaseButton = (props: BaseButtonProps) => {
     return {}
   })()
   const surfacePress = ((): CSSObject => {
-    if (variant === 'primary') return tokens.surface['button-primary-hovered']
-    if (variant === 'secondary') return tokens.surface['button-secondary-hovered']
+    if (variant === 'primary') return tokens.surface['button-primary-pressed']
+    if (variant === 'secondary') return tokens.surface['button-secondary-pressed']
     if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
     if (variant === 'optional') return tokens.surface['button-optional-hovered']
     if (variant === 'danger') return tokens.surface['button-danger-hovered']
@@ -87,13 +87,17 @@ export const useBaseButton = (props: BaseButtonProps) => {
     if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
     return {}
   })()
-  const surface = {
-    border: '1px solid transparent',
-    ...(isPressed || state === 'pressed' ? surfacePress : surfaceDefault),
-  }
+  const noopProps = ((): CSSObject => {
+    const noopColor = tokens.color['text-subtle']
+    if (isSolid) return { backgroundColor: noopColor }
+    if (isOutline) return { borderColor: noopColor, color: noopColor }
+    if (isTextOnly || isMenuItem) return { color: noopColor }
+    return {}
+  })()
 
   const buttonBaseCss: CSSObject = {
-    ...surface,
+    ...(isPressed ? surfacePress : surfaceDefault),
+    ...(isNoop ? noopProps : {}),
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
@@ -106,12 +110,15 @@ export const useBaseButton = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
+    transform: isPressed ? 'translateY(-1px)' : undefined,
     transition: 'all 0.3s ease',
-    '&:hover, &:focus': {
-      ...surfaceHover,
-      transform: isPressed && state === 'default' ? 'translateY(-1px)' : 'translateY(-2px)',
-    },
-    // TODO: Fix blur effect from scale()
+    '&:hover, &:focus':
+      isNoop || pressing
+        ? {}
+        : {
+            ...surfaceHover,
+            transform: 'translateY(-2px)',
+          },
   }
   const childrenCss: CSSObject = {
     display: 'flex',
@@ -119,7 +126,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     justifyContent: isMenuItem ? 'unset' : 'center',
     textAlign: isMenuItem ? 'left' : 'center',
     width: '100%',
-    opacity: loading ? 0 : 1,
+    opacity: state === 'loading' ? 0 : 1,
     pointerEvents: 'none',
     userSelect: 'none',
   }
@@ -159,7 +166,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     <>
       <span css={childrenCss}>{children}</span>
 
-      {Boolean(loading) && (
+      {state === 'loading' && (
         <span css={spinnerCss}>
           <Loader css={spinnerIconCss} />
         </span>

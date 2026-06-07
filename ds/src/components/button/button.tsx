@@ -10,13 +10,13 @@ export type { ButtonProps, ButtonSize, ButtonState, ButtonVariant } from './_typ
 
 /** Fundamental component for user actions and navigation */
 export const Button = (props: ButtonProps) => {
-  const { state = 'default', linkHref, linkType = 'internal', size = 'md', variant = 'primary' } = props
+  const { linkHref, linkType = 'internal', size = 'md', variant = 'primary', state = 'default' } = props
   const { tokens } = useThemeService()
   const { bindings, content, buttonBaseCss, isMenuItem } = useBaseButton({
     ...props,
-    state,
     linkType,
     size,
+    state,
     variant,
   })
 
