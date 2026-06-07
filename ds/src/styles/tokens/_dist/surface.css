@@ -121,7 +121,7 @@
   }
 }
 
-@utility ds-surface-button-optional-tertiary {
+@utility ds-surface-button-tertiary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
     transform: scale(1.02) translateY(-3px);

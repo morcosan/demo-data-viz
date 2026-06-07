@@ -10,10 +10,9 @@ export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_type
 
 /** Fundamental component for user actions and navigation, displayed as icon */
 export const IconButton = (props: IconButtonProps) => {
-  const { linkHref, linkType = 'internal', pressed, size = 'md', variant = 'text-default' } = props
+  const { linkHref, linkType = 'internal', state = 'default', size = 'md', variant = 'primary' } = props
   const { tokens } = useThemeService()
-  const state = pressed ? 'pressed' : 'default'
-  const { baseCssVars, bindings, content, buttonBaseCss, isVText } = useBaseButton({
+  const { bindings, buttonBaseCss, content, height } = useBaseButton({
     ...props,
     state,
     linkType,
@@ -21,23 +20,13 @@ export const IconButton = (props: IconButtonProps) => {
     variant,
   })
 
-  const cssVars = {
-    ...baseCssVars,
-    borderRadius: isVText ? tokens.radius['full'] : tokens.radius['sm'],
-  }
-
   const buttonCss: CSSObject = {
     ...buttonBaseCss,
-    width: cssVars.size,
-    minWidth: cssVars.size,
+    width: height,
+    minWidth: height,
     padding: 0,
-    borderRadius: cssVars.borderRadius,
+    borderRadius: tokens.radius['sm'],
     fontSize: tokens.fontSize['md'],
-
-    '&::before, &::after': {
-      ...(buttonBaseCss['&::before, &::after'] as CSSObject),
-      borderRadius: cssVars.borderRadius,
-    },
   }
 
   return linkHref ? (

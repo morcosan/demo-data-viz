@@ -7,9 +7,8 @@ import { useDataProps } from '../../utilities/react-utils'
 import { type LinkType } from './types'
 import { useClickable } from './use-clickable'
 
+export type BaseButtonState = 'default' | 'pressed' | 'loading' | 'disabled'
 export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
-export type BaseButtonState = 'default' | 'pressed' | 'selected'
-
 export type BaseVariant =
   | 'primary'
   | 'secondary'
@@ -17,20 +16,8 @@ export type BaseVariant =
   | 'optional'
   | 'danger'
   | 'caution'
-  | 'tertiary-item'
-  | 'caution-item'
-
-type Variant = BaseVariant | undefined
-
-const VARIANTS_DANGER: Variant[] = ['solid-danger', 'ghost-danger', 'text-danger', 'item-text-danger']
-const VARIANTS_DEFAULT: Variant[] = ['text-default', 'item-text-default']
-const VARIANTS_GHOST: Variant[] = ['ghost-primary', 'ghost-secondary', 'ghost-danger']
-const VARIANTS_ITEM: Variant[] = ['item-text-default', 'item-text-danger', 'item-solid-secondary']
-const VARIANTS_PRIMARY: Variant[] = ['solid-primary', 'ghost-primary']
-const VARIANTS_SECONDARY: Variant[] = ['solid-secondary', 'ghost-secondary', 'item-solid-secondary']
-const VARIANTS_SOLID: Variant[] = ['solid-primary', 'solid-secondary', 'solid-danger', 'item-solid-secondary']
-const VARIANTS_SUBTLE: Variant[] = ['text-subtle']
-const VARIANTS_TEXT: Variant[] = ['text-default', 'text-subtle', 'text-danger', 'item-text-default', 'item-text-danger']
+  | 'menu-default'
+  | 'menu-caution'
 
 interface BaseButtonProps extends HtmlDataProps {
   // Slots
@@ -56,119 +43,82 @@ export const useBaseButton = (props: BaseButtonProps) => {
   const { bindings: clickableBindings, isNoop, isPressed } = useClickable(props)
   const dataProps = useDataProps(props)
 
-  const isVSolid = variant === 'primary'
+  const isSolid = variant === 'primary' || variant === 'danger'
+  const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
 
-  const baseCssVars = {
-    size: (() => {
-      if (size === 'xs') return tokens.spacing['button-h-xs']
-      if (size === 'sm') return tokens.spacing['button-h-sm']
-      if (size === 'md') return tokens.spacing['button-h-md']
-      if (size === 'lg') return tokens.spacing['button-h-lg']
-      return ''
-    })(),
-    bgColor: (() => {
-      if (isVSolid && isNoop) return tokens.color['text-subtle']
-      if (variant === 'primary') return tokens.surface['button-primary'].value.backgroundColor
-      return 'transparent'
-    })(),
-    borderColor: (() => {
-      if (isVGhost) {
-        if (isNoop) return tokens.color['text-subtle']
-        if (isVPrimary) return tokens.color['primary-page-text']
-        if (isVSecondary) return tokens.color['secondary-page-text']
-        if (isVDanger) return tokens.color['danger-page-text']
-      }
-      if (isVSolid) {
-        if (isNoop) return tokens.color['text-subtle']
-        if (isVPrimary) return tokens.color['primary-button-bg']
-        if (isVSecondary) return tokens.color['secondary-button-bg']
-        if (isVDanger) return tokens.color['danger-button-bg']
-      }
-      return 'transparent'
-    })(),
-    textColor: (() => {
-      if (isVSolid) {
-        if (isNoop) return tokens.color['white']
-        if (isVPrimary) return tokens.color['primary-button-text']
-        if (isVSecondary) return tokens.color['secondary-button-text']
-        if (isVDanger) return tokens.color['danger-button-text']
-      }
-      if (isNoop) return tokens.color['text-subtle']
-      if (isVGhost) {
-        if (isVPrimary) return tokens.color['primary-page-text']
-        if (isVSecondary) return tokens.color['secondary-page-text']
-        if (isVDanger) return tokens.color['danger-page-text']
-      }
-      if (isVDanger) return tokens.color['danger-page-text']
-      if (isVDefault) return tokens.color['text-default']
-      if (isVSubtle) return tokens.color['text-subtle']
-      return ''
-    })(),
-    hoverBgColor: (() => {
-      if (isNoop) return 'transparent'
-      if (state === 'default') {
-        if (isVText || isVGhost) return tokens.color['hover-text-default']
-        if (isVPrimary) return tokens.color['primary-hover-default']
-        if (isVSecondary) return tokens.color['secondary-hover-default']
-        if (isVDanger) return tokens.color['danger-hover-default']
-      }
-      return ''
-    })(),
-    pressBgColor: (() => {
-      if (isNoop || state === 'selected') return 'transparent'
-      if (isPressed || state === 'pressed') {
-        if (isVText || isVGhost) return tokens.color['hover-text-pressed']
-        if (isVPrimary) return tokens.color['primary-hover-pressed']
-        if (isVSecondary) return tokens.color['secondary-hover-pressed']
-        if (isVDanger) return tokens.color['danger-hover-pressed']
-      }
-      return ''
-    })(),
-    pressTransform: isPressed && state === 'default' ? 'translateY(1px)' : 'unset',
-    outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
-    opacity: isNoop ? 0.4 : 1,
-    cursor: isNoop ? 'not-allowed' : 'pointer',
-  }
+  const surfaceDefault = ((): CSSObject => {
+    if (variant === 'primary') return tokens.surface['button-primary']
+    if (variant === 'secondary') return tokens.surface['button-secondary']
+    if (variant === 'tertiary') return tokens.surface['button-tertiary']
+    if (variant === 'optional') return tokens.surface['button-optional']
+    if (variant === 'danger') return tokens.surface['button-danger']
+    if (variant === 'caution') return tokens.surface['button-caution']
+    if (variant === 'menu-default') return tokens.surface['button-tertiary']
+    if (variant === 'menu-caution') return tokens.surface['button-caution']
+    return {}
+  })()
+  const surfaceHover = ((): CSSObject => {
+    if (variant === 'primary') return tokens.surface['button-primary-hovered']
+    if (variant === 'secondary') return tokens.surface['button-secondary-hovered']
+    if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
+    if (variant === 'optional') return tokens.surface['button-optional-hovered']
+    if (variant === 'danger') return tokens.surface['button-danger-hovered']
+    if (variant === 'caution') return tokens.surface['button-caution-hovered']
+    if (variant === 'menu-default') return tokens.surface['button-tertiary-hovered']
+    if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
+    return {}
+  })()
+  const surfacePress = ((): CSSObject => {
+    if (variant === 'primary') return tokens.surface['button-primary-hovered']
+    if (variant === 'secondary') return tokens.surface['button-secondary-hovered']
+    if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
+    if (variant === 'optional') return tokens.surface['button-optional-hovered']
+    if (variant === 'danger') return tokens.surface['button-danger-hovered']
+    if (variant === 'caution') return tokens.surface['button-caution-hovered']
+    if (variant === 'menu-default') return tokens.surface['button-tertiary-hovered']
+    if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
+    return {}
+  })()
+  const surface = isPressed || state === 'pressed' ? surfacePress : surfaceDefault
+
+  const height = (() => {
+    if (size === 'xs') return tokens.spacing['button-h-xs']
+    if (size === 'sm') return tokens.spacing['button-h-sm']
+    if (size === 'md') return tokens.spacing['button-h-md']
+    if (size === 'lg') return tokens.spacing['button-h-lg']
+    return ''
+  })()
 
   const buttonBaseCss: CSSObject = {
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
     lineHeight: 1,
-    height: baseCssVars.size,
-    minHeight: baseCssVars.size,
-    border: `1px solid ${baseCssVars.borderColor}`,
-    backgroundColor: baseCssVars.bgColor,
-    opacity: baseCssVars.opacity,
-    color: baseCssVars.textColor,
+    height: height,
+    minHeight: height,
+    border: surface.border || 'transparent',
+    backgroundColor: surface.backgroundColor || 'transparent',
+    opacity: isNoop ? 0.4 : 1,
+    color: surface.color,
     fill: 'currentColor',
     stroke: 'currentColor',
-    outlineOffset: baseCssVars.outlineOffset,
-    cursor: baseCssVars.cursor,
+    outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
+    cursor: isNoop ? 'not-allowed' : 'pointer',
     verticalAlign: 'middle',
-    transform: baseCssVars.pressTransform,
-
-    '&::before, &::after': {
-      content: `''`,
-      position: 'absolute',
-      top: '-1px',
-      left: '-1px',
-      right: '-1px',
-      bottom: '-1px',
+    transform: isPressed && state === 'default' ? 'translateY(1px)' : 'unset',
+    '&:hover, &:focus': {
+      backgroundColor: surfaceHover.backgroundColor,
     },
-    '&::before': isVSolid && !isNoop ? { border: `1px solid ${tokens.color['black-alpha-3']}` } : {},
-    '&::after': { backgroundColor: `${baseCssVars.pressBgColor} !important` },
-    '&:hover::after, &:focus::after': { backgroundColor: baseCssVars.hoverBgColor },
   }
   const childrenCss: CSSObject = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: isVItem ? 'unset' : 'center',
+    justifyContent: isMenuItem ? 'unset' : 'center',
+    textAlign: isMenuItem ? 'left' : 'center',
     width: '100%',
     opacity: loading ? 0 : 1,
     pointerEvents: 'none',
     userSelect: 'none',
-    textAlign: isVItem ? 'left' : 'center',
   }
 
   const bindings = {
@@ -199,7 +149,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
   }
   const spinnerIconCss: CSSObject = {
     '--loader-size': `${spinnerSize} !important`,
-    '--loader-color': `${isVSolid ? tokens.color['text-inverse'] : tokens.color['text-subtle']} !important`,
+    '--loader-color': `${isSolid ? tokens.color['text-inverse'] : tokens.color['text-subtle']} !important`,
   }
 
   const content = (
@@ -215,20 +165,13 @@ export const useBaseButton = (props: BaseButtonProps) => {
   )
 
   return {
-    baseCssVars,
     bindings,
     buttonBaseCss,
     content,
+    height,
+    isMenuItem,
     isNoop,
     isPressed,
-    isVDanger,
-    isVDefault,
-    isVGhost,
-    isVItem,
-    isVPrimary,
-    isVSecondary,
-    isVSolid,
-    isVSubtle,
-    isVText,
+    isSolid,
   }
 }

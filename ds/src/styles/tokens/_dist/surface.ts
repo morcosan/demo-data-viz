@@ -181,7 +181,7 @@ export const TOKENS__SURFACE = {
     ref: { color: '{color.text-default}' },
     value: { color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' } },
   },
-  'button-optional-tertiary': {
+  'button-tertiary-hovered': {
     type: 'composite',
     ref: {
       color: '{color.text-default}',

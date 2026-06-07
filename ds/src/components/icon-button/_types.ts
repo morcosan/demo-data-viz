@@ -1,8 +1,9 @@
 import { type CSSProperties, type ReactNode } from 'react'
 import { type LinkType } from '../_shared/types'
 
-export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type IconButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'optional' | 'danger' | 'caution'
+export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg'
+export type IconButtonState = 'default' | 'pressed' | 'loading' | 'disabled'
 
 export interface IconButtonProps extends HtmlDataProps {
   /**
@@ -18,19 +19,12 @@ export interface IconButtonProps extends HtmlDataProps {
   /**
    * Props
    */
-  /** Property that determines total height and padding */
-  size?: IconButtonSize
   /** Property that determines color and highlight */
   variant?: IconButtonVariant
-  /** Flag for enforcing the highlight for pressed state */
-  pressed?: boolean
-  /**
-	 - Flag for enabling loading state (non-interactive)
-	 - It has priority over `disabled` prop
-	 */
-  loading?: boolean
-  /** Flag for enabling disabled state (non-interactive) */
-  disabled?: boolean
+  /** Property that determines total height and padding */
+  size?: IconButtonSize
+  /** Property for changing the button state */
+  state?: IconButtonState
   /** URL path for transforming the button into `<a>` link */
   linkHref?: string
   /**

@@ -1,17 +1,10 @@
 import { type CSSProperties, type ReactNode } from 'react'
 import { type LinkType } from '../_shared/types'
+import { type BaseButtonSize, type BaseButtonState, type BaseVariant } from '../_shared/use-base-button'
 
-export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
-export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'optional'
-  | 'danger'
-  | 'caution'
-  | 'tertiary-item'
-  | 'caution-item'
-export type ButtonState = 'default' | 'pressed' | 'selected'
+export type ButtonVariant = BaseVariant
+export type ButtonSize = BaseButtonSize
+export type ButtonState = BaseButtonState
 
 export interface ButtonProps extends HtmlDataProps {
   /**
@@ -27,19 +20,12 @@ export interface ButtonProps extends HtmlDataProps {
   /**
    * Props
    */
-  /** Property that determines total height and padding */
-  size?: ButtonSize
   /** Property that determines color and highlight */
   variant?: ButtonVariant
-  /** Property for enforcing a specific button state */
+  /** Property that determines total height and padding */
+  size?: ButtonSize
+  /** Property for changing the button state */
   state?: ButtonState
-  /**
-	 - Flag for enabling loading state (non-interactive)
-	 - It has priority over `disabled` prop
-	 */
-  loading?: boolean
-  /** Flag for enabling disabled state (non-interactive) */
-  disabled?: boolean
   /** URL path for transforming the button into `<a>` link */
   linkHref?: string
   /**
