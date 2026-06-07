@@ -14,12 +14,12 @@ export const TOKENS__SURFACE = {
       backgroundColor: '{color.bg-page}',
       backgroundImage: {
         light: [
-          'radial-gradient(circle, {color.black-alpha-2} 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, {color.blue-4}, {color.bg-page} 20% 80%, {color.yellow-4})',
+          'radial-gradient(circle, {color.blue-2} 0.8px, transparent 0.8px)',
+          'linear-gradient(100deg, {color.blue-4}, {color.bg-page} 20% 80%, {color.yellow-3})',
         ],
         dark: [
-          'radial-gradient(circle, {color.white-alpha-2} 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, {color.blue-16}, {color.grey-19} 20% 80%, {color.yellow-16})',
+          'radial-gradient(circle, {color.blue-16} 0.8px, transparent 0.8px)',
+          'linear-gradient(100deg, {color.blue-16}, {color.bg-page} 20% 80%, {color.yellow-16})',
         ],
       },
     },
@@ -27,11 +27,11 @@ export const TOKENS__SURFACE = {
       backgroundColor: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.2861 0.0099 308)' },
       backgroundImage: {
         light: [
-          'radial-gradient(circle, oklch(0.1068 0.0519 317 / 0.06) 0.8px, transparent 0.8px)',
-          'linear-gradient(100deg, oklch(0.8434 0.0715 260), oklch(0.9474 0.0029 308) 20% 80%, oklch(0.9680 0.0780 101.50))',
+          'radial-gradient(circle, oklch(0.9215 0.0348 260) 0.8px, transparent 0.8px)',
+          'linear-gradient(100deg, oklch(0.8434 0.0715 260), oklch(0.9474 0.0029 308) 20% 80%, oklch(0.9800 0.0520 102.50))',
         ],
         dark: [
-          'radial-gradient(circle, oklch(1 0 0 / 0.06) 0.8px, transparent 0.8px)',
+          'radial-gradient(circle, oklch(0.2191 0.0494 260) 0.8px, transparent 0.8px)',
           'linear-gradient(100deg, oklch(0.2191 0.0494 260), oklch(0.2861 0.0099 308) 20% 80%, oklch(0.2600 0.0580 60.00))',
         ],
       },

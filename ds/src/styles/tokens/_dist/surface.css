@@ -7,8 +7,8 @@
   :where(html) &,
   [data-color-mode='light'] & {
     background-image:
-      radial-gradient(circle, var(--ds-color-black-alpha-2) 0.8px, transparent 0.8px),
-      linear-gradient(100deg, var(--ds-color-blue-4), var(--ds-color-bg-page) 20% 80%, var(--ds-color-yellow-4));
+      radial-gradient(circle, var(--ds-color-blue-2) 0.8px, transparent 0.8px),
+      linear-gradient(100deg, var(--ds-color-blue-4), var(--ds-color-bg-page) 20% 80%, var(--ds-color-yellow-3));
     background-size:
       12px 12px,
       cover;
@@ -17,8 +17,8 @@
 
   [data-color-mode='dark'] & {
     background-image:
-      radial-gradient(circle, var(--ds-color-white-alpha-2) 0.8px, transparent 0.8px),
-      linear-gradient(100deg, var(--ds-color-blue-16), var(--ds-color-grey-19) 20% 80%, var(--ds-color-yellow-16));
+      radial-gradient(circle, var(--ds-color-blue-16) 0.8px, transparent 0.8px),
+      linear-gradient(100deg, var(--ds-color-blue-16), var(--ds-color-bg-page) 20% 80%, var(--ds-color-yellow-16));
     background-size:
       12px 12px,
       cover;
