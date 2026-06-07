@@ -110,7 +110,6 @@ export const useBaseButton = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    transform: isPressed ? 'translateY(-1px)' : undefined,
     transition: 'all 0.3s ease',
     '&:hover, &:focus':
       isNoop || pressing

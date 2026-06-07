@@ -9,7 +9,8 @@ export const tokens = Object.entries(TOKENS.SURFACE)
 export const Surface = ({ title, children, className }) => (
   <div
     className={cx(
-      'py-xs-7 px-sm-0 min-h-md-0 gap-xs-5 text-size-sm flex h-fit w-full flex-col justify-center',
+      'py-xs-7 px-xs-9 min-h-md-0 gap-xs-5 flex h-fit w-full flex-col justify-center',
+      'text-size-sm truncate',
       className,
     )}
   >
@@ -34,7 +35,7 @@ export const parseRef = (ref) => {
 
 # Surface tokens
 
-<DocsCanvas className="p-xs-9 gap-xs-9 grid lg:grid-cols-2">
+<DocsCanvas className="p-xs-9 gap-xs-9 grid xl:grid-cols-[3fr_5fr]">
   <Surface title="page" className="ds-surface-page">
     <Surface title="sheet" className="ds-surface-sheet">
       <Surface title="card" className="ds-surface-card">
@@ -50,11 +51,13 @@ export const parseRef = (ref) => {
     <div className="gap-xs-9 flex">
       <Surface title="card" className="ds-surface-card" />
       <Surface title="card-hovered" className="ds-surface-card-hovered" />
+      <Surface title="card-pressed" className="ds-surface-card-pressed" />
       <Surface title="card + hover" className="ds-surface-card hover:ds-surface-card-hovered" />
     </div>
     <div className="gap-xs-9 flex">
       <Surface title="button-primary" className="ds-surface-button-primary" />
       <Surface title="button-primary-hovered" className="ds-surface-button-primary-hovered" />
+      <Surface title="button-primary-pressed" className="ds-surface-button-primary-pressed" />
       <Surface
         title="button-primary + hover"
         className="ds-surface-button-primary hover:ds-surface-button-primary-hovered"
@@ -63,6 +66,7 @@ export const parseRef = (ref) => {
     <div className="gap-xs-9 flex">
       <Surface title="button-secondary" className="ds-surface-button-secondary" />
       <Surface title="button-secondary-hovered" className="ds-surface-button-secondary-hovered" />
+      <Surface title="button-secondary-pressed" className="ds-surface-button-secondary-pressed" />
       <Surface
         title="button-secondary + hover"
         className="ds-surface-button-secondary hover:ds-surface-button-secondary-hovered"
@@ -71,6 +75,7 @@ export const parseRef = (ref) => {
     <div className="gap-xs-9 flex">
       <Surface title="button-optional" className="ds-surface-button-optional" />
       <Surface title="button-optional-hovered" className="ds-surface-button-optional-hovered" />
+      <Surface title="button-optional-pressed" className="ds-surface-button-optional-pressed" />
       <Surface
         title="button-optional + hover"
         className="ds-surface-button-optional hover:ds-surface-button-optional-hovered"
@@ -79,6 +84,7 @@ export const parseRef = (ref) => {
     <div className="gap-xs-9 flex">
       <Surface title="button-danger" className="ds-surface-button-danger" />
       <Surface title="button-danger-hovered" className="ds-surface-button-danger-hovered" />
+      <Surface title="button-danger-pressed" className="ds-surface-button-danger-pressed" />
       <Surface
         title="button-danger + hover"
         className="ds-surface-button-danger hover:ds-surface-button-danger-hovered"
@@ -87,6 +93,7 @@ export const parseRef = (ref) => {
     <div className="gap-xs-9 flex">
       <Surface title="button-caution" className="ds-surface-button-caution" />
       <Surface title="button-caution-hovered" className="ds-surface-button-caution-hovered" />
+      <Surface title="button-caution-pressed" className="ds-surface-button-caution-pressed" />
       <Surface
         title="button-caution + hover"
         className="ds-surface-button-caution hover:ds-surface-button-caution-hovered"
