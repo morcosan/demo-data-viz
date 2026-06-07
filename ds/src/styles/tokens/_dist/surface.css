@@ -8,7 +8,7 @@
   [data-color-mode='light'] & {
     background-image:
       radial-gradient(circle, var(--ds-color-black-alpha-2) 0.8px, transparent 0.8px),
-      linear-gradient(100deg, var(--ds-color-blue-1), var(--ds-color-bg-page) 20% 80%, var(--ds-color-yellow-1));
+      linear-gradient(100deg, var(--ds-color-blue-4), var(--ds-color-bg-page) 20% 80%, var(--ds-color-yellow-4));
     background-size:
       12px 12px,
       cover;
@@ -18,7 +18,7 @@
   [data-color-mode='dark'] & {
     background-image:
       radial-gradient(circle, var(--ds-color-white-alpha-2) 0.8px, transparent 0.8px),
-      linear-gradient(100deg, var(--ds-color-blue-8), var(--ds-color-grey-19) 20% 80%, var(--ds-color-yellow-8));
+      linear-gradient(100deg, var(--ds-color-blue-16), var(--ds-color-grey-19) 20% 80%, var(--ds-color-yellow-16));
     background-size:
       12px 12px,
       cover;
@@ -50,9 +50,9 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-1),
+      0 0 7px 2px var(--ds-color-yellow-2),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-3);
+    border: 2px solid var(--ds-color-yellow-4);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-yellow-1);
   }
@@ -71,9 +71,9 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-blue-6);
+    border: 1px solid var(--ds-color-blue-11);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-blue-6);
+    background-color: var(--ds-color-blue-11);
     color: var(--ds-color-white);
   }
 }
@@ -82,11 +82,11 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow:
-      0 0 5px 0 var(--ds-color-blue-4),
+      0 0 4px 0 var(--ds-color-blue-9),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-blue-5);
+    border: 2px solid var(--ds-color-blue-11);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-blue-4);
+    background-color: var(--ds-color-blue-9);
     color: var(--ds-color-white);
   }
 }
@@ -95,10 +95,10 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-blue-6);
+    border: 1px solid var(--ds-color-blue-11);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-blue-1);
-    color: var(--ds-color-blue-6);
+    color: var(--ds-color-blue-11);
   }
 }
 
@@ -106,12 +106,12 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow:
-      0 0 6px 1px var(--ds-color-blue-1),
+      0 0 6px 1px var(--ds-color-blue-2),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-blue-4);
+    border: 2px solid var(--ds-color-blue-7);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-blue-1);
-    color: var(--ds-color-blue-6);
+    background-color: var(--ds-color-blue-2);
+    color: var(--ds-color-blue-11);
   }
 }
 
@@ -126,9 +126,9 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-1),
+      0 0 7px 2px var(--ds-color-yellow-2),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-3);
+    border: 2px solid var(--ds-color-yellow-4);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-yellow-1);
     color: var(--ds-color-text-default);
@@ -146,9 +146,9 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-1),
+      0 0 7px 2px var(--ds-color-yellow-2),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-3);
+    border: 2px solid var(--ds-color-yellow-4);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-yellow-1);
     color: var(--ds-color-text-default);
@@ -159,9 +159,9 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-red-6);
+    border: 1px solid var(--ds-color-red-11);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-red-6);
+    background-color: var(--ds-color-red-11);
     color: var(--ds-color-white);
   }
 }
@@ -170,11 +170,11 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow:
-      0 0 5px 0 var(--ds-color-red-4),
+      0 0 4px 0 var(--ds-color-red-9),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-red-5);
+    border: 2px solid var(--ds-color-red-10);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-red-4);
+    background-color: var(--ds-color-red-9);
     color: var(--ds-color-white);
   }
 }
@@ -182,7 +182,7 @@
 @utility ds-surface-button-caution {
   :where(html) &,
   [data-color-mode='light'] & {
-    color: var(--ds-color-red-6);
+    color: var(--ds-color-red-11);
   }
 }
 
@@ -190,11 +190,11 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow:
-      0 0 6px 1px var(--ds-color-red-1),
+      0 0 5px 1px var(--ds-color-red-2),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-red-2);
+    border: 2px solid var(--ds-color-red-4);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-red-1);
-    color: var(--ds-color-red-6);
+    color: var(--ds-color-red-11);
   }
 }

@@ -29,7 +29,7 @@ export const DocsColorSwatch = ({ color }: Props) => {
       style={{ background: `var(${CSS_PREFIX.COLOR}${color})` }}
       onClick={handleClick}
     >
-      <span className="bg-color-white-alpha-7 px-xs-1 text-color-black text-size-xs rounded-xs">{color}</span>
+      <span className="bg-color-white-alpha-10 px-xs-1 text-color-black text-size-xs rounded-xs">{color}</span>
 
       <span className="absolute-overlay flex items-end opacity-0 group-focus:opacity-100 hover:opacity-100">
         <span className="bg-color-white-alpha-10 px-xs-1 text-size-xs flex">{hexValue}</span>
