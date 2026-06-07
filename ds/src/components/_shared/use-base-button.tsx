@@ -87,7 +87,10 @@ export const useBaseButton = (props: BaseButtonProps) => {
     if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
     return {}
   })()
-  const surface = isPressed || state === 'pressed' ? surfacePress : surfaceDefault
+  const surface = {
+    border: '1px solid transparent',
+    ...(isPressed || state === 'pressed' ? surfacePress : surfaceDefault),
+  }
 
   const buttonBaseCss: CSSObject = {
     ...surface,
