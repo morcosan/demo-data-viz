@@ -122,7 +122,7 @@ export const TOKENS__SURFACE = {
       backgroundColor: '{color.blue-4}',
       border: '2px solid {color.blue-5}',
       borderRadius: '{radius.md}',
-      boxShadow: '{shadow.md}',
+      boxShadow: ['0 4px 6px -1px {color.blue-6}', '{shadow.md}'],
     },
     value: {
       color: 'oklch(1 0 0)',
@@ -130,8 +130,16 @@ export const TOKENS__SURFACE = {
       border: '2px solid oklch(0.6231 0.188 260)',
       borderRadius: '8px',
       boxShadow: {
-        light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
-        dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
+        light: [
+          '0 4px 6px -1px oklch(0.5303 0.1572 260)',
+          '0 4px 6px -1px rgb(0 0 0 / 0.15)',
+          '0 2px 4px -2px rgb(0 0 0 / 0.15)',
+        ],
+        dark: [
+          '0 4px 6px -1px oklch(0.5303 0.1572 260)',
+          '0 4px 6px -1px rgb(0 0 0 / 0.4)',
+          '0 2px 4px -2px rgb(0 0 0 / 0.4)',
+        ],
       },
     },
   },

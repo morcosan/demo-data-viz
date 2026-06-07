@@ -79,7 +79,9 @@
 @utility ds-surface-button-primary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-md);
+    box-shadow:
+      0 4px 6px -1px var(--ds-color-blue-6),
+      var(--ds-shadow-md);
     border: 2px solid var(--ds-color-blue-5);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-blue-4);

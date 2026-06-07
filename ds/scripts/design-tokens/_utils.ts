@@ -11,6 +11,10 @@ export const NOTICE = [
 
 export const prettierConfig = await prettier.resolveConfig(process.cwd() + '/package.json')
 
-export const hasColorMode = (value: unknown): value is TokenColoredValue => {
+export const isColoredValue = (value: unknown): value is TokenColoredValue => {
   return Boolean(typeof value === 'object' && value && '$light' in value && '$dark' in value)
+}
+
+export const isColoredArray = (array: unknown): array is TokenColoredValue[] => {
+  return Boolean(Array.isArray(array) && array.some((value) => isColoredValue(value)))
 }

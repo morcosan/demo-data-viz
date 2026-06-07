@@ -2,7 +2,7 @@ import { camelCase } from 'lodash-es'
 import prettier from 'prettier'
 import StyleDictionary, { type TransformedToken } from 'style-dictionary'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
-import { hasColorMode, NOTICE, prettierConfig } from './_utils.ts'
+import { isColoredArray, isColoredValue, NOTICE, prettierConfig } from './_utils.ts'
 import type {
   TokenAtomicValue,
   TokenColoredValue,
@@ -44,11 +44,14 @@ const isBrokenValue = (value: TokenScalarValue) => {
   return typeof value === 'string' ? value.includes(BROKEN_VALUE) : Array.isArray(value) && value.some(isBrokenValue)
 }
 const isBrokenToken = (value: TokenAtomicValue): boolean => {
-  return hasColorMode(value) ? Object.values(value).some(isBrokenValue) : isBrokenValue(value as TokenScalarValue)
+  return isColoredValue(value) ? Object.values(value).some(isBrokenValue) : isBrokenValue(value as TokenScalarValue)
 }
 
 const unwrapValue = (value: TokenColoredValue | TokenScalarValue, mode: TokenColorMode): TokenScalarValue => {
-  return hasColorMode(value) ? value[mode] : (value as TokenScalarValue)
+  return isColoredValue(value) ? value[mode] : (value as TokenScalarValue)
+}
+const unwrapArray = (array: Array<TokenColoredValue | TokenScalarValue>, mode: TokenColorMode): TokenScalarValue => {
+  return array.flatMap((value) => unwrapValue(value, mode))
 }
 
 const resolveScalar = (value: TokenScalar, mode: TokenColorMode, seen = new Set<string>()): TokenScalar => {
@@ -57,7 +60,7 @@ const resolveScalar = (value: TokenScalar, mode: TokenColorMode, seen = new Set<
     if (seen.has(path)) return path
     const token = _globalTokenMap[path]
     const tokenValue = token?.$value
-    const resolved = hasColorMode(tokenValue) ? tokenValue[mode] : tokenValue
+    const resolved = isColoredValue(tokenValue) ? tokenValue[mode] : tokenValue
     return resolveScalar(resolved, mode, new Set([...seen, path])) as string
   })
 }
@@ -65,7 +68,7 @@ const resolveOriginal = (original: TokenAtomicValue, mode: TokenColorMode): Toke
   if (typeof original === 'number') return original
   if (typeof original === 'string') return resolveScalar(original, mode)
   if (Array.isArray(original)) return original.map((value) => resolveScalar(value, mode))
-  if (hasColorMode(original)) {
+  if (isColoredValue(original)) {
     const result = Object.fromEntries(
       Object.entries(original).map(([key, value]) => [
         key,
@@ -81,7 +84,7 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
   const result: AtomicOutput = {} as AtomicOutput
 
   // Compute result.ref
-  if (hasColorMode(original)) {
+  if (isColoredValue(original)) {
     const lightRef = parseRef(original.$light)
     const darkRef = parseRef(original.$dark)
     const ref = {} as ColoredRefOutput
@@ -94,15 +97,13 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
   }
 
   // Compute result.value
-  if (isBrokenToken(resolved)) {
-    result.value = { light: resolveOriginal(original, '$light'), dark: resolveOriginal(original, '$dark') }
-  } else {
-    if (hasColorMode(resolved)) {
-      result.value = { light: unwrapValue(resolved.$light, '$light'), dark: unwrapValue(resolved.$dark, '$dark') }
-    } else {
-      result.value = resolved as string | number
-    }
-  }
+  result.value = isBrokenToken(resolved)
+    ? { light: resolveOriginal(original, '$light'), dark: resolveOriginal(original, '$dark') }
+    : isColoredValue(resolved)
+      ? { light: unwrapValue(resolved.$light, '$light'), dark: unwrapValue(resolved.$dark, '$dark') }
+      : isColoredArray(resolved)
+        ? { light: unwrapArray(resolved, '$light'), dark: unwrapArray(resolved, '$dark') }
+        : resolved
 
   return result
 }
