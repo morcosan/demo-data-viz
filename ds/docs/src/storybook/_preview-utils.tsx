@@ -70,7 +70,7 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
     hoc(ConfigService, {}),
     hoc(A11yService, {}),
     hoc(ViewportService, {}),
-    hoc(ThemeService, { cookieKeyMode: 'ds-color-mode', cookieKeyTheme: 'ds-color-theme', colorMode }),
+    hoc(ThemeService, { cookieKeyMode: 'ds-color-mode', colorMode }),
     hoc(DocsCanvasService, { canvasBg }),
     ...providers,
   ]

@@ -41,7 +41,7 @@ const Default: StoryObj<typeof Modal> = {
 
     return (
       <>
-        <Button variant="text-default" onClick={() => setOpened(true)}>
+        <Button variant="tertiary" onClick={() => setOpened(true)}>
           Open modal
         </Button>
 
@@ -72,13 +72,13 @@ const Nesting: StoryObj<typeof Modal> = {
     const slotTriggers = useMemo(
       () => (
         <div className="gap-xs-5 flex">
-          <Button variant="text-default" onClick={() => setOpened1(true)}>
+          <Button variant="tertiary" onClick={() => setOpened1(true)}>
             Open modal #1
           </Button>
-          <Button variant="text-default" onClick={() => setOpened2(true)}>
+          <Button variant="tertiary" onClick={() => setOpened2(true)}>
             Open modal #2
           </Button>
-          <Button variant="text-default" onClick={() => setOpened3(true)}>
+          <Button variant="tertiary" onClick={() => setOpened3(true)}>
             Open modal #3
           </Button>
         </div>

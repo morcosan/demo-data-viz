@@ -46,7 +46,7 @@ export const Modal = (props: ModalProps) => {
         {!noClose && (
           <IconButton
             tooltip={translate('ds.action.close')}
-            variant="text-subtle"
+            variant="optional"
             className="absolute!"
             css={{ top: cssVars.modalContentPY, right: cssVars.modalContentPY }}
             onClick={onClose}
@@ -64,7 +64,7 @@ export const Modal = (props: ModalProps) => {
 
           <div css={actionsCss}>
             {!noClose && (
-              <Button variant="text-default" onClick={onClose}>
+              <Button variant="optional" onClick={onClose}>
                 {translate('ds.action.close')}
               </Button>
             )}

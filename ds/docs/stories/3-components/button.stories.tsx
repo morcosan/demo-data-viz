@@ -11,11 +11,9 @@ const meta: Meta = {
       ariaDescription: 'Example description',
     },
     props: {
+      variant: 'primary',
       size: 'md',
-      variant: 'solid-primary',
       state: 'default',
-      loading: false,
-      disabled: false,
       linkHref: '',
       linkType: 'internal',
       className: '',
@@ -35,18 +33,14 @@ const Variants: StoryObj<typeof Button> = {
   render() {
     const svg = <LogoutSvg className="mr-xs-4 h-xs-7 w-xs-7" />
     const variants: ButtonVariant[] = [
-      'solid-primary',
-      'solid-secondary',
-      'solid-danger',
-      'ghost-primary',
-      'ghost-secondary',
-      'ghost-danger',
-      'text-default',
-      'text-subtle',
-      'text-danger',
-      'item-solid-secondary',
-      'item-text-default',
-      'item-text-danger',
+      'primary',
+      'secondary',
+      'tertiary',
+      'optional',
+      'danger',
+      'caution',
+      'menu-default',
+      'menu-caution',
     ]
 
     return (
@@ -60,13 +54,10 @@ const Variants: StoryObj<typeof Button> = {
               <Button variant={variant} state="pressed">
                 {svg} pressed
               </Button>
-              <Button variant={variant} state="selected">
-                {svg} selected
-              </Button>
-              <Button variant={variant} loading>
+              <Button variant={variant} state="loading">
                 {svg} loading
               </Button>
-              <Button variant={variant} disabled>
+              <Button variant={variant} state="disabled">
                 {svg} disabled
               </Button>
               <Button variant={variant} size="xs">

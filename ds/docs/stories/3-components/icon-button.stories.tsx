@@ -11,11 +11,9 @@ const meta: Meta = {
       ariaDescription: 'Example description',
     },
     props: {
+      variant: 'primary',
       size: 'md',
-      variant: 'text-default',
-      pressed: false,
-      loading: false,
-      disabled: false,
+      state: 'default',
       linkHref: '',
       linkType: 'internal',
       className: '',
@@ -34,17 +32,7 @@ const Default: StoryObj<typeof IconButton> = {
 const Variants: StoryObj<typeof IconButton> = {
   render() {
     const svg = <LogoutSvg className="h-xs-7 w-xs-7" />
-    const variants: IconButtonVariant[] = [
-      'text-default',
-      'text-subtle',
-      'text-danger',
-      'solid-primary',
-      'solid-secondary',
-      'solid-danger',
-      'ghost-primary',
-      'ghost-secondary',
-      'ghost-danger',
-    ]
+    const variants: IconButtonVariant[] = ['primary', 'secondary', 'tertiary', 'optional', 'danger', 'caution']
 
     return (
       <DocsPage type="component">
@@ -54,13 +42,13 @@ const Variants: StoryObj<typeof IconButton> = {
               <IconButton tooltip={variant} variant={variant}>
                 {svg}
               </IconButton>
-              <IconButton tooltip={variant + ' pressed'} variant={variant} pressed>
+              <IconButton tooltip={variant + ' pressed'} variant={variant} state="pressed">
                 {svg}
               </IconButton>
-              <IconButton tooltip={variant + ' loading'} variant={variant} loading>
+              <IconButton tooltip={variant + ' loading'} variant={variant} state="loading">
                 {svg}
               </IconButton>
-              <IconButton tooltip={variant + ' disabled'} variant={variant} disabled>
+              <IconButton tooltip={variant + ' disabled'} variant={variant} state="disabled">
                 {svg}
               </IconButton>
               <IconButton tooltip={variant + ' xs'} variant={variant} size="xs">

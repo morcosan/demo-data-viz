@@ -127,7 +127,7 @@ const Variants: StoryObj<typeof TextField> = {
                       id={`${size}4`}
                       size={size}
                       placeholder={`${multiline ? 'Multiline' : 'Default'} - ${size}`}
-                      suffix={getSlot(buttonSizes[index], 'solid-primary')}
+                      suffix={getSlot(buttonSizes[index], 'primary')}
                       multiline={multiline}
                       className="flex-1"
                     />
@@ -181,21 +181,21 @@ const Variants: StoryObj<typeof TextField> = {
                 id="variant-default"
                 variant="default"
                 placeholder="Variant - default"
-                suffix={getSlot('sm', 'text-default')}
+                suffix={getSlot('sm', 'tertiary')}
                 className="flex-1"
               />
               <TextField
                 id="variant-primary"
                 variant="primary"
                 placeholder="Variant - primary"
-                suffix={getSlot('sm', 'solid-primary')}
+                suffix={getSlot('sm', 'primary')}
                 className="flex-1"
               />
               <TextField
                 id="variant-secondary"
                 variant="secondary"
                 placeholder="Variant - secondary"
-                suffix={getSlot('sm', 'solid-secondary')}
+                suffix={getSlot('sm', 'secondary')}
                 className="flex-1"
               />
             </div>
