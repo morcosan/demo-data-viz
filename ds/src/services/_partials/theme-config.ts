@@ -39,7 +39,7 @@ const mapCompositeTokens = (tokenGroup: TokenGroup, mode: ColorMode) => {
     Object.keys(tokenGroup).map((tokenName: string) => {
       const token = tokenGroup[tokenName] as CompositeToken
       const tokenValue = getTokenValue<TokenCompositeValue>(token, mode)
-      return [tokenName, Object.fromEntries(Object.keys(tokenValue).map(([key]) => [key, tokenValue[key]]))]
+      return [tokenName, Object.fromEntries(Object.keys(tokenValue).map((key) => [key, tokenValue[key]]))]
       // TODO: add ENV__USE_CSS_VARS
     }),
   ) as Record<string, CSSObject>

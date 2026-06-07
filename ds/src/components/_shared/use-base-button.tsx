@@ -46,6 +46,14 @@ export const useBaseButton = (props: BaseButtonProps) => {
   const isSolid = variant === 'primary' || variant === 'danger'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
 
+  const height = (() => {
+    if (size === 'xs') return tokens.spacing['button-h-xs']
+    if (size === 'sm') return tokens.spacing['button-h-sm']
+    if (size === 'md') return tokens.spacing['button-h-md']
+    if (size === 'lg') return tokens.spacing['button-h-lg']
+    return ''
+  })()
+
   const surfaceDefault = ((): CSSObject => {
     if (variant === 'primary') return tokens.surface['button-primary']
     if (variant === 'secondary') return tokens.surface['button-secondary']
@@ -80,14 +88,6 @@ export const useBaseButton = (props: BaseButtonProps) => {
     return {}
   })()
   const surface = isPressed || state === 'pressed' ? surfacePress : surfaceDefault
-
-  const height = (() => {
-    if (size === 'xs') return tokens.spacing['button-h-xs']
-    if (size === 'sm') return tokens.spacing['button-h-sm']
-    if (size === 'md') return tokens.spacing['button-h-md']
-    if (size === 'lg') return tokens.spacing['button-h-lg']
-    return ''
-  })()
 
   const buttonBaseCss: CSSObject = {
     position: 'relative',
