@@ -123,8 +123,8 @@ export const TOKENS__COLOR = {
   'white-alpha-9': { value: 'oklch(1 0 0 / 0.48)' },
   'white-alpha-10': { value: 'oklch(1 0 0 / 0.56)' },
   'bg-page': {
-    ref: { light: '{color.grey-1}', dark: '{color.grey-20}' },
-    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.2558 0.0079 308)' },
+    ref: { light: '{color.grey-1}', dark: '{color.grey-17}' },
+    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
   },
   'bg-region': {
     ref: { light: '{color.grey-2}', dark: '{color.grey-18}' },

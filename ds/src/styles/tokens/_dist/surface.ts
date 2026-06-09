@@ -13,32 +13,47 @@ export const TOKENS__SURFACE = {
     ref: {
       backgroundColor: '{color.bg-page}',
       backgroundImage: {
-        light: 'radial-gradient(circle, {color.black-alpha-1} 1px, transparent 1px)',
-        dark: 'radial-gradient(circle, {color.white-alpha-2} 1px, transparent 1px)',
+        light: [
+          'radial-gradient(circle at 6px 6px, {color.black-alpha-1} 1.2px, transparent 1.2px)',
+          'radial-gradient(circle at 14px 14px, {color.black-alpha-1} 1.5px, transparent 1.5px)',
+        ],
+        dark: [
+          'radial-gradient(circle at 6px 6px, {color.black-alpha-4} 1.2px, transparent 1.2px)',
+          'radial-gradient(circle at 14px 14px, {color.black-alpha-4} 1.5px, transparent 1.5px)',
+        ],
       },
     },
     value: {
-      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.2558 0.0079 308)' },
+      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
       backgroundImage: {
-        light: 'radial-gradient(circle, oklch(0.1068 0.0519 317 / 0.03) 1px, transparent 1px)',
-        dark: 'radial-gradient(circle, oklch(1 0 0 / 0.06) 1px, transparent 1px)',
+        light: [
+          'radial-gradient(circle at 6px 6px, oklch(0.1068 0.0519 317 / 0.03) 1.2px, transparent 1.2px)',
+          'radial-gradient(circle at 14px 14px, oklch(0.1068 0.0519 317 / 0.03) 1.5px, transparent 1.5px)',
+        ],
+        dark: [
+          'radial-gradient(circle at 6px 6px, oklch(0.1068 0.0519 317 / 0.12) 1.2px, transparent 1.2px)',
+          'radial-gradient(circle at 14px 14px, oklch(0.1068 0.0519 317 / 0.12) 1.5px, transparent 1.5px)',
+        ],
       },
-      backgroundSize: '12px 12px, cover',
+      backgroundSize: '16px 16px',
     },
   },
   region: {
     type: 'composite',
     ref: {
       backgroundColor: '{color.bg-region}',
-      border: '1px solid {color.white}',
+      border: { light: '1px solid {color.white}', dark: '1px solid {color.grey-15}' },
       borderRadius: '{radius.md}',
-      boxShadow: 'inset 0 0 3px 2px {color.black-alpha-1}',
+      boxShadow: { light: 'inset 0 0 3px 2px {color.black-alpha-1}', dark: 'inset 0 0 3px 2px {color.black-alpha-3}' },
     },
     value: {
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
-      border: '1px solid oklch(1 0 0)',
+      border: { light: '1px solid oklch(1 0 0)', dark: '1px solid oklch(0.4047 0.0142 308)' },
       borderRadius: '8px',
-      boxShadow: 'inset 0 0 3px 2px oklch(0.1068 0.0519 317 / 0.03)',
+      boxShadow: {
+        light: 'inset 0 0 3px 2px oklch(0.1068 0.0519 317 / 0.03)',
+        dark: 'inset 0 0 3px 2px oklch(0.1068 0.0519 317 / 0.09)',
+      },
     },
   },
   card: {

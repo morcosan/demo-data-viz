@@ -6,18 +6,18 @@
 @utility ds-surface-page {
   :where(html) &,
   [data-color-mode='light'] & {
-    background-image: radial-gradient(circle, var(--ds-color-black-alpha-1) 1px, transparent 1px);
-    background-size:
-      12px 12px,
-      cover;
+    background-image:
+      radial-gradient(circle at 6px 6px, var(--ds-color-black-alpha-1) 1.2px, transparent 1.2px),
+      radial-gradient(circle at 14px 14px, var(--ds-color-black-alpha-1) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
     background-color: var(--ds-color-bg-page);
   }
 
   [data-color-mode='dark'] & {
-    background-image: radial-gradient(circle, var(--ds-color-white-alpha-2) 1px, transparent 1px);
-    background-size:
-      12px 12px,
-      cover;
+    background-image:
+      radial-gradient(circle at 6px 6px, var(--ds-color-black-alpha-4) 1.2px, transparent 1.2px),
+      radial-gradient(circle at 14px 14px, var(--ds-color-black-alpha-4) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
     background-color: var(--ds-color-bg-page);
   }
 }
@@ -27,6 +27,13 @@
   [data-color-mode='light'] & {
     box-shadow: inset 0 0 3px 2px var(--ds-color-black-alpha-1);
     border: 1px solid var(--ds-color-white);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-bg-region);
+  }
+
+  [data-color-mode='dark'] & {
+    box-shadow: inset 0 0 3px 2px var(--ds-color-black-alpha-3);
+    border: 1px solid var(--ds-color-grey-15);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-region);
   }

@@ -32,7 +32,7 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
 
 # Surface tokens
 
-<DocsCanvas className="p-xs-9 mb-sm-3 flex flex-col">
+<DocsCanvas className="p-sm-0 mb-sm-3 flex flex-col">
   {/* BASIC SURFACES */}
   <div className="gap-xs-9 ds-surface-page min-h-lg-9 grid lg:grid-cols-3">
     <Surface title="page" className="ds-surface-page">
@@ -161,8 +161,8 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
             <DocsTokenCodeGrid
               tsVar={`tokens.color['${name}']`}
               classVar={`${CLASS_PREFIX.SURFACE}${name}`}
-              tsSize="w-lg-2"
-              classSize="w-lg-2"
+              tsSize="w-lg-3"
+              classSize="w-lg-3"
               delay={1000}
               vertical
             />
