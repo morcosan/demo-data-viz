@@ -123,16 +123,16 @@ export const TOKENS__COLOR = {
   'white-alpha-9': { value: 'oklch(1 0 0 / 0.48)' },
   'white-alpha-10': { value: 'oklch(1 0 0 / 0.56)' },
   'bg-page': {
-    ref: { light: '{color.blue-1}', dark: '{color.grey-20}' },
-    value: { light: 'oklch(0.9500 0.0200 260)', dark: 'oklch(0.2558 0.0079 308)' },
+    ref: { light: '{color.grey-1}', dark: '{color.grey-20}' },
+    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.2558 0.0079 308)' },
   },
-  'bg-sheet': {
+  'bg-region': {
     ref: { light: '{color.grey-2}', dark: '{color.grey-18}' },
     value: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
   },
   'bg-card': {
-    ref: { light: '{color.grey-1}', dark: '{color.grey-17}' },
-    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
+    ref: { light: '{color.white}', dark: '{color.grey-16}' },
+    value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
   },
   'bg-popup': {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },

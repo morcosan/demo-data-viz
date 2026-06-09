@@ -9,7 +9,16 @@ export const CSS_PREFIX__SHADOW = '--ds-shadow-'
 
 export const TOKENS__SHADOW = {
   inner: { value: { light: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.1)', dark: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.2)' } },
-  xs: { value: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' } },
+  xs: {
+    ref: {
+      light: ['0 -1px 0 0 {color.black-alpha-2}', '0 1px 2px 0 {color.black-alpha-5}'],
+      dark: '0 1px 2px 0 {color.black-alpha-8}',
+    },
+    value: {
+      light: ['0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)', '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.16)'],
+      dark: '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.4)',
+    },
+  },
   sm: {
     value: {
       light: ['0 1px 3px 0 rgb(0 0 0 / 0.15)', '0 1px 2px -1px rgb(0 0 0 / 0.15)'],

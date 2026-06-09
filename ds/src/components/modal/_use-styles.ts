@@ -47,7 +47,7 @@ export const useStyles = (props: Props) => {
     margin: `0 auto`,
     border: `1px solid ${tokens.color['border-shadow']}`,
     borderRadius: tokens.radius['lg'],
-    backgroundColor: tokens.color['bg-sheet'],
+    backgroundColor: tokens.color['bg-page'],
     boxShadow: tokens.shadow['lg'],
   }
   const modalContentCss: CSSObject = {
@@ -58,7 +58,7 @@ export const useStyles = (props: Props) => {
     height: cssVars.modalHeight,
     maxHeight: '100%',
     padding: `${cssVars.modalContentPY} ${cssVars.modalContentPX}`,
-    backgroundColor: tokens.color['bg-sheet'],
+    backgroundColor: tokens.color['bg-page'],
     color: tokens.color['text-default'],
   }
   const titleCss: CSSObject = {

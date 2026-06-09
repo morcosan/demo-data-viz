@@ -7,7 +7,6 @@
 :host,
 [data-color-mode='light'] {
   --ds-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.1);
-  --ds-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.15);
   --ds-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.15), 0 1px 2px -1px rgb(0 0 0 / 0.15);
   --ds-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.15), 0 2px 4px -2px rgb(0 0 0 / 0.15);
   --ds-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.15), 0 4px 6px -4px rgb(0 0 0 / 0.15);
@@ -15,11 +14,11 @@
   --ds-shadow-below-sm: 0 6px 6px -6px rgb(0 0 0 / 0.15);
   --ds-shadow-below-md: 0 10px 10px -10px rgb(0 0 0 / 0.15);
   --ds-shadow-below-lg: 0 14px 14px -14px rgb(0 0 0 / 0.15);
+  --ds-shadow-xs: 0 -1px 0 0 var(--ds-color-black-alpha-2), 0 1px 2px 0 var(--ds-color-black-alpha-5);
 }
 
 [data-color-mode='dark'] {
   --ds-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.2);
-  --ds-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
   --ds-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
   --ds-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
   --ds-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
@@ -27,4 +26,5 @@
   --ds-shadow-below-sm: 0 6px 6px -6px rgb(0 0 0 / 0.6);
   --ds-shadow-below-md: 0 10px 10px -10px rgb(0 0 0 / 0.6);
   --ds-shadow-below-lg: 0 14px 14px -14px rgb(0 0 0 / 0.6);
+  --ds-shadow-xs: 0 1px 2px 0 var(--ds-color-black-alpha-8);
 }

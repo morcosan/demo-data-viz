@@ -6,7 +6,7 @@
 @utility ds-surface-page {
   :where(html) &,
   [data-color-mode='light'] & {
-    background-image: radial-gradient(circle, var(--ds-color-white-alpha-10) 1px, transparent 1px);
+    background-image: radial-gradient(circle, var(--ds-color-black-alpha-1) 1px, transparent 1px);
     background-size:
       12px 12px,
       cover;
@@ -22,20 +22,21 @@
   }
 }
 
-@utility ds-surface-sheet {
+@utility ds-surface-region {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-bg-card);
+    border: 1px solid var(--ds-color-white);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-bg-sheet);
+    background-color: var(--ds-color-bg-region);
   }
 }
 
 @utility ds-surface-card {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
+    box-shadow:
+      0 -2px 0 0 var(--ds-color-black-alpha-3),
+      var(--ds-shadow-xs);
     border: 2px solid var(--ds-color-bg-card);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);

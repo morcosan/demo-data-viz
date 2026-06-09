@@ -13,32 +13,26 @@ export const TOKENS__SURFACE = {
     ref: {
       backgroundColor: '{color.bg-page}',
       backgroundImage: {
-        light: 'radial-gradient(circle, {color.white-alpha-10} 1px, transparent 1px)',
+        light: 'radial-gradient(circle, {color.black-alpha-1} 1px, transparent 1px)',
         dark: 'radial-gradient(circle, {color.white-alpha-2} 1px, transparent 1px)',
       },
     },
     value: {
-      backgroundColor: { light: 'oklch(0.9500 0.0200 260)', dark: 'oklch(0.2558 0.0079 308)' },
+      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.2558 0.0079 308)' },
       backgroundImage: {
-        light: 'radial-gradient(circle, oklch(1 0 0 / 0.56) 1px, transparent 1px)',
+        light: 'radial-gradient(circle, oklch(0.1068 0.0519 317 / 0.03) 1px, transparent 1px)',
         dark: 'radial-gradient(circle, oklch(1 0 0 / 0.06) 1px, transparent 1px)',
       },
       backgroundSize: '12px 12px, cover',
     },
   },
-  sheet: {
+  region: {
     type: 'composite',
-    ref: {
-      backgroundColor: '{color.bg-sheet}',
-      border: '1px solid {color.bg-card}',
-      borderRadius: '{radius.md}',
-      boxShadow: '{shadow.xs}',
-    },
+    ref: { backgroundColor: '{color.bg-region}', border: '1px solid {color.white}', borderRadius: '{radius.md}' },
     value: {
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
-      border: { light: '1px solid oklch(0.9884 0.0013 308)', dark: '1px solid oklch(0.346 0.011 308)' },
+      border: '1px solid oklch(1 0 0)',
       borderRadius: '8px',
-      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
     },
   },
   card: {
@@ -47,13 +41,20 @@ export const TOKENS__SURFACE = {
       backgroundColor: '{color.bg-card}',
       border: '2px solid {color.bg-card}',
       borderRadius: '{radius.md}',
-      boxShadow: '{shadow.xs}',
+      boxShadow: ['0 -2px 0 0 {color.black-alpha-3}', '{shadow.xs}'],
     },
     value: {
-      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
-      border: { light: '2px solid oklch(0.9884 0.0013 308)', dark: '2px solid oklch(0.346 0.011 308)' },
+      backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
+      border: { light: '2px solid oklch(1 0 0)', dark: '2px solid oklch(0.3771 0.0124 308)' },
       borderRadius: '8px',
-      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
+      boxShadow: {
+        light: [
+          '0 -2px 0 0 oklch(0.1068 0.0519 317 / 0.09)',
+          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
+          '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.16)',
+        ],
+        dark: ['0 -2px 0 0 oklch(0.1068 0.0519 317 / 0.09)', '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.4)'],
+      },
     },
   },
   'card-hovered': {
@@ -108,7 +109,10 @@ export const TOKENS__SURFACE = {
       backgroundColor: 'oklch(0.4500 0.1600 260)',
       border: '2px solid oklch(0.4500 0.1600 260)',
       borderRadius: '8px',
-      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
+      boxShadow: {
+        light: ['0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)', '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.16)'],
+        dark: '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.4)',
+      },
     },
   },
   'button-primary-hovered': {
@@ -177,7 +181,10 @@ export const TOKENS__SURFACE = {
       backgroundColor: 'oklch(0.9500 0.0200 260)',
       border: '2px solid oklch(0.5900 0.1620 260)',
       borderRadius: '8px',
-      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
+      boxShadow: {
+        light: ['0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)', '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.16)'],
+        dark: '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.4)',
+      },
     },
   },
   'button-secondary-hovered': {
@@ -319,7 +326,10 @@ export const TOKENS__SURFACE = {
       backgroundColor: 'oklch(0.5808 0.2104 23)',
       border: '2px solid oklch(0.5808 0.2104 23)',
       borderRadius: '8px',
-      boxShadow: { light: '0 1px 2px 0 rgb(0 0 0 / 0.15)', dark: '0 1px 2px 0 rgb(0 0 0 / 0.4)' },
+      boxShadow: {
+        light: ['0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)', '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.16)'],
+        dark: '0 1px 2px 0 oklch(0.1068 0.0519 317 / 0.4)',
+      },
     },
   },
   'button-danger-hovered': {
