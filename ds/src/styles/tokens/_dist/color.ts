@@ -139,8 +139,8 @@ export const TOKENS__COLOR = {
     value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
   },
   'bg-coding': {
-    ref: { light: '{color.grey-3}', dark: '{color.grey-18}' },
-    value: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.3171 0.0092 308)' },
+    ref: { light: '{color.black-alpha-2}', dark: '{color.grey-18}' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.06)', dark: 'oklch(0.3171 0.0092 308)' },
   },
   'bg-field': {
     ref: { light: '{color.black-alpha-1}', dark: '{color.black-alpha-4}' },

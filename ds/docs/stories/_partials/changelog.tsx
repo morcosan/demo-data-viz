@@ -1,4 +1,4 @@
-import { DocsCard, renderHtml } from '@ds/docs/core'
+import { renderHtml } from '@ds/docs/core'
 import changelogJson from '../../../changelog.json'
 import packageJson from '../../../package.json'
 
@@ -33,7 +33,7 @@ export const Changelog = () => {
   return (
     <>
       {changelogJson.map((entry: ChangelogEntry) => (
-        <DocsCard key={entry.version} className="px-sm-0! py-xs-9! mt-sm-2! relative overflow-visible!">
+        <div key={entry.version} className="ds-surface-region px-sm-0 py-xs-9 mt-sm-2 relative">
           {packageJson.version === entry.version && (
             <div
               className={cx(
@@ -59,7 +59,7 @@ export const Changelog = () => {
             {entry.changes.docs?.length ? createList('📚 Docs:', entry.changes.docs) : ''}
             {entry.changes.internal?.length ? createList('🔒 Internal:', entry.changes.internal) : ''}
           </div>
-        </DocsCard>
+        </div>
       ))}
     </>
   )

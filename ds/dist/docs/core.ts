@@ -15,7 +15,6 @@ export * from '../../docs/src/services/docs-canvas-service'
  */
 export * from '../../docs/src/components/docs-asset-item'
 export * from '../../docs/src/components/docs-canvas'
-export * from '../../docs/src/components/docs-card'
 export * from '../../docs/src/components/docs-code-block'
 export * from '../../docs/src/components/docs-color-swatch'
 export * from '../../docs/src/components/docs-columns'
