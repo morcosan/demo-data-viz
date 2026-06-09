@@ -8,7 +8,6 @@ export const CLASS_PREFIX__SHADOW = 'ds-shadow-'
 export const CSS_PREFIX__SHADOW = '--ds-shadow-'
 
 export const TOKENS__SHADOW = {
-  inner: { value: { light: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.1)', dark: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.2)' } },
   xs: {
     ref: {
       light: ['0 -1px 0 0 {color.black-alpha-2}', '0 1px 2px 0 {color.black-alpha-5}'],
@@ -20,30 +19,50 @@ export const TOKENS__SHADOW = {
     },
   },
   sm: {
+    ref: {
+      light: ['0 1px 3px 0 {color.black-alpha-5}', '0 1px 2px -1px {color.black-alpha-5}'],
+      dark: ['0 1px 3px 0 {color.black-alpha-8}', '0 1px 2px -1px {color.black-alpha-8}'],
+    },
     value: {
-      light: ['0 1px 3px 0 rgb(0 0 0 / 0.15)', '0 1px 2px -1px rgb(0 0 0 / 0.15)'],
-      dark: ['0 1px 3px 0 rgb(0 0 0 / 0.4)', '0 1px 2px -1px rgb(0 0 0 / 0.4)'],
+      light: ['0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)', '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)'],
+      dark: ['0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)', '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)'],
     },
   },
   md: {
+    ref: {
+      light: ['0 4px 6px -1px {color.black-alpha-5}', '0 2px 4px -2px {color.black-alpha-5}'],
+      dark: ['0 4px 6px -1px {color.black-alpha-8}', '0 2px 4px -2px {color.black-alpha-8}'],
+    },
     value: {
-      light: ['0 4px 6px -1px rgb(0 0 0 / 0.15)', '0 2px 4px -2px rgb(0 0 0 / 0.15)'],
-      dark: ['0 4px 6px -1px rgb(0 0 0 / 0.4)', '0 2px 4px -2px rgb(0 0 0 / 0.4)'],
+      light: ['0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.16)', '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)'],
+      dark: ['0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.4)', '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)'],
     },
   },
   lg: {
+    ref: {
+      light: ['0 10px 15px -3px {color.black-alpha-5}', '0 4px 6px -4px {color.black-alpha-5}'],
+      dark: ['0 10px 15px -3px {color.black-alpha-8}', '0 4px 6px -4px {color.black-alpha-8}'],
+    },
     value: {
-      light: ['0 10px 15px -3px rgb(0 0 0 / 0.15)', '0 4px 6px -4px rgb(0 0 0 / 0.15)'],
-      dark: ['0 10px 15px -3px rgb(0 0 0 / 0.4)', '0 4px 6px -4px rgb(0 0 0 / 0.4)'],
+      light: ['0 10px 15px -3px oklch(0.1068 0.0519 317 / 0.16)', '0 4px 6px -4px oklch(0.1068 0.0519 317 / 0.16)'],
+      dark: ['0 10px 15px -3px oklch(0.1068 0.0519 317 / 0.4)', '0 4px 6px -4px oklch(0.1068 0.0519 317 / 0.4)'],
     },
   },
   xl: {
+    ref: {
+      light: ['0 20px 25px -5px {color.black-alpha-5}', '0 8px 10px -6px {color.black-alpha-5}'],
+      dark: ['0 20px 25px -5px {color.black-alpha-8}', '0 8px 10px -6px {color.black-alpha-8}'],
+    },
     value: {
-      light: ['0 20px 25px -5px rgb(0 0 0 / 0.15)', '0 8px 10px -6px rgb(0 0 0 / 0.15)'],
-      dark: ['0 20px 25px -5px rgb(0 0 0 / 0.4)', '0 8px 10px -6px rgb(0 0 0 / 0.4)'],
+      light: ['0 20px 25px -5px oklch(0.1068 0.0519 317 / 0.16)', '0 8px 10px -6px oklch(0.1068 0.0519 317 / 0.16)'],
+      dark: ['0 20px 25px -5px oklch(0.1068 0.0519 317 / 0.4)', '0 8px 10px -6px oklch(0.1068 0.0519 317 / 0.4)'],
     },
   },
-  'below-sm': { value: { light: '0 6px 6px -6px rgb(0 0 0 / 0.15)', dark: '0 6px 6px -6px rgb(0 0 0 / 0.6)' } },
-  'below-md': { value: { light: '0 10px 10px -10px rgb(0 0 0 / 0.15)', dark: '0 10px 10px -10px rgb(0 0 0 / 0.6)' } },
-  'below-lg': { value: { light: '0 14px 14px -14px rgb(0 0 0 / 0.15)', dark: '0 14px 14px -14px rgb(0 0 0 / 0.6)' } },
+  'below-sm': {
+    ref: { light: '0 6px 6px -6px {color.black-alpha-5}', dark: '0 6px 6px -6px {color.black-alpha-10}' },
+    value: {
+      light: '0 6px 6px -6px oklch(0.1068 0.0519 317 / 0.16)',
+      dark: '0 6px 6px -6px oklch(0.1068 0.0519 317 / 0.56)',
+    },
+  },
 } as const
