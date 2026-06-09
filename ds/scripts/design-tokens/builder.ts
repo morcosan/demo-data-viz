@@ -42,7 +42,7 @@ const sd = new StyleDictionary({
       })),
     },
   },
-  log: { verbosity: 'verbose' },
+  log: { verbosity: 'verbose', warnings: 'disabled' },
 })
 
 sd.registerFormat({ ...createCssFormat(), name: FORMAT_NAME__CSS })
