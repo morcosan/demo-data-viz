@@ -25,7 +25,7 @@ export const IconButton = (props: IconButtonProps) => {
     width: height,
     minWidth: height,
     padding: 0,
-    borderRadius: tokens.radius['sm'],
+    borderRadius: tokens.radius['full'],
     fontSize: tokens.fontSize['md'],
   }
 

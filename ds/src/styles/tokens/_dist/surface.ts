@@ -121,14 +121,14 @@ export const TOKENS__SURFACE = {
       color: '{color.white}',
       backgroundColor: '{color.blue-11}',
       border: '2px solid {color.blue-11}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(1 0 0)',
       backgroundColor: 'oklch(0.4500 0.1600 240)',
       border: '2px solid oklch(0.4500 0.1600 240)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
@@ -149,14 +149,14 @@ export const TOKENS__SURFACE = {
       color: '{color.yellow-2}',
       backgroundColor: '{color.blue-9}',
       border: '2px solid {color.blue-11}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 4px 0 {color.blue-9}', '{shadow.md}'],
     },
     value: {
       color: 'oklch(0.9880 0.0320 103.00)',
       backgroundColor: 'oklch(0.5900 0.1620 240)',
       border: '2px solid oklch(0.4500 0.1600 240)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 4px 0 oklch(0.5900 0.1620 240)',
@@ -179,14 +179,14 @@ export const TOKENS__SURFACE = {
       color: '{color.white}',
       backgroundColor: '{color.blue-12}',
       border: '2px solid {color.blue-13}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 4px 0 {color.blue-9}', '{shadow.sm}'],
     },
     value: {
       color: 'oklch(1 0 0)',
       backgroundColor: 'oklch(0.3900 0.1420 240)',
       border: '2px solid oklch(0.3300 0.1200 240)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 4px 0 oklch(0.5900 0.1620 240)',
@@ -209,14 +209,14 @@ export const TOKENS__SURFACE = {
       color: '{color.blue-11}',
       backgroundColor: '{color.blue-1}',
       border: '2px solid {color.blue-9}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(0.4500 0.1600 240)',
       backgroundColor: 'oklch(0.9500 0.0200 240)',
       border: '2px solid oklch(0.5900 0.1620 240)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
@@ -237,14 +237,14 @@ export const TOKENS__SURFACE = {
       color: '{color.blue-10}',
       backgroundColor: '{color.blue-2}',
       border: '2px solid {color.blue-7}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 6px 1px {color.blue-2}', '{shadow.md}'],
     },
     value: {
       color: 'oklch(0.5200 0.1750 240)',
       backgroundColor: 'oklch(0.9215 0.0348 240)',
       border: '2px solid oklch(0.7100 0.1280 240)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 6px 1px oklch(0.9215 0.0348 240)',
@@ -267,14 +267,14 @@ export const TOKENS__SURFACE = {
       color: '{color.blue-11}',
       backgroundColor: '{color.blue-3}',
       border: '2px solid {color.blue-8}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 6px 1px {color.blue-2}', '{shadow.sm}'],
     },
     value: {
       color: 'oklch(0.4500 0.1600 240)',
       backgroundColor: 'oklch(0.8825 0.0531 240)',
       border: '2px solid oklch(0.6500 0.1450 240)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 6px 1px oklch(0.9215 0.0348 240)',
@@ -302,14 +302,14 @@ export const TOKENS__SURFACE = {
       color: '{color.yellow-14}',
       backgroundColor: '{color.yellow-1}',
       border: '2px solid {color.yellow-4}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 7px 2px {color.yellow-2}', '{shadow.md}'],
     },
     value: {
       color: 'oklch(0.3900 0.0880 64.00)',
       backgroundColor: 'oklch(0.9950 0.0150 103.19)',
       border: '2px solid oklch(0.9680 0.0780 101.50)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 7px 2px oklch(0.9880 0.0320 103.00)',
@@ -340,14 +340,14 @@ export const TOKENS__SURFACE = {
       color: '{color.yellow-13}',
       backgroundColor: '{color.yellow-1}',
       border: '2px solid {color.yellow-4}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 7px 2px {color.yellow-2}', '{shadow.md}'],
     },
     value: {
       color: 'oklch(0.4600 0.1020 67.00)',
       backgroundColor: 'oklch(0.9950 0.0150 103.19)',
       border: '2px solid oklch(0.9680 0.0780 101.50)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 7px 2px oklch(0.9880 0.0320 103.00)',
@@ -370,14 +370,14 @@ export const TOKENS__SURFACE = {
       color: '{color.white}',
       backgroundColor: '{color.red-11}',
       border: '2px solid {color.red-11}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(1 0 0)',
       backgroundColor: 'oklch(0.5808 0.2104 30)',
       border: '2px solid oklch(0.5808 0.2104 30)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
@@ -398,14 +398,14 @@ export const TOKENS__SURFACE = {
       color: '{color.yellow-2}',
       backgroundColor: '{color.red-9}',
       border: '2px solid {color.red-10}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 4px 0 {color.red-9}', '{shadow.md}'],
     },
     value: {
       color: 'oklch(0.9880 0.0320 103.00)',
       backgroundColor: 'oklch(0.6513 0.1862 30)',
       border: '2px solid oklch(0.5919 0.2063 30)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 4px 0 oklch(0.6513 0.1862 30)',
@@ -433,14 +433,14 @@ export const TOKENS__SURFACE = {
       color: '{color.red-10}',
       backgroundColor: '{color.red-1}',
       border: '2px solid {color.red-4}',
-      borderRadius: '{radius.md}',
+      borderRadius: '{radius.max}',
       boxShadow: ['0 0 5px 1px {color.red-2}', '{shadow.md}'],
     },
     value: {
       color: 'oklch(0.5919 0.2063 30)',
       backgroundColor: 'oklch(0.9400 0.0300 30)',
       border: '2px solid oklch(0.8077 0.1035 30)',
-      borderRadius: '8px',
+      borderRadius: '99px',
       boxShadow: {
         light: [
           '0 0 5px 1px oklch(0.8845 0.0593 30)',

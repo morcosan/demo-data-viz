@@ -29,7 +29,6 @@ export const Button = (props: ButtonProps) => {
       if (size === 'md') return `calc(${tokens.spacing['button-px-md']} - 1px)`
       if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
     })(),
-    borderRadius: size === 'lg' ? tokens.radius['md'] : tokens.radius['sm'],
     fontWeight: isMenuItem ? tokens.fontWeight['sm'] : tokens.fontWeight['md'],
     fontSize: (() => {
       if (isMenuItem) return 'unset'
@@ -44,7 +43,6 @@ export const Button = (props: ButtonProps) => {
     ...buttonBaseCss,
     minWidth: 'unset',
     padding: `0 ${cssVars.paddingX}`,
-    borderRadius: cssVars.borderRadius,
     fontSize: cssVars.fontSize,
     fontWeight: cssVars.fontWeight,
   }
