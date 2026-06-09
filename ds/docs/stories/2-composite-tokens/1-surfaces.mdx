@@ -9,7 +9,8 @@ export const tokens = Object.entries(TOKENS.SURFACE)
 export const Surface = ({ title, children, className }) => (
   <div
     className={cx(
-      'py-xs-7 px-xs-9 min-h-md-0 gap-xs-5 flex h-fit w-full flex-col justify-center',
+      'min-h-md-0 relative h-fit w-full overflow-visible',
+      'py-xs-7 px-xs-9 gap-xs-5 flex flex-col justify-center',
       'text-size-sm truncate',
       className,
     )}
@@ -25,87 +26,86 @@ export const TokenValue = ({ value }) => {
 
 export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-[auto_1fr] items-center')
 
-export const parseRef = (ref) => {
-  return typeof ref === 'string' && ref.startsWith('{') && ref.endsWith('}') ? ref.slice(1, -1) : ref
-}
-
 {/* ---------------------------------------------------------------------------------------------------------------- */}
 
 <Meta title="Composite tokens / Surface" />
 
 # Surface tokens
 
-<DocsCanvas className="p-xs-9 gap-xs-9 mb-sm-3 grid xl:grid-cols-[3fr_5fr]">
-  <Surface title="page" className="ds-surface-page">
-    <Surface title="region" className="ds-surface-region">
-      <Surface title="card" className="ds-surface-card">
-        <Surface title="popup" className="ds-surface-popup" />
+<DocsCanvas className="p-xs-9 mb-sm-3 flex flex-col">
+  {/* BASIC SURFACES */}
+  <div className="gap-xs-9 ds-surface-page min-h-lg-9 grid lg:grid-cols-3">
+    <Surface title="page" className="ds-surface-page">
+      <Surface title="region" className="ds-surface-region">
+        <Surface title="card" className="ds-surface-card">
+          <Surface title="popup" className="ds-surface-popup" />
+        </Surface>
       </Surface>
     </Surface>
-    <Surface title="card" className="ds-surface-card mt-xs-5">
-      <Surface title="popup" className="ds-surface-popup" />
+    <Surface>
+      <Surface title="card" className="ds-surface-card mt-xs-5">
+        <Surface title="popup" className="ds-surface-popup" />
+        <Surface title="popup" className="ds-surface-popup translate-y-sm-6" />
+      </Surface>
     </Surface>
-    <Surface title="popup" className="ds-surface-popup mt-xs-5" />
-  </Surface>
-  <div className="gap-xs-9 flex flex-col">
+    <Surface>
+      <Surface title="region" className="ds-surface-region">
+        <Surface title="popup" className="ds-surface-popup mt-xs-5" />
+      </Surface>
+      <Surface title="popup" className="ds-surface-popup mt-xs-5" />
+    </Surface>
+  </div>
+  {/* CONTROLS */}
+  <Surface className="gap-xs-9 flex flex-col">
     <div className="gap-xs-9 flex">
+      <Surface title="card + hover" className="ds-surface-card hover:ds-surface-card-hovered" />
       <Surface title="card" className="ds-surface-card" />
       <Surface title="card-hovered" className="ds-surface-card-hovered" />
       <Surface title="card-pressed" className="ds-surface-card-pressed" />
-      <Surface title="card + hover" className="ds-surface-card hover:ds-surface-card-hovered" />
     </div>
     <div className="gap-xs-9 flex">
-      <Surface title="button-primary" className="ds-surface-button-primary" />
-      <Surface title="button-primary-hovered" className="ds-surface-button-primary-hovered" />
-      <Surface title="button-primary-pressed" className="ds-surface-button-primary-pressed" />
       <Surface
         title="button-primary + hover"
         className="ds-surface-button-primary hover:ds-surface-button-primary-hovered"
       />
+      <Surface title="button-primary" className="ds-surface-button-primary" />
+      <Surface title="button-primary-hovered" className="ds-surface-button-primary-hovered" />
+      <Surface title="button-primary-pressed" className="ds-surface-button-primary-pressed" />
     </div>
     <div className="gap-xs-9 flex">
-      <Surface title="button-secondary" className="ds-surface-button-secondary" />
-      <Surface title="button-secondary-hovered" className="ds-surface-button-secondary-hovered" />
-      <Surface title="button-secondary-pressed" className="ds-surface-button-secondary-pressed" />
       <Surface
         title="button-secondary + hover"
         className="ds-surface-button-secondary hover:ds-surface-button-secondary-hovered"
       />
+      <Surface title="button-secondary" className="ds-surface-button-secondary" />
+      <Surface title="button-secondary-hovered" className="ds-surface-button-secondary-hovered" />
+      <Surface title="button-secondary-pressed" className="ds-surface-button-secondary-pressed" />
     </div>
     <div className="gap-xs-9 flex">
-      <Surface title="button-optional" className="ds-surface-button-optional" />
-      <Surface title="button-optional-hovered" className="ds-surface-button-optional-hovered" />
-      <Surface title="button-optional-pressed" className="ds-surface-button-optional-pressed" />
       <Surface
         title="button-optional + hover"
         className="ds-surface-button-optional hover:ds-surface-button-optional-hovered"
       />
+      <Surface title="button-optional" className="ds-surface-button-optional" />
+      <Surface title="button-optional-hovered" className="ds-surface-button-optional-hovered" />
+      <Surface title="button-optional-pressed" className="ds-surface-button-optional-pressed" />
     </div>
     <div className="gap-xs-9 flex">
-      <Surface title="button-danger" className="ds-surface-button-danger" />
-      <Surface title="button-danger-hovered" className="ds-surface-button-danger-hovered" />
-      <Surface title="button-danger-pressed" className="ds-surface-button-danger-pressed" />
-      <Surface
-        title="button-danger + hover"
-        className="ds-surface-button-danger hover:ds-surface-button-danger-hovered"
-      />
-    </div>
-    <div className="gap-xs-9 flex">
-      <Surface title="button-caution" className="ds-surface-button-caution" />
-      <Surface title="button-caution-hovered" className="ds-surface-button-caution-hovered" />
-      <Surface title="button-caution-pressed" className="ds-surface-button-caution-pressed" />
       <Surface
         title="button-caution + hover"
         className="ds-surface-button-caution hover:ds-surface-button-caution-hovered"
       />
+      <Surface title="button-caution" className="ds-surface-button-caution" />
+      <Surface title="button-caution-hovered" className="ds-surface-button-caution-hovered" />
+      <Surface title="button-caution-pressed" className="ds-surface-button-caution-pressed" />
     </div>
-  </div>
+  </Surface>
 </DocsCanvas>
 
 <table className="docs">
   <thead>
     <tr>
-      <th>Token</th>
+      <th className="min-w-md-5">Token</th>
       <th>Reference</th>
       <th className="w-full">Value</th>
       <th>Coding</th>
@@ -113,57 +113,62 @@ export const parseRef = (ref) => {
   </thead>
   <tbody>
     {tokens.map(([name, token]) => (
-      <tr key={name}>
-        <td className="pr-0!">
-          <pre>{name}</pre>
-        </td>
-        <td className="pr-0!">
-          <div className={gridClass}>
-            {Object.entries(token.ref).map(([key, value]) => (
-              <Fragment key={key}>
-                <pre className="text-color-text-subtle text-size-sm">{kebabCase(key)}:</pre>
-                {typeof value === 'object' && !Array.isArray(value) ? (
-                  <DocsTokenGrid
-                    lightSlot={<DocsToken value={parseRef(value.light)} />}
-                    darkSlot={<DocsToken value={parseRef(value.dark)} />}
-                    large={Array.isArray(value.light) && Array.isArray(value.dark)}
-                  />
-                ) : (
-                  <DocsToken value={parseRef(value)} />
-                )}
-              </Fragment>
-            ))}
-          </div>
-        </td>
-        <td className="pr-0!">
-          <div className={gridClass}>
-            {Object.entries(token.value).map(([key, value]) => (
-              <Fragment key={key}>
-                <pre className="text-color-text-subtle text-size-sm">{kebabCase(key)}:</pre>
-                {typeof value === 'object' && !Array.isArray(value) ? (
-                  <DocsTokenGrid
-                    lightSlot={<TokenValue value={value.light} />}
-                    darkSlot={<TokenValue value={value.dark} />}
-                    large={Array.isArray(value.light) && Array.isArray(value.dark)}
-                  />
-                ) : (
-                  <DocsToken value={value} />
-                )}
-              </Fragment>
-            ))}
-          </div>
-        </td>
-        <td>
-          <DocsTokenCodeGrid
-            tsVar={`tokens.color['${name}']`}
-            classVar={`${CLASS_PREFIX.SURFACE}${name}`}
-            tsSize="w-lg-2"
-            classSize="w-lg-2"
-            delay={1000}
-            vertical
-          />
-        </td>
-      </tr>
+      <Fragment key={name}>
+        <tr>
+          <td colSpan={4} className="pt-sm-0! pb-0!">
+            <pre>{name}</pre>
+          </td>
+        </tr>
+        <tr className="border-0! [&>td]:align-top!">
+          <td></td>
+          <td>
+            <div className={gridClass}>
+              {Object.entries(token.ref).map(([key, value]) => (
+                <Fragment key={key}>
+                  <pre className="text-color-text-subtle text-size-sm">{kebabCase(key)}:</pre>
+                  {typeof value === 'object' && !Array.isArray(value) ? (
+                    <DocsTokenGrid
+                      lightSlot={<DocsToken value={value.light} />}
+                      darkSlot={<DocsToken value={value.dark} />}
+                      large={Array.isArray(value.light) && Array.isArray(value.dark)}
+                    />
+                  ) : (
+                    <DocsToken value={value} />
+                  )}
+                </Fragment>
+              ))}
+            </div>
+          </td>
+          <td>
+            <div className={gridClass}>
+              {Object.entries(token.value).map(([key, value]) => (
+                <Fragment key={key}>
+                  <pre className="text-color-text-subtle text-size-sm">{kebabCase(key)}:</pre>
+                  {typeof value === 'object' && !Array.isArray(value) ? (
+                    <DocsTokenGrid
+                      lightSlot={<TokenValue value={value.light} />}
+                      darkSlot={<TokenValue value={value.dark} />}
+                      large={Array.isArray(value.light) && Array.isArray(value.dark)}
+                    />
+                  ) : (
+                    <DocsToken value={value} />
+                  )}
+                </Fragment>
+              ))}
+            </div>
+          </td>
+          <td>
+            <DocsTokenCodeGrid
+              tsVar={`tokens.color['${name}']`}
+              classVar={`${CLASS_PREFIX.SURFACE}${name}`}
+              tsSize="w-lg-2"
+              classSize="w-lg-2"
+              delay={1000}
+              vertical
+            />
+          </td>
+        </tr>
+      </Fragment>
     ))}
   </tbody>
 </table>
