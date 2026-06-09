@@ -203,6 +203,36 @@ export const TOKENS__SURFACE = {
       },
     },
   },
+  'button-primary-selected': {
+    type: 'composite',
+    ref: {
+      color: '{color.white}',
+      backgroundColor: '{color.blue-12}',
+      border: '2px solid {color.blue-13}',
+      borderRadius: '{radius.max}',
+      boxShadow: ['0 0 4px 0 {color.blue-9}', '{shadow.sm}'],
+    },
+    value: {
+      color: 'oklch(1 0 0)',
+      backgroundColor: 'oklch(0.3900 0.1420 240)',
+      border: '2px solid oklch(0.3300 0.1200 240)',
+      borderRadius: '99px',
+      boxShadow: {
+        light: [
+          '0 0 4px 0 oklch(0.5900 0.1620 240)',
+          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
+          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
+          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
+        ],
+        dark: [
+          '0 0 4px 0 oklch(0.5900 0.1620 240)',
+          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
+          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
+          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
+        ],
+      },
+    },
+  },
   'button-secondary': {
     type: 'composite',
     ref: {

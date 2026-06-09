@@ -45,6 +45,9 @@ const Variants: StoryObj<typeof IconButton> = {
               <IconButton tooltip={variant + ' pressed'} variant={variant} state="pressed">
                 {svg}
               </IconButton>
+              <IconButton tooltip={variant + ' selected'} variant={variant} state="selected">
+                {svg}
+              </IconButton>
               <IconButton tooltip={variant + ' loading'} variant={variant} state="loading">
                 {svg}
               </IconButton>

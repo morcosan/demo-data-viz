@@ -4,20 +4,8 @@ import '@mantine/core/styles/Loader.css'
 import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
 import { useDataProps } from '../../utilities/react-utils'
-import { type LinkType } from './types'
-import { type ClickableState, useClickable } from './use-clickable'
-
-export type BaseButtonState = ClickableState
-export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
-export type BaseVariant =
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'optional'
-  | 'danger'
-  | 'caution'
-  | 'menu-default'
-  | 'menu-caution'
+import { type BaseButtonSize, type BaseVariant, type ClickableState, type LinkType } from './types'
+import { useClickable } from './use-clickable'
 
 interface BaseButtonProps extends HtmlDataProps {
   // Slots
@@ -28,7 +16,7 @@ interface BaseButtonProps extends HtmlDataProps {
   // Props
   size: BaseButtonSize
   variant: BaseVariant
-  state: BaseButtonState
+  state: ClickableState
   linkHref?: string
   linkType?: LinkType
   className?: string
@@ -41,6 +29,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
   const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
 
+  const isSelected = state === 'selected'
   const isSolid = variant === 'primary' || variant === 'danger'
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'tertiary' || variant === 'optional' || variant === 'caution'
@@ -65,7 +54,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
     if (variant === 'menu-caution') return tokens.surface['button-caution']
     return {}
   })()
-  const surfaceHover = ((): CSSObject => {
+  const surfaceHovered = ((): CSSObject => {
     if (variant === 'primary') return tokens.surface['button-primary-hovered']
     if (variant === 'secondary') return tokens.surface['button-secondary-hovered']
     if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
@@ -76,8 +65,19 @@ export const useBaseButton = (props: BaseButtonProps) => {
     if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
     return {}
   })()
-  const surfacePress = ((): CSSObject => {
+  const surfacePressed = ((): CSSObject => {
     if (variant === 'primary') return tokens.surface['button-primary-pressed']
+    if (variant === 'secondary') return tokens.surface['button-secondary-pressed']
+    if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
+    if (variant === 'optional') return tokens.surface['button-optional-hovered']
+    if (variant === 'danger') return tokens.surface['button-danger-hovered']
+    if (variant === 'caution') return tokens.surface['button-caution-hovered']
+    if (variant === 'menu-default') return tokens.surface['button-tertiary-hovered']
+    if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
+    return {}
+  })()
+  const surfaceSelected = ((): CSSObject => {
+    if (variant === 'primary') return tokens.surface['button-primary-selected']
     if (variant === 'secondary') return tokens.surface['button-secondary-pressed']
     if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
     if (variant === 'optional') return tokens.surface['button-optional-hovered']
@@ -96,7 +96,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
   })()
 
   const buttonBaseCss: CSSObject = {
-    ...(isPressed ? surfacePress : surfaceDefault),
+    ...(isPressed ? surfacePressed : isSelected ? surfaceSelected : surfaceDefault),
     ...(isNoop ? noopProps : {}),
     position: 'relative',
     display: 'inline-flex',
@@ -115,7 +115,7 @@ export const useBaseButton = (props: BaseButtonProps) => {
       isNoop || pressing
         ? {}
         : {
-            ...surfaceHover,
+            ...surfaceHovered,
             transform: 'translateY(-2px)',
           },
   }

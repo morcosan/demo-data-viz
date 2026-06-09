@@ -42,7 +42,7 @@ const Variants: StoryObj<typeof Button> = {
       'menu-default',
       'menu-caution',
     ]
-    const widthClass = cx('w-lg-2')
+    const widthClass = cx('w-lg-1')
 
     return (
       <DocsPage type="component">
@@ -54,6 +54,9 @@ const Variants: StoryObj<typeof Button> = {
               </Button>
               <Button variant={variant} state="pressed" className={widthClass}>
                 {svg} pressed
+              </Button>
+              <Button variant={variant} state="selected" className={widthClass}>
+                {svg} selected
               </Button>
               <Button variant={variant} state="loading" className={widthClass}>
                 {svg} loading
