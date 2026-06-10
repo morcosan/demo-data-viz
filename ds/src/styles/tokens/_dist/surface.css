@@ -155,7 +155,7 @@
   :where(html) &,
   [data-color-mode='light'] & {
     border: 2px solid transparent;
-    color: var(--ds-color-text-default);
+    color: var(--ds-color-blue-12);
   }
 }
 

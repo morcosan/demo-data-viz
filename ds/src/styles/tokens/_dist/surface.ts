@@ -324,8 +324,8 @@ export const TOKENS__SURFACE = {
   },
   'button-tertiary': {
     type: 'composite',
-    ref: { color: '{color.text-default}' },
-    value: { color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' }, border: '2px solid transparent' },
+    ref: { color: '{color.blue-12}' },
+    value: { color: 'oklch(0.3900 0.1420 240)', border: '2px solid transparent' },
   },
   'button-tertiary-hovered': {
     type: 'composite',
