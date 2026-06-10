@@ -112,7 +112,7 @@ const renderCompositeToken = (original: TokenCompositeValue, resolved: TokenComp
   const result: CompositeOutput = { type: 'composite', ref: {}, value: {} }
 
   Object.keys(original).forEach((key) => {
-    const camelKey = camelCase(key)
+    const camelKey = key.startsWith('--') ? key : camelCase(key)
     const output = renderAtomicToken(original[key], resolved[key])
     if (output.ref) result.ref[camelKey] = output.ref
     if (output.value) result.value[camelKey] = output.value

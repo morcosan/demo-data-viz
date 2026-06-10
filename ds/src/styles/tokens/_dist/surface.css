@@ -75,6 +75,7 @@
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
+    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
     background-color: var(--ds-color-blue-11);
     color: var(--ds-color-blue-2);
   }
@@ -85,6 +86,7 @@
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
+    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
     background-color: var(--ds-color-blue-10);
     color: var(--ds-color-white);
     text-shadow: 0 0 1px var(--ds-color-white);
@@ -95,6 +97,7 @@
   :where(html) &,
   [data-color-mode='light'] & {
     border-radius: var(--ds-radius-max);
+    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
     background-color: var(--ds-color-blue-10);
     color: var(--ds-color-white);
     text-shadow: 0 0 1px var(--ds-color-white);
@@ -193,24 +196,34 @@
 @utility ds-surface-button-danger {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
-    border: 2px solid var(--ds-color-red-11);
+    box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-red-11);
-    color: var(--ds-color-white);
+    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
+    background-color: var(--ds-color-red-13);
+    color: var(--ds-color-red-1);
   }
 }
 
 @utility ds-surface-button-danger-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 4px 0 var(--ds-color-red-9),
-      var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-red-10);
+    box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-red-9);
-    color: var(--ds-color-yellow-2);
+    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
+    background-color: var(--ds-color-red-12);
+    color: var(--ds-color-white);
+    text-shadow: 0 0 1px var(--ds-color-white);
+  }
+}
+
+@utility ds-surface-button-danger-pressed {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border-radius: var(--ds-radius-max);
+    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
+    background-color: var(--ds-color-red-12);
+    color: var(--ds-color-white);
+    text-shadow: 0 0 1px var(--ds-color-white);
   }
 }
 

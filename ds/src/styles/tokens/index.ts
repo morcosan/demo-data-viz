@@ -69,7 +69,7 @@ const getTokenValue = <V = TokenScalarValue | TokenCompositeValue>(token: Token,
     const result: Record<string, TokenScalarValue> = {}
     for (const key in token.value) {
       result[key] =
-        typeof token.value[key] === 'object'
+        typeof token.value[key] === 'object' && !Array.isArray(token.value[key])
           ? (token.value[key] as TokenColoredValue)[mode || 'light']
           : token.value[key]
     }
