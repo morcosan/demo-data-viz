@@ -73,37 +73,38 @@
 @utility ds-surface-button-primary {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
+    box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-blue-10);
-    color: var(--ds-color-white);
+    background-color: var(--ds-color-blue-11);
+    color: var(--ds-color-blue-2);
   }
 }
 
 @utility ds-surface-button-primary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-md);
+    box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-blue-9);
+    background-color: var(--ds-color-blue-10);
     color: var(--ds-color-white);
+    text-shadow: 0 0 1px var(--ds-color-white);
   }
 }
 
 @utility ds-surface-button-primary-pressed {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-blue-9);
+    background-color: var(--ds-color-blue-10);
     color: var(--ds-color-white);
+    text-shadow: 0 0 1px var(--ds-color-white);
   }
 }
 
 @utility ds-surface-button-primary-selected {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
+    box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
     background-color: var(--ds-color-blue-12);
     color: var(--ds-color-white);
