@@ -135,7 +135,10 @@ export const useButtonBase = (props: BaseButtonProps) => {
           }
         : {
             [crosshairSelector]: crosshairHoverCss,
-            [surfaceSelector]: styles.surfaceHovered,
+            [surfaceSelector]: {
+              ...styles.surfaceHovered,
+              transform: 'scale(1)',
+            },
           },
   }
 
