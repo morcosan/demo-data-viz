@@ -10,14 +10,14 @@ export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_type
 /** Fundamental component for user actions and navigation, displayed as icon */
 export const IconButton = (props: IconButtonProps) => {
   const { linkHref, linkType = 'internal', size = 'md', variant = 'primary', state = 'default' } = props
-  const { bindings, buttonCss, content, height } = useButtonBase({
+  const { bindings, buttonCss, content, styles } = useButtonBase({
     ...{ ...props, linkType, size, state, variant, isIcon: true },
   })
 
   const rootCss: CSSObject = {
     ...buttonCss,
-    width: height,
-    minWidth: height,
+    width: styles.height,
+    minWidth: styles.height,
   }
 
   return linkHref ? (
