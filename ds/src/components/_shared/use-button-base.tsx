@@ -19,14 +19,13 @@ interface BaseButtonProps extends HtmlDataProps {
   state: ClickableState
   linkHref?: string
   linkType?: LinkType
-  noCorners?: boolean
-  noPadding?: boolean
+  isIcon?: boolean
   className?: string
   style?: CSSProperties
 }
 
 export const useButtonBase = (props: BaseButtonProps) => {
-  const { ariaDescription, children, className, size, style, tooltip, state, variant, noCorners, noPadding } = props
+  const { ariaDescription, children, className, size, style, tooltip, state, variant, isIcon } = props
   const { tokens } = useThemeService()
   const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
@@ -42,6 +41,13 @@ export const useButtonBase = (props: BaseButtonProps) => {
     if (size === 'sm') return tokens.spacing['button-h-sm']
     if (size === 'md') return tokens.spacing['button-h-md']
     if (size === 'lg') return tokens.spacing['button-h-lg']
+    return ''
+  })()
+  const crosshairSize = (() => {
+    if (size === 'xs') return '2px'
+    if (size === 'sm') return '2px'
+    if (size === 'md') return '3px'
+    if (size === 'lg') return '3px'
     return ''
   })()
   const paddingX = (() => {
@@ -125,17 +131,34 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const crosshairCss: CSSObject = {
     position: 'absolute',
     inset: 0,
+    transition: 'all 0.3s ease',
+    transform: 'scale(1.3)',
+    opacity: 0,
+    '& > span': {
+      position: 'absolute',
+      width: `calc(${height} / 4)`,
+      height: `calc(${height} / 4)`,
+      border: `${crosshairSize} solid ${tokens.color['button-crosshair']}`,
+    },
+    '& > span:nth-child(1)': { top: 0, left: 0, borderBottom: 'none', borderRight: 'none' },
+    '& > span:nth-child(2)': { top: 0, right: 0, borderBottom: 'none', borderLeft: 'none' },
+    '& > span:nth-child(3)': { bottom: 0, right: 0, borderTop: 'none', borderLeft: 'none' },
+    '& > span:nth-child(4)': { bottom: 0, left: 0, borderTop: 'none', borderRight: 'none' },
+  }
+  const crosshairHoverCss: CSSObject = {
+    opacity: 1,
+    transform: isIcon ? 'scale(1.2)' : 'scale(1.1, 1.2)',
   }
   const surfaceCss: CSSObject = {
     ...(isPressed ? surfacePressed : isSelected ? surfaceSelected : surfaceDefault),
     ...(isNoop ? noopProps : {}),
-    ...(noCorners ? { borderRadius: tokens.radius['full'] } : {}),
+    ...(isIcon ? { borderRadius: tokens.radius['full'] } : {}),
     position: 'relative',
     transition: 'all 0.3s ease',
     width: '100%',
     height: '100%',
-    padding: noPadding ? 0 : `0 ${paddingX}`,
-    ...(pressing ? { transform: 'scale(0.95)' } : {}),
+    padding: isIcon ? 0 : `0 ${paddingX}`,
+    ...(pressing ? { transform: 'scale(0.9)' } : {}),
   }
   const childrenCss: CSSObject = {
     display: 'flex',
@@ -175,11 +198,15 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus':
-      isNoop || pressing
-        ? {}
-        : {
+    '&:hover, &:focus': isNoop
+      ? {}
+      : pressing
+        ? {
+            [crosshairSelector]: crosshairHoverCss,
             [surfaceSelector]: surfaceHovered,
+          }
+        : {
+            [crosshairSelector]: crosshairHoverCss,
           },
   }
 
@@ -195,7 +222,12 @@ export const useButtonBase = (props: BaseButtonProps) => {
 
   const content = (
     <>
-      <span css={crosshairCss}></span>
+      <span css={crosshairCss}>
+        <span />
+        <span />
+        <span />
+        <span />
+      </span>
       <span css={surfaceCss}>
         <span css={childrenCss}>{children}</span>
         {state === 'loading' && (

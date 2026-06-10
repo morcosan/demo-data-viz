@@ -350,6 +350,10 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.green-7}', dark: '{color.green-3}' },
     value: { light: 'oklch(0.7227 0.1920 140)', dark: 'oklch(0.9250 0.0806 140)' },
   },
+  'button-crosshair': {
+    ref: { light: '{color.green-7}', dark: '{color.green-3}' },
+    value: { light: 'oklch(0.7227 0.1920 140)', dark: 'oklch(0.9250 0.0806 140)' },
+  },
   'modal-overlay-subtle': {
     ref: { light: '{color.black-alpha-7}', dark: '{color.black-alpha-6}' },
     value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.24)' },
