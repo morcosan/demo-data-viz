@@ -1,8 +1,7 @@
 'use client'
 
 import { type CSSObject } from '@emotion/react'
-import { useThemeService } from '../../services/theme-service'
-import { useBaseButton } from '../_shared/use-base-button'
+import { useButtonBase } from '../_shared/use-button-base'
 import { type IconButtonProps } from './_types'
 
 export type { LinkType } from '../_shared/types'
@@ -11,30 +10,21 @@ export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './_type
 /** Fundamental component for user actions and navigation, displayed as icon */
 export const IconButton = (props: IconButtonProps) => {
   const { linkHref, linkType = 'internal', size = 'md', variant = 'primary', state = 'default' } = props
-  const { tokens } = useThemeService()
-  const { bindings, buttonBaseCss, content, height } = useBaseButton({
-    ...props,
-    linkType,
-    size,
-    state,
-    variant,
-  })
+  const baseProps = { ...props, linkType, size, state, variant, noCorners: true, noPadding: true }
+  const { bindings, buttonCss, content, height } = useButtonBase(baseProps)
 
-  const buttonCss: CSSObject = {
-    ...buttonBaseCss,
+  const rootCss: CSSObject = {
+    ...buttonCss,
     width: height,
     minWidth: height,
-    padding: 0,
-    borderRadius: tokens.radius['full'],
-    fontSize: tokens.fontSize['md'],
   }
 
   return linkHref ? (
-    <a {...bindings} css={buttonCss}>
+    <a {...bindings} css={rootCss}>
       {content}
     </a>
   ) : (
-    <button type="button" {...bindings} css={buttonCss}>
+    <button type="button" {...bindings} css={rootCss}>
       {content}
     </button>
   )

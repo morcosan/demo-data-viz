@@ -134,15 +134,13 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       color: '{color.white}',
-      backgroundColor: '{color.blue-11}',
-      border: '2px solid {color.blue-11}',
+      backgroundColor: '{color.blue-10}',
       borderRadius: '{radius.max}',
       boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.4500 0.1600 240)',
-      border: '2px solid oklch(0.4500 0.1600 240)',
+      backgroundColor: 'oklch(0.5200 0.1750 240)',
       borderRadius: '99px',
       boxShadow: {
         light: [
@@ -161,26 +159,22 @@ export const TOKENS__SURFACE = {
   'button-primary-hovered': {
     type: 'composite',
     ref: {
-      color: '{color.yellow-2}',
+      color: '{color.white}',
       backgroundColor: '{color.blue-9}',
-      border: '2px solid {color.blue-11}',
       borderRadius: '{radius.max}',
-      boxShadow: ['0 0 4px 0 {color.blue-9}', '{shadow.md}'],
+      boxShadow: '{shadow.md}',
     },
     value: {
-      color: 'oklch(0.9880 0.0320 103.00)',
+      color: 'oklch(1 0 0)',
       backgroundColor: 'oklch(0.5900 0.1620 240)',
-      border: '2px solid oklch(0.4500 0.1600 240)',
       borderRadius: '99px',
       boxShadow: {
         light: [
-          '0 0 4px 0 oklch(0.5900 0.1620 240)',
           '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.03)',
           '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.16)',
           '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
         ],
         dark: [
-          '0 0 4px 0 oklch(0.5900 0.1620 240)',
           '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.06)',
           '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.4)',
           '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
@@ -192,28 +186,24 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       color: '{color.white}',
-      backgroundColor: '{color.blue-12}',
-      border: '2px solid {color.blue-13}',
+      backgroundColor: '{color.blue-9}',
       borderRadius: '{radius.max}',
-      boxShadow: ['0 0 4px 0 {color.blue-9}', '{shadow.sm}'],
+      boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.3900 0.1420 240)',
-      border: '2px solid oklch(0.3300 0.1200 240)',
+      backgroundColor: 'oklch(0.5900 0.1620 240)',
       borderRadius: '99px',
       boxShadow: {
         light: [
-          '0 0 4px 0 oklch(0.5900 0.1620 240)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
         ],
         dark: [
-          '0 0 4px 0 oklch(0.5900 0.1620 240)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
         ],
       },
     },
@@ -223,27 +213,23 @@ export const TOKENS__SURFACE = {
     ref: {
       color: '{color.white}',
       backgroundColor: '{color.blue-12}',
-      border: '2px solid {color.blue-13}',
       borderRadius: '{radius.max}',
-      boxShadow: ['0 0 4px 0 {color.blue-9}', '{shadow.sm}'],
+      boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(1 0 0)',
       backgroundColor: 'oklch(0.3900 0.1420 240)',
-      border: '2px solid oklch(0.3300 0.1200 240)',
       borderRadius: '99px',
       boxShadow: {
         light: [
-          '0 0 4px 0 oklch(0.5900 0.1620 240)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
         ],
         dark: [
-          '0 0 4px 0 oklch(0.5900 0.1620 240)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
         ],
       },
     },

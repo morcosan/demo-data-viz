@@ -19,12 +19,14 @@ interface BaseButtonProps extends HtmlDataProps {
   state: ClickableState
   linkHref?: string
   linkType?: LinkType
+  noCorners?: boolean
+  noPadding?: boolean
   className?: string
   style?: CSSProperties
 }
 
-export const useBaseButton = (props: BaseButtonProps) => {
-  const { ariaDescription, children, className, size, style, tooltip, state, variant } = props
+export const useButtonBase = (props: BaseButtonProps) => {
+  const { ariaDescription, children, className, size, style, tooltip, state, variant, noCorners, noPadding } = props
   const { tokens } = useThemeService()
   const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
@@ -42,6 +44,29 @@ export const useBaseButton = (props: BaseButtonProps) => {
     if (size === 'lg') return tokens.spacing['button-h-lg']
     return ''
   })()
+  const paddingX = (() => {
+    // Subtract border from padding
+    if (isMenuItem) return `calc(${tokens.spacing['button-px-item']} - 1px)`
+    if (size === 'xs') return `calc(${tokens.spacing['button-px-xs']} - 1px)`
+    if (size === 'sm') return `calc(${tokens.spacing['button-px-sm']} - 1px)`
+    if (size === 'md') return `calc(${tokens.spacing['button-px-md']} - 1px)`
+    if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
+  })()
+  const spinnerSize = (() => {
+    if (size === 'xs') return tokens.spacing['xs-5']
+    if (size === 'sm') return tokens.spacing['xs-7']
+    if (size === 'md') return tokens.spacing['xs-9']
+    if (size === 'lg') return tokens.spacing['sm-0']
+    return ''
+  })()
+  const fontSize = (() => {
+    if (isMenuItem) return 'unset'
+    if (size === 'xs') return tokens.fontSize['xs']
+    if (size === 'sm') return tokens.fontSize['sm']
+    if (size === 'md') return tokens.fontSize['md']
+    if (size === 'lg') return tokens.fontSize['lg']
+  })()
+  const fontWeight = isMenuItem ? tokens.fontWeight['sm'] : tokens.fontWeight['md']
 
   const surfaceDefault = ((): CSSObject => {
     if (variant === 'primary') return tokens.surface['button-primary']
@@ -95,29 +120,22 @@ export const useBaseButton = (props: BaseButtonProps) => {
     return {}
   })()
 
-  const buttonBaseCss: CSSObject = {
+  const crosshairSelector = '& > span:nth-child(1)'
+  const surfaceSelector = '& > span:nth-child(2)'
+  const crosshairCss: CSSObject = {
+    position: 'absolute',
+    inset: 0,
+  }
+  const surfaceCss: CSSObject = {
     ...(isPressed ? surfacePressed : isSelected ? surfaceSelected : surfaceDefault),
     ...(isNoop ? noopProps : {}),
+    ...(noCorners ? { borderRadius: tokens.radius['full'] } : {}),
     position: 'relative',
-    display: 'inline-flex',
-    alignItems: 'center',
-    verticalAlign: 'middle',
-    lineHeight: 1,
-    fill: 'currentColor',
-    stroke: 'currentColor',
-    height: height,
-    minHeight: height,
-    outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
-    opacity: isNoop ? 0.4 : 1,
-    cursor: isNoop ? 'not-allowed' : 'pointer',
     transition: 'all 0.3s ease',
-    '&:hover, &:focus':
-      isNoop || pressing
-        ? {}
-        : {
-            ...surfaceHovered,
-            transform: 'translateY(-2px)',
-          },
+    width: '100%',
+    height: '100%',
+    padding: noPadding ? 0 : `0 ${paddingX}`,
+    ...(pressing ? { transform: 'scale(0.95)' } : {}),
   }
   const childrenCss: CSSObject = {
     display: 'flex',
@@ -125,28 +143,16 @@ export const useBaseButton = (props: BaseButtonProps) => {
     justifyContent: isMenuItem ? 'unset' : 'center',
     textAlign: isMenuItem ? 'left' : 'center',
     width: '100%',
+    height: '100%',
     opacity: state === 'loading' ? 0 : 1,
     pointerEvents: 'none',
     userSelect: 'none',
+    lineHeight: 1,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    fill: 'currentColor',
+    stroke: 'currentColor',
   }
-
-  const bindings = {
-    ...clickableBindings,
-    title: tooltip,
-    className: className,
-    style: style,
-    'aria-description': ariaDescription,
-    css: buttonBaseCss,
-    ...dataProps,
-  }
-
-  const spinnerSize = (() => {
-    if (size === 'xs') return tokens.spacing['xs-5']
-    if (size === 'sm') return tokens.spacing['xs-7']
-    if (size === 'md') return tokens.spacing['xs-9']
-    if (size === 'lg') return tokens.spacing['sm-0']
-    return ''
-  })()
   const spinnerCss: CSSObject = {
     position: 'absolute',
     inset: 0,
@@ -160,22 +166,50 @@ export const useBaseButton = (props: BaseButtonProps) => {
     '--loader-size': `${spinnerSize} !important`,
     '--loader-color': `${isSolid ? tokens.color['text-inverse'] : tokens.color['text-subtle']} !important`,
   }
+  const buttonCss: CSSObject = {
+    position: 'relative',
+    display: 'inline-flex',
+    height: height,
+    minHeight: height,
+    borderRadius: surfaceCss.borderRadius,
+    outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
+    opacity: isNoop ? 0.4 : 1,
+    cursor: isNoop ? 'not-allowed' : 'pointer',
+    '&:hover, &:focus':
+      isNoop || pressing
+        ? {}
+        : {
+            [surfaceSelector]: surfaceHovered,
+          },
+  }
+
+  const bindings = {
+    ...clickableBindings,
+    title: tooltip,
+    className: className,
+    style: style,
+    'aria-description': ariaDescription,
+    css: buttonCss,
+    ...dataProps,
+  }
 
   const content = (
     <>
-      <span css={childrenCss}>{children}</span>
-
-      {state === 'loading' && (
-        <span css={spinnerCss}>
-          <Loader css={spinnerIconCss} />
-        </span>
-      )}
+      <span css={crosshairCss}></span>
+      <span css={surfaceCss}>
+        <span css={childrenCss}>{children}</span>
+        {state === 'loading' && (
+          <span css={spinnerCss}>
+            <Loader css={spinnerIconCss} />
+          </span>
+        )}
+      </span>
     </>
   )
 
   return {
     bindings,
-    buttonBaseCss,
+    buttonCss,
     content,
     height,
     isMenuItem,

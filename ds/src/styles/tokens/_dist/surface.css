@@ -74,9 +74,8 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-xs);
-    border: 2px solid var(--ds-color-blue-11);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-blue-11);
+    background-color: var(--ds-color-blue-10);
     color: var(--ds-color-white);
   }
 }
@@ -84,25 +83,19 @@
 @utility ds-surface-button-primary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 4px 0 var(--ds-color-blue-9),
-      var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-blue-11);
+    box-shadow: var(--ds-shadow-md);
     border-radius: var(--ds-radius-max);
     background-color: var(--ds-color-blue-9);
-    color: var(--ds-color-yellow-2);
+    color: var(--ds-color-white);
   }
 }
 
 @utility ds-surface-button-primary-pressed {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 4px 0 var(--ds-color-blue-9),
-      var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-blue-13);
+    box-shadow: var(--ds-shadow-xs);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-blue-12);
+    background-color: var(--ds-color-blue-9);
     color: var(--ds-color-white);
   }
 }
@@ -110,10 +103,7 @@
 @utility ds-surface-button-primary-selected {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 4px 0 var(--ds-color-blue-9),
-      var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-blue-13);
+    box-shadow: var(--ds-shadow-xs);
     border-radius: var(--ds-radius-max);
     background-color: var(--ds-color-blue-12);
     color: var(--ds-color-white);
