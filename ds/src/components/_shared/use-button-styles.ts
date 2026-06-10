@@ -34,10 +34,10 @@ export const useButtonStyles = ({ size, variant }: Props) => {
     if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
   })()
   const scalePressed = (() => {
-    if (size === 'xs') return '0.9'
+    if (size === 'xs') return '0.88'
     if (size === 'sm') return '0.9'
-    if (size === 'md') return '0.95'
-    if (size === 'lg') return '0.95'
+    if (size === 'md') return '0.92'
+    if (size === 'lg') return '0.92'
     return ''
   })()
   const spinnerSize = (() => {

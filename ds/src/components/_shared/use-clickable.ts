@@ -28,8 +28,8 @@ export const useClickable = (props: ClickableProps) => {
       onClick?.(event)
 
       if (isA11yModePointer()) {
-        const button = event.target as HTMLElement
-        button.blur()
+        const button = (event.target as HTMLElement).closest('button')
+        button?.blur()
       }
 
       if (linkHref && linkType === 'internal') {

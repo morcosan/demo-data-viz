@@ -46,28 +46,48 @@ export const useButtonBase = (props: BaseButtonProps) => {
     return {}
   })()
 
-  const crosshairSelector = '& > span:nth-child(1)'
-  const surfaceSelector = '& > span:nth-child(2)'
+  const spinnerCss: CSSObject = {
+    position: 'absolute',
+    inset: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    pointerEvents: 'none',
+    userSelect: 'none',
+  }
+  const spinnerIconCss: CSSObject = {
+    '--loader-size': `${styles.spinnerSize} !important`,
+    '--loader-color': `${isSolid ? tokens.color['text-inverse'] : tokens.color['text-subtle']} !important`,
+  }
   const crosshairCss: CSSObject = {
     position: 'absolute',
     inset: 0,
+    border: `1px dotted ${tokens.color['button-crosshair']}`,
     transition: 'all 0.3s ease',
     transform: 'scale(1.3)',
     opacity: 0,
+    zIndex: 1,
+    '&::after': {
+      position: 'absolute',
+      inset: 0,
+      content: '""',
+      backgroundColor: tokens.color['button-crosshair'],
+      opacity: 0.05,
+    },
     '& > span': {
       position: 'absolute',
       width: `calc(${styles.height} / 4)`,
       height: `calc(${styles.height} / 4)`,
       border: `${styles.crosshairSize} solid ${tokens.color['button-crosshair']}`,
     },
-    '& > span:nth-child(1)': { top: 0, left: 0, borderBottom: 'none', borderRight: 'none' },
-    '& > span:nth-child(2)': { top: 0, right: 0, borderBottom: 'none', borderLeft: 'none' },
-    '& > span:nth-child(3)': { bottom: 0, right: 0, borderTop: 'none', borderLeft: 'none' },
-    '& > span:nth-child(4)': { bottom: 0, left: 0, borderTop: 'none', borderRight: 'none' },
+    '& > span:nth-of-type(1)': { top: '-2px', left: '-2px', borderBottom: 'none', borderRight: 'none' },
+    '& > span:nth-of-type(2)': { top: '-2px', right: '-2px', borderBottom: 'none', borderLeft: 'none' },
+    '& > span:nth-of-type(3)': { bottom: '-2px', right: '-2px', borderTop: 'none', borderLeft: 'none' },
+    '& > span:nth-of-type(4)': { bottom: '-2px', left: '-2px', borderTop: 'none', borderRight: 'none' },
   }
   const crosshairHoverCss: CSSObject = {
     opacity: 1,
-    transform: isIcon ? 'scale(1.2)' : 'scale(1.1, 1.2)',
+    transform: isIcon ? 'scale(1.2)' : 'scale(1.05, 1.2)',
   }
   const surfaceCss: CSSObject = {
     ...(isPressed ? styles.surfacePressed : isSelected ? styles.surfaceSelected : styles.surfaceDefault),
@@ -96,19 +116,8 @@ export const useButtonBase = (props: BaseButtonProps) => {
     fill: 'currentColor',
     stroke: 'currentColor',
   }
-  const spinnerCss: CSSObject = {
-    position: 'absolute',
-    inset: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    pointerEvents: 'none',
-    userSelect: 'none',
-  }
-  const spinnerIconCss: CSSObject = {
-    '--loader-size': `${styles.spinnerSize} !important`,
-    '--loader-color': `${isSolid ? tokens.color['text-inverse'] : tokens.color['text-subtle']} !important`,
-  }
+  const crosshairSelector = '& > span:nth-of-type(1)'
+  const surfaceSelector = '& > span:nth-of-type(2)'
   const buttonCss: CSSObject = {
     position: 'relative',
     display: 'inline-flex',
@@ -123,10 +132,10 @@ export const useButtonBase = (props: BaseButtonProps) => {
       : pressing
         ? {
             [crosshairSelector]: crosshairHoverCss,
-            [surfaceSelector]: styles.surfaceHovered,
           }
         : {
             [crosshairSelector]: crosshairHoverCss,
+            [surfaceSelector]: styles.surfaceHovered,
           },
   }
 
