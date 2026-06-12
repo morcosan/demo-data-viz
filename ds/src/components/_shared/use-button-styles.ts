@@ -81,23 +81,23 @@ export const useButtonStyles = ({ size, variant }: Props) => {
   const surfacePressed = ((): CSSObject => {
     if (variant === 'primary') return tokens.surface['button-primary-pressed']
     if (variant === 'secondary') return tokens.surface['button-secondary-pressed']
-    if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
-    if (variant === 'optional') return tokens.surface['button-optional-hovered']
-    if (variant === 'danger') return tokens.surface['button-danger-hovered']
-    if (variant === 'caution') return tokens.surface['button-caution-hovered']
-    if (variant === 'menu-default') return tokens.surface['button-tertiary-hovered']
-    if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
+    if (variant === 'tertiary') return tokens.surface['button-tertiary-pressed']
+    if (variant === 'optional') return tokens.surface['button-optional-pressed']
+    if (variant === 'danger') return tokens.surface['button-danger-pressed']
+    if (variant === 'caution') return tokens.surface['button-caution-pressed']
+    if (variant === 'menu-default') return tokens.surface['button-tertiary-pressed']
+    if (variant === 'menu-caution') return tokens.surface['button-caution-pressed']
     return {}
   })()
   const surfaceSelected = ((): CSSObject => {
     if (variant === 'primary') return tokens.surface['button-primary-selected']
-    if (variant === 'secondary') return tokens.surface['button-secondary-pressed']
-    if (variant === 'tertiary') return tokens.surface['button-tertiary-hovered']
-    if (variant === 'optional') return tokens.surface['button-optional-hovered']
-    if (variant === 'danger') return tokens.surface['button-danger-hovered']
-    if (variant === 'caution') return tokens.surface['button-caution-hovered']
-    if (variant === 'menu-default') return tokens.surface['button-tertiary-hovered']
-    if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
+    if (variant === 'secondary') return tokens.surface['button-secondary-selected']
+    if (variant === 'tertiary') return tokens.surface['button-tertiary-selected']
+    if (variant === 'optional') return tokens.surface['button-optional-selected']
+    if (variant === 'danger') return tokens.surface['button-danger-selected']
+    if (variant === 'caution') return tokens.surface['button-caution-selected']
+    if (variant === 'menu-default') return tokens.surface['button-tertiary-selected']
+    if (variant === 'menu-caution') return tokens.surface['button-caution-selected']
     return {}
   })()
 

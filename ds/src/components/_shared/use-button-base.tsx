@@ -40,7 +40,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
 
   const noopProps = ((): CSSObject => {
     const noopColor = tokens.color['text-subtle']
-    if (isSolid) return { backgroundColor: noopColor, borderColor: noopColor }
+    if (isSolid) return { color: tokens.color['text-inverse'], backgroundColor: noopColor, borderColor: noopColor }
     if (isOutline) return { color: noopColor, backgroundColor: 'transparent', borderColor: noopColor }
     if (isTextOnly || isMenuItem) return { color: noopColor }
     return {}
@@ -64,7 +64,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     inset: 0,
     border: `1px dotted ${tokens.color['button-crosshair']}`,
     transition: 'all 0.3s ease',
-    transform: 'scale(1.3)',
+    transform: 'scale(1.35)',
     opacity: 0,
     zIndex: 1,
     '&::after': {
@@ -87,7 +87,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   }
   const crosshairHoverCss: CSSObject = {
     opacity: 1,
-    transform: isIcon ? 'scale(1.2)' : 'scale(1.05, 1.2)',
+    transform: isIcon ? 'scale(1.2)' : 'scale(1.05, 1.25)',
   }
   const surfaceCss: CSSObject = {
     ...(isPressed ? styles.surfacePressed : isSelected ? styles.surfaceSelected : styles.surfaceDefault),
