@@ -216,7 +216,7 @@ const PivotQueryMemo = memo(function PivotQueryMemo(props: PivotQueryProps) {
             query && (
               <IconButton
                 tooltip={t('dataViz.action.clearQuery')}
-                variant="text-subtle"
+                variant="optional"
                 size="xs"
                 onClick={handleQueryClear}
               >

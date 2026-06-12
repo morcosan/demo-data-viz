@@ -91,8 +91,8 @@ export const NavMenu = (props: NavMenuProps) => {
                 <Button
                   key={item.path}
                   linkHref={item.path}
-                  variant={selected ? 'item-solid-secondary' : 'item-text-default'}
                   state={selected ? 'selected' : 'default'}
+                  variant="menu-default"
                   size="lg"
                   className="w-full"
                   onClick={closeMenu}

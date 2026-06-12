@@ -27,7 +27,7 @@ const providers = [
   hoc(QueryProvider, {}),
   hoc(RouterProvider, {}),
   hoc(LoadingScreen, {}),
-  hoc(ThemeService, { cookieKeyMode: 'app-color-mode', cookieKeyTheme: 'app-color-theme' }),
+  hoc(ThemeService, { cookieKeyMode: 'app-color-mode' }),
 ]
 
 export const Providers = ({ children }: ReactProps) => {

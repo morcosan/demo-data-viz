@@ -19,7 +19,7 @@ export const StatsCard = ({ type, label, onClick, children, className }: StatsCa
       )}
     >
       {type === 'button' ? (
-        <Button variant="text-default" size="sm" className="px-xs-3!" onClick={onClick}>
+        <Button variant="optional" size="sm" className="px-xs-3!" onClick={onClick}>
           {children}
         </Button>
       ) : (

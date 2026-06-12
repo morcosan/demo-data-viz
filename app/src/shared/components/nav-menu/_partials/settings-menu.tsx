@@ -58,14 +58,16 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
           data-testid="color-mode-toggle"
         >
           <Button
-            variant={isLightMode ? 'solid-secondary' : 'text-default'}
+            state={isLightMode ? 'selected' : 'default'}
+            variant="tertiary"
             size="xs"
             onClick={() => changeColorMode('light')}
           >
             ☀️ {t('core.label.modeLight')}&nbsp;
           </Button>
           <Button
-            variant={isDarkMode ? 'solid-secondary' : 'text-default'}
+            state={isDarkMode ? 'selected' : 'default'}
+            variant="tertiary"
             size="xs"
             onClick={() => changeColorMode('dark')}
           >
@@ -77,28 +79,28 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
       <hr className={hrClass} />
 
       {/* DS STORYBOOK */}
-      <Button linkHref={dsStorybookUrl} linkType="external" variant="item-text-default">
+      <Button linkHref={dsStorybookUrl} linkType="external" variant="menu-default">
         <StorybookSvg className={actionIconClass} />
         {t('core.label.dsStorybook')}
         <NewTabSvg className={newTabIconClass} />
       </Button>
 
       {/* APP STORYBOOK */}
-      <Button linkHref={appStorybookUrl} linkType="external" variant="item-text-default">
+      <Button linkHref={appStorybookUrl} linkType="external" variant="menu-default">
         <StorybookSvg className={actionIconClass} />
         {t('core.label.appStorybook')}
         <NewTabSvg className={newTabIconClass} />
       </Button>
 
       {/* E2E TESTS */}
-      <Button linkHref={e2eTestsUrl} linkType="external" variant="item-text-default">
+      <Button linkHref={e2eTestsUrl} linkType="external" variant="menu-default">
         <PlaywrightSvg className={cx(actionIconClass, 'h-xs-9 w-xs-9 -ml-xs-0')} />
         {t('core.label.e2eTests')}
         <NewTabSvg className={newTabIconClass} />
       </Button>
 
       {/* REPO */}
-      <Button linkHref="https://github.com/morcosan/demo-data-viz" linkType="external" variant="item-text-default">
+      <Button linkHref="https://github.com/morcosan/demo-data-viz" linkType="external" variant="menu-default">
         {Boolean(isLightMode) && <GithubBlackSvg className={actionIconClass} />}
         {Boolean(isDarkMode) && <GithubWhiteSvg className={actionIconClass} />}
         {t('core.label.githubRepo')}
@@ -108,7 +110,7 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
       <hr className={hrClass} />
 
       {/* SETTINGS */}
-      <Button linkHref="/settings" variant="item-text-default" onClick={closeMenuFn}>
+      <Button linkHref="/settings" variant="menu-default" onClick={closeMenuFn}>
         <SettingsSvg className={actionIconClass} />
         {t('core.label.settings')}
       </Button>

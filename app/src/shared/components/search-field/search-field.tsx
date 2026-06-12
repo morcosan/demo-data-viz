@@ -49,7 +49,7 @@ export const SearchField = (props: SearchFieldProps) => {
           query && (
             <IconButton
               tooltip={t('core.action.clearSearch')}
-              variant="text-subtle"
+              variant="optional"
               size="xs"
               onClick={() => handleQueryChange('')}
             >

@@ -11,7 +11,7 @@ interface Props extends ReactProps {
 export const SettingsButton = ({ iconWidth, collapsed, highlight, onClick, className }: Props) => {
   return (
     <Button
-      variant="item-text-default"
+      variant="menu-default"
       size="lg"
       className={cx('w-full', className)}
       data-testid="settings-button"

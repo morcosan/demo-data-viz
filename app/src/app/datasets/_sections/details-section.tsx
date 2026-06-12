@@ -158,14 +158,14 @@ export const DetailsSection = ({ onClickBack }: Props) => {
 
           <div className="gap-xs-2 ml-auto flex">
             {isViewportMinSM ? (
-              <Button variant="text-default" size="sm" onClick={() => setOpenedDetails(true)}>
+              <Button variant="optional" size="sm" onClick={() => setOpenedDetails(true)}>
                 <InfoSvg className="h-xs-8 mr-xs-2" />
                 {t('core.label.details')}
               </Button>
             ) : (
               <IconButton
                 tooltip={t('core.label.details')}
-                variant="text-default"
+                variant="optional"
                 size="sm"
                 className="ml-auto"
                 onClick={() => setOpenedDetails(true)}

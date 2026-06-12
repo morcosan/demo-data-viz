@@ -39,7 +39,8 @@ export const ColCell = ({ cell, col, width, sticky }: Props) => {
         {cell.column.getCanSort() && (
           <IconButton
             tooltip={t('core.action.sort')}
-            variant={sort ? 'solid-secondary' : 'text-default'}
+            state={sort ? 'selected' : 'default'}
+            variant="optional"
             size="sm"
             className="rounded-full! before:rounded-full! after:rounded-full!"
             onClick={cell.column.getToggleSortingHandler()}

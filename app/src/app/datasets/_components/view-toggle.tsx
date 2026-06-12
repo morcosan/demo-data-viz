@@ -19,22 +19,31 @@ export const ViewToggle = ({ view, onChange }: Props) => {
       )}
     >
       <Button
-        variant={view === 'table' ? 'solid-secondary' : 'text-default'}
+        state={view === 'table' ? 'selected' : 'default'}
+        variant="tertiary"
         size="sm"
         onClick={() => onChange('table')}
       >
         <TableSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewTable')}
       </Button>
+
       <Button
-        variant={view === 'chart' ? 'solid-secondary' : 'text-default'}
+        state={view === 'chart' ? 'selected' : 'default'}
+        variant="tertiary"
         size="sm"
         onClick={() => onChange('chart')}
       >
         <ChartSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewChart')}
       </Button>
-      <Button variant={view === 'map' ? 'solid-secondary' : 'text-default'} size="sm" onClick={() => onChange('map')}>
+
+      <Button
+        state={view === 'map' ? 'selected' : 'default'}
+        variant="tertiary"
+        size="sm"
+        onClick={() => onChange('map')}
+      >
         <MapSvg className="h-xs-6 mr-xs-1" />
         {t('dataViz.label.viewMap')}
       </Button>
