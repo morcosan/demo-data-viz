@@ -92,12 +92,12 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const surfaceCss: CSSObject = {
     ...(isPressed ? styles.surfacePressed : isSelected ? styles.surfaceSelected : styles.surfaceDefault),
     ...(isNoop ? noopProps : {}),
-    ...(isIcon ? { borderRadius: tokens.radius['full'] } : {}),
     position: 'relative',
     transition: 'all 0.3s ease',
     width: '100%',
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
+    borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
     ...(isPressed ? { transform: `scale(${styles.scalePressed})` } : {}),
   }
   const childrenCss: CSSObject = {
