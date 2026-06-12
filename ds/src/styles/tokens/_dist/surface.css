@@ -129,25 +129,24 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-blue-9);
+    border: 2px solid var(--ds-color-blue-10);
     border-radius: var(--ds-radius-max);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-2);
     color: var(--ds-color-blue-11);
-    text-shadow: 0 0 1px var(--ds-color-white);
+    text-shadow: 0 0 9px var(--ds-color-white);
   }
 }
 
 @utility ds-surface-button-secondary-pressed {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-blue-9);
+    border: 2px solid var(--ds-color-blue-10);
     border-radius: var(--ds-radius-max);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-2);
     color: var(--ds-color-blue-11);
-    text-shadow: 0 0 1px var(--ds-color-white);
+    text-shadow: 0 0 9px var(--ds-color-white);
   }
 }
 
