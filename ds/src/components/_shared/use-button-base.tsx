@@ -72,7 +72,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
       inset: 0,
       content: '""',
       backgroundColor: tokens.color['button-crosshair'],
-      opacity: 0.05,
+      opacity: 0.01,
     },
     '& > span': {
       position: 'absolute',

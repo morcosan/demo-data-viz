@@ -75,7 +75,7 @@
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
     border-radius: var(--ds-radius-max);
-    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-3) 50% 100%);
+    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-4) 50% 100%);
     background-color: var(--ds-color-blue-11);
     color: var(--ds-color-blue-2);
   }
@@ -89,7 +89,6 @@
     background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-3) 50% 100%);
     background-color: var(--ds-color-blue-10);
     color: var(--ds-color-white);
-    text-shadow: 0 0 1px var(--ds-color-white);
   }
 }
 
@@ -100,7 +99,6 @@
     background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-3) 50% 100%);
     background-color: var(--ds-color-blue-10);
     color: var(--ds-color-white);
-    text-shadow: 0 0 1px var(--ds-color-white);
   }
 }
 
@@ -117,11 +115,12 @@
 @utility ds-surface-button-secondary {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 2px solid var(--ds-color-blue-10);
+    box-shadow: var(--ds-shadow-sm);
+    border: 1px solid var(--ds-color-blue-11);
     border-radius: var(--ds-radius-max);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-9) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-1);
-    color: var(--ds-color-blue-11);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-2);
+    color: var(--ds-color-blue-12);
   }
 }
 
@@ -129,24 +128,22 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-blue-10);
+    border: 1px solid var(--ds-color-blue-10);
     border-radius: var(--ds-radius-max);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-2);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-1);
     color: var(--ds-color-blue-11);
-    text-shadow: 0 0 9px var(--ds-color-white);
   }
 }
 
 @utility ds-surface-button-secondary-pressed {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 2px solid var(--ds-color-blue-10);
+    border: 1px solid var(--ds-color-blue-10);
     border-radius: var(--ds-radius-max);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-2);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-1);
     color: var(--ds-color-blue-11);
-    text-shadow: 0 0 9px var(--ds-color-white);
   }
 }
 
@@ -166,7 +163,8 @@
 @utility ds-surface-button-tertiary {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 2px solid transparent;
+    border: 1px dotted transparent;
+    border-radius: var(--ds-radius-max);
     color: var(--ds-color-blue-12);
   }
 }
@@ -174,26 +172,21 @@
 @utility ds-surface-button-tertiary-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-2),
-      var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-4);
+    box-shadow: var(--ds-shadow-sm);
+    border: 1px dotted var(--ds-color-blue-6);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-yellow-14);
+    background-color: var(--ds-color-white-alpha-10);
+    color: var(--ds-color-blue-10);
   }
 }
 
 @utility ds-surface-button-tertiary-pressed {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-2),
-      var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-4);
+    border: 1px dotted var(--ds-color-blue-6);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-yellow-14);
+    background-color: var(--ds-color-white-alpha-10);
+    color: var(--ds-color-blue-10);
   }
 }
 
@@ -213,7 +206,8 @@
 @utility ds-surface-button-optional {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 2px solid transparent;
+    border: 1px dotted transparent;
+    border-radius: var(--ds-radius-max);
     color: var(--ds-color-text-subtle);
   }
 }
@@ -221,13 +215,11 @@
 @utility ds-surface-button-optional-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-2),
-      var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-4);
+    box-shadow: var(--ds-shadow-sm);
+    border: 1px dotted var(--ds-color-grey-7);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-yellow-13);
+    background-color: var(--ds-color-white-alpha-10);
+    color: var(--ds-color-text-subtle);
   }
 }
 
@@ -237,10 +229,10 @@
     box-shadow:
       0 0 7px 2px var(--ds-color-yellow-2),
       var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-4);
+    border: 1px dotted var(--ds-color-grey-7);
     border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-yellow-13);
+    background-color: var(--ds-color-white-alpha-10);
+    color: var(--ds-color-text-subtle);
   }
 }
 
