@@ -56,19 +56,18 @@ const CrosshairService = ({ enabled, children }: Props) => {
     let currElem: HTMLElement | null = null
 
     const getHoveredElement = (x: number, y: number): HTMLElement | null => {
-      let bestElem: HTMLElement | null = null
-      let bestArea = Infinity
-      for (const elem of registryRef.current) {
-        const rect = elem.getBoundingClientRect()
-        if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-          const area = rect.width * rect.height
-          if (area < bestArea) {
-            bestElem = elem
-            bestArea = area
-          }
+      const topmost = document.elementFromPoint(x, y)
+      if (!topmost) return null
+
+      let node: Element | null = topmost
+      while (node) {
+        if (node instanceof HTMLElement && registryRef.current.has(node)) {
+          return node
         }
+        node = node.parentElement
       }
-      return bestElem
+
+      return null
     }
 
     const onMouseMove = (event: MouseEvent) => {
