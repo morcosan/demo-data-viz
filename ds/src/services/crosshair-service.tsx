@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { wait } from '../utilities/various-utils'
 import { Crosshair } from './_partials/crosshair'
 import { useDomRegistry } from './_partials/use-dom-registry'
 
@@ -80,9 +81,8 @@ const CrosshairService = ({ children }: ReactProps) => {
       currElem = elem
       const rect = elem.getBoundingClientRect()
       const id = nextId++
-      const entry: CrosshairEntry = { id, rect, visible: true }
-
-      setCrosshairs((prev) => [...prev.map((entry) => ({ ...entry, visible: false })), entry])
+      setCrosshairs((prev) => [...prev, { id, rect, visible: false }])
+      wait(1).then(() => setCrosshairs((prev) => [...prev.map((entry) => ({ ...entry, visible: entry.id === id }))]))
       animTimerRef.current = setTimeout(
         () => setCrosshairs((prev) => prev.filter((entry) => entry.id === id)),
         ANIM_DURATION,
@@ -100,8 +100,8 @@ const CrosshairService = ({ children }: ReactProps) => {
   return (
     <Context.Provider value={store}>
       {children}
-      {crosshairs.map((c) => (
-        <Crosshair key={c.id} visible={c.visible} targetRect={c.rect} />
+      {crosshairs.map((entry) => (
+        <Crosshair key={entry.id} visible={entry.visible} targetRect={entry.rect} />
       ))}
     </Context.Provider>
   )
