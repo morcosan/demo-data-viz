@@ -3,7 +3,7 @@ export type LinkType = 'internal' | 'external' | 'inactive'
 export type ClickableState = 'default' | 'pressed' | 'selected' | 'loading' | 'disabled'
 
 export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
-export type BaseVariant =
+export type BaseButtonVariant =
   | 'primary'
   | 'secondary'
   | 'default'

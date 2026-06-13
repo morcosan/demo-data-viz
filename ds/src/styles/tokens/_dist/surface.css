@@ -90,25 +90,6 @@
   }
 }
 
-@utility ds-surface-button-primary-pressed {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-3) 50% 100%);
-    background-color: var(--ds-color-blue-10);
-    color: var(--ds-color-white);
-  }
-}
-
-@utility ds-surface-button-primary-selected {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-blue-12);
-    color: var(--ds-color-white);
-  }
-}
-
 @utility ds-surface-button-secondary {
   :where(html) &,
   [data-color-mode='light'] & {
@@ -131,29 +112,6 @@
   }
 }
 
-@utility ds-surface-button-secondary-pressed {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    border: 1px solid var(--ds-color-blue-10);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-1);
-    color: var(--ds-color-blue-11);
-  }
-}
-
-@utility ds-surface-button-secondary-selected {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    box-shadow:
-      0 0 6px 1px var(--ds-color-blue-2),
-      var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-blue-8);
-    border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-blue-3);
-    color: var(--ds-color-blue-11);
-  }
-}
-
 @utility ds-surface-button-default {
   :where(html) &,
   [data-color-mode='light'] & {
@@ -168,25 +126,6 @@
     box-shadow: var(--ds-shadow-sm);
     border: 1px dotted var(--ds-color-grey-7);
     background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-text-default);
-  }
-}
-
-@utility ds-surface-button-default-pressed {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    border: 1px dotted var(--ds-color-grey-7);
-    background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-text-default);
-  }
-}
-
-@utility ds-surface-button-default-selected {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-4);
-    background-color: var(--ds-color-yellow-1);
     color: var(--ds-color-text-default);
   }
 }
@@ -206,28 +145,6 @@
     border: 1px dotted var(--ds-color-grey-7);
     background-color: var(--ds-color-white-alpha-10);
     color: var(--ds-color-text-subtle);
-  }
-}
-
-@utility ds-surface-button-optional-pressed {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    border: 1px dotted var(--ds-color-grey-7);
-    background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-text-subtle);
-  }
-}
-
-@utility ds-surface-button-optional-selected {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-2),
-      var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-yellow-4);
-    border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-yellow-13);
   }
 }
 
@@ -251,26 +168,6 @@
   }
 }
 
-@utility ds-surface-button-danger-pressed {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
-    background-color: var(--ds-color-red-12);
-    color: var(--ds-color-white);
-  }
-}
-
-@utility ds-surface-button-danger-selected {
-  :where(html) &,
-  [data-color-mode='light'] & {
-    border-radius: var(--ds-radius-max);
-    background-image: repeating-linear-gradient(150deg, transparent 0% 50%, var(--ds-color-black-alpha-2) 50% 100%);
-    background-color: var(--ds-color-red-12);
-    color: var(--ds-color-white);
-    text-shadow: 0 0 1px var(--ds-color-white);
-  }
-}
-
 @utility ds-surface-button-caution {
   :where(html) &,
   [data-color-mode='light'] & {
@@ -289,24 +186,24 @@
   }
 }
 
-@utility ds-surface-button-caution-pressed {
+@utility ds-surface-button-selected {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 1px dotted var(--ds-color-red-9);
-    background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-red-10);
+    box-shadow: var(--ds-shadow-sm);
+    border: 2px solid var(--ds-color-yellow-9);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-yellow-3);
+    color: var(--ds-color-yellow-12);
   }
 }
 
-@utility ds-surface-button-caution-selected {
+@utility ds-surface-button-selected-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 5px 1px var(--ds-color-red-2),
-      var(--ds-shadow-md);
-    border: 2px solid var(--ds-color-red-4);
-    border-radius: var(--ds-radius-max);
-    background-color: var(--ds-color-red-1);
-    color: var(--ds-color-red-10);
+    box-shadow: var(--ds-shadow-sm);
+    border: 2px solid var(--ds-color-yellow-9);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-yellow-3);
+    color: var(--ds-color-yellow-12);
   }
 }

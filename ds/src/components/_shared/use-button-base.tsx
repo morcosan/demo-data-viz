@@ -4,7 +4,7 @@ import '@mantine/core/styles/Loader.css'
 import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
 import { useDataProps } from '../../utilities/react-utils'
-import { type BaseButtonSize, type BaseVariant, type ClickableState, type LinkType } from './types'
+import { type BaseButtonSize, type BaseButtonVariant, type ClickableState, type LinkType } from './types'
 import { useButtonStyles } from './use-button-styles'
 import { useClickable } from './use-clickable'
 
@@ -16,7 +16,7 @@ interface BaseButtonProps extends HtmlDataProps {
 
   // Props
   size: BaseButtonSize
-  variant: BaseVariant
+  variant: BaseButtonVariant
   state: ClickableState
   linkHref?: string
   linkType?: LinkType
@@ -30,7 +30,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const { tokens } = useThemeService()
   const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
-  const styles = useButtonStyles({ size, variant })
+  const styles = useButtonStyles({ state, size, variant })
 
   const isSelected = state === 'selected'
   const isSolid = variant === 'primary' || variant === 'danger'
@@ -71,8 +71,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
       position: 'absolute',
       inset: 0,
       content: '""',
-      backgroundColor: tokens.color['button-crosshair'],
-      opacity: 0.01,
     },
     '& > span': {
       position: 'absolute',
@@ -90,7 +88,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     transform: isIcon ? 'scale(1.2)' : 'scale(1.05, 1.25)',
   }
   const surfaceCss: CSSObject = {
-    ...(isPressed ? styles.surfacePressed : isSelected ? styles.surfaceSelected : styles.surfaceDefault),
+    ...(isPressed ? styles.surfaceHovered : styles.surfaceDefault),
     ...(isNoop ? noopProps : {}),
     position: 'relative',
     transition: 'all 0.3s ease',
@@ -98,7 +96,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
-    ...(isPressed ? { transform: `scale(${styles.scalePressed})` } : {}),
+    ...(isPressed ? { transform: `scale(${styles.scalePressed})`, boxShadow: 'none' } : {}),
   }
   const childrenCss: CSSObject = {
     display: 'flex',

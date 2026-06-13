@@ -1,13 +1,14 @@
 import { type CSSObject } from '@emotion/react'
 import { useThemeService } from '../../services/theme-service'
-import { type BaseButtonSize, type BaseVariant } from './types'
+import { type BaseButtonSize, type BaseButtonVariant, type ClickableState } from './types'
 
 interface Props {
+  state: ClickableState
   size: BaseButtonSize
-  variant: BaseVariant
+  variant: BaseButtonVariant
 }
 
-export const useButtonStyles = ({ size, variant }: Props) => {
+export const useButtonStyles = ({ state, size, variant }: Props) => {
   const { tokens } = useThemeService()
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
 
@@ -57,6 +58,7 @@ export const useButtonStyles = ({ size, variant }: Props) => {
   const fontWeight = isMenuItem ? tokens.fontWeight['sm'] : tokens.fontWeight['md']
 
   const surfaceDefault = ((): CSSObject => {
+    if (state === 'selected') return tokens.surface['button-selected']
     if (variant === 'primary') return tokens.surface['button-primary']
     if (variant === 'secondary') return tokens.surface['button-secondary']
     if (variant === 'default') return tokens.surface['button-default']
@@ -68,6 +70,7 @@ export const useButtonStyles = ({ size, variant }: Props) => {
     return {}
   })()
   const surfaceHovered = ((): CSSObject => {
+    if (state === 'selected') return tokens.surface['button-selected-hovered']
     if (variant === 'primary') return tokens.surface['button-primary-hovered']
     if (variant === 'secondary') return tokens.surface['button-secondary-hovered']
     if (variant === 'default') return tokens.surface['button-default-hovered']
@@ -76,28 +79,6 @@ export const useButtonStyles = ({ size, variant }: Props) => {
     if (variant === 'caution') return tokens.surface['button-caution-hovered']
     if (variant === 'menu-default') return tokens.surface['button-default-hovered']
     if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
-    return {}
-  })()
-  const surfacePressed = ((): CSSObject => {
-    if (variant === 'primary') return tokens.surface['button-primary-pressed']
-    if (variant === 'secondary') return tokens.surface['button-secondary-pressed']
-    if (variant === 'default') return tokens.surface['button-default-pressed']
-    if (variant === 'optional') return tokens.surface['button-optional-pressed']
-    if (variant === 'danger') return tokens.surface['button-danger-pressed']
-    if (variant === 'caution') return tokens.surface['button-caution-pressed']
-    if (variant === 'menu-default') return tokens.surface['button-default-pressed']
-    if (variant === 'menu-caution') return tokens.surface['button-caution-pressed']
-    return {}
-  })()
-  const surfaceSelected = ((): CSSObject => {
-    if (variant === 'primary') return tokens.surface['button-primary-selected']
-    if (variant === 'secondary') return tokens.surface['button-secondary-selected']
-    if (variant === 'default') return tokens.surface['button-default-selected']
-    if (variant === 'optional') return tokens.surface['button-optional-selected']
-    if (variant === 'danger') return tokens.surface['button-danger-selected']
-    if (variant === 'caution') return tokens.surface['button-caution-selected']
-    if (variant === 'menu-default') return tokens.surface['button-default-selected']
-    if (variant === 'menu-caution') return tokens.surface['button-caution-selected']
     return {}
   })()
 
@@ -111,7 +92,5 @@ export const useButtonStyles = ({ size, variant }: Props) => {
     spinnerSize,
     surfaceDefault,
     surfaceHovered,
-    surfacePressed,
-    surfaceSelected,
   }
 }

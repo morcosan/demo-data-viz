@@ -184,46 +184,6 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-primary-pressed': {
-    type: 'composite',
-    ref: {
-      color: '{color.white}',
-      backgroundColor: '{color.blue-10}',
-      backgroundImage: 'repeating-linear-gradient(150deg, transparent 0% 50%, {color.black-alpha-3} 50% 100%)',
-    },
-    value: {
-      color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5200 0.1750 240)',
-      backgroundImage:
-        'repeating-linear-gradient(150deg, transparent 0% 50%, oklch(0.1068 0.0519 317 / 0.09) 50% 100%)',
-    },
-  },
-  'button-primary-selected': {
-    type: 'composite',
-    ref: {
-      color: '{color.white}',
-      backgroundColor: '{color.blue-12}',
-      borderRadius: '{radius.max}',
-      boxShadow: '{shadow.sm}',
-    },
-    value: {
-      color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.3900 0.1420 240)',
-      borderRadius: '99px',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
-    },
-  },
   'button-secondary': {
     type: 'composite',
     ref: {
@@ -280,51 +240,6 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-secondary-pressed': {
-    type: 'composite',
-    ref: {
-      color: '{color.blue-11}',
-      backgroundColor: '{color.blue-1}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.blue-10}',
-    },
-    value: {
-      color: 'oklch(0.4500 0.1600 240)',
-      backgroundColor: 'oklch(0.9500 0.0200 240)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
-      border: '1px solid oklch(0.5200 0.1750 240)',
-    },
-  },
-  'button-secondary-selected': {
-    type: 'composite',
-    ref: {
-      color: '{color.blue-11}',
-      backgroundColor: '{color.blue-3}',
-      border: '2px solid {color.blue-8}',
-      borderRadius: '{radius.max}',
-      boxShadow: ['0 0 6px 1px {color.blue-2}', '{shadow.sm}'],
-    },
-    value: {
-      color: 'oklch(0.4500 0.1600 240)',
-      backgroundColor: 'oklch(0.8825 0.0531 240)',
-      border: '2px solid oklch(0.6500 0.1450 240)',
-      borderRadius: '99px',
-      boxShadow: {
-        light: [
-          '0 0 6px 1px oklch(0.9215 0.0348 240)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 0 6px 1px oklch(0.9215 0.0348 240)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
-    },
-  },
   'button-default': {
     type: 'composite',
     ref: { color: '{color.text-default}' },
@@ -351,45 +266,6 @@ export const TOKENS__SURFACE = {
         dark: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
           '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
-    },
-  },
-  'button-default-pressed': {
-    type: 'composite',
-    ref: {
-      color: '{color.text-default}',
-      backgroundColor: '{color.white-alpha-10}',
-      border: '1px dotted {color.grey-7}',
-    },
-    value: {
-      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
-      backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.7997 0.0103 308)',
-    },
-  },
-  'button-default-selected': {
-    type: 'composite',
-    ref: {
-      color: '{color.text-default}',
-      backgroundColor: '{color.yellow-1}',
-      border: '2px solid {color.yellow-4}',
-      boxShadow: '{shadow.md}',
-    },
-    value: {
-      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
-      backgroundColor: 'oklch(0.9950 0.0150 103.19)',
-      border: '2px solid oklch(0.9680 0.0780 101.50)',
-      boxShadow: {
-        light: [
-          '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.4)',
           '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
         ],
       },
@@ -424,49 +300,6 @@ export const TOKENS__SURFACE = {
         dark: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
           '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
-    },
-  },
-  'button-optional-pressed': {
-    type: 'composite',
-    ref: {
-      color: '{color.text-subtle}',
-      backgroundColor: '{color.white-alpha-10}',
-      border: '1px dotted {color.grey-7}',
-    },
-    value: {
-      color: { light: 'oklch(0.516 0.0186 308)', dark: 'oklch(0.7548 0.0151 308)' },
-      backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.7997 0.0103 308)',
-    },
-  },
-  'button-optional-selected': {
-    type: 'composite',
-    ref: {
-      color: '{color.yellow-13}',
-      backgroundColor: '{color.yellow-1}',
-      border: '2px solid {color.yellow-4}',
-      borderRadius: '{radius.max}',
-      boxShadow: ['0 0 7px 2px {color.yellow-2}', '{shadow.md}'],
-    },
-    value: {
-      color: 'oklch(0.4600 0.1020 67.00)',
-      backgroundColor: 'oklch(0.9950 0.0150 103.19)',
-      border: '2px solid oklch(0.9680 0.0780 101.50)',
-      borderRadius: '99px',
-      boxShadow: {
-        light: [
-          '0 0 7px 2px oklch(0.9880 0.0320 103.00)',
-          '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 0 7px 2px oklch(0.9880 0.0320 103.00)',
-          '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.4)',
           '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
         ],
       },
@@ -526,38 +359,6 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-danger-pressed': {
-    type: 'composite',
-    ref: {
-      color: '{color.white}',
-      backgroundColor: '{color.red-12}',
-      backgroundImage: 'repeating-linear-gradient(150deg, transparent 0% 50%, {color.black-alpha-2} 50% 100%)',
-    },
-    value: {
-      color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5696 0.2145 30)',
-      backgroundImage:
-        'repeating-linear-gradient(150deg, transparent 0% 50%, oklch(0.1068 0.0519 317 / 0.06) 50% 100%)',
-    },
-  },
-  'button-danger-selected': {
-    type: 'composite',
-    ref: {
-      color: '{color.white}',
-      textShadow: '0 0 1px {color.white}',
-      backgroundColor: '{color.red-12}',
-      backgroundImage: 'repeating-linear-gradient(150deg, transparent 0% 50%, {color.black-alpha-2} 50% 100%)',
-      borderRadius: '{radius.max}',
-    },
-    value: {
-      color: 'oklch(1 0 0)',
-      textShadow: '0 0 1px oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5696 0.2145 30)',
-      backgroundImage:
-        'repeating-linear-gradient(150deg, transparent 0% 50%, oklch(0.1068 0.0519 317 / 0.06) 50% 100%)',
-      borderRadius: '99px',
-    },
-  },
   'button-caution': {
     type: 'composite',
     ref: { color: '{color.red-12}' },
@@ -589,40 +390,57 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-caution-pressed': {
-    type: 'composite',
-    ref: { color: '{color.red-10}', backgroundColor: '{color.white-alpha-10}', border: '1px dotted {color.red-9}' },
-    value: {
-      color: 'oklch(0.5919 0.2063 30)',
-      backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.6513 0.1862 30)',
-    },
-  },
-  'button-caution-selected': {
+  'button-selected': {
     type: 'composite',
     ref: {
-      color: '{color.red-10}',
-      backgroundColor: '{color.red-1}',
-      border: '2px solid {color.red-4}',
-      borderRadius: '{radius.max}',
-      boxShadow: ['0 0 5px 1px {color.red-2}', '{shadow.md}'],
+      color: '{color.yellow-12}',
+      backgroundColor: '{color.yellow-3}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+      border: '2px solid {color.yellow-9}',
+      boxShadow: '{shadow.sm}',
     },
     value: {
-      color: 'oklch(0.5919 0.2063 30)',
-      backgroundColor: 'oklch(0.9400 0.0300 30)',
-      border: '2px solid oklch(0.8077 0.1035 30)',
-      borderRadius: '99px',
+      color: 'oklch(0.5400 0.1200 72.00)',
+      backgroundColor: 'oklch(0.9800 0.0520 102.50)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+      border: '2px solid oklch(0.7900 0.1650 87.00)',
       boxShadow: {
         light: [
-          '0 0 5px 1px oklch(0.8845 0.0593 30)',
-          '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.16)',
+          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
+          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
           '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
         ],
         dark: [
-          '0 0 5px 1px oklch(0.8845 0.0593 30)',
-          '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.4)',
+          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
+          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
+          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
+        ],
+      },
+    },
+  },
+  'button-selected-hovered': {
+    type: 'composite',
+    ref: {
+      color: '{color.yellow-12}',
+      backgroundColor: '{color.yellow-3}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+      border: '2px solid {color.yellow-9}',
+      boxShadow: '{shadow.sm}',
+    },
+    value: {
+      color: 'oklch(0.5400 0.1200 72.00)',
+      backgroundColor: 'oklch(0.9800 0.0520 102.50)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+      border: '2px solid oklch(0.7900 0.1650 87.00)',
+      boxShadow: {
+        light: [
+          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
+          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
+          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
+        ],
+        dark: [
+          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
+          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
           '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
         ],
       },
