@@ -181,7 +181,7 @@ const Variants: StoryObj<typeof TextField> = {
                 id="variant-default"
                 variant="default"
                 placeholder="Variant - default"
-                suffix={getSlot('sm', 'tertiary')}
+                suffix={getSlot('sm', 'default')}
                 className="flex-1"
               />
               <TextField

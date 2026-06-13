@@ -1,7 +1,7 @@
 import { type CSSProperties, type ReactNode } from 'react'
 import { type ClickableState, type LinkType } from '../_shared/types'
 
-export type IconButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'optional' | 'danger' | 'caution'
+export type IconButtonVariant = 'primary' | 'secondary' | 'default' | 'optional' | 'danger' | 'caution'
 export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type IconButtonState = ClickableState
 

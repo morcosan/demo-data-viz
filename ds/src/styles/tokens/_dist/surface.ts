@@ -325,23 +325,23 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-tertiary': {
+  'button-default': {
     type: 'composite',
-    ref: { color: '{color.blue-12}' },
-    value: { color: 'oklch(0.3900 0.1420 240)', border: '1px dotted transparent' },
+    ref: { color: '{color.text-default}' },
+    value: { color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' }, border: '1px dotted transparent' },
   },
-  'button-tertiary-hovered': {
+  'button-default-hovered': {
     type: 'composite',
     ref: {
-      color: '{color.blue-10}',
+      color: '{color.text-default}',
       backgroundColor: '{color.white-alpha-10}',
-      border: '1px dotted {color.blue-6}',
+      border: '1px dotted {color.grey-7}',
       boxShadow: '{shadow.sm}',
     },
     value: {
-      color: 'oklch(0.5200 0.1750 240)',
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.7664 0.1113 240)',
+      border: '1px dotted oklch(0.7997 0.0103 308)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
@@ -356,25 +356,29 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-tertiary-pressed': {
-    type: 'composite',
-    ref: { color: '{color.blue-10}', backgroundColor: '{color.white-alpha-10}', border: '1px dotted {color.blue-6}' },
-    value: {
-      color: 'oklch(0.5200 0.1750 240)',
-      backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.7664 0.1113 240)',
-    },
-  },
-  'button-tertiary-selected': {
+  'button-default-pressed': {
     type: 'composite',
     ref: {
-      color: '{color.yellow-14}',
+      color: '{color.text-default}',
+      backgroundColor: '{color.white-alpha-10}',
+      border: '1px dotted {color.grey-7}',
+    },
+    value: {
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
+      backgroundColor: 'oklch(1 0 0 / 0.56)',
+      border: '1px dotted oklch(0.7997 0.0103 308)',
+    },
+  },
+  'button-default-selected': {
+    type: 'composite',
+    ref: {
+      color: '{color.text-default}',
       backgroundColor: '{color.yellow-1}',
       border: '2px solid {color.yellow-4}',
       boxShadow: '{shadow.md}',
     },
     value: {
-      color: 'oklch(0.3900 0.0880 64.00)',
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: 'oklch(0.9950 0.0150 103.19)',
       border: '2px solid oklch(0.9680 0.0780 101.50)',
       boxShadow: {

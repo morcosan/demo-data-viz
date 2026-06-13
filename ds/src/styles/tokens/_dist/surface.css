@@ -154,40 +154,40 @@
   }
 }
 
-@utility ds-surface-button-tertiary {
+@utility ds-surface-button-default {
   :where(html) &,
   [data-color-mode='light'] & {
     border: 1px dotted transparent;
-    color: var(--ds-color-blue-12);
+    color: var(--ds-color-text-default);
   }
 }
 
-@utility ds-surface-button-tertiary-hovered {
+@utility ds-surface-button-default-hovered {
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
-    border: 1px dotted var(--ds-color-blue-6);
+    border: 1px dotted var(--ds-color-grey-7);
     background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-blue-10);
+    color: var(--ds-color-text-default);
   }
 }
 
-@utility ds-surface-button-tertiary-pressed {
+@utility ds-surface-button-default-pressed {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 1px dotted var(--ds-color-blue-6);
+    border: 1px dotted var(--ds-color-grey-7);
     background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-blue-10);
+    color: var(--ds-color-text-default);
   }
 }
 
-@utility ds-surface-button-tertiary-selected {
+@utility ds-surface-button-default-selected {
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-md);
     border: 2px solid var(--ds-color-yellow-4);
     background-color: var(--ds-color-yellow-1);
-    color: var(--ds-color-yellow-14);
+    color: var(--ds-color-text-default);
   }
 }
 

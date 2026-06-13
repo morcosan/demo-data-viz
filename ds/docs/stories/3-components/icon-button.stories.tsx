@@ -32,7 +32,7 @@ const Default: StoryObj<typeof IconButton> = {
 const Variants: StoryObj<typeof IconButton> = {
   render() {
     const svg = <LogoutSvg className="h-xs-7 w-xs-7" />
-    const variants: IconButtonVariant[] = ['primary', 'secondary', 'tertiary', 'optional', 'danger', 'caution']
+    const variants: IconButtonVariant[] = ['primary', 'secondary', 'default', 'optional', 'danger', 'caution']
 
     return (
       <DocsPage type="component">

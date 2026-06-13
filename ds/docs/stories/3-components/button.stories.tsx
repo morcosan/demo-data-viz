@@ -35,7 +35,7 @@ const Variants: StoryObj<typeof Button> = {
     const variants: ButtonVariant[] = [
       'primary',
       'secondary',
-      'tertiary',
+      'default',
       'optional',
       'danger',
       'caution',

@@ -6,7 +6,7 @@ export type BaseButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type BaseVariant =
   | 'primary'
   | 'secondary'
-  | 'tertiary'
+  | 'default'
   | 'optional'
   | 'danger'
   | 'caution'

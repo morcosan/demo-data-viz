@@ -59,7 +59,7 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
         >
           <Button
             state={isLightMode ? 'selected' : 'default'}
-            variant="tertiary"
+            variant="default"
             size="xs"
             onClick={() => changeColorMode('light')}
           >
@@ -67,7 +67,7 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
           </Button>
           <Button
             state={isDarkMode ? 'selected' : 'default'}
-            variant="tertiary"
+            variant="default"
             size="xs"
             onClick={() => changeColorMode('dark')}
           >

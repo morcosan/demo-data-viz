@@ -112,7 +112,7 @@ export const DataPane = (props: DatasetPaneProps) => {
   )
 
   const filtersButton = (
-    <Button variant="tertiary" size="sm" onClick={onOpenFilters}>
+    <Button variant="default" size="sm" onClick={onOpenFilters}>
       <FilterSvg className="h-xs-7 mr-xs-1" />
       <span className="truncate">{t('dataViz.label.filtersModalButton', { count: filterCount })}</span>
     </Button>

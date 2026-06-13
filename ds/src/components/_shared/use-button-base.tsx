@@ -35,7 +35,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const isSelected = state === 'selected'
   const isSolid = variant === 'primary' || variant === 'danger'
   const isOutline = variant === 'secondary'
-  const isTextOnly = variant === 'tertiary' || variant === 'optional' || variant === 'caution'
+  const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
 
   const noopProps = ((): CSSObject => {
