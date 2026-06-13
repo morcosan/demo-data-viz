@@ -58,34 +58,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     '--loader-size': `${styles.spinnerSize} !important`,
     '--loader-color': `${isSolid ? tokens.color['text-inverse'] : tokens.color['text-subtle']} !important`,
   }
-  const crosshairCss: CSSObject = {
-    position: 'absolute',
-    inset: 0,
-    border: `1px dotted ${tokens.color['button-crosshair']}`,
-    transition: 'all 0.3s ease',
-    transform: 'scale(1.35)',
-    opacity: 0,
-    zIndex: 1,
-    '&::after': {
-      position: 'absolute',
-      inset: 0,
-      content: '""',
-    },
-    '& > span': {
-      position: 'absolute',
-      width: `calc(${styles.height} / 4)`,
-      height: `calc(${styles.height} / 4)`,
-      border: `${styles.crosshairSize} solid ${tokens.color['button-crosshair']}`,
-    },
-    '& > span:nth-of-type(1)': { top: '-2px', left: '-2px', borderBottom: 'none', borderRight: 'none' },
-    '& > span:nth-of-type(2)': { top: '-2px', right: '-2px', borderBottom: 'none', borderLeft: 'none' },
-    '& > span:nth-of-type(3)': { bottom: '-2px', right: '-2px', borderTop: 'none', borderLeft: 'none' },
-    '& > span:nth-of-type(4)': { bottom: '-2px', left: '-2px', borderTop: 'none', borderRight: 'none' },
-  }
-  const crosshairHoverCss: CSSObject = {
-    opacity: 1,
-    transform: isIcon ? 'scale(1.2)' : 'scale(1.05, 1.25)',
-  }
+
   const surfaceCss: CSSObject = {
     ...(isPressed ? styles.surfaceHovered : styles.surfaceDefault),
     ...(isNoop ? noopProps : {}),
@@ -113,8 +86,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
     fill: 'currentColor',
     stroke: 'currentColor',
   }
-  const crosshairSelector = '& > span:nth-of-type(1)'
-  const surfaceSelector = '& > span:nth-of-type(2)'
   const buttonCss: CSSObject = {
     position: 'relative',
     display: 'inline-flex',
@@ -124,19 +95,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus': isNoop
-      ? {}
-      : pressing
-        ? {
-            [crosshairSelector]: crosshairHoverCss,
-          }
-        : {
-            [crosshairSelector]: crosshairHoverCss,
-            [surfaceSelector]: {
-              ...styles.surfaceHovered,
-              transform: 'scale(1)',
-            },
-          },
+    '&:hover, &:focus': isNoop || pressing ? {} : { '& > span': { ...styles.surfaceHovered, transform: 'scale(1)' } },
   }
 
   const bindings = {
@@ -151,12 +110,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
 
   const content = (
     <>
-      <span css={crosshairCss}>
-        <span />
-        <span />
-        <span />
-        <span />
-      </span>
       <span css={surfaceCss}>
         <span css={childrenCss}>{children}</span>
         {state === 'loading' && (

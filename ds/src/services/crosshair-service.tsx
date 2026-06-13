@@ -8,7 +8,7 @@ import { useDomRegistry } from './_partials/use-dom-registry'
 /**
  * Constants
  */
-const TARGET_SELECTOR = 'button, [role="button"]'
+const TARGET_SELECTOR = 'button:not([aria-disabled="true"]), [role="button"]:not([aria-disabled="true"])'
 const ANIM_DURATION = 300
 
 /**

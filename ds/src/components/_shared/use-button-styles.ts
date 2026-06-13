@@ -19,13 +19,6 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     if (size === 'lg') return tokens.spacing['button-h-lg']
     return ''
   })()
-  const crosshairSize = (() => {
-    if (size === 'xs') return '2px'
-    if (size === 'sm') return '2px'
-    if (size === 'md') return '3px'
-    if (size === 'lg') return '3px'
-    return ''
-  })()
   const paddingX = (() => {
     // Subtract border from padding
     if (isMenuItem) return `calc(${tokens.spacing['button-px-item']} - 1px)`
@@ -83,7 +76,6 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
   })()
 
   return {
-    crosshairSize,
     fontSize,
     fontWeight,
     height,
