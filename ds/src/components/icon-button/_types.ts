@@ -19,12 +19,12 @@ export interface IconButtonProps extends HtmlDataProps {
   /**
    * Props
    */
+  /** Property for changing the button state */
+  state?: IconButtonState
   /** Property that determines color and highlight */
   variant?: IconButtonVariant
   /** Property that determines total height and padding */
   size?: IconButtonSize
-  /** Property for changing the button state */
-  state?: IconButtonState
   /** URL path for transforming the button into `<a>` link */
   linkHref?: string
   /**

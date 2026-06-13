@@ -6,14 +6,14 @@ const meta: Meta = {
   title: 'Components / Icon Button',
   ...defineMeta(IconButton, {
     slots: {
-      children: '⭐',
+      children: 'A',
       tooltip: 'Tooltip',
       ariaDescription: 'Example description',
     },
     props: {
+      state: 'default',
       variant: 'primary',
       size: 'md',
-      state: 'default',
       linkHref: '',
       linkType: 'internal',
       className: '',
@@ -21,7 +21,7 @@ const meta: Meta = {
       'data-prop': '',
     },
     events: ['onClick'],
-    inlineRadios: ['size', 'variant', 'linkType'],
+    inlineRadios: ['state', 'size', 'variant', 'linkType'],
   }),
 }
 

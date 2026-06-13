@@ -135,14 +135,13 @@ export const TOKENS__SURFACE = {
     ref: {
       color: '{color.blue-2}',
       backgroundColor: '{color.blue-11}',
-      backgroundImage: 'repeating-linear-gradient(150deg, transparent 0% 50%, {color.black-alpha-4} 50% 100%)',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-4} 0% 50%, transparent 50% 100%)',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.9215 0.0348 240)',
       backgroundColor: 'oklch(0.4500 0.1600 240)',
-      backgroundImage:
-        'repeating-linear-gradient(150deg, transparent 0% 50%, oklch(0.1068 0.0519 317 / 0.12) 50% 100%)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.12) 0% 50%, transparent 50% 100%)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
@@ -161,15 +160,14 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       color: '{color.white}',
-      backgroundColor: '{color.blue-10}',
-      backgroundImage: 'repeating-linear-gradient(150deg, transparent 0% 50%, {color.black-alpha-3} 50% 100%)',
+      backgroundColor: '{color.blue-9}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-4} 0% 50%, transparent 50% 100%)',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5200 0.1750 240)',
-      backgroundImage:
-        'repeating-linear-gradient(150deg, transparent 0% 50%, oklch(0.1068 0.0519 317 / 0.09) 50% 100%)',
+      backgroundColor: 'oklch(0.5900 0.1620 240)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.12) 0% 50%, transparent 50% 100%)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
@@ -190,14 +188,14 @@ export const TOKENS__SURFACE = {
       color: '{color.blue-12}',
       backgroundColor: '{color.blue-2}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-7} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.blue-11}',
+      border: '1px solid {color.blue-10}',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.3900 0.1420 240)',
       backgroundColor: 'oklch(0.9215 0.0348 240)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.32) 0% 50%, transparent 50% 100%)',
-      border: '1px solid oklch(0.4500 0.1600 240)',
+      border: '1px solid oklch(0.5200 0.1750 240)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
@@ -215,17 +213,17 @@ export const TOKENS__SURFACE = {
   'button-secondary-hovered': {
     type: 'composite',
     ref: {
-      color: '{color.blue-11}',
+      color: '{color.blue-10}',
       backgroundColor: '{color.blue-1}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.blue-10}',
+      border: '1px solid {color.blue-9}',
       boxShadow: '{shadow.sm}',
     },
     value: {
-      color: 'oklch(0.4500 0.1600 240)',
+      color: 'oklch(0.5200 0.1750 240)',
       backgroundColor: 'oklch(0.9500 0.0200 240)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
-      border: '1px solid oklch(0.5200 0.1750 240)',
+      border: '1px solid oklch(0.5900 0.1620 240)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
@@ -310,14 +308,13 @@ export const TOKENS__SURFACE = {
     ref: {
       color: '{color.red-1}',
       backgroundColor: '{color.red-13}',
-      backgroundImage: 'repeating-linear-gradient(150deg, transparent 0% 50%, {color.black-alpha-3} 50% 100%)',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-5} 0% 50%, transparent 50% 100%)',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.9400 0.0300 30)',
       backgroundColor: 'oklch(0.5344 0.2015 30)',
-      backgroundImage:
-        'repeating-linear-gradient(150deg, transparent 0% 50%, oklch(0.1068 0.0519 317 / 0.09) 50% 100%)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.16) 0% 50%, transparent 50% 100%)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
@@ -336,15 +333,14 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       color: '{color.white}',
-      backgroundColor: '{color.red-12}',
-      backgroundImage: 'repeating-linear-gradient(150deg, transparent 0% 50%, {color.black-alpha-2} 50% 100%)',
+      backgroundColor: '{color.red-9}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-5} 0% 50%, transparent 50% 100%)',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5696 0.2145 30)',
-      backgroundImage:
-        'repeating-linear-gradient(150deg, transparent 0% 50%, oklch(0.1068 0.0519 317 / 0.06) 50% 100%)',
+      backgroundColor: 'oklch(0.6513 0.1862 30)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.16) 0% 50%, transparent 50% 100%)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
@@ -396,8 +392,9 @@ export const TOKENS__SURFACE = {
       color: '{color.yellow-12}',
       backgroundColor: '{color.yellow-4}',
       backgroundImage: [
-        'radial-gradient(circle at 2px 2px, {color.yellow-6} 1px, transparent 1px)',
-        'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+        'repeating-linear-gradient(150deg, {color.white-alpha-9} 0% 50%, transparent 50% 100%)',
+        'radial-gradient(circle, {color.yellow-7} 0.8px, transparent 0.8px)',
+        'radial-gradient(circle, {color.yellow-7} 0.8px, transparent 0.8px)',
       ],
       border: '2px solid {color.yellow-11}',
       boxShadow: '{shadow.sm}',
@@ -406,10 +403,12 @@ export const TOKENS__SURFACE = {
       color: 'oklch(0.5400 0.1200 72.00)',
       backgroundColor: 'oklch(0.9680 0.0780 101.50)',
       backgroundImage: [
-        'radial-gradient(circle at 2px 2px, oklch(0.9185 0.1426 98.22) 1px, transparent 1px)',
-        'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+        'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.48) 0% 50%, transparent 50% 100%)',
+        'radial-gradient(circle, oklch(0.8896 0.1579 95.08) 0.8px, transparent 0.8px)',
+        'radial-gradient(circle, oklch(0.8896 0.1579 95.08) 0.8px, transparent 0.8px)',
       ],
-      backgroundSize: '8px 8px, 100% 100%',
+      backgroundPosition: '0 0, -1.5px -5px, -5px -1.5px',
+      backgroundSize: '100% 100%, 3px 10px, 10px 3px',
       border: '2px solid oklch(0.6300 0.1400 77.00)',
       boxShadow: {
         light: [
@@ -428,23 +427,26 @@ export const TOKENS__SURFACE = {
   'button-selected-hovered': {
     type: 'composite',
     ref: {
-      color: '{color.yellow-12}',
+      color: '{color.yellow-11}',
       backgroundColor: '{color.yellow-3}',
       backgroundImage: [
-        'radial-gradient(circle at 2px 2px, {color.yellow-5} 1px, transparent 1px)',
         'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+        'radial-gradient(circle, {color.yellow-6} 0.8px, transparent 0.8px)',
+        'radial-gradient(circle, {color.yellow-6} 0.8px, transparent 0.8px)',
       ],
       border: '2px solid {color.yellow-9}',
       boxShadow: '{shadow.sm}',
     },
     value: {
-      color: 'oklch(0.5400 0.1200 72.00)',
+      color: 'oklch(0.6300 0.1400 77.00)',
       backgroundColor: 'oklch(0.9800 0.0520 102.50)',
       backgroundImage: [
-        'radial-gradient(circle at 2px 2px, oklch(0.9500 0.1100 100.00) 1px, transparent 1px)',
         'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+        'radial-gradient(circle, oklch(0.9185 0.1426 98.22) 0.8px, transparent 0.8px)',
+        'radial-gradient(circle, oklch(0.9185 0.1426 98.22) 0.8px, transparent 0.8px)',
       ],
-      backgroundSize: '8px 8px, 100% 100%',
+      backgroundPosition: '0 0, -1.5px -5px, -5px -1.5px',
+      backgroundSize: '100% 100%, 3px 10px, 10px 3px',
       border: '2px solid oklch(0.7900 0.1650 87.00)',
       boxShadow: {
         light: [

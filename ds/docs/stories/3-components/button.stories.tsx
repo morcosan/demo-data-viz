@@ -11,9 +11,9 @@ const meta: Meta = {
       ariaDescription: 'Example description',
     },
     props: {
+      state: 'default',
       variant: 'primary',
       size: 'md',
-      state: 'default',
       linkHref: '',
       linkType: 'internal',
       className: '',
@@ -21,7 +21,7 @@ const meta: Meta = {
       'data-prop': '',
     },
     events: ['onClick'],
-    inlineRadios: ['size', 'variant', 'state', 'linkType'],
+    inlineRadios: ['state', 'size', 'variant', 'linkType'],
   }),
 }
 

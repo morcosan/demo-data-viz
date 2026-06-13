@@ -19,12 +19,12 @@ export interface ButtonProps extends HtmlDataProps {
   /**
    * Props
    */
+  /** Property for changing the button state */
+  state?: ButtonState
   /** Property that determines color and highlight */
   variant?: ButtonVariant
   /** Property that determines total height and padding */
   size?: ButtonSize
-  /** Property for changing the button state */
-  state?: ButtonState
   /** URL path for transforming the button into `<a>` link */
   linkHref?: string
   /**
