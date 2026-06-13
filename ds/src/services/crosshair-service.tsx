@@ -1,12 +1,14 @@
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { Crosshair, type CrosshairRect } from './_partials/crosshair'
+import { Crosshair } from './_partials/crosshair'
+import { useDomRegistry } from './_partials/use-dom-registry'
 
 /**
  * Constants
  */
 const TARGET_SELECTOR = 'button, [role="button"]'
+const ANIM_DURATION = 300
 
 /**
  * Context
@@ -24,36 +26,25 @@ const useCrosshairService = () => useContext(Context)
 /**
  * Provider
  */
+type CrosshairEntry = {
+  id: number
+  rect: DOMRect
+  visible: boolean
+}
+
 const CrosshairService = ({ children }: ReactProps) => {
   const [enabled, setEnabled] = useState(true)
-  const [visible, setVisible] = useState(false)
-  const [targetRect, setTargetRect] = useState<CrosshairRect>({ top: 0, left: 0, width: 0, height: 0 })
+  const [crosshairs, setCrosshairs] = useState<CrosshairEntry[]>([])
+  const registryRef = useDomRegistry(TARGET_SELECTOR)
 
   useEffect(() => {
-    const registry = new Set<HTMLElement>()
-
-    function updateRegistry(nodes: NodeList, action: 'add' | 'delete') {
-      nodes.forEach((node) => {
-        if (!(node instanceof HTMLElement)) return
-        if (node.matches(TARGET_SELECTOR)) registry[action](node)
-        node.querySelectorAll<HTMLElement>(TARGET_SELECTOR).forEach((el) => registry[action](el))
-      })
-    }
-
-    document.querySelectorAll<HTMLElement>(TARGET_SELECTOR).forEach((elem) => registry.add(elem))
-
-    const observer = new MutationObserver((records) => {
-      for (const record of records) {
-        updateRegistry(record.addedNodes, 'add')
-        updateRegistry(record.removedNodes, 'delete')
-      }
-    })
-    observer.observe(document.body, { childList: true, subtree: true })
+    let nextId = 0
+    let currElem: HTMLElement | null = null
 
     const getHoveredElement = (x: number, y: number): HTMLElement | null => {
       let bestElem: HTMLElement | null = null
       let bestArea = Infinity
-      for (const elem of registry) {
+      for (const elem of registryRef.current) {
         const rect = elem.getBoundingClientRect()
         if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
           const area = rect.width * rect.height
@@ -67,30 +58,44 @@ const CrosshairService = ({ children }: ReactProps) => {
     }
 
     const onMouseMove = (event: MouseEvent) => {
-      if (!enabled) return setVisible(false)
+      if (!enabled) {
+        currElem = null
+        setCrosshairs([])
+        return
+      }
 
       const elem = getHoveredElement(event.clientX, event.clientY)
-      if (!elem) return setVisible(false)
+      if (currElem === elem) return
+      if (!elem) {
+        currElem = null
+        setCrosshairs((prev) => prev.map((entry) => ({ ...entry, visible: false })))
+        setTimeout(() => setCrosshairs([]), ANIM_DURATION)
+        return
+      }
 
+      currElem = elem
       const rect = elem.getBoundingClientRect()
-      setTargetRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
-      setVisible(true)
+      const id = nextId++
+      const entry: CrosshairEntry = { id, rect, visible: true }
+
+      setCrosshairs((prev) => [...prev.map((entry) => ({ ...entry, visible: false })), entry])
+      setTimeout(() => setCrosshairs((prev) => prev.filter((entry) => entry.id === id)), ANIM_DURATION)
     }
 
     document.addEventListener('mousemove', onMouseMove)
-
     return () => {
       document.removeEventListener('mousemove', onMouseMove)
-      observer.disconnect()
     }
-  }, [enabled])
+  }, [enabled, registryRef])
 
   const store: Store = useMemo(() => ({ enabled, setEnabled }), [enabled])
 
   return (
     <Context.Provider value={store}>
       {children}
-      <Crosshair visible={visible && enabled} targetRect={targetRect} />
+      {crosshairs.map((c) => (
+        <Crosshair key={c.id} visible={c.visible} targetRect={c.rect} />
+      ))}
     </Context.Provider>
   )
 }

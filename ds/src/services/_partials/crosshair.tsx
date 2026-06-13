@@ -1,15 +1,9 @@
 import type { CSSObject } from '@emotion/react'
 import { useThemeService } from '../theme-service'
 
-export interface CrosshairRect {
-  top: number
-  left: number
-  width: number
-  height: number
-}
 export interface CrosshairProps {
   visible: boolean
-  targetRect: CrosshairRect
+  targetRect: DOMRect
 }
 
 export const Crosshair = (props: CrosshairProps) => {
