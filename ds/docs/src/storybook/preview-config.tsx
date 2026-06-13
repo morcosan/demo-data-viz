@@ -44,8 +44,6 @@ const toolbarConfig = {
     colorMode: {
       description: 'Change color mode',
       toolbar: {
-        title: 'Light',
-        icon: 'sun' as any,
         items: [
           { value: 'light', title: 'Light', icon: 'sun' as any },
           { value: 'dark', title: 'Dark', icon: 'moon' as any },
@@ -55,8 +53,6 @@ const toolbarConfig = {
     canvasBg: {
       description: 'Change canvas background',
       toolbar: {
-        title: 'Grid',
-        icon: 'photo' as any,
         items: [
           { value: 'grid', title: 'Grid', icon: 'photo' as any },
           { value: 'tiles', title: 'Tiles', icon: 'photo' as any },
@@ -64,10 +60,20 @@ const toolbarConfig = {
         ],
       },
     },
+    hasCrosshair: {
+      description: 'Toggle crosshair',
+      toolbar: {
+        items: [
+          { value: true, title: 'Crosshair', icon: 'lightning' as any },
+          { value: false, title: 'No crosshair', icon: 'lightningoff' as any },
+        ],
+      },
+    },
   },
   initialGlobals: {
     colorMode: 'light',
     canvasBg: 'grid',
+    hasCrosshair: true,
   },
 } satisfies PreviewToolbar
 

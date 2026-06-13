@@ -27,17 +27,23 @@ const useCrosshairService = () => useContext(Context)
 /**
  * Provider
  */
-type CrosshairEntry = {
+interface CrosshairEntry {
   id: number
   rect: DOMRect
   visible: boolean
 }
-
-const CrosshairService = ({ children }: ReactProps) => {
-  const [enabled, setEnabled] = useState(true)
+interface Props extends ReactProps {
+  enabled: boolean
+}
+const CrosshairService = ({ enabled, children }: Props) => {
+  const [isEnabled, setIsEnabled] = useState(enabled)
   const [crosshairs, setCrosshairs] = useState<CrosshairEntry[]>([])
   const registryRef = useDomRegistry(TARGET_SELECTOR)
   const animTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
+
+  useEffect(() => {
+    setIsEnabled(enabled)
+  }, [enabled])
 
   useEffect(() => {
     let nextId = 0
@@ -60,7 +66,7 @@ const CrosshairService = ({ children }: ReactProps) => {
     }
 
     const onMouseMove = (event: MouseEvent) => {
-      if (!enabled) {
+      if (!isEnabled) {
         currElem = null
         setCrosshairs([])
         return
@@ -93,9 +99,9 @@ const CrosshairService = ({ children }: ReactProps) => {
     return () => {
       document.removeEventListener('mousemove', onMouseMove)
     }
-  }, [enabled, registryRef])
+  }, [isEnabled, registryRef])
 
-  const store: Store = useMemo(() => ({ enabled, setEnabled }), [enabled])
+  const store: Store = useMemo(() => ({ enabled: isEnabled, setEnabled: setIsEnabled }), [isEnabled])
 
   return (
     <Context.Provider value={store}>
