@@ -67,6 +67,7 @@ export const useFullscreen = ({ padding }: Props) => {
     () => (
       <IconButton
         tooltip={isFullscreen ? t('core.action.collapseView') : t('core.action.expandView')}
+        variant="optional"
         size="sm"
         style={{
           transitionProperty: 'margin',
