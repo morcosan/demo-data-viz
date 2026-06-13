@@ -1,7 +1,7 @@
 'use client'
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Crosshair, type CrosshairProps } from './_partials/crosshair'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { Crosshair, type CrosshairRect } from './_partials/crosshair'
 
 /**
  * Constants
@@ -13,7 +13,7 @@ const TARGET_SELECTOR = 'button, [role="button"]'
  */
 const registry = new Set<HTMLElement>()
 
-function syncNodes(nodes: NodeList, action: 'add' | 'delete') {
+function updateRegistry(nodes: NodeList, action: 'add' | 'delete') {
   nodes.forEach((node) => {
     if (!(node instanceof HTMLElement)) return
     if (node.matches(TARGET_SELECTOR)) registry[action](node)
@@ -21,15 +21,15 @@ function syncNodes(nodes: NodeList, action: 'add' | 'delete') {
   })
 }
 
-function hitTest(x: number, y: number): HTMLElement | null {
+function getHoveredElement(x: number, y: number): HTMLElement | null {
   let best: HTMLElement | null = null
   let bestArea = Infinity
-  for (const el of registry) {
-    const r = el.getBoundingClientRect()
-    if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) {
-      const area = r.width * r.height
+  for (const elem of registry) {
+    const rect = elem.getBoundingClientRect()
+    if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+      const area = rect.width * rect.height
       if (area < bestArea) {
-        best = el
+        best = elem
         bestArea = area
       }
     }
@@ -50,73 +50,51 @@ const Context = createContext<Store>({
 })
 const useCrosshairService = () => useContext(Context)
 
-const HIDDEN: CrosshairProps = { visible: false, top: 0, left: 0, width: 0, height: 0, square: false }
-
 /**
  * Provider
  */
 const CrosshairService = ({ children }: ReactProps) => {
   const [enabled, setEnabled] = useState(true)
-  const [crosshairProps, setCrosshairProps] = useState<CrosshairProps>(HIDDEN)
-  const enabledRef = useRef(enabled)
-  enabledRef.current = enabled
+  const [visible, setVisible] = useState(false)
+  const [targetRect, setTargetRect] = useState<CrosshairRect>({ top: 0, left: 0, width: 0, height: 0 })
 
   useEffect(() => {
-    document.querySelectorAll<HTMLElement>(TARGET_SELECTOR).forEach((el) => registry.add(el))
+    document.querySelectorAll<HTMLElement>(TARGET_SELECTOR).forEach((elem) => registry.add(elem))
 
     const observer = new MutationObserver((records) => {
       for (const record of records) {
-        syncNodes(record.addedNodes, 'add')
-        syncNodes(record.removedNodes, 'delete')
+        updateRegistry(record.addedNodes, 'add')
+        updateRegistry(record.removedNodes, 'delete')
       }
     })
     observer.observe(document.body, { childList: true, subtree: true })
 
-    const onMove = (event: MouseEvent) => {
-      if (!enabledRef.current) {
-        setCrosshairProps(HIDDEN)
-        return
-      }
+    const onMouseMove = (event: MouseEvent) => {
+      if (!enabled) return setVisible(false)
 
-      const elem = hitTest(event.clientX, event.clientY)
-      if (!elem) {
-        setCrosshairProps((prev) => (prev.visible ? HIDDEN : prev))
-        return
-      }
+      const elem = getHoveredElement(event.clientX, event.clientY)
+      if (!elem) return setVisible(false)
 
       const rect = elem.getBoundingClientRect()
-      const isSquare = Math.abs(rect.width - rect.height) < 4
-
-      setCrosshairProps((prev) => {
-        const isSame =
-          prev.visible &&
-          prev.top === rect.top &&
-          prev.left === rect.left &&
-          prev.width === rect.width &&
-          prev.height === rect.height &&
-          prev.square === isSquare
-
-        return isSame
-          ? prev
-          : { visible: true, top: rect.top, left: rect.left, width: rect.width, height: rect.height, square: isSquare }
-      })
+      setTargetRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
+      setVisible(true)
     }
 
-    document.addEventListener('mousemove', onMove, { passive: true })
+    document.addEventListener('mousemove', onMouseMove, { passive: true })
 
     return () => {
       observer.disconnect()
-      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mousemove', onMouseMove)
       registry.clear()
     }
-  }, [])
+  }, [enabled])
 
   const store: Store = useMemo(() => ({ enabled, setEnabled }), [enabled])
 
   return (
     <Context.Provider value={store}>
       {children}
-      {enabled && <Crosshair {...crosshairProps} />}
+      <Crosshair visible={visible && enabled} targetRect={targetRect} />
     </Context.Provider>
   )
 }

@@ -1,19 +1,23 @@
 import type { CSSObject } from '@emotion/react'
 import { useThemeService } from '../theme-service'
 
-export interface CrosshairProps {
-  visible: boolean
+export interface CrosshairRect {
   top: number
   left: number
   width: number
   height: number
-  square: boolean
+}
+export interface CrosshairProps {
+  visible: boolean
+  targetRect: CrosshairRect
 }
 
 export const Crosshair = (props: CrosshairProps) => {
-  const { visible, top, left, height, width, square } = props
+  const { targetRect, visible } = props
   const { tokens } = useThemeService()
-  const heightPx = `${height}px`
+
+  const isSquare = Math.abs(targetRect.width - targetRect.height) < 4
+  const heightPx = `${targetRect.height}px`
 
   const crosshairCss: CSSObject = {
     position: 'absolute',
@@ -42,7 +46,7 @@ export const Crosshair = (props: CrosshairProps) => {
 
   const crosshairHoverCss: CSSObject = {
     opacity: 1,
-    transform: square ? 'scale(1.2)' : 'scale(1.05, 1.25)',
+    transform: isSquare ? 'scale(1.2)' : 'scale(1.05, 1.25)',
   }
 
   return (
@@ -52,10 +56,10 @@ export const Crosshair = (props: CrosshairProps) => {
         userSelect: 'none',
         position: 'fixed',
         zIndex: 9999,
-        top: top,
-        left: left,
-        width: width,
-        height: height,
+        top: targetRect.top,
+        left: targetRect.left,
+        width: targetRect.width,
+        height: targetRect.height,
       }}
     >
       <div css={[crosshairCss, visible && crosshairHoverCss]}>
