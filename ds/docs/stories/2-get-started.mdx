@@ -96,11 +96,11 @@ Set up all required providers using `HocComposer`. Create a providers file:
         () => [
           hoc(ConfigService, {}),
           hoc(A11yService, {}),
-          hoc(CrosshairService, {}),
           hoc(ViewportService, {}),
           hoc(RoutingService, { navigate }),
           hoc(I18nService, { translate: t, loading: false }),
           hoc(ThemeService, { cookieKeyMode: 'app-color-mode', cookieKeyTheme: 'app-color-theme' }),
+          hoc(CrosshairService, {}),
         ],
         [navigate]
       )

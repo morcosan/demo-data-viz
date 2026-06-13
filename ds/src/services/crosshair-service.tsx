@@ -9,35 +9,6 @@ import { Crosshair, type CrosshairRect } from './_partials/crosshair'
 const TARGET_SELECTOR = 'button, [role="button"]'
 
 /**
- * Registry
- */
-const registry = new Set<HTMLElement>()
-
-function updateRegistry(nodes: NodeList, action: 'add' | 'delete') {
-  nodes.forEach((node) => {
-    if (!(node instanceof HTMLElement)) return
-    if (node.matches(TARGET_SELECTOR)) registry[action](node)
-    node.querySelectorAll<HTMLElement>(TARGET_SELECTOR).forEach((el) => registry[action](el))
-  })
-}
-
-function getHoveredElement(x: number, y: number): HTMLElement | null {
-  let best: HTMLElement | null = null
-  let bestArea = Infinity
-  for (const elem of registry) {
-    const rect = elem.getBoundingClientRect()
-    if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-      const area = rect.width * rect.height
-      if (area < bestArea) {
-        best = elem
-        bestArea = area
-      }
-    }
-  }
-  return best
-}
-
-/**
  * Context
  */
 type Store = {
@@ -59,6 +30,16 @@ const CrosshairService = ({ children }: ReactProps) => {
   const [targetRect, setTargetRect] = useState<CrosshairRect>({ top: 0, left: 0, width: 0, height: 0 })
 
   useEffect(() => {
+    const registry = new Set<HTMLElement>()
+
+    function updateRegistry(nodes: NodeList, action: 'add' | 'delete') {
+      nodes.forEach((node) => {
+        if (!(node instanceof HTMLElement)) return
+        if (node.matches(TARGET_SELECTOR)) registry[action](node)
+        node.querySelectorAll<HTMLElement>(TARGET_SELECTOR).forEach((el) => registry[action](el))
+      })
+    }
+
     document.querySelectorAll<HTMLElement>(TARGET_SELECTOR).forEach((elem) => registry.add(elem))
 
     const observer = new MutationObserver((records) => {
@@ -68,6 +49,22 @@ const CrosshairService = ({ children }: ReactProps) => {
       }
     })
     observer.observe(document.body, { childList: true, subtree: true })
+
+    const getHoveredElement = (x: number, y: number): HTMLElement | null => {
+      let bestElem: HTMLElement | null = null
+      let bestArea = Infinity
+      for (const elem of registry) {
+        const rect = elem.getBoundingClientRect()
+        if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+          const area = rect.width * rect.height
+          if (area < bestArea) {
+            bestElem = elem
+            bestArea = area
+          }
+        }
+      }
+      return bestElem
+    }
 
     const onMouseMove = (event: MouseEvent) => {
       if (!enabled) return setVisible(false)
@@ -80,12 +77,11 @@ const CrosshairService = ({ children }: ReactProps) => {
       setVisible(true)
     }
 
-    document.addEventListener('mousemove', onMouseMove, { passive: true })
+    document.addEventListener('mousemove', onMouseMove)
 
     return () => {
-      observer.disconnect()
       document.removeEventListener('mousemove', onMouseMove)
-      registry.clear()
+      observer.disconnect()
     }
   }, [enabled])
 

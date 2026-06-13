@@ -22,13 +22,13 @@ const providers = [
   hoc(StrictMode, {}),
   hoc(ConfigService, {}),
   hoc(A11yService, {}),
-  hoc(CrosshairService, {}),
   hoc(ViewportService, {}),
   hoc(I18nProvider, {}),
   hoc(QueryProvider, {}),
   hoc(RouterProvider, {}),
   hoc(LoadingScreen, {}),
   hoc(ThemeService, { cookieKeyMode: 'app-color-mode' }),
+  hoc(CrosshairService, {}),
 ]
 
 export const Providers = ({ children }: ReactProps) => {
