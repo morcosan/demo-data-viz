@@ -15,7 +15,7 @@ export const ViewToggle = ({ view, onChange }: Props) => {
     <div
       className={cx(
         'p-xs-1 gap-xs-0 ml-auto flex h-fit self-end',
-        'bg-color-bg-field border-color-border-subtle rounded-md border',
+        'bg-color-bg-field border-color-border-subtle rounded-max border',
       )}
     >
       <Button

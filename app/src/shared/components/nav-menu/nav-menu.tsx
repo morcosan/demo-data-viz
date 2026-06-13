@@ -83,7 +83,7 @@ export const NavMenu = (props: NavMenuProps) => {
         <SettingsMenu closeMenuFn={closeMenu} onClickBack={handlePopupToggle} />
       ) : (
         <>
-          <div className="flex flex-1 flex-col">
+          <div className="gap-xs-3 flex flex-1 flex-col">
             {/* ITEMS */}
             {items.map((item: Item) => {
               const selected = pathname === item.path

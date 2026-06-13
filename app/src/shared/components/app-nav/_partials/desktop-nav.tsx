@@ -33,7 +33,6 @@ export const DesktopNav = (props: Props) => {
     'p-a11y-scrollbar flex flex-col',
     'border-color-border-shadow bg-color-bg-card border-r shadow-lg',
   )
-  const pinColorClass = cx(isPinned ? 'text-color-secondary-page-text' : 'text-color-text-subtle rotate-45')
 
   const loadPinConfig = () => {
     const cookie = localStorage.getItem(cookieKeyPinned)
@@ -114,12 +113,13 @@ export const DesktopNav = (props: Props) => {
           {/* PIN */}
           <IconButton
             tooltip={isPinned ? t('core.action.unpinNavMenu') : t('core.action.pinNavMenu')}
+            variant="optional"
             size="sm"
             className={cx('right-xs-2 top-xs-2 absolute!', isCollapsed && 'hidden!')}
             data-testid="pin-button"
             onClick={() => handlePinClick(!isPinned)}
           >
-            <PinSvg className={cx('h-xs-5', pinColorClass)} />
+            <PinSvg className={cx('h-xs-5', isPinned ? 'text-color-text-default' : 'rotate-45')} />
           </IconButton>
 
           {/* MENU */}

@@ -32,7 +32,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const dataProps = useDataProps(props)
   const styles = useButtonStyles({ state, size, variant })
 
-  const isSelected = state === 'selected'
   const isSolid = variant === 'primary' || variant === 'danger'
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'
@@ -91,7 +90,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     ...(isPressed ? styles.surfaceHovered : styles.surfaceDefault),
     ...(isNoop ? noopProps : {}),
     position: 'relative',
-    transition: 'all 0.3s ease',
+    transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     width: '100%',
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
