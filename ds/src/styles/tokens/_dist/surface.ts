@@ -395,14 +395,21 @@ export const TOKENS__SURFACE = {
     ref: {
       color: '{color.yellow-12}',
       backgroundColor: '{color.yellow-4}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+      backgroundImage: [
+        'radial-gradient(circle at 2px 2px, {color.yellow-6} 1px, transparent 1px)',
+        'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+      ],
       border: '2px solid {color.yellow-11}',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.5400 0.1200 72.00)',
       backgroundColor: 'oklch(0.9680 0.0780 101.50)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+      backgroundImage: [
+        'radial-gradient(circle at 2px 2px, oklch(0.9185 0.1426 98.22) 1px, transparent 1px)',
+        'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+      ],
+      backgroundSize: '8px 8px, 100% 100%',
       border: '2px solid oklch(0.6300 0.1400 77.00)',
       boxShadow: {
         light: [
@@ -423,14 +430,21 @@ export const TOKENS__SURFACE = {
     ref: {
       color: '{color.yellow-12}',
       backgroundColor: '{color.yellow-3}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+      backgroundImage: [
+        'radial-gradient(circle at 2px 2px, {color.yellow-5} 1px, transparent 1px)',
+        'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+      ],
       border: '2px solid {color.yellow-9}',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.5400 0.1200 72.00)',
       backgroundColor: 'oklch(0.9800 0.0520 102.50)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+      backgroundImage: [
+        'radial-gradient(circle at 2px 2px, oklch(0.9500 0.1100 100.00) 1px, transparent 1px)',
+        'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+      ],
+      backgroundSize: '8px 8px, 100% 100%',
       border: '2px solid oklch(0.7900 0.1650 87.00)',
       boxShadow: {
         light: [

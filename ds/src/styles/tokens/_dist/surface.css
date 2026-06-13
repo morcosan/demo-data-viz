@@ -191,7 +191,12 @@
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
     border: 2px solid var(--ds-color-yellow-11);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-image:
+      radial-gradient(circle at 2px 2px, var(--ds-color-yellow-6) 1px, transparent 1px),
+      repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-size:
+      8px 8px,
+      100% 100%;
     background-color: var(--ds-color-yellow-4);
     color: var(--ds-color-yellow-12);
   }
@@ -202,7 +207,12 @@
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
     border: 2px solid var(--ds-color-yellow-9);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-image:
+      radial-gradient(circle at 2px 2px, var(--ds-color-yellow-5) 1px, transparent 1px),
+      repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-size:
+      8px 8px,
+      100% 100%;
     background-color: var(--ds-color-yellow-3);
     color: var(--ds-color-yellow-12);
   }
