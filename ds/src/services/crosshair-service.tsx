@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Crosshair } from './_partials/crosshair'
 import { useDomRegistry } from './_partials/use-dom-registry'
 
@@ -36,6 +36,7 @@ const CrosshairService = ({ children }: ReactProps) => {
   const [enabled, setEnabled] = useState(true)
   const [crosshairs, setCrosshairs] = useState<CrosshairEntry[]>([])
   const registryRef = useDomRegistry(TARGET_SELECTOR)
+  const animTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     let nextId = 0
@@ -66,10 +67,13 @@ const CrosshairService = ({ children }: ReactProps) => {
 
       const elem = getHoveredElement(event.clientX, event.clientY)
       if (currElem === elem) return
+
+      clearTimeout(animTimerRef.current)
+
       if (!elem) {
         currElem = null
         setCrosshairs((prev) => prev.map((entry) => ({ ...entry, visible: false })))
-        setTimeout(() => setCrosshairs([]), ANIM_DURATION)
+        animTimerRef.current = setTimeout(() => setCrosshairs([]), ANIM_DURATION)
         return
       }
 
@@ -79,7 +83,10 @@ const CrosshairService = ({ children }: ReactProps) => {
       const entry: CrosshairEntry = { id, rect, visible: true }
 
       setCrosshairs((prev) => [...prev.map((entry) => ({ ...entry, visible: false })), entry])
-      setTimeout(() => setCrosshairs((prev) => prev.filter((entry) => entry.id === id)), ANIM_DURATION)
+      animTimerRef.current = setTimeout(
+        () => setCrosshairs((prev) => prev.filter((entry) => entry.id === id)),
+        ANIM_DURATION,
+      )
     }
 
     document.addEventListener('mousemove', onMouseMove)
