@@ -8,7 +8,13 @@ import { useDomRegistry } from './_partials/use-dom-registry'
 /**
  * Constants
  */
-const TARGET_SELECTOR = 'button:not([aria-disabled="true"]), [role="button"]:not([aria-disabled="true"])'
+const TARGET_SELECTOR = [
+  'button:not([aria-disabled="true"])',
+  'a:not([aria-disabled="true"])',
+  '[role="button"]:not([aria-disabled="true"])',
+  '[role="option"]:not([aria-disabled="true"]):not([data-combobox-disabled="true"])',
+  'input:not([disabled="true"]):not([aria-disabled="true"])',
+].join(',')
 const ANIM_DURATION = 300
 
 /**

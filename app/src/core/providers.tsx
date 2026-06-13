@@ -28,7 +28,7 @@ const providers = [
   hoc(RouterProvider, {}),
   hoc(LoadingScreen, {}),
   hoc(ThemeService, { cookieKeyMode: 'app-color-mode' }),
-  hoc(CrosshairService, {}),
+  hoc(CrosshairService, { enabled: true }),
 ]
 
 export const Providers = ({ children }: ReactProps) => {
