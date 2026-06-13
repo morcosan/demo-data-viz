@@ -394,16 +394,16 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       color: '{color.yellow-12}',
-      backgroundColor: '{color.yellow-3}',
+      backgroundColor: '{color.yellow-4}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
-      border: '2px solid {color.yellow-9}',
+      border: '2px solid {color.yellow-11}',
       boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.5400 0.1200 72.00)',
-      backgroundColor: 'oklch(0.9800 0.0520 102.50)',
+      backgroundColor: 'oklch(0.9680 0.0780 101.50)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
-      border: '2px solid oklch(0.7900 0.1650 87.00)',
+      border: '2px solid oklch(0.6300 0.1400 77.00)',
       boxShadow: {
         light: [
           '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',

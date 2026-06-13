@@ -190,9 +190,9 @@
   :where(html) &,
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-yellow-9);
+    border: 2px solid var(--ds-color-yellow-11);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-yellow-3);
+    background-color: var(--ds-color-yellow-4);
     color: var(--ds-color-yellow-12);
   }
 }
