@@ -191,18 +191,7 @@
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
     border: 1px solid var(--ds-color-yellow-11);
-    background-image:
-      repeating-linear-gradient(150deg, var(--ds-color-white-alpha-9) 0% 50%, transparent 50% 100%),
-      radial-gradient(circle, var(--ds-color-yellow-7) 0.8px, transparent 0.8px),
-      radial-gradient(circle, var(--ds-color-yellow-7) 0.8px, transparent 0.8px);
-    background-position:
-      0 0,
-      -1.5px -5px,
-      -5px -1.5px;
-    background-size:
-      100% 100%,
-      3px 10px,
-      10px 3px;
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-9) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-yellow-4);
     color: var(--ds-color-yellow-12);
   }
@@ -213,18 +202,7 @@
   [data-color-mode='light'] & {
     box-shadow: var(--ds-shadow-sm);
     border: 1px solid var(--ds-color-yellow-9);
-    background-image:
-      repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%),
-      radial-gradient(circle, var(--ds-color-yellow-6) 0.8px, transparent 0.8px),
-      radial-gradient(circle, var(--ds-color-yellow-6) 0.8px, transparent 0.8px);
-    background-position:
-      0 0,
-      -1.5px -5px,
-      -5px -1.5px;
-    background-size:
-      100% 100%,
-      3px 10px,
-      10px 3px;
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-yellow-3);
     color: var(--ds-color-yellow-11);
   }
