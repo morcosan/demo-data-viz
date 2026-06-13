@@ -25,15 +25,15 @@ This utility simplifies nesting multiple providers or HOCs by allowing you to de
 import { HocComposer } from '@ds/core'
 //
 const App = ({ children }) => (
-	<HocComposer
-		hocs={[
-			HocComposer.hoc(ThemeProvider, { mode: 'dark' }),
-			HocComposer.hoc(I18nProvider, { locale: 'en' }),
-			HocComposer.hoc(RouterProvider, { router })
-		]}
-	>
-		{children}
-	</HocComposer>
+  <HocComposer
+    hocs={[
+      HocComposer.hoc(ThemeProvider, { mode: 'dark' }),
+      HocComposer.hoc(I18nProvider, { locale: 'en' }),
+      HocComposer.hoc(RouterProvider, { router })
+    ]}
+  >
+    {children}
+  </HocComposer>
 )
 ```
 

@@ -8,6 +8,7 @@ import {
   ViewportService,
 } from '@ds/core'
 import { type ComponentType, type ReactNode, StrictMode, useEffect } from 'react'
+import { CrosshairService } from '../../../src/services/crosshair-service'
 import { type DocsCanvasBg, DocsCanvasService } from '../services/docs-canvas-service'
 
 interface GlobalConfig<T> {
@@ -69,6 +70,7 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
     hoc(StrictMode, {}),
     hoc(ConfigService, {}),
     hoc(A11yService, {}),
+    hoc(CrosshairService, {}),
     hoc(ViewportService, {}),
     hoc(ThemeService, { cookieKeyMode: 'ds-color-mode', colorMode }),
     hoc(DocsCanvasService, { canvasBg }),

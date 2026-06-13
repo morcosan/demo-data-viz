@@ -53,21 +53,21 @@ const nextConfig: NextConfig = {
   },
 
   // webpack: (config) => {
-  // 	config.resolve.alias = {
-  // 		...config.resolve.alias,
-  // 		'@ds': path.resolve(__dirname, '../ds/dist'),
-  // 	}
-  // 	config.module.rules.push({
-  // 		test: /\.svg$/,
-  // 		use: ['@svgr/webpack'],
-  // 	})
-  // 	config.plugins?.push(
-  // 		new webpack.DefinePlugin({
-  // 			ENV__BASE_PATH: JSON.stringify(BASE_PATH),
-  // 			ENV__BUILD_NUMBER: BUILD_NUMBER,
-  // 		})
-  // 	)
-  // 	return config
+  //   config.resolve.alias = {
+  //     ...config.resolve.alias,
+  //     '@ds': path.resolve(__dirname, '../ds/dist'),
+  //   }
+  //   config.module.rules.push({
+  //     test: /\.svg$/,
+  //     use: ['@svgr/webpack'],
+  //   })
+  //   config.plugins?.push(
+  //     new webpack.DefinePlugin({
+  //       ENV__BASE_PATH: JSON.stringify(BASE_PATH),
+  //       ENV__BUILD_NUMBER: BUILD_NUMBER,
+  //     })
+  //   )
+  //   return config
   // },
 }
 

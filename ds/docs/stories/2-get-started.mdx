@@ -23,19 +23,19 @@ Create or update your `tailwind.config.ts` file to use the design system's theme
 <DocsCodeBlock
   filename="tailwind.config.ts"
   code={`
-		import { type Config } from 'tailwindcss'
-		import { tailwindTheme } from '../../ds/dist/scripts/tailwind'
-		//
-		const config: Config = {
-			content: [
-				'./src/**/*.{ts,tsx,mdx}',
-				'../../ds/src/**/*.{ts,tsx,mdx}', // Adjust path to your DS package
-			],
-			theme: tailwindTheme,
-		}
-		//
-		export default config
-	`}
+    import { type Config } from 'tailwindcss'
+    import { tailwindTheme } from '../../ds/dist/scripts/tailwind'
+    //
+    const config: Config = {
+      content: [
+        './src/**/*.{ts,tsx,mdx}',
+        '../../ds/src/**/*.{ts,tsx,mdx}', // Adjust path to your DS package
+      ],
+      theme: tailwindTheme,
+    }
+    //
+    export default config
+  `}
 />
 
 Configure PostCSS to use Tailwind CSS:
@@ -43,14 +43,14 @@ Configure PostCSS to use Tailwind CSS:
 <DocsCodeBlock
   filename="postcss.config.mjs"
   code={`
-		const config = {
-			plugins: {
-				'@tailwindcss/postcss': {},
-			},
-		}
-		//
-		export default config
-	`}
+    const config = {
+      plugins: {
+        '@tailwindcss/postcss': {},
+      },
+    }
+    //
+    export default config
+  `}
 />
 
 Import the design system styles in your global CSS file:
@@ -58,11 +58,11 @@ Import the design system styles in your global CSS file:
 <DocsCodeBlock
   filename="globals.css"
   code={`
-		@import '@ds/styles.css';
-		//
-		@import 'tailwindcss';
-		@config './tailwind.config.ts';
-	`}
+    @import '@ds/styles.css';
+    //
+    @import 'tailwindcss';
+    @config './tailwind.config.ts';
+  `}
 />
 
 ## Providers Setup
@@ -72,41 +72,42 @@ Set up all required providers using `HocComposer`. Create a providers file:
 <DocsCodeBlock
   filename="providers.tsx"
   code={`
-		'use client'
-		//
-		import {
-			A11yService,
-			ConfigService,
-			HocComposer,
-			I18nService,
-			RoutingService,
-			ThemeService,
-			ViewportService,
-		} from '@ds/core'
-		import { useRouter } from 'next/navigation'
-		import { useMemo } from 'react'
-		import { useTranslation } from 'react-i18next'
-		//
-		export const Providers = ({ children }: ReactProps) => {
-			const { t } = useTranslation()
-			const router = useRouter()
-			const navigate = (path: string) => router.push(path)
-			const hoc = HocComposer.hoc
-			const providers = useMemo(
-				() => [
-					hoc(ConfigService, {}),
-					hoc(A11yService, {}),
-					hoc(ViewportService, {}),
-					hoc(RoutingService, { navigate }),
-					hoc(I18nService, { translate: t, loading: false }),
-					hoc(ThemeService, { cookieKeyMode: 'app-color-mode', cookieKeyTheme: 'app-color-theme' }),
-				],
-				[navigate]
-			)
-			//
-			return <HocComposer hocs={providers}>{children}</HocComposer>
-		}
-	`}
+    'use client'
+    //
+    import {
+      A11yService,
+      ConfigService,
+      HocComposer,
+      I18nService,
+      RoutingService,
+      ThemeService,
+      ViewportService,
+    } from '@ds/core'
+    import { useRouter } from 'next/navigation'
+    import { useMemo } from 'react'
+    import { useTranslation } from 'react-i18next'
+    //
+    export const Providers = ({ children }: ReactProps) => {
+      const { t } = useTranslation()
+      const router = useRouter()
+      const navigate = (path: string) => router.push(path)
+      const hoc = HocComposer.hoc
+      const providers = useMemo(
+        () => [
+          hoc(ConfigService, {}),
+          hoc(A11yService, {}),
+          hoc(CrosshairService, {}),
+          hoc(ViewportService, {}),
+          hoc(RoutingService, { navigate }),
+          hoc(I18nService, { translate: t, loading: false }),
+          hoc(ThemeService, { cookieKeyMode: 'app-color-mode', cookieKeyTheme: 'app-color-theme' }),
+        ],
+        [navigate]
+      )
+      //
+      return <HocComposer hocs={providers}>{children}</HocComposer>
+    }
+  `}
 />
 
 ## Next.js Configuration
@@ -116,29 +117,29 @@ If you're using Next.js, configure it to transpile the design system package and
 <DocsCodeBlock
   filename="next.config.ts"
   code={`
-		import { type NextConfig } from 'next'
-		import path from 'node:path'
-		//
-		const nextConfig: NextConfig = {
-			compiler: {
-				emotion: true,
-			},
-			turbopack: {
-				root: path.resolve(dirname, '..'), // Monorepo root
-				resolveAlias: {
-					'@ds/*': '../ds/dist/*',
-				},
-			},
-			rules: {
-				'*.svg': {
-					loaders: ['@svgr/webpack'],
-					as: '*.js',
-				},
-			},
-		}
-		//
-		export default nextConfig
-	`}
+    import { type NextConfig } from 'next'
+    import path from 'node:path'
+    //
+    const nextConfig: NextConfig = {
+      compiler: {
+        emotion: true,
+      },
+      turbopack: {
+        root: path.resolve(dirname, '..'), // Monorepo root
+        resolveAlias: {
+          '@ds/*': '../ds/dist/*',
+        },
+      },
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    }
+    //
+    export default nextConfig
+  `}
 />
 
 ## ESLint Configuration
@@ -148,21 +149,21 @@ Configure ESLint to use the design system's custom plugin that enforces proper i
 <DocsCodeBlock
   filename="base-eslint.config.ts"
   code={`
-		import { defineConfig } from 'eslint/config'
-		import { dsImports } from '../ds/dist/scripts/eslint'
-		//
-		export default defineConfig([
-			{
-				files: ['**/*.{ts,tsx}'],
-				extends: [
-					dsImports.configs.recommended,
-				],
-				plugins: {
-					'ds-imports': dsImports,
-				},
-			},
-		])
-	`}
+    import { defineConfig } from 'eslint/config'
+    import { dsImports } from '../ds/dist/scripts/eslint'
+    //
+    export default defineConfig([
+      {
+        files: ['**/*.{ts,tsx}'],
+        extends: [
+          dsImports.configs.recommended,
+        ],
+        plugins: {
+          'ds-imports': dsImports,
+        },
+      },
+    ])
+  `}
 />
 
 ## Versioning Configuration (Optional)
@@ -173,22 +174,22 @@ You can also generate a build number based on build time.
 <DocsCodeBlock
   filename="vite.config.ts or next.config.ts"
   code={`
-		import { createBuildNumber, getDsVersion } from '../ds/dist/scripts/utilities'
-		//
-		// For Vite:
-		config.define = {
-			ENV__BUILD_NUMBER: JSON.stringify(createBuildNumber()),
-			ENV__DS_VERSION: JSON.stringify(getDsVersion()),
-		}
-		//
-		// For Next.js:
-		const nextConfig = {
-			env: {
-				BUILD_NUMBER: createBuildNumber(),
-				DS_VERSION: getDsVersion(),
-			},
-		}
-	`}
+    import { createBuildNumber, getDsVersion } from '../ds/dist/scripts/utilities'
+    //
+    // For Vite:
+    config.define = {
+      ENV__BUILD_NUMBER: JSON.stringify(createBuildNumber()),
+      ENV__DS_VERSION: JSON.stringify(getDsVersion()),
+    }
+    //
+    // For Next.js:
+    const nextConfig = {
+      env: {
+        BUILD_NUMBER: createBuildNumber(),
+        DS_VERSION: getDsVersion(),
+      },
+    }
+  `}
 />
 
 ## TypeScript Configuration for Docs
@@ -198,6 +199,6 @@ Add TypeScript type definitions for the documentation components:
 <DocsCodeBlock
   filename=".storybook/preview/types.d.ts"
   code={`
-		import '@ds/docs/types.d.ts'
-	`}
+    import '@ds/docs/types.d.ts'
+  `}
 />

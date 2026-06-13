@@ -15,9 +15,9 @@ const ConfigService = ({ children }: ReactProps) => {
     fontFamilyMonospace: getTokenValue(TOKENS.FONT_FAMILY['mono']),
   })
   const mantineCSS = `
-		${variablesCSS || ''}
-		${fixOutlineCSS(globalCSS) || ''}
-	`
+    ${variablesCSS || ''}
+    ${fixOutlineCSS(globalCSS) || ''}
+  `
 
   return (
     <MantineProvider theme={mantineTheme}>

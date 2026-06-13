@@ -29,10 +29,10 @@ This service handles setup tasks that need to occur before the application rende
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { ConfigService } from '@ds/core'
-				//
-				const App = ({ children }) => <ConfigService>{children}</ConfigService>
-    		`}
+        import { ConfigService } from '@ds/core'
+        //
+        const App = ({ children }) => <ConfigService>{children}</ConfigService>
+        `}
     />
   </div>
 </DocsColumns>
@@ -47,27 +47,27 @@ This service manages translations and loading states, allowing you to build mult
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useI18nService } from '@ds/core'
-				//
-				const App = () => {
-					const { translate, loading } = useI18nService()
-					return <div data-loading={loading}>{translate('key')}</div>
-				}
-			`}
+        import { useI18nService } from '@ds/core'
+        //
+        const App = () => {
+          const { translate, loading } = useI18nService()
+          return <div data-loading={loading}>{translate('key')}</div>
+        }
+      `}
     />
   </div>
   <div>
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { I18nService } from '@ds/core'
-				//
-				const App = ({ children }) => (
-					<I18nService translate={() => ''} loading={false}>
-						{children}
-					</I18nService>
-				)
-			`}
+        import { I18nService } from '@ds/core'
+        //
+        const App = ({ children }) => (
+          <I18nService translate={() => ''} loading={false}>
+            {children}
+          </I18nService>
+        )
+      `}
     />
   </div>
 </DocsColumns>
@@ -97,27 +97,27 @@ This service abstracts routing logic, making it easier to integrate with differe
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useRoutingService } from '@ds/core'
-				//
-				const App = () => {
-					const { navigate } = useRoutingService()
-					return <button onClick={() => navigate('/home')}>Home</button>
-				}
-			`}
+        import { useRoutingService } from '@ds/core'
+        //
+        const App = () => {
+          const { navigate } = useRoutingService()
+          return <button onClick={() => navigate('/home')}>Home</button>
+        }
+      `}
     />
   </div>
   <div>
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { RoutingService } from '@ds/core'
-				//
-				const App = ({ children }) => (
-					<RoutingService navigate={() => {}}>
-						{children}
-					</RoutingService>
-				)
-			`}
+        import { RoutingService } from '@ds/core'
+        //
+        const App = ({ children }) => (
+          <RoutingService navigate={() => {}}>
+            {children}
+          </RoutingService>
+        )
+      `}
     />
   </div>
 </DocsColumns>
@@ -141,33 +141,33 @@ This service enables dark/light mode switching and exposes all design system tok
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useThemeService } from '@ds/core'
-				//
-				const App = () => {
-					const { tokens, colorMode, isDarkMode, isLightMode, changeColorMode } = useThemeService()
-					return (
-						<button
-						  data-mode={colorMode}
-						  style={{ color: tokens.color['black'] }}
-						  onClick={changeColorMode}
-						>
-							{isDarkMode ? 'Dark' : isLightMode ? 'Light' : '??'}
-						</button>
-					)
-				}
-			`}
+        import { useThemeService } from '@ds/core'
+        //
+        const App = () => {
+          const { tokens, colorMode, isDarkMode, isLightMode, changeColorMode } = useThemeService()
+          return (
+            <button
+              data-mode={colorMode}
+              style={{ color: tokens.color['black'] }}
+              onClick={changeColorMode}
+            >
+              {isDarkMode ? 'Dark' : isLightMode ? 'Light' : '??'}
+            </button>
+          )
+        }
+      `}
     />
   </div>
   <div>
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { ThemeService } from '@ds/core'
-				//
-				const App = ({ children }) => (
-					<ThemeService cookieKey="color-mode">{children}</ThemeService>
-				)
-			`}
+        import { ThemeService } from '@ds/core'
+        //
+        const App = ({ children }) => (
+          <ThemeService cookieKey="color-mode">{children}</ThemeService>
+        )
+      `}
     />
   </div>
 </DocsColumns>

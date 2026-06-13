@@ -7,7 +7,7 @@ import { ENV__BUILD_NUMBER } from '@app/env'
 import '@app/globals'
 import { LOG } from '@app/shared/utils/debugging'
 import '@app/styles'
-import { A11yService, ConfigService, HocComposer, ThemeService, ViewportService } from '@ds/core'
+import { A11yService, ConfigService, CrosshairService, HocComposer, ThemeService, ViewportService } from '@ds/core'
 import { StrictMode } from 'react'
 import { RouterProvider } from './router/router-provider'
 
@@ -22,6 +22,7 @@ const providers = [
   hoc(StrictMode, {}),
   hoc(ConfigService, {}),
   hoc(A11yService, {}),
+  hoc(CrosshairService, {}),
   hoc(ViewportService, {}),
   hoc(I18nProvider, {}),
   hoc(QueryProvider, {}),

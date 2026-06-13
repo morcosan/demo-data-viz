@@ -28,11 +28,11 @@ export interface IconButtonProps extends HtmlDataProps {
   /** URL path for transforming the button into `<a>` link */
   linkHref?: string
   /**
-	 - Link behavior when linkHref is set
-	 - `internal` creates a router `Link` component
-	 - `external` creates an `<a>` link that opens in new tab
-	 - `inactive` creates an `<a>` link without any behavior
-	 */
+   - Link behavior when linkHref is set
+   - `internal` creates a router `Link` component
+   - `external` creates an `<a>` link that opens in new tab
+   - `inactive` creates an `<a>` link without any behavior
+   */
   linkType?: LinkType
   /** CSS class attribute for the wrapper element */
   className?: string

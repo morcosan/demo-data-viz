@@ -29,9 +29,9 @@ wait(1000).then(() => console.log('Executed after 1 second'))
 //
 // In async functions
 const fetchData = async () => {
-	await wait(500)
-	const response = await fetch('/api/data')
-	return response.json()
+  await wait(500)
+  const response = await fetch('/api/data')
+  return response.json()
 }
 ```
 
@@ -59,15 +59,15 @@ import { Keyboard } from '@ds/core'
 //
 // Keyboard event handling
 const handleKeyDown = (event: KeyboardEvent) => {
-	if (event.key === Keyboard.ENTER) {
-		submitForm()
-	}
-	if (event.key === Keyboard.ESCAPE) {
-		closeModal()
-	}
-	if (event.key === Keyboard.ARROW_UP) {
-		navigateUp()
-	}
+  if (event.key === Keyboard.ENTER) {
+    submitForm()
+  }
+  if (event.key === Keyboard.ESCAPE) {
+    closeModal()
+  }
+  if (event.key === Keyboard.ARROW_UP) {
+    navigateUp()
+  }
 }
 ```
 

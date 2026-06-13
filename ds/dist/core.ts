@@ -23,6 +23,7 @@ export * from '../src/components/text-field/text-field'
  */
 export * from '../src/services/a11y-service'
 export * from '../src/services/config-service'
+export * from '../src/services/crosshair-service'
 export * from '../src/services/i18n-service'
 export * from '../src/services/routing-service'
 export * from '../src/services/theme-service'

@@ -27,35 +27,35 @@ This service automatically detects user input methods and adjusts the UI accordi
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useA11yService } from '@ds/core'
-				//
-				const App = () => {
-					const { a11yMode, isPointer, forceA11yMode } = useA11yService()
-					return (
-						<button onClick={() => forceA11yMode('default')}>
-							{a11yMode} {isPointer ? 'pointer' : 'default'}
-						</button>
-					)
-				}
-			`}
+        import { useA11yService } from '@ds/core'
+        //
+        const App = () => {
+          const { a11yMode, isPointer, forceA11yMode } = useA11yService()
+          return (
+            <button onClick={() => forceA11yMode('default')}>
+              {a11yMode} {isPointer ? 'pointer' : 'default'}
+            </button>
+          )
+        }
+      `}
     />
   </div>
   <div>
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { A11yService } from '@ds/core'
-				//
-				const App = ({ children }) => <A11yService>{children}</A11yService>
-    	`}
+        import { A11yService } from '@ds/core'
+        //
+        const App = ({ children }) => <A11yService>{children}</A11yService>
+      `}
     />
     <h3>Utilities</h3>
     <DocsCodeBlock
       code={`
-				import { isA11yModeDefault, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core'
-				//
-				console.log(isA11yModeDefault(), isA11yModePointer(), ATTR_KEY__A11Y_MODE)
-    	`}
+        import { isA11yModeDefault, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core'
+        //
+        console.log(isA11yModeDefault(), isA11yModePointer(), ATTR_KEY__A11Y_MODE)
+      `}
     />
   </div>
 </DocsColumns>
@@ -83,30 +83,30 @@ This service tracks window resize events and provides comprehensive breakpoint h
     <h3>Consumer</h3>
     <DocsCodeBlock
       code={`
-				import { useViewportService } from '@ds/core'
-				//
-				const App = () => {
-					const { viewportWidth, isViewportLG, isViewportMinMD, isViewportMaxSM } = useViewportService()
-					return (
-						<div>
-							<p>Width: {viewportWidth}px</p>
-							<p>{isViewportLG ? 'Large desktop' : 'Mobile/Tablet'}</p>
-							<p>{isViewportMinMD && 'Medium and above'}</p>
-							<p>{isViewportMaxSM && 'Small and below'}</p>
-						</div>
-					)
-				}
-			`}
+        import { useViewportService } from '@ds/core'
+        //
+        const App = () => {
+          const { viewportWidth, isViewportLG, isViewportMinMD, isViewportMaxSM } = useViewportService()
+          return (
+            <div>
+              <p>Width: {viewportWidth}px</p>
+              <p>{isViewportLG ? 'Large desktop' : 'Mobile/Tablet'}</p>
+              <p>{isViewportMinMD && 'Medium and above'}</p>
+              <p>{isViewportMaxSM && 'Small and below'}</p>
+            </div>
+          )
+        }
+      `}
     />
   </div>
   <div>
     <h3>Provider</h3>
     <DocsCodeBlock
       code={`
-				import { ViewportService } from '@ds/core'
-				//
-				const App = ({ children }) => <ViewportService>{children}</ViewportService>
-			`}
+        import { ViewportService } from '@ds/core'
+        //
+        const App = ({ children }) => <ViewportService>{children}</ViewportService>
+      `}
     />
   </div>
 </DocsColumns>

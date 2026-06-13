@@ -35,22 +35,22 @@ export interface TextFieldProps extends HtmlDataProps {
   /** Maximum number of characters allowed for `value` prop */
   maxLength?: number
   /**
-	 - Flag for allowing multiple lines of text separated by `\n` character
-	 - The field will auto-expand based on `minRows` and `maxRows` props
-	 - It uses `<textarea>` HTML element instead of `<input>` element
-	 */
+   - Flag for allowing multiple lines of text separated by `\n` character
+   - The field will auto-expand based on `minRows` and `maxRows` props
+   - It uses `<textarea>` HTML element instead of `<input>` element
+   */
   multiline?: boolean
   /** Minimum number of rows displayed when `value` prop is empty */
   minRows?: number
   /**
-	 - Maximum number of rows displayed before enforcing vertical scrolling
-	 - If `maxRows` is smaller than `minRows`, then `minRows` is used instead
-	 */
+   - Maximum number of rows displayed before enforcing vertical scrolling
+   - If `maxRows` is smaller than `minRows`, then `minRows` is used instead
+   */
   maxRows?: number
   /**
-	 - Flag for marking the field as read-only and disable editing
-	 - The field is still accessible via keyboard navigation
-	 */
+   - Flag for marking the field as read-only and disable editing
+   - The field is still accessible via keyboard navigation
+   */
   readonly?: boolean
   /** Flag for completely disable the field and its interaction */
   disabled?: boolean
@@ -91,10 +91,10 @@ export interface TextFieldProps extends HtmlDataProps {
    */
   /**
    * Reference object with imperative methods
-   * @param setValue(value:string):void 	- Sets the current value of `<input>` or `<textarea>` element
-   * @param getValue():string 						- Returns the current value of `<input>` or `<textarea>` element
-   * @param focus():void 									- Triggers focus on the `<input>` or `<textarea>` element
-   * @param blur():void 									- Triggers blur on the `<input>` or `<textarea>` element
+   * @param setValue(value:string):void   - Sets the current value of `<input>` or `<textarea>` element
+   * @param getValue():string             - Returns the current value of `<input>` or `<textarea>` element
+   * @param focus():void                   - Triggers focus on the `<input>` or `<textarea>` element
+   * @param blur():void                   - Triggers blur on the `<input>` or `<textarea>` element
    */
   ref?: Ref<TextFieldHandle>
 }

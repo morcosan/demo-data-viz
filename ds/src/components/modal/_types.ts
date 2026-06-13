@@ -26,9 +26,9 @@ export interface ModalProps extends HtmlDataProps {
   /** Property that determines height and max-height for modal */
   height?: ModalHeight
   /**
-	 - Flag for disabling the overlay click and `Escape` key
-	 - It also increases the background contrast
-	 */
+   - Flag for disabling the overlay click and `Escape` key
+   - It also increases the background contrast
+   */
   noDismiss?: boolean
   /** Flag for hiding all close buttons */
   noClose?: boolean
