@@ -1,4 +1,5 @@
 import { type CSSObject } from '@emotion/react'
+import { useEffect, useState } from 'react'
 import { getTokenValue, TOKENS } from '../../styles/tokens'
 import { useThemeService } from '../theme-service'
 
@@ -10,6 +11,7 @@ export interface CrosshairProps {
 export const Crosshair = (props: CrosshairProps) => {
   const { targetRect, visible } = props
   const { tokens } = useThemeService()
+  const [isVisible, setIsVisible] = useState(false)
 
   const heightLimit = parseInt(getTokenValue(TOKENS.SPACING['button-h-sm']))
   const isSmall = targetRect.width <= heightLimit || targetRect.height <= heightLimit
@@ -42,9 +44,18 @@ export const Crosshair = (props: CrosshairProps) => {
     transform: isSquare ? 'scale(1.2)' : 'scale(1.05, 1.25)',
   }
 
+  useEffect(() => {
+    // Must start hidden for CSS transition to work
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsVisible(visible)
+      })
+    })
+  }, [visible])
+
   return (
     <div
-      css={[crosshairCss, visible && crosshairHoverCss]}
+      css={[crosshairCss, isVisible && crosshairHoverCss]}
       style={{
         top: targetRect.top,
         left: targetRect.left,
