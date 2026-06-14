@@ -142,23 +142,13 @@
   --ds-color-hover-text-pressed: var(--ds-color-black-alpha-3);
   --ds-color-hover-button-default: var(--ds-color-black-alpha-5);
   --ds-color-hover-button-pressed: var(--ds-color-black-alpha-7);
-  --ds-color-primary-page-text: var(--ds-color-purple-6);
   --ds-color-secondary-button-bg: var(--ds-color-yellow-3);
   --ds-color-secondary-button-text: var(--ds-color-yellow-8);
   --ds-color-secondary-hover-default: var(--ds-color-black-alpha-4);
-  --ds-color-secondary-hover-pressed: var(--ds-color-black-alpha-5);
-  --ds-color-secondary-card-bg: var(--ds-color-yellow-1);
-  --ds-color-secondary-card-text: var(--ds-color-yellow-8);
-  --ds-color-secondary-card-subtext: var(--ds-color-yellow-7);
-  --ds-color-secondary-page-text: var(--ds-color-yellow-7);
-  --ds-color-danger-button-bg: var(--ds-color-red-6);
-  --ds-color-danger-button-text: var(--ds-color-white);
   --ds-color-danger-card-bg: var(--ds-color-red-1);
   --ds-color-danger-card-text: var(--ds-color-red-8);
   --ds-color-danger-card-subtext: var(--ds-color-red-7);
   --ds-color-danger-page-text: var(--ds-color-red-6);
-  --ds-color-success-button-bg: var(--ds-color-green-6);
-  --ds-color-success-button-text: var(--ds-color-white);
   --ds-color-success-card-bg: var(--ds-color-green-1);
   --ds-color-success-card-text: var(--ds-color-green-8);
   --ds-color-success-card-subtext: var(--ds-color-green-7);
@@ -170,13 +160,9 @@
   --ds-color-chart-bar-hover: var(--ds-color-grey-14);
   --ds-color-map-ocean: var(--ds-color-blue-1);
   --ds-color-map-land: var(--ds-color-grey-1);
-  --ds-color-map-value-none: var(--ds-color-purple-1);
-  --ds-color-map-value-min: var(--ds-color-purple-2);
-  --ds-color-map-value-max: var(--ds-color-purple-8);
-  --ds-color-danger-hover-default: var(--ds-color-hover-button-default);
-  --ds-color-danger-hover-pressed: var(--ds-color-hover-button-pressed);
-  --ds-color-success-hover-default: var(--ds-color-hover-button-default);
-  --ds-color-success-hover-pressed: var(--ds-color-hover-button-pressed);
+  --ds-color-map-value-none: var(--ds-color-grey-6);
+  --ds-color-map-value-min: var(--ds-color-yellow-6);
+  --ds-color-map-value-max: var(--ds-color-blue-12);
 }
 
 [data-color-mode='dark'] {
@@ -202,22 +188,12 @@
   --ds-color-hover-text-pressed: var(--ds-color-black-alpha-6);
   --ds-color-hover-button-default: var(--ds-color-black-alpha-5);
   --ds-color-hover-button-pressed: var(--ds-color-black-alpha-7);
-  --ds-color-primary-page-text: var(--ds-color-purple-3);
   --ds-color-secondary-button-bg: var(--ds-color-yellow-2);
   --ds-color-secondary-button-text: var(--ds-color-yellow-7);
-  --ds-color-secondary-hover-pressed: var(--ds-color-black-alpha-6);
-  --ds-color-secondary-card-bg: var(--ds-color-yellow-6);
-  --ds-color-secondary-card-text: var(--ds-color-white);
-  --ds-color-secondary-card-subtext: var(--ds-color-yellow-1);
-  --ds-color-secondary-page-text: var(--ds-color-yellow-2);
-  --ds-color-danger-button-bg: var(--ds-color-red-5);
-  --ds-color-danger-button-text: var(--ds-color-white);
   --ds-color-danger-card-bg: var(--ds-color-red-8);
   --ds-color-danger-card-text: var(--ds-color-white);
   --ds-color-danger-card-subtext: var(--ds-color-red-2);
   --ds-color-danger-page-text: var(--ds-color-red-3);
-  --ds-color-success-button-bg: var(--ds-color-green-6);
-  --ds-color-success-button-text: var(--ds-color-white);
   --ds-color-success-card-bg: var(--ds-color-green-8);
   --ds-color-success-card-text: var(--ds-color-white);
   --ds-color-success-card-subtext: var(--ds-color-green-3);
@@ -227,14 +203,10 @@
   --ds-color-modal-overlay-strong: var(--ds-color-black-alpha-10);
   --ds-color-chart-bar-default: var(--ds-color-grey-10);
   --ds-color-chart-bar-hover: var(--ds-color-grey-8);
-  --ds-color-map-ocean: var(--ds-color-blue-8);
-  --ds-color-map-land: var(--ds-color-grey-18);
-  --ds-color-map-value-none: var(--ds-color-grey-14);
-  --ds-color-map-value-min: var(--ds-color-purple-7);
-  --ds-color-map-value-max: var(--ds-color-purple-1);
+  --ds-color-map-ocean: var(--ds-color-blue-15);
+  --ds-color-map-land: var(--ds-color-grey-16);
+  --ds-color-map-value-none: var(--ds-color-grey-13);
+  --ds-color-map-value-min: var(--ds-color-blue-11);
+  --ds-color-map-value-max: var(--ds-color-yellow-7);
   --ds-color-secondary-hover-default: var(--ds-color-hover-button-default);
-  --ds-color-danger-hover-default: var(--ds-color-hover-button-default);
-  --ds-color-danger-hover-pressed: var(--ds-color-hover-button-pressed);
-  --ds-color-success-hover-default: var(--ds-color-hover-button-default);
-  --ds-color-success-hover-pressed: var(--ds-color-hover-button-pressed);
 }

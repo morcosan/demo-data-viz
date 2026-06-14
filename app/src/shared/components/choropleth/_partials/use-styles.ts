@@ -39,20 +39,12 @@ export const useStyles = () => {
     [],
   )
 
-  const shadows = useMemo(
+  const shadow = useMemo(
     () => ({
-      sm: {
-        color: isLightMode ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.7)',
-        blur: isLightMode ? 3 : 4,
-        offsetX: 0,
-        offsetY: isLightMode ? 1 : 2,
-      },
-      md: {
-        color: isLightMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.6)',
-        blur: 6,
-        offsetX: 0,
-        offsetY: 4,
-      },
+      color: isLightMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.7)',
+      blur: isLightMode ? 4 : 6,
+      offsetX: 0,
+      offsetY: isLightMode ? 2 : 4,
     }),
     [isLightMode],
   )
@@ -87,10 +79,10 @@ export const useStyles = () => {
           areaColor: 'inherit',
           borderColor: colors.borderHover,
           borderWidth: sizes.borderHover,
-          shadowColor: isMobile ? undefined : shadows.md.color,
-          shadowBlur: isMobile ? undefined : shadows.md.blur,
-          shadowOffsetX: isMobile ? undefined : shadows.md.offsetX,
-          shadowOffsetY: isMobile ? undefined : shadows.md.offsetY,
+          shadowColor: isMobile ? undefined : shadow.color,
+          shadowBlur: isMobile ? undefined : shadow.blur,
+          shadowOffsetX: isMobile ? undefined : shadow.offsetX,
+          shadowOffsetY: isMobile ? undefined : shadow.offsetY,
         },
       } satisfies Record<string, EItemStyle>,
       legend: {
@@ -111,7 +103,7 @@ export const useStyles = () => {
         className: tooltipClass,
       } satisfies ETooltip,
     }),
-    [colors, sizes, shadows, isMobile],
+    [colors, sizes, shadow, isMobile],
   )
 
   const containerCss: CSSObject = {
@@ -152,7 +144,6 @@ export const useStyles = () => {
     draggingClass,
     getCitySize,
     getItemStyle,
-    shadows,
     sizes,
     styles,
   }

@@ -10,7 +10,7 @@ export const useHoverEffect = ({ small, wide }: HoverEffectProps) => {
   const { tokens } = useThemeService()
 
   const startPos = '-12px'
-  const endPos = wide ? '-5px' : '-4px'
+  const endPos = small ? '-3px' : wide ? '-5px' : '-4px'
 
   const defaultCss: CSSObject = {
     position: 'absolute',

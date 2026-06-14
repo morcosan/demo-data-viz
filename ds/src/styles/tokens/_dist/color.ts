@@ -210,10 +210,6 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.black-alpha-7}', dark: '{color.black-alpha-7}' },
     value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
   },
-  'primary-page-text': {
-    ref: { light: '{color.purple-6}', dark: '{color.purple-3}' },
-    value: { light: 'oklch(0.5575 0.2525 306)', dark: 'oklch(0.7326 0.1697 306)' },
-  },
   'secondary-button-bg': {
     ref: { light: '{color.yellow-3}', dark: '{color.yellow-2}' },
     value: { light: 'oklch(0.9800 0.0520 102.50)', dark: 'oklch(0.9880 0.0320 103.00)' },
@@ -225,42 +221,6 @@ export const TOKENS__COLOR = {
   'secondary-hover-default': {
     ref: { light: '{color.black-alpha-4}', dark: '{color.hover-button-default}' },
     value: { light: 'oklch(0.1068 0.0519 317 / 0.12)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
-  },
-  'secondary-hover-pressed': {
-    ref: { light: '{color.black-alpha-5}', dark: '{color.black-alpha-6}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.24)' },
-  },
-  'secondary-card-bg': {
-    ref: { light: '{color.yellow-1}', dark: '{color.yellow-6}' },
-    value: { light: 'oklch(0.9950 0.0150 103.19)', dark: 'oklch(0.9185 0.1426 98.22)' },
-  },
-  'secondary-card-text': {
-    ref: { light: '{color.yellow-8}', dark: '{color.white}' },
-    value: { light: 'oklch(0.8606 0.1731 91.94)', dark: 'oklch(1 0 0)' },
-  },
-  'secondary-card-subtext': {
-    ref: { light: '{color.yellow-7}', dark: '{color.yellow-1}' },
-    value: { light: 'oklch(0.8896 0.1579 95.08)', dark: 'oklch(0.9950 0.0150 103.19)' },
-  },
-  'secondary-page-text': {
-    ref: { light: '{color.yellow-7}', dark: '{color.yellow-2}' },
-    value: { light: 'oklch(0.8896 0.1579 95.08)', dark: 'oklch(0.9880 0.0320 103.00)' },
-  },
-  'danger-button-bg': {
-    ref: { light: '{color.red-6}', dark: '{color.red-5}' },
-    value: { light: 'oklch(0.7305 0.1593 30)', dark: 'oklch(0.7691 0.1314 30)' },
-  },
-  'danger-button-text': {
-    ref: { light: '{color.white}', dark: '{color.white}' },
-    value: { light: 'oklch(1 0 0)', dark: 'oklch(1 0 0)' },
-  },
-  'danger-hover-default': {
-    ref: { light: '{color.hover-button-default}', dark: '{color.hover-button-default}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
-  },
-  'danger-hover-pressed': {
-    ref: { light: '{color.hover-button-pressed}', dark: '{color.hover-button-pressed}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
   },
   'danger-card-bg': {
     ref: { light: '{color.red-1}', dark: '{color.red-8}' },
@@ -277,22 +237,6 @@ export const TOKENS__COLOR = {
   'danger-page-text': {
     ref: { light: '{color.red-6}', dark: '{color.red-3}' },
     value: { light: 'oklch(0.7305 0.1593 30)', dark: 'oklch(0.8461 0.0814 30)' },
-  },
-  'success-button-bg': {
-    ref: { light: '{color.green-6}', dark: '{color.green-6}' },
-    value: { light: 'oklch(0.7615 0.1871 140)', dark: 'oklch(0.7615 0.1871 140)' },
-  },
-  'success-button-text': {
-    ref: { light: '{color.white}', dark: '{color.white}' },
-    value: { light: 'oklch(1 0 0)', dark: 'oklch(1 0 0)' },
-  },
-  'success-hover-default': {
-    ref: { light: '{color.hover-button-default}', dark: '{color.hover-button-default}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
-  },
-  'success-hover-pressed': {
-    ref: { light: '{color.hover-button-pressed}', dark: '{color.hover-button-pressed}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
   },
   'success-card-bg': {
     ref: { light: '{color.green-1}', dark: '{color.green-8}' },
@@ -331,23 +275,23 @@ export const TOKENS__COLOR = {
     value: { light: 'oklch(0.461 0.0157 308)', dark: 'oklch(0.7548 0.0151 308)' },
   },
   'map-ocean': {
-    ref: { light: '{color.blue-1}', dark: '{color.blue-8}' },
-    value: { light: 'oklch(0.9500 0.0200 240)', dark: 'oklch(0.6500 0.1450 240)' },
+    ref: { light: '{color.blue-1}', dark: '{color.blue-15}' },
+    value: { light: 'oklch(0.9500 0.0200 240)', dark: 'oklch(0.2200 0.0720 240)' },
   },
   'map-land': {
-    ref: { light: '{color.grey-1}', dark: '{color.grey-18}' },
-    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.3171 0.0092 308)' },
+    ref: { light: '{color.grey-1}', dark: '{color.grey-16}' },
+    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.3771 0.0124 308)' },
   },
   'map-value-none': {
-    ref: { light: '{color.purple-1}', dark: '{color.grey-14}' },
-    value: { light: 'oklch(0.9024 0.0604 306)', dark: 'oklch(0.461 0.0157 308)' },
+    ref: { light: '{color.grey-6}', dark: '{color.grey-13}' },
+    value: { light: 'oklch(0.8432 0.0088 308)', dark: 'oklch(0.516 0.0186 308)' },
   },
   'map-value-min': {
-    ref: { light: '{color.purple-2}', dark: '{color.purple-7}' },
-    value: { light: 'oklch(0.8268 0.1082 306)', dark: 'oklch(0.4383 0.1983 306)' },
+    ref: { light: '{color.yellow-6}', dark: '{color.blue-11}' },
+    value: { light: 'oklch(0.9185 0.1426 98.22)', dark: 'oklch(0.4500 0.1600 240)' },
   },
   'map-value-max': {
-    ref: { light: '{color.purple-8}', dark: '{color.purple-1}' },
-    value: { light: 'oklch(0.3442 0.1476 306)', dark: 'oklch(0.9024 0.0604 306)' },
+    ref: { light: '{color.blue-12}', dark: '{color.yellow-7}' },
+    value: { light: 'oklch(0.3900 0.1420 240)', dark: 'oklch(0.8896 0.1579 95.08)' },
   },
 } as const
