@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from '@app-i18n'
-import { LogoSvg } from '@ds/core'
+import { LogoSvg, useThemeService } from '@ds/core'
 import Link from 'next/link'
 
 export interface AppLogoProps extends ReactProps {
@@ -14,9 +14,14 @@ export interface AppLogoProps extends ReactProps {
 /** App logo to be rendered on top of navigation */
 export const AppLogo = ({ collapsed, mobile, className }: AppLogoProps) => {
   const { t } = useTranslation()
+  const { isLightMode } = useThemeService()
 
   return (
-    <Link href="/" className={cx('p-xs-3 text-color-primary-page-text flex w-fit', className)} data-testid="app-logo">
+    <Link
+      href="/"
+      className={cx('p-xs-3 flex w-fit', isLightMode ? 'text-color-blue-10' : 'text-color-blue-4', className)}
+      data-testid="app-logo"
+    >
       {mobile ? (
         <span className="flex items-center">
           <LogoSvg className="mr-xs-3 h-sm-0 w-sm-0 animate-pulse" />

@@ -8,7 +8,7 @@ interface Props extends TextFieldProps {
 }
 
 export const useStyles = (props: Props) => {
-  const { disabled, invalid, isNoop, multiline, readonly, size, variant } = props
+  const { disabled, invalid, isNoop, multiline, readonly, size } = props
   const { tokens } = useThemeService()
   const ifNotNoop = (css: CSSObject) => (isNoop ? {} : css)
 
@@ -54,13 +54,7 @@ export const useStyles = (props: Props) => {
         ? tokens.color['border-subtle']
         : tokens.color['border-default'],
     borderColorHover: invalid ? tokens.color['danger-page-text'] : tokens.color['border-hover'],
-    borderColorActive: (() => {
-      if (invalid) return tokens.color['danger-page-text']
-      if (variant === 'default') return tokens.color['border-active']
-      if (variant === 'primary') return tokens.color['primary-page-text']
-      if (variant === 'secondary') return tokens.color['secondary-page-text']
-      return ''
-    })(),
+    borderColorActive: invalid ? tokens.color['danger-page-text'] : tokens.color['border-active'],
   }
 
   const rootCss: CSSObject = {

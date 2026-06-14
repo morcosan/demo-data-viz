@@ -9,7 +9,7 @@ const meta: Meta = {
     slots: {
       title: 'Modal title',
       children: loremLongText(20),
-      actions: '<button class="p-xs-3 bg-color-primary-button-bg text-color-text-inverse rounded-md">Submit</button>',
+      actions: '<button class="p-xs-3 bg-color-blue-9 text-color-text-inverse rounded-md">Submit</button>',
       extras: 'Extra content',
     },
     props: {

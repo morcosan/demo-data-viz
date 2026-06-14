@@ -12,7 +12,7 @@ const meta: Meta = {
     },
     props: {
       state: 'default',
-      variant: 'primary',
+      variant: 'default',
       size: 'md',
       linkHref: '',
       linkType: 'internal',

@@ -35,13 +35,12 @@ export const TextField = (props: TextFieldProps) => {
     style,
     suffix,
     value,
-    variant = 'default',
   } = props
   const dataProps = useDataProps(props)
   const inputRef = useRef<InputElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const isNoop = Boolean(disabled || readonly)
-  const { inputCss, prefixCss, rootCss, suffixCss } = useStyles({ ...props, isNoop, size, variant })
+  const { inputCss, prefixCss, rootCss, suffixCss } = useStyles({ ...props, isNoop, size })
 
   const handleKeyDown = useCallback(
     (event: ReactKeyboardEvent) => event.key === Keyboard.ENTER && onSubmit?.(event),

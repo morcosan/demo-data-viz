@@ -27,7 +27,6 @@ const meta: Meta = {
     },
     props: {
       id: 'example-id',
-      variant: 'default',
       size: 'md',
       maxLength: 0,
       multiline: false,
@@ -41,7 +40,7 @@ const meta: Meta = {
       'data-prop': '',
     },
     events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
-    inlineRadios: ['variant', 'size'],
+    inlineRadios: ['size'],
     hasMethods: true,
     shortcuts: [
       {
@@ -173,30 +172,6 @@ const Variants: StoryObj<typeof TextField> = {
                 className="flex-1"
                 multiline
                 disabled
-              />
-            </div>
-
-            <div className="gap-xs-7 flex w-full flex-wrap items-center">
-              <TextField
-                id="variant-default"
-                variant="default"
-                placeholder="Variant - default"
-                suffix={getSlot('sm', 'default')}
-                className="flex-1"
-              />
-              <TextField
-                id="variant-primary"
-                variant="primary"
-                placeholder="Variant - primary"
-                suffix={getSlot('sm', 'primary')}
-                className="flex-1"
-              />
-              <TextField
-                id="variant-secondary"
-                variant="secondary"
-                placeholder="Variant - secondary"
-                suffix={getSlot('sm', 'secondary')}
-                className="flex-1"
               />
             </div>
           </label>

@@ -28,8 +28,6 @@ export interface TextFieldProps extends HtmlDataProps {
    */
   /** Unique id attribute for the `input` / `textarea` element */
   id: string
-  /** Property that determines active border color when the field is focused */
-  variant?: TextFieldVariant
   /** Property that determines the height and padding for the field */
   size?: TextFieldSize
   /** Maximum number of characters allowed for `value` prop */

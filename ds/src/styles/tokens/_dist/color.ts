@@ -150,14 +150,6 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.black-alpha-3}', dark: '{color.white-alpha-5}' },
     value: { light: 'oklch(0.1068 0.0519 317 / 0.09)', dark: 'oklch(1 0 0 / 0.16)' },
   },
-  'bg-link': {
-    ref: { light: '{color.black-alpha-2}', dark: '{color.black-alpha-5}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.06)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
-  },
-  'bg-blockquote': {
-    ref: { light: '{color.black-alpha-1}', dark: '{color.white-alpha-2}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.03)', dark: 'oklch(1 0 0 / 0.06)' },
-  },
   'bg-highlight': {
     ref: { light: '{color.yellow-4}', dark: '{color.yellow-6}' },
     value: { light: 'oklch(0.9680 0.0780 101.50)', dark: 'oklch(0.9185 0.1426 98.22)' },
@@ -202,10 +194,6 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.grey-11}', dark: '{color.grey-11}' },
     value: { light: 'oklch(0.6207 0.0223 308)', dark: 'oklch(0.6207 0.0223 308)' },
   },
-  'text-link': {
-    ref: { light: '{color.purple-8}', dark: '{color.purple-1}' },
-    value: { light: 'oklch(0.3442 0.1476 306)', dark: 'oklch(0.9024 0.0604 306)' },
-  },
   'hover-text-default': {
     ref: { light: '{color.black-alpha-2}', dark: '{color.black-alpha-5}' },
     value: { light: 'oklch(0.1068 0.0519 317 / 0.06)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
@@ -221,34 +209,6 @@ export const TOKENS__COLOR = {
   'hover-button-pressed': {
     ref: { light: '{color.black-alpha-7}', dark: '{color.black-alpha-7}' },
     value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
-  },
-  'primary-button-bg': {
-    ref: { light: '{color.purple-6}', dark: '{color.purple-5}' },
-    value: { light: 'oklch(0.5575 0.2525 306)', dark: 'oklch(0.5926 0.2335 306)' },
-  },
-  'primary-button-text': {
-    ref: { light: '{color.white}', dark: '{color.white}' },
-    value: { light: 'oklch(1 0 0)', dark: 'oklch(1 0 0)' },
-  },
-  'primary-hover-default': {
-    ref: { light: '{color.hover-button-default}', dark: '{color.hover-button-default}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.16)', dark: 'oklch(0.1068 0.0519 317 / 0.16)' },
-  },
-  'primary-hover-pressed': {
-    ref: { light: '{color.hover-button-pressed}', dark: '{color.hover-button-pressed}' },
-    value: { light: 'oklch(0.1068 0.0519 317 / 0.32)', dark: 'oklch(0.1068 0.0519 317 / 0.32)' },
-  },
-  'primary-card-bg': {
-    ref: { light: '{color.purple-1}', dark: '{color.purple-8}' },
-    value: { light: 'oklch(0.9024 0.0604 306)', dark: 'oklch(0.3442 0.1476 306)' },
-  },
-  'primary-card-text': {
-    ref: { light: '{color.purple-8}', dark: '{color.white}' },
-    value: { light: 'oklch(0.3442 0.1476 306)', dark: 'oklch(1 0 0)' },
-  },
-  'primary-card-subtext': {
-    ref: { light: '{color.purple-7}', dark: '{color.purple-3}' },
-    value: { light: 'oklch(0.4383 0.1983 306)', dark: 'oklch(0.7326 0.1697 306)' },
   },
   'primary-page-text': {
     ref: { light: '{color.purple-6}', dark: '{color.purple-3}' },
