@@ -3,13 +3,14 @@ import { useThemeService } from '../services/theme-service'
 
 export interface HoverEffectProps {
   small?: boolean
+  wide?: boolean
 }
 
-export const useHoverEffect = ({ small }: HoverEffectProps) => {
+export const useHoverEffect = ({ small, wide }: HoverEffectProps) => {
   const { tokens } = useThemeService()
 
   const startPos = '-12px'
-  const endPos = '-4px'
+  const endPos = wide ? '-5px' : '-4px'
 
   const defaultCss: CSSObject = {
     position: 'absolute',

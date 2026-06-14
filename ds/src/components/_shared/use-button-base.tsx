@@ -32,12 +32,11 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
   const styles = useButtonStyles({ state, size, variant })
-  const hoverEffect = useHoverEffect({ small: size === 'xs' })
-
   const isSolid = variant === 'primary' || variant === 'danger'
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
+  const hoverEffect = useHoverEffect({ small: size === 'xs', wide: isMenuItem })
 
   const noopProps = ((): CSSObject => {
     const noopColor = tokens.color['text-subtle']
@@ -64,7 +63,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const surfaceCss: CSSObject = {
     ...(isPressed ? styles.surfaceHovered : styles.surfaceDefault),
     ...(isNoop ? noopProps : {}),
-    position: 'relative',
     transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     width: '100%',
     height: '100%',
@@ -84,8 +82,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
     width: '100%',
     height: '100%',
     opacity: state === 'loading' ? 0 : 1,
-    pointerEvents: 'none',
-    userSelect: 'none',
     lineHeight: 1,
     fontSize: styles.fontSize,
     fontWeight: styles.fontWeight,
@@ -101,6 +97,10 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
+    '& > span': {
+      pointerEvents: 'none',
+      userSelect: 'none',
+    },
     '&:hover, &:focus': isNoop
       ? {}
       : pressing

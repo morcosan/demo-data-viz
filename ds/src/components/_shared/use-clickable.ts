@@ -28,7 +28,7 @@ export const useClickable = (props: ClickableProps) => {
       onClick?.(event)
 
       if (isA11yModePointer()) {
-        const button = (event.target as HTMLElement).closest('button')
+        const button = event.target as HTMLElement
         button?.blur()
       }
 
