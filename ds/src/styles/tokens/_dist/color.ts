@@ -351,8 +351,8 @@ export const TOKENS__COLOR = {
     value: { light: 'oklch(0.7227 0.1920 140)', dark: 'oklch(0.9250 0.0806 140)' },
   },
   'button-hover-effect': {
-    ref: { light: '{color.yellow-7}', dark: '{color.yellow-3}' },
-    value: { light: 'oklch(0.8896 0.1579 95.08)', dark: 'oklch(0.9800 0.0520 102.50)' },
+    ref: { light: '{color.blue-7}', dark: '{color.yellow-3}' },
+    value: { light: 'oklch(0.7100 0.1280 240)', dark: 'oklch(0.9800 0.0520 102.50)' },
   },
   'modal-overlay-subtle': {
     ref: { light: '{color.black-alpha-7}', dark: '{color.black-alpha-6}' },

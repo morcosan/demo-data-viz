@@ -32,7 +32,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
   const styles = useButtonStyles({ state, size, variant })
-  const hoverEffect = useHoverEffect({ small: size === 'xs' || size === 'sm' })
+  const hoverEffect = useHoverEffect({ small: size === 'xs' })
 
   const isSolid = variant === 'primary' || variant === 'danger'
   const isOutline = variant === 'secondary'
@@ -101,9 +101,10 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus':
-      isNoop || pressing
-        ? {}
+    '&:hover, &:focus': isNoop
+      ? {}
+      : pressing
+        ? { '& > span:nth-of-type(1)': hoverEffect.css }
         : {
             '& > span:nth-of-type(1)': hoverEffect.css,
             '& > span:nth-of-type(2)': surfaceHoverCss,
