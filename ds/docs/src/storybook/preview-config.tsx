@@ -60,20 +60,10 @@ const toolbarConfig = {
         ],
       },
     },
-    hasCrosshair: {
-      description: 'Toggle crosshair',
-      toolbar: {
-        items: [
-          { value: true, title: 'Crosshair', icon: 'lightning' as any },
-          { value: false, title: 'No crosshair', icon: 'lightningoff' as any },
-        ],
-      },
-    },
   },
   initialGlobals: {
     colorMode: 'light',
     canvasBg: 'grid',
-    hasCrosshair: true,
   },
 } satisfies PreviewToolbar
 

@@ -8,7 +8,6 @@ import {
   ViewportService,
 } from '@ds/core'
 import { type ComponentType, type ReactNode, StrictMode, useEffect } from 'react'
-import { CrosshairService } from '../../../src/services/crosshair-service'
 import { type DocsCanvasBg, DocsCanvasService } from '../services/docs-canvas-service'
 
 interface GlobalConfig<T> {
@@ -20,12 +19,10 @@ interface GlobalConfig<T> {
 interface GlobalTypes {
   colorMode?: GlobalConfig<ColorMode>
   canvasBg?: GlobalConfig<DocsCanvasBg>
-  hasCrosshair?: GlobalConfig<boolean>
 }
 interface GlobalDefaults {
   colorMode?: ColorMode | '_reset'
   canvasBg?: DocsCanvasBg | '_reset'
-  hasCrosshair?: boolean
 }
 interface PreviewToolbar {
   globalTypes: GlobalTypes
@@ -65,7 +62,6 @@ interface DocsComponentProps {
 const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
   const colorMode = !globals.colorMode || globals.colorMode === '_reset' ? 'light' : globals.colorMode
   const canvasBg = !globals.canvasBg || globals.canvasBg === '_reset' ? 'grid' : globals.canvasBg
-  const hasCrosshair = Boolean(globals.hasCrosshair === undefined || globals.hasCrosshair)
   const hoc = HocComposer.hoc
   return [
     hoc(StrictMode, {}),
@@ -73,7 +69,6 @@ const computeServices = (providers: HOC[], globals: GlobalDefaults): HOC[] => {
     hoc(A11yService, {}),
     hoc(ViewportService, {}),
     hoc(ThemeService, { cookieKeyMode: 'ds-color-mode', colorMode }),
-    hoc(CrosshairService, { enabled: hasCrosshair }),
     hoc(DocsCanvasService, { canvasBg }),
     ...providers,
   ]

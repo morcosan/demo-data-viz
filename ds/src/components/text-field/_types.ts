@@ -93,7 +93,7 @@ export interface TextFieldProps extends HtmlDataProps {
    * Reference object with imperative methods
    * @param setValue(value:string):void   - Sets the current value of `<input>` or `<textarea>` element
    * @param getValue():string             - Returns the current value of `<input>` or `<textarea>` element
-   * @param focus():void                   - Triggers focus on the `<input>` or `<textarea>` element
+   * @param focus():void                  - Triggers focus on the `<input>` or `<textarea>` element
    * @param blur():void                   - Triggers blur on the `<input>` or `<textarea>` element
    */
   ref?: Ref<TextFieldHandle>

@@ -4,6 +4,7 @@ import '@mantine/core/styles/Loader.css'
 import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
 import { useDataProps } from '../../utilities/react-utils'
+import { useHoverEffect } from '../../utilities/use-hover-effect'
 import { type BaseButtonSize, type BaseButtonVariant, type ClickableState, type LinkType } from './types'
 import { useButtonStyles } from './use-button-styles'
 import { useClickable } from './use-clickable'
@@ -31,6 +32,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
   const styles = useButtonStyles({ state, size, variant })
+  const hoverEffect = useHoverEffect({ small: size === 'xs' || size === 'sm' })
 
   const isSolid = variant === 'primary' || variant === 'danger'
   const isOutline = variant === 'secondary'
@@ -70,6 +72,10 @@ export const useButtonBase = (props: BaseButtonProps) => {
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
     ...(isPressed ? { transform: `scale(${styles.scalePressed})`, boxShadow: 'none' } : {}),
   }
+  const surfaceHoverCss: CSSObject = {
+    ...styles.surfaceHovered,
+    transform: 'scale(1)',
+  }
   const childrenCss: CSSObject = {
     display: 'flex',
     alignItems: 'center',
@@ -95,7 +101,13 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus': isNoop || pressing ? {} : { '& > span': { ...styles.surfaceHovered, transform: 'scale(1)' } },
+    '&:hover, &:focus':
+      isNoop || pressing
+        ? {}
+        : {
+            '& > span:nth-of-type(1)': hoverEffect.css,
+            '& > span:nth-of-type(2)': surfaceHoverCss,
+          },
   }
 
   const bindings = {
@@ -110,6 +122,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
 
   const content = (
     <>
+      {hoverEffect.html}
       <span css={surfaceCss}>
         <span css={childrenCss}>{children}</span>
         {state === 'loading' && (

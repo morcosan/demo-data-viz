@@ -350,7 +350,7 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.green-7}', dark: '{color.green-3}' },
     value: { light: 'oklch(0.7227 0.1920 140)', dark: 'oklch(0.9250 0.0806 140)' },
   },
-  'button-crosshair': {
+  'button-hover-effect': {
     ref: { light: '{color.yellow-7}', dark: '{color.yellow-3}' },
     value: { light: 'oklch(0.8896 0.1579 95.08)', dark: 'oklch(0.9800 0.0520 102.50)' },
   },
