@@ -25,10 +25,10 @@ export const DocsPage = ({ title, type, shortcuts, children }: Props) => {
     )
   }
   if (type === 'mdx') {
-    return <div className="docs-mdx pb-md-0">{children}</div>
+    return <div className="docs-mdx pb-sm-0">{children}</div>
   }
   return (
-    <div className="px-sm-3 py-sm-2 mb-md-0">
+    <div className="px-sm-3 py-sm-2 mb-sm-0">
       {title && <h1 className="mb-sm-2 text-size-xxl font-weight-lg">{title}</h1>}
       {children}
     </div>
