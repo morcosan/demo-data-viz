@@ -1,9 +1,9 @@
 import { type CSSProperties, type ReactNode } from 'react'
-import { type BaseButtonSize, type BaseButtonVariant, type ClickableState, type LinkType } from '../_shared/types'
+import { type BaseButtonSize, type BaseButtonState, type BaseButtonVariant, type LinkType } from '../_shared/types'
 
 export type ButtonVariant = BaseButtonVariant
 export type ButtonSize = BaseButtonSize
-export type ButtonState = ClickableState
+export type ButtonState = BaseButtonState
 
 export interface ButtonProps extends HtmlDataProps {
   /**

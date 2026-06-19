@@ -1,9 +1,9 @@
 import { type CSSProperties, type ReactNode } from 'react'
-import { type ClickableState, type LinkType } from '../_shared/types'
+import { type BaseButtonState, type LinkType } from '../_shared/types'
 
 export type IconButtonVariant = 'primary' | 'secondary' | 'default' | 'optional' | 'danger' | 'caution'
 export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg'
-export type IconButtonState = ClickableState
+export type IconButtonState = BaseButtonState
 
 export interface IconButtonProps extends HtmlDataProps {
   /**

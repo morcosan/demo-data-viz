@@ -1,9 +1,9 @@
 import { type CSSObject } from '@emotion/react'
 import { useThemeService } from '../../services/theme-service'
-import { type BaseButtonSize, type BaseButtonVariant, type ClickableState } from './types'
+import { type BaseButtonSize, type BaseButtonState, type BaseButtonVariant } from './types'
 
 interface Props {
-  state: ClickableState
+  state: BaseButtonState
   size: BaseButtonSize
   variant: BaseButtonVariant
 }
@@ -51,7 +51,7 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
   const fontWeight = isMenuItem ? tokens.fontWeight['sm'] : tokens.fontWeight['md']
 
   const surfaceDefault = ((): CSSObject => {
-    if (state === 'selected') return tokens.surface['button-selected']
+    if (state === 'selected') return tokens.surface['button-selection']
     if (variant === 'primary') return tokens.surface['button-primary']
     if (variant === 'secondary') return tokens.surface['button-secondary']
     if (variant === 'default') return tokens.surface['button-default']
@@ -63,15 +63,15 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     return {}
   })()
   const surfaceHovered = ((): CSSObject => {
-    if (state === 'selected') return tokens.surface['button-selected-hovered']
-    if (variant === 'primary') return tokens.surface['button-primary-hovered']
-    if (variant === 'secondary') return tokens.surface['button-secondary-hovered']
-    if (variant === 'default') return tokens.surface['button-default-hovered']
-    if (variant === 'optional') return tokens.surface['button-optional-hovered']
-    if (variant === 'danger') return tokens.surface['button-danger-hovered']
-    if (variant === 'caution') return tokens.surface['button-caution-hovered']
-    if (variant === 'menu-default') return tokens.surface['button-default-hovered']
-    if (variant === 'menu-caution') return tokens.surface['button-caution-hovered']
+    if (state === 'selected') return tokens.surface['button-selection-hover']
+    if (variant === 'primary') return tokens.surface['button-primary-hover']
+    if (variant === 'secondary') return tokens.surface['button-secondary-hover']
+    if (variant === 'default') return tokens.surface['button-default-hover']
+    if (variant === 'optional') return tokens.surface['button-optional-hover']
+    if (variant === 'danger') return tokens.surface['button-danger-hover']
+    if (variant === 'caution') return tokens.surface['button-caution-hover']
+    if (variant === 'menu-default') return tokens.surface['button-default-hover']
+    if (variant === 'menu-caution') return tokens.surface['button-caution-hover']
     return {}
   })()
 

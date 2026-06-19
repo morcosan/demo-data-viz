@@ -42,17 +42,17 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       backgroundColor: '{color.bg-region}',
-      border: { light: '1px solid {color.white}', dark: '1px solid {color.grey-15}' },
+      border: { light: '1px solid {color.grey-4}', dark: '1px solid {color.grey-15}' },
       borderRadius: '{radius.md}',
-      boxShadow: { light: 'inset 0 0 3px 2px {color.black-alpha-1}', dark: 'inset 0 0 3px 2px {color.black-alpha-3}' },
+      boxShadow: { light: 'inset 0 0 3px 1px {color.black-alpha-1}', dark: 'inset 0 0 3px 1px {color.black-alpha-3}' },
     },
     value: {
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
-      border: { light: '1px solid oklch(1 0 0)', dark: '1px solid oklch(0.4047 0.0142 308)' },
+      border: { light: '1px solid oklch(0.9266 0.0042 308)', dark: '1px solid oklch(0.4047 0.0142 308)' },
       borderRadius: '8px',
       boxShadow: {
-        light: 'inset 0 0 3px 2px oklch(0.1068 0.0519 317 / 0.03)',
-        dark: 'inset 0 0 3px 2px oklch(0.1068 0.0519 317 / 0.09)',
+        light: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.03)',
+        dark: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.09)',
       },
     },
   },
@@ -82,7 +82,7 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'card-hovered': {
+  'card-hover': {
     type: 'composite',
     ref: {
       backgroundColor: '{color.yellow-1}',
@@ -156,7 +156,7 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-primary-hovered': {
+  'button-primary-hover': {
     type: 'composite',
     ref: {
       color: '{color.white}',
@@ -210,7 +210,7 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-secondary-hovered': {
+  'button-secondary-hover': {
     type: 'composite',
     ref: {
       color: '{color.blue-10}',
@@ -243,7 +243,7 @@ export const TOKENS__SURFACE = {
     ref: { color: '{color.text-default}' },
     value: { color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' }, border: '1px dotted transparent' },
   },
-  'button-default-hovered': {
+  'button-default-hover': {
     type: 'composite',
     ref: {
       color: '{color.text-default}',
@@ -277,7 +277,7 @@ export const TOKENS__SURFACE = {
       border: '1px dotted transparent',
     },
   },
-  'button-optional-hovered': {
+  'button-optional-hover': {
     type: 'composite',
     ref: {
       color: '{color.text-subtle}',
@@ -329,7 +329,7 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-danger-hovered': {
+  'button-danger-hover': {
     type: 'composite',
     ref: {
       color: '{color.white}',
@@ -360,7 +360,7 @@ export const TOKENS__SURFACE = {
     ref: { color: '{color.red-12}' },
     value: { color: 'oklch(0.5696 0.2145 30)', border: '1px dotted transparent' },
   },
-  'button-caution-hovered': {
+  'button-caution-hover': {
     type: 'composite',
     ref: {
       color: '{color.red-10}',
@@ -386,60 +386,34 @@ export const TOKENS__SURFACE = {
       },
     },
   },
-  'button-selected': {
+  'button-selection': {
     type: 'composite',
     ref: {
       color: '{color.yellow-12}',
       backgroundColor: '{color.yellow-4}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-9} 0% 50%, transparent 50% 100%)',
       border: '1px solid {color.yellow-11}',
-      boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.5400 0.1200 72.00)',
       backgroundColor: 'oklch(0.9680 0.0780 101.50)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.48) 0% 50%, transparent 50% 100%)',
       border: '1px solid oklch(0.6300 0.1400 77.00)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
     },
   },
-  'button-selected-hovered': {
+  'button-selection-hover': {
     type: 'composite',
     ref: {
       color: '{color.yellow-11}',
       backgroundColor: '{color.yellow-3}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
       border: '1px solid {color.yellow-9}',
-      boxShadow: '{shadow.sm}',
     },
     value: {
       color: 'oklch(0.6300 0.1400 77.00)',
       backgroundColor: 'oklch(0.9800 0.0520 102.50)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
       border: '1px solid oklch(0.7900 0.1650 87.00)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
     },
   },
 } as const

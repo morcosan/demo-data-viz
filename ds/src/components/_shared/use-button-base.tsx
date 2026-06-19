@@ -5,7 +5,7 @@ import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
 import { useDataProps } from '../../utilities/react-utils'
 import { useHoverEffect } from '../../utilities/use-hover-effect'
-import { type BaseButtonSize, type BaseButtonVariant, type ClickableState, type LinkType } from './types'
+import { type BaseButtonSize, type BaseButtonState, type BaseButtonVariant, type LinkType } from './types'
 import { useButtonStyles } from './use-button-styles'
 import { useClickable } from './use-clickable'
 
@@ -18,7 +18,7 @@ interface BaseButtonProps extends HtmlDataProps {
   // Props
   size: BaseButtonSize
   variant: BaseButtonVariant
-  state: ClickableState
+  state: BaseButtonState
   linkHref?: string
   linkType?: LinkType
   isIcon?: boolean

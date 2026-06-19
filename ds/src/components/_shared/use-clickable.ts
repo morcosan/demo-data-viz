@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 import { isA11yModePointer } from '../../services/a11y-service'
 import { useRoutingService } from '../../services/routing-service'
 import { Keyboard } from '../../utilities/various-utils'
-import { type ClickableState, type LinkType } from './types'
+import { type BaseButtonState, type LinkType } from './types'
 
 export interface ClickableProps {
-  state: ClickableState
+  state: BaseButtonState
   linkHref?: string
   linkType?: LinkType
   onClick?: (event: ReactMouseEvent) => void
