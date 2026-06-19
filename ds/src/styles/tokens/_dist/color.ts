@@ -166,6 +166,10 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.grey-3}', dark: '{color.grey-20}' },
     value: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.2558 0.0079 308)' },
   },
+  'border-surface': {
+    ref: { light: '{color.black-alpha-3}', dark: '{color.black-alpha-8}' },
+    value: { light: 'oklch(0.1068 0.0519 317 / 0.09)', dark: 'oklch(0.1068 0.0519 317 / 0.4)' },
+  },
   'border-highlight': {
     ref: { light: '{color.yellow-3}', dark: '{color.yellow-4}' },
     value: { light: 'oklch(0.9800 0.0520 102.50)', dark: 'oklch(0.9680 0.0780 101.50)' },

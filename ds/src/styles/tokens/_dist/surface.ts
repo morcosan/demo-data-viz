@@ -42,17 +42,17 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       backgroundColor: '{color.bg-region}',
-      border: { light: '1px solid {color.grey-4}', dark: '1px solid {color.grey-15}' },
+      border: { light: '1px solid {color.grey-4}', dark: '1px solid {color.grey-19}' },
       borderRadius: '{radius.md}',
-      boxShadow: { light: 'inset 0 0 3px 1px {color.black-alpha-1}', dark: 'inset 0 0 3px 1px {color.black-alpha-3}' },
+      boxShadow: { light: 'inset 0 0 2px 1px {color.black-alpha-1}', dark: 'inset 0 0 2px 1px {color.black-alpha-2}' },
     },
     value: {
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.3171 0.0092 308)' },
-      border: { light: '1px solid oklch(0.9266 0.0042 308)', dark: '1px solid oklch(0.4047 0.0142 308)' },
+      border: { light: '1px solid oklch(0.9266 0.0042 308)', dark: '1px solid oklch(0.2861 0.0099 308)' },
       borderRadius: '8px',
       boxShadow: {
-        light: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.03)',
-        dark: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.09)',
+        light: 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.03)',
+        dark: 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)',
       },
     },
   },
@@ -60,26 +60,13 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       backgroundColor: '{color.bg-card}',
-      border: '2px solid {color.bg-card}',
+      border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
-      boxShadow: '{shadow.xs}',
     },
     value: {
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
-      border: { light: '2px solid oklch(1 0 0)', dark: '2px solid oklch(0.3771 0.0124 308)' },
+      border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
       borderRadius: '8px',
-      boxShadow: {
-        light: [
-          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
-          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
-          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
-          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
-          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
     },
   },
   'card-hover': {
@@ -112,22 +99,15 @@ export const TOKENS__SURFACE = {
   },
   popup: {
     type: 'composite',
-    ref: { backgroundColor: '{color.bg-popup}', borderRadius: '{radius.xs}', boxShadow: '{shadow.sm}' },
+    ref: {
+      backgroundColor: '{color.bg-popup}',
+      border: '1px solid {color.border-surface}',
+      borderRadius: '{radius.sm}',
+    },
     value: {
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
-      borderRadius: '4px',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
+      borderRadius: '6px',
     },
   },
   'button-primary': {
