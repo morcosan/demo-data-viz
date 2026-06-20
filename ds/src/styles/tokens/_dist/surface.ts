@@ -292,47 +292,29 @@ export const TOKENS__SURFACE = {
   },
   'button-selection': {
     type: 'composite',
-    ref: {
-      color: '{color.yellow-12}',
-      backgroundColor: '{color.yellow-4}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-9} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.yellow-11}',
-    },
+    ref: { color: '{color.yellow-12}', backgroundColor: '{color.yellow-2}', border: '1px solid {color.yellow-11}' },
     value: {
       color: 'oklch(0.5400 0.1200 72.00)',
-      backgroundColor: 'oklch(0.9680 0.0780 101.50)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.48) 0% 50%, transparent 50% 100%)',
+      backgroundColor: 'oklch(0.9880 0.0320 103.00)',
       border: '1px solid oklch(0.6300 0.1400 77.00)',
     },
   },
   'button-selection-hover': {
     type: 'composite',
-    ref: {
-      color: '{color.yellow-11}',
-      backgroundColor: '{color.yellow-3}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.yellow-9}',
-    },
+    ref: { color: '{color.yellow-13}', backgroundColor: '{color.yellow-3}', border: '1px solid {color.yellow-12}' },
     value: {
-      color: 'oklch(0.6300 0.1400 77.00)',
+      color: 'oklch(0.4600 0.1020 67.00)',
       backgroundColor: 'oklch(0.9800 0.0520 102.50)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
-      border: '1px solid oklch(0.7900 0.1650 87.00)',
+      border: '1px solid oklch(0.5400 0.1200 72.00)',
     },
   },
   'button-selection-press': {
     type: 'composite',
-    ref: {
-      color: '{color.yellow-11}',
-      backgroundColor: '{color.yellow-3}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.yellow-9}',
-    },
+    ref: { color: '{color.yellow-14}', backgroundColor: '{color.yellow-4}', border: '1px solid {color.yellow-13}' },
     value: {
-      color: 'oklch(0.6300 0.1400 77.00)',
-      backgroundColor: 'oklch(0.9800 0.0520 102.50)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
-      border: '1px solid oklch(0.7900 0.1650 87.00)',
+      color: 'oklch(0.3900 0.0880 64.00)',
+      backgroundColor: 'oklch(0.9680 0.0780 101.50)',
+      border: '1px solid oklch(0.4600 0.1020 67.00)',
     },
   },
 } as const

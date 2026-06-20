@@ -36,7 +36,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
-  const hoverEffect = useHoverEffect({ small: size === 'xs', wide: isMenuItem })
+  const hoverEffect = useHoverEffect({ small: size === 'xs', square: isMenuItem })
 
   const noopProps = ((): CSSObject => {
     const noopColor = tokens.color['text-subtle']

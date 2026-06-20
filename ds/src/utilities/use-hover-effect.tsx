@@ -1,16 +1,18 @@
 import { type CSSObject } from '@emotion/react'
+import { useA11yService } from '../services/a11y-service'
 import { useThemeService } from '../services/theme-service'
 
 export interface HoverEffectProps {
   small?: boolean
-  wide?: boolean
+  square?: boolean
 }
 
-export const useHoverEffect = ({ small, wide }: HoverEffectProps) => {
+export const useHoverEffect = ({ small, square }: HoverEffectProps) => {
   const { tokens } = useThemeService()
+  const { a11yMode } = useA11yService()
 
-  const startPos = '-12px'
-  const endPos = small ? '-3px' : wide ? '-5px' : '-4px'
+  const startPos = square ? '-16px' : '-14px'
+  const endPos = square ? (small ? '-5px' : '-6px') : '-4px'
 
   const defaultCss: CSSObject = {
     position: 'absolute',
@@ -21,8 +23,8 @@ export const useHoverEffect = ({ small, wide }: HoverEffectProps) => {
     opacity: 0,
     '& > span': {
       position: 'absolute',
-      width: small ? '6px' : '8px',
-      height: small ? '6px' : '8px',
+      width: small ? '7px' : '8px',
+      height: small ? '7px' : '8px',
       border: '2px solid transparent',
       transition: 'all 0.3s ease',
     },
@@ -52,6 +54,6 @@ export const useHoverEffect = ({ small, wide }: HoverEffectProps) => {
 
   return {
     html: hoverHtml,
-    css: hoverCss,
+    css: a11yMode === 'keyboard' ? {} : hoverCss,
   }
 }

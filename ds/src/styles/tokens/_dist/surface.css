@@ -226,8 +226,7 @@
   :where(html) &,
   [data-color-mode='light'] & {
     border: 1px solid var(--ds-color-yellow-11);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-9) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-yellow-4);
+    background-color: var(--ds-color-yellow-2);
     color: var(--ds-color-yellow-12);
   }
 }
@@ -235,19 +234,17 @@
 @utility ds-surface-button-selection-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 1px solid var(--ds-color-yellow-9);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    border: 1px solid var(--ds-color-yellow-12);
     background-color: var(--ds-color-yellow-3);
-    color: var(--ds-color-yellow-11);
+    color: var(--ds-color-yellow-13);
   }
 }
 
 @utility ds-surface-button-selection-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 1px solid var(--ds-color-yellow-9);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-yellow-3);
-    color: var(--ds-color-yellow-11);
+    border: 1px solid var(--ds-color-yellow-13);
+    background-color: var(--ds-color-yellow-4);
+    color: var(--ds-color-yellow-14);
   }
 }

@@ -11,7 +11,7 @@ const ATTR_KEY__A11Y_MODE = 'data-a11y-mode'
 /**
  * Context
  */
-type A11yMode = 'default' | 'pointer'
+type A11yMode = 'default' | 'keyboard' | 'pointer'
 type Store = {
   a11yMode: A11yMode
   isPointer: boolean
@@ -48,8 +48,8 @@ const A11yService = ({ children }: ReactProps) => {
 
   const handleWindowKeyDown = (event: KeyboardEvent) => {
     if (event.key === Keyboard.TAB) {
-      setA11yMode('default')
-      setHtmlAttr('default')
+      setA11yMode('keyboard')
+      setHtmlAttr('keyboard')
     }
   }
 
@@ -80,6 +80,9 @@ const A11yService = ({ children }: ReactProps) => {
  */
 const isA11yModeDefault = () => {
   return (document.documentElement.getAttribute(ATTR_KEY__A11Y_MODE) as A11yMode) === 'default'
+}
+const isA11yModeKeyboard = () => {
+  return (document.documentElement.getAttribute(ATTR_KEY__A11Y_MODE) as A11yMode) === 'keyboard'
 }
 const isA11yModePointer = () => {
   return (document.documentElement.getAttribute(ATTR_KEY__A11Y_MODE) as A11yMode) === 'pointer'
