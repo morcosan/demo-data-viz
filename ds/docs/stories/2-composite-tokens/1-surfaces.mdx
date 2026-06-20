@@ -6,11 +6,12 @@ import { Fragment } from 'react'
 
 export const tokens = Object.entries(TOKENS.SURFACE)
 
-export const Surface = ({ title, children, className }) => (
+export const Surface = ({ title, children, className, small }) => (
   <div
     className={cx(
-      'min-h-md-0 relative h-fit w-full overflow-visible',
-      'py-xs-7 px-xs-9 gap-xs-5 flex flex-col justify-center',
+      'relative h-fit w-full overflow-visible',
+      small ? 'min-h-button-h-md' : 'min-h-md-0 py-xs-7',
+      'px-xs-9 gap-xs-5 flex flex-col justify-center',
       'text-size-sm truncate',
       className,
     )}
@@ -57,37 +58,45 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
   </div>
   {/* CONTROLS */}
   <Surface className="gap-sm-2! mt-xs-7 flex flex-row! flex-wrap">
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="button-primary" className="ds-surface-button-primary" />
-      <Surface title="button-primary-hover" className="ds-surface-button-primary-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="button-primary" className="ds-surface-button-primary" small />
+      <Surface title="button-primary-hover" className="ds-surface-button-primary-hover" small />
+      <Surface title="button-primary-press" className="ds-surface-button-primary-press" small />
     </div>
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="button-secondary" className="ds-surface-button-secondary" />
-      <Surface title="button-secondary-hover" className="ds-surface-button-secondary-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="button-secondary" className="ds-surface-button-secondary" small />
+      <Surface title="button-secondary-hover" className="ds-surface-button-secondary-hover" small />
+      <Surface title="button-secondary-press" className="ds-surface-button-secondary-press" small />
     </div>
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="button-default" className="ds-surface-button-default" />
-      <Surface title="button-default-hover" className="ds-surface-button-default-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="button-default" className="ds-surface-button-default" small />
+      <Surface title="button-default-hover" className="ds-surface-button-default-hover" small />
+      <Surface title="button-default-press" className="ds-surface-button-default-press" small />
     </div>
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="button-optional" className="ds-surface-button-optional" />
-      <Surface title="button-optional-hover" className="ds-surface-button-optional-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="button-optional" className="ds-surface-button-optional" small />
+      <Surface title="button-optional-hover" className="ds-surface-button-optional-hover" small />
+      <Surface title="button-optional-press" className="ds-surface-button-optional-press" small />
     </div>
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="button-danger" className="ds-surface-button-danger" />
-      <Surface title="button-danger-hover" className="ds-surface-button-danger-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="button-danger" className="ds-surface-button-danger" small />
+      <Surface title="button-danger-hover" className="ds-surface-button-danger-hover" small />
+      <Surface title="button-danger-press" className="ds-surface-button-danger-press" small />
     </div>
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="button-caution" className="ds-surface-button-caution" />
-      <Surface title="button-caution-hover" className="ds-surface-button-caution-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="button-caution" className="ds-surface-button-caution" small />
+      <Surface title="button-caution-hover" className="ds-surface-button-caution-hover" small />
+      <Surface title="button-caution-press" className="ds-surface-button-caution-press" small />
     </div>
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="button-selection" className="ds-surface-button-selection" />
-      <Surface title="button-selection-hover" className="ds-surface-button-selection-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="button-selection" className="ds-surface-button-selection" small />
+      <Surface title="button-selection-hover" className="ds-surface-button-selection-hover" small />
+      <Surface title="button-selection-press" className="ds-surface-button-selection-press" small />
     </div>
-    <div className="w-lg-9 gap-xs-3 flex flex-col">
-      <Surface title="card" className="ds-surface-card" />
-      <Surface title="card-hover" className="ds-surface-card-hover" />
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="card" className="ds-surface-card" small />
+      <Surface title="card-hover" className="ds-surface-card-hover" small />
+      <Surface title="card-press" className="ds-surface-card-press" small />
     </div>
   </Surface>
 </DocsCanvas>
