@@ -92,6 +92,16 @@
   --ds-color-green-14: oklch(0.482 0.1228 140);
   --ds-color-green-15: oklch(0.4373 0.1062 140);
   --ds-color-green-16: oklch(0.3925 0.0896 140);
+  --ds-color-red-alpha-1: oklch(0.6276 0.2577 30 / 0.03);
+  --ds-color-red-alpha-2: oklch(0.6276 0.2577 30 / 0.06);
+  --ds-color-red-alpha-3: oklch(0.6276 0.2577 30 / 0.09);
+  --ds-color-red-alpha-4: oklch(0.6276 0.2577 30 / 0.12);
+  --ds-color-red-alpha-5: oklch(0.6276 0.2577 30 / 0.16);
+  --ds-color-red-alpha-6: oklch(0.6276 0.2577 30 / 0.24);
+  --ds-color-red-alpha-7: oklch(0.6276 0.2577 30 / 0.32);
+  --ds-color-red-alpha-8: oklch(0.6276 0.2577 30 / 0.4);
+  --ds-color-red-alpha-9: oklch(0.6276 0.2577 30 / 0.48);
+  --ds-color-red-alpha-10: oklch(0.6276 0.2577 30 / 0.56);
   --ds-color-black-alpha-1: oklch(0.1068 0.0519 317 / 0.03);
   --ds-color-black-alpha-2: oklch(0.1068 0.0519 317 / 0.06);
   --ds-color-black-alpha-3: oklch(0.1068 0.0519 317 / 0.09);

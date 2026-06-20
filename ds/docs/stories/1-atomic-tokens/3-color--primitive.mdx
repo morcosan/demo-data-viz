@@ -8,6 +8,7 @@ export const yellows = Object.keys(TOKENS.COLOR).filter((name) => /^yellow-\d+$/
 export const reds = Object.keys(TOKENS.COLOR).filter((name) => /^red-\d+$/.test(name))
 export const greens = Object.keys(TOKENS.COLOR).filter((name) => /^green-\d+$/.test(name))
 export const greys = Object.keys(TOKENS.COLOR).filter((name) => /^grey-\d+$/.test(name))
+export const redAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^red-alpha-\d+$/.test(name))
 export const blackAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^black-alpha-\d+$/.test(name))
 export const whiteAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^white-alpha-\d+$/.test(name))
 
@@ -31,6 +32,7 @@ export const ColorSwatches = ({ colors }) => (
   <ColorSwatches colors={reds} />
   <ColorSwatches colors={greens} />
   <ColorSwatches colors={greys} />
+  <ColorSwatches colors={redAlphas} />
   <ColorSwatches colors={blackAlphas} />
   <ColorSwatches colors={whiteAlphas} />
 </DocsCanvas>

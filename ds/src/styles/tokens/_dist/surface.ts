@@ -113,258 +113,182 @@ export const TOKENS__SURFACE = {
   'button-primary': {
     type: 'composite',
     ref: {
-      color: '{color.blue-2}',
-      backgroundColor: '{color.blue-11}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-4} 0% 50%, transparent 50% 100%)',
-      boxShadow: '{shadow.sm}',
+      color: '{color.white}',
+      backgroundColor: '{color.blue-10}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-3} 0% 50%, transparent 50% 100%)',
     },
     value: {
-      color: 'oklch(0.9215 0.0348 240)',
-      backgroundColor: 'oklch(0.4500 0.1600 240)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.12) 0% 50%, transparent 50% 100%)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      color: 'oklch(1 0 0)',
+      backgroundColor: 'oklch(0.5200 0.1750 240)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.09) 0% 50%, transparent 50% 100%)',
     },
   },
   'button-primary-hover': {
     type: 'composite',
     ref: {
-      color: '{color.white}',
-      backgroundColor: '{color.blue-9}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-4} 0% 50%, transparent 50% 100%)',
-      boxShadow: '{shadow.sm}',
+      color: '{color.blue-1}',
+      backgroundColor: '{color.blue-11}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-3} 0% 50%, transparent 50% 100%)',
     },
     value: {
-      color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.5900 0.1620 240)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.12) 0% 50%, transparent 50% 100%)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      color: 'oklch(0.9500 0.0200 240)',
+      backgroundColor: 'oklch(0.4500 0.1600 240)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.09) 0% 50%, transparent 50% 100%)',
+    },
+  },
+  'button-primary-press': {
+    type: 'composite',
+    ref: {
+      color: '{color.blue-2}',
+      backgroundColor: '{color.blue-12}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-3} 0% 50%, transparent 50% 100%)',
+    },
+    value: {
+      color: 'oklch(0.9215 0.0348 240)',
+      backgroundColor: 'oklch(0.3900 0.1420 240)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.09) 0% 50%, transparent 50% 100%)',
     },
   },
   'button-secondary': {
     type: 'composite',
     ref: {
-      color: '{color.blue-12}',
-      backgroundColor: '{color.blue-2}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-7} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.blue-10}',
-      boxShadow: '{shadow.sm}',
+      color: '{color.blue-11}',
+      backgroundColor: '{color.blue-1}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-9} 0% 50%, transparent 50% 100%)',
+      border: '1px solid {color.blue-11}',
     },
     value: {
-      color: 'oklch(0.3900 0.1420 240)',
-      backgroundColor: 'oklch(0.9215 0.0348 240)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.32) 0% 50%, transparent 50% 100%)',
-      border: '1px solid oklch(0.5200 0.1750 240)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      color: 'oklch(0.4500 0.1600 240)',
+      backgroundColor: 'oklch(0.9500 0.0200 240)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.48) 0% 50%, transparent 50% 100%)',
+      border: '1px solid oklch(0.4500 0.1600 240)',
     },
   },
   'button-secondary-hover': {
     type: 'composite',
     ref: {
-      color: '{color.blue-10}',
-      backgroundColor: '{color.blue-1}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
-      border: '1px solid {color.blue-9}',
-      boxShadow: '{shadow.sm}',
+      color: '{color.blue-12}',
+      backgroundColor: '{color.blue-2}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-7} 0% 50%, transparent 50% 100%)',
+      border: '1px solid {color.blue-11}',
     },
     value: {
-      color: 'oklch(0.5200 0.1750 240)',
-      backgroundColor: 'oklch(0.9500 0.0200 240)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
-      border: '1px solid oklch(0.5900 0.1620 240)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      color: 'oklch(0.3900 0.1420 240)',
+      backgroundColor: 'oklch(0.9215 0.0348 240)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.32) 0% 50%, transparent 50% 100%)',
+      border: '1px solid oklch(0.4500 0.1600 240)',
+    },
+  },
+  'button-secondary-press': {
+    type: 'composite',
+    ref: {
+      color: '{color.blue-12}',
+      backgroundColor: '{color.blue-3}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-6} 0% 50%, transparent 50% 100%)',
+      border: '1px solid {color.blue-11}',
+    },
+    value: {
+      color: 'oklch(0.3900 0.1420 240)',
+      backgroundColor: 'oklch(0.8825 0.0531 240)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.24) 0% 50%, transparent 50% 100%)',
+      border: '1px solid oklch(0.4500 0.1600 240)',
     },
   },
   'button-default': {
     type: 'composite',
     ref: { color: '{color.text-default}' },
-    value: { color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' }, border: '1px dotted transparent' },
+    value: { color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' } },
   },
   'button-default-hover': {
     type: 'composite',
-    ref: {
-      color: '{color.text-default}',
-      backgroundColor: '{color.white-alpha-10}',
-      border: '1px dotted {color.grey-7}',
-      boxShadow: '{shadow.sm}',
-    },
+    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-1}' },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
-      backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.7997 0.0103 308)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      backgroundColor: 'oklch(0.1068 0.0519 317 / 0.03)',
+    },
+  },
+  'button-default-press': {
+    type: 'composite',
+    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-2}' },
+    value: {
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
+      backgroundColor: 'oklch(0.1068 0.0519 317 / 0.06)',
     },
   },
   'button-optional': {
     type: 'composite',
     ref: { color: '{color.text-subtle}' },
-    value: {
-      color: { light: 'oklch(0.516 0.0186 308)', dark: 'oklch(0.7548 0.0151 308)' },
-      border: '1px dotted transparent',
-    },
+    value: { color: { light: 'oklch(0.516 0.0186 308)', dark: 'oklch(0.7548 0.0151 308)' } },
   },
   'button-optional-hover': {
     type: 'composite',
-    ref: {
-      color: '{color.text-subtle}',
-      backgroundColor: '{color.white-alpha-10}',
-      border: '1px dotted {color.grey-7}',
-      boxShadow: '{shadow.sm}',
-    },
+    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-1}' },
     value: {
-      color: { light: 'oklch(0.516 0.0186 308)', dark: 'oklch(0.7548 0.0151 308)' },
-      backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.7997 0.0103 308)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
+      backgroundColor: 'oklch(0.1068 0.0519 317 / 0.03)',
+    },
+  },
+  'button-optional-press': {
+    type: 'composite',
+    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-2}' },
+    value: {
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
+      backgroundColor: 'oklch(0.1068 0.0519 317 / 0.06)',
     },
   },
   'button-danger': {
     type: 'composite',
     ref: {
-      color: '{color.red-1}',
-      backgroundColor: '{color.red-13}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-5} 0% 50%, transparent 50% 100%)',
-      boxShadow: '{shadow.sm}',
+      color: '{color.white}',
+      backgroundColor: '{color.red-11}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-4} 0% 50%, transparent 50% 100%)',
     },
     value: {
-      color: 'oklch(0.9400 0.0300 30)',
-      backgroundColor: 'oklch(0.5344 0.2015 30)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.16) 0% 50%, transparent 50% 100%)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      color: 'oklch(1 0 0)',
+      backgroundColor: 'oklch(0.5808 0.2104 30)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.12) 0% 50%, transparent 50% 100%)',
     },
   },
   'button-danger-hover': {
     type: 'composite',
     ref: {
-      color: '{color.white}',
-      backgroundColor: '{color.red-9}',
-      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-5} 0% 50%, transparent 50% 100%)',
-      boxShadow: '{shadow.sm}',
+      color: '{color.red-1}',
+      backgroundColor: '{color.red-13}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-4} 0% 50%, transparent 50% 100%)',
     },
     value: {
-      color: 'oklch(1 0 0)',
-      backgroundColor: 'oklch(0.6513 0.1862 30)',
-      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.16) 0% 50%, transparent 50% 100%)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+      color: 'oklch(0.9400 0.0300 30)',
+      backgroundColor: 'oklch(0.5344 0.2015 30)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.12) 0% 50%, transparent 50% 100%)',
+    },
+  },
+  'button-danger-press': {
+    type: 'composite',
+    ref: {
+      color: '{color.red-2}',
+      backgroundColor: '{color.red-14}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-4} 0% 50%, transparent 50% 100%)',
+    },
+    value: {
+      color: 'oklch(0.8845 0.0593 30)',
+      backgroundColor: 'oklch(0.4991 0.1884 30)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.12) 0% 50%, transparent 50% 100%)',
     },
   },
   'button-caution': {
     type: 'composite',
     ref: { color: '{color.red-12}' },
-    value: { color: 'oklch(0.5696 0.2145 30)', border: '1px dotted transparent' },
+    value: { color: 'oklch(0.5696 0.2145 30)' },
   },
   'button-caution-hover': {
     type: 'composite',
-    ref: {
-      color: '{color.red-10}',
-      backgroundColor: '{color.white-alpha-10}',
-      border: '1px dotted {color.red-9}',
-      boxShadow: '{shadow.sm}',
-    },
-    value: {
-      color: 'oklch(0.5919 0.2063 30)',
-      backgroundColor: 'oklch(1 0 0 / 0.56)',
-      border: '1px dotted oklch(0.6513 0.1862 30)',
-      boxShadow: {
-        light: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
-    },
+    ref: { color: '{color.red-13}', backgroundColor: '{color.red-alpha-2}' },
+    value: { color: 'oklch(0.5344 0.2015 30)', backgroundColor: 'oklch(0.6276 0.2577 30 / 0.06)' },
+  },
+  'button-caution-press': {
+    type: 'composite',
+    ref: { color: '{color.red-13}', backgroundColor: '{color.red-alpha-3}' },
+    value: { color: 'oklch(0.5344 0.2015 30)', backgroundColor: 'oklch(0.6276 0.2577 30 / 0.09)' },
   },
   'button-selection': {
     type: 'composite',
@@ -382,6 +306,21 @@ export const TOKENS__SURFACE = {
     },
   },
   'button-selection-hover': {
+    type: 'composite',
+    ref: {
+      color: '{color.yellow-11}',
+      backgroundColor: '{color.yellow-3}',
+      backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-10} 0% 50%, transparent 50% 100%)',
+      border: '1px solid {color.yellow-9}',
+    },
+    value: {
+      color: 'oklch(0.6300 0.1400 77.00)',
+      backgroundColor: 'oklch(0.9800 0.0520 102.50)',
+      backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.56) 0% 50%, transparent 50% 100%)',
+      border: '1px solid oklch(0.7900 0.1650 87.00)',
+    },
+  },
+  'button-selection-press': {
     type: 'composite',
     ref: {
       color: '{color.yellow-11}',

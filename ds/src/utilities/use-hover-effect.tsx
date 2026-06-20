@@ -21,8 +21,8 @@ export const useHoverEffect = ({ small, wide }: HoverEffectProps) => {
     opacity: 0,
     '& > span': {
       position: 'absolute',
-      width: small ? '7px' : '10px',
-      height: small ? '7px' : '10px',
+      width: small ? '6px' : '8px',
+      height: small ? '6px' : '8px',
       border: '2px solid transparent',
       transition: 'all 0.3s ease',
     },

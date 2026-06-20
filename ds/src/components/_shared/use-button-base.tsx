@@ -61,7 +61,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   }
 
   const surfaceCss: CSSObject = {
-    ...(isPressed ? styles.surfaceHovered : styles.surfaceDefault),
+    ...(isPressed ? styles.surfacePress : styles.surfaceDefault),
     ...(isNoop ? noopProps : {}),
     transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     width: '100%',
@@ -71,7 +71,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     ...(isPressed ? { transform: `scale(${styles.scalePressed})`, boxShadow: 'none' } : {}),
   }
   const surfaceHoverCss: CSSObject = {
-    ...styles.surfaceHovered,
+    ...styles.surfaceHover,
     transform: 'scale(1)',
   }
   const childrenCss: CSSObject = {

@@ -28,10 +28,10 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
   })()
   const scalePressed = (() => {
-    if (size === 'xs') return '0.88'
-    if (size === 'sm') return '0.9'
-    if (size === 'md') return '0.92'
-    if (size === 'lg') return '0.92'
+    if (size === 'xs') return '0.91'
+    if (size === 'sm') return '0.93'
+    if (size === 'md') return '0.95'
+    if (size === 'lg') return '0.95'
     return ''
   })()
   const spinnerSize = (() => {
@@ -62,7 +62,7 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     if (variant === 'menu-caution') return tokens.surface['button-caution']
     return {}
   })()
-  const surfaceHovered = ((): CSSObject => {
+  const surfaceHover = ((): CSSObject => {
     if (state === 'selected') return tokens.surface['button-selection-hover']
     if (variant === 'primary') return tokens.surface['button-primary-hover']
     if (variant === 'secondary') return tokens.surface['button-secondary-hover']
@@ -74,6 +74,18 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     if (variant === 'menu-caution') return tokens.surface['button-caution-hover']
     return {}
   })()
+  const surfacePress = ((): CSSObject => {
+    if (state === 'selected') return tokens.surface['button-selection-press']
+    if (variant === 'primary') return tokens.surface['button-primary-press']
+    if (variant === 'secondary') return tokens.surface['button-secondary-press']
+    if (variant === 'default') return tokens.surface['button-default-press']
+    if (variant === 'optional') return tokens.surface['button-optional-press']
+    if (variant === 'danger') return tokens.surface['button-danger-press']
+    if (variant === 'caution') return tokens.surface['button-caution-press']
+    if (variant === 'menu-default') return tokens.surface['button-default-press']
+    if (variant === 'menu-caution') return tokens.surface['button-caution-press']
+    return {}
+  })()
 
   return {
     fontSize,
@@ -83,6 +95,7 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     scalePressed,
     spinnerSize,
     surfaceDefault,
-    surfaceHovered,
+    surfaceHover,
+    surfacePress,
   }
 }

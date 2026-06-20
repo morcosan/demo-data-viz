@@ -72,49 +72,63 @@
 @utility ds-surface-button-primary {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-4) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-11);
-    color: var(--ds-color-blue-2);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-10);
+    color: var(--ds-color-white);
   }
 }
 
 @utility ds-surface-button-primary-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-4) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-9);
-    color: var(--ds-color-white);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-11);
+    color: var(--ds-color-blue-1);
+  }
+}
+
+@utility ds-surface-button-primary-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-12);
+    color: var(--ds-color-blue-2);
   }
 }
 
 @utility ds-surface-button-secondary {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    border: 1px solid var(--ds-color-blue-10);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-2);
-    color: var(--ds-color-blue-12);
+    border: 1px solid var(--ds-color-blue-11);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-9) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-1);
+    color: var(--ds-color-blue-11);
   }
 }
 
 @utility ds-surface-button-secondary-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    border: 1px solid var(--ds-color-blue-9);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-1);
-    color: var(--ds-color-blue-10);
+    border: 1px solid var(--ds-color-blue-11);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-2);
+    color: var(--ds-color-blue-12);
+  }
+}
+
+@utility ds-surface-button-secondary-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border: 1px solid var(--ds-color-blue-11);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-6) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-3);
+    color: var(--ds-color-blue-12);
   }
 }
 
 @utility ds-surface-button-default {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 1px dotted transparent;
     color: var(--ds-color-text-default);
   }
 }
@@ -122,9 +136,15 @@
 @utility ds-surface-button-default-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    border: 1px dotted var(--ds-color-grey-7);
-    background-color: var(--ds-color-white-alpha-10);
+    background-color: var(--ds-color-black-alpha-1);
+    color: var(--ds-color-text-default);
+  }
+}
+
+@utility ds-surface-button-default-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    background-color: var(--ds-color-black-alpha-2);
     color: var(--ds-color-text-default);
   }
 }
@@ -132,7 +152,6 @@
 @utility ds-surface-button-optional {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 1px dotted transparent;
     color: var(--ds-color-text-subtle);
   }
 }
@@ -140,37 +159,49 @@
 @utility ds-surface-button-optional-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    border: 1px dotted var(--ds-color-grey-7);
-    background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-text-subtle);
+    background-color: var(--ds-color-black-alpha-1);
+    color: var(--ds-color-text-default);
+  }
+}
+
+@utility ds-surface-button-optional-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    background-color: var(--ds-color-black-alpha-2);
+    color: var(--ds-color-text-default);
   }
 }
 
 @utility ds-surface-button-danger {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-5) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-red-13);
-    color: var(--ds-color-red-1);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-4) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-red-11);
+    color: var(--ds-color-white);
   }
 }
 
 @utility ds-surface-button-danger-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-5) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-red-9);
-    color: var(--ds-color-white);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-4) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-red-13);
+    color: var(--ds-color-red-1);
+  }
+}
+
+@utility ds-surface-button-danger-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-4) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-red-14);
+    color: var(--ds-color-red-2);
   }
 }
 
 @utility ds-surface-button-caution {
   :where(html) &,
   [data-color-mode='light'] & {
-    border: 1px dotted transparent;
     color: var(--ds-color-red-12);
   }
 }
@@ -178,10 +209,16 @@
 @utility ds-surface-button-caution-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-sm);
-    border: 1px dotted var(--ds-color-red-9);
-    background-color: var(--ds-color-white-alpha-10);
-    color: var(--ds-color-red-10);
+    background-color: var(--ds-color-red-alpha-2);
+    color: var(--ds-color-red-13);
+  }
+}
+
+@utility ds-surface-button-caution-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    background-color: var(--ds-color-red-alpha-3);
+    color: var(--ds-color-red-13);
   }
 }
 
@@ -196,6 +233,16 @@
 }
 
 @utility ds-surface-button-selection-hover {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border: 1px solid var(--ds-color-yellow-9);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-10) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-yellow-3);
+    color: var(--ds-color-yellow-11);
+  }
+}
+
+@utility ds-surface-button-selection-press {
   :where(html) &,
   [data-color-mode='light'] & {
     border: 1px solid var(--ds-color-yellow-9);
