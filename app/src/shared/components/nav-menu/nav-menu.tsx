@@ -91,7 +91,7 @@ export const NavMenu = (props: NavMenuProps) => {
                 <Button
                   key={item.path}
                   linkHref={item.path}
-                  state={selected ? 'selected' : 'default'}
+                  state={selected ? 'selected' : 'active'}
                   variant="menu-default"
                   size="lg"
                   className="w-full"
@@ -109,7 +109,7 @@ export const NavMenu = (props: NavMenuProps) => {
             <SettingsButton
               iconWidth={iconWidth}
               collapsed={collapsed}
-              highlight={isPopupOpened ? 'pressed' : 'default'}
+              state={isPopupOpened ? 'pressed' : 'active'}
               className="mt-xs-1"
               onClick={handlePopupToggle}
             />

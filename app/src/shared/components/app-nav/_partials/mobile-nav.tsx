@@ -43,7 +43,7 @@ export const MobileNav = (props: Props) => {
           {/* MENU BUTTON */}
           <IconButton
             tooltip={isMenuOpen ? t('core.action.closeMenu') : t('core.action.openMenu')}
-            state={isMenuOpen ? 'pressed' : 'default'}
+            state={isMenuOpen ? 'pressed' : 'active'}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <MenuSvg className="h-xs-9" />

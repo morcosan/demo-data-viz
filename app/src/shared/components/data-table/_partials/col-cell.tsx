@@ -39,7 +39,7 @@ export const ColCell = ({ cell, col, width, sticky }: Props) => {
         {cell.column.getCanSort() && (
           <IconButton
             tooltip={t('core.action.sort')}
-            state={sort ? 'selected' : 'default'}
+            state={sort ? 'selected' : 'active'}
             variant="optional"
             size="sm"
             className="rounded-full! before:rounded-full! after:rounded-full!"

@@ -19,7 +19,7 @@ export const ViewToggle = ({ view, onChange }: Props) => {
       )}
     >
       <Button
-        state={view === 'table' ? 'selected' : 'default'}
+        state={view === 'table' ? 'selected' : 'active'}
         variant="default"
         size="sm"
         onClick={() => onChange('table')}
@@ -29,7 +29,7 @@ export const ViewToggle = ({ view, onChange }: Props) => {
       </Button>
 
       <Button
-        state={view === 'chart' ? 'selected' : 'default'}
+        state={view === 'chart' ? 'selected' : 'active'}
         variant="default"
         size="sm"
         onClick={() => onChange('chart')}
@@ -39,7 +39,7 @@ export const ViewToggle = ({ view, onChange }: Props) => {
       </Button>
 
       <Button
-        state={view === 'map' ? 'selected' : 'default'}
+        state={view === 'map' ? 'selected' : 'active'}
         variant="default"
         size="sm"
         onClick={() => onChange('map')}

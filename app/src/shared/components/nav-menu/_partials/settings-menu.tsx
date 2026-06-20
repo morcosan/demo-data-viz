@@ -58,7 +58,7 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
           data-testid="color-mode-toggle"
         >
           <Button
-            state={isLightMode ? 'selected' : 'default'}
+            state={isLightMode ? 'selected' : 'active'}
             variant="default"
             size="xs"
             onClick={() => changeColorMode('light')}
@@ -66,7 +66,7 @@ export const SettingsMenu = ({ closeMenuFn, onClickBack }: Props) => {
             ☀️ {t('core.label.modeLight')}&nbsp;
           </Button>
           <Button
-            state={isDarkMode ? 'selected' : 'default'}
+            state={isDarkMode ? 'selected' : 'active'}
             variant="default"
             size="xs"
             onClick={() => changeColorMode('dark')}

@@ -30,7 +30,7 @@ export const Toolbar = (props: Props) => {
 
         <IconButton
           tooltip={t('core.action.sort')}
-          state={sort ? 'selected' : 'default'}
+          state={sort ? 'selected' : 'active'}
           variant="optional"
           size="sm"
           className="rounded-full! before:rounded-full! after:rounded-full!"

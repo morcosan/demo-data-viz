@@ -57,7 +57,7 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
     </Surface>
   </div>
   {/* CONTROLS */}
-  <Surface className="gap-sm-2! mt-xs-7 flex flex-row! flex-wrap">
+  <Surface className="gap-sm-2! mt-xs-7 flex flex-row! flex-wrap justify-start">
     <div className="w-lg-9 gap-xs-1 flex flex-col">
       <Surface title="button-primary" className="ds-surface-button-primary" small />
       <Surface title="button-primary-hover" className="ds-surface-button-primary-hover" small />
@@ -93,10 +93,16 @@ export const gridClass = cx('gap-x-xs-4 gap-y-xs-4 my-xs-4 grid w-max grid-cols-
       <Surface title="button-selection-hover" className="ds-surface-button-selection-hover" small />
       <Surface title="button-selection-press" className="ds-surface-button-selection-press" small />
     </div>
+    <div></div>
     <div className="w-lg-9 gap-xs-1 flex flex-col">
-      <Surface title="card" className="ds-surface-card" small />
-      <Surface title="card-hover" className="ds-surface-card-hover" small />
-      <Surface title="card-press" className="ds-surface-card-press" small />
+      <Surface title="card" className="ds-surface-card" />
+      <Surface title="card-hover" className="ds-surface-card-hover" />
+      <Surface title="card-press" className="ds-surface-card-press" />
+    </div>
+    <div className="w-lg-9 gap-xs-1 flex flex-col">
+      <Surface title="card-selection" className="ds-surface-card-selection" />
+      <Surface title="card-selection-hover" className="ds-surface-card-selection-hover" />
+      <Surface title="card-selection-press" className="ds-surface-card-selection-press" />
     </div>
   </Surface>
 </DocsCanvas>

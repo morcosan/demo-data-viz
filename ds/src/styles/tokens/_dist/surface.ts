@@ -59,11 +59,13 @@ export const TOKENS__SURFACE = {
   card: {
     type: 'composite',
     ref: {
+      color: '{color.text-default}',
       backgroundColor: '{color.bg-card}',
       border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
     },
     value: {
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
       border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
       borderRadius: '8px',
@@ -72,11 +74,13 @@ export const TOKENS__SURFACE = {
   'card-hover': {
     type: 'composite',
     ref: {
+      color: '{color.text-default}',
       backgroundColor: '{color.bg-card}',
       border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
     },
     value: {
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
       border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
       borderRadius: '8px',
@@ -85,13 +89,60 @@ export const TOKENS__SURFACE = {
   'card-press': {
     type: 'composite',
     ref: {
+      color: '{color.text-default}',
       backgroundColor: '{color.bg-card}',
       border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
     },
     value: {
+      color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
       border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
+      borderRadius: '8px',
+    },
+  },
+  'card-selection': {
+    type: 'composite',
+    ref: {
+      color: '{color.yellow-12}',
+      backgroundColor: '{color.yellow-2}',
+      border: '1px solid {color.yellow-11}',
+      borderRadius: '{radius.md}',
+    },
+    value: {
+      color: 'oklch(0.5400 0.1200 72.00)',
+      backgroundColor: 'oklch(0.9880 0.0320 103.00)',
+      border: '1px solid oklch(0.6300 0.1400 77.00)',
+      borderRadius: '8px',
+    },
+  },
+  'card-selection-hover': {
+    type: 'composite',
+    ref: {
+      color: '{color.yellow-13}',
+      backgroundColor: '{color.yellow-3}',
+      border: '1px solid {color.yellow-12}',
+      borderRadius: '{radius.md}',
+    },
+    value: {
+      color: 'oklch(0.4600 0.1020 67.00)',
+      backgroundColor: 'oklch(0.9800 0.0520 102.50)',
+      border: '1px solid oklch(0.5400 0.1200 72.00)',
+      borderRadius: '8px',
+    },
+  },
+  'card-selection-press': {
+    type: 'composite',
+    ref: {
+      color: '{color.yellow-14}',
+      backgroundColor: '{color.yellow-4}',
+      border: '1px solid {color.yellow-13}',
+      borderRadius: '{radius.md}',
+    },
+    value: {
+      color: 'oklch(0.3900 0.0880 64.00)',
+      backgroundColor: 'oklch(0.9680 0.0780 101.50)',
+      border: '1px solid oklch(0.4600 0.1020 67.00)',
       borderRadius: '8px',
     },
   },

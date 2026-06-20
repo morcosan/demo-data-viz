@@ -45,6 +45,7 @@
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
+    color: var(--ds-color-text-default);
   }
 }
 
@@ -54,6 +55,7 @@
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
+    color: var(--ds-color-text-default);
   }
 }
 
@@ -63,6 +65,37 @@
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
+    color: var(--ds-color-text-default);
+  }
+}
+
+@utility ds-surface-card-selection {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border: 1px solid var(--ds-color-yellow-11);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-yellow-2);
+    color: var(--ds-color-yellow-12);
+  }
+}
+
+@utility ds-surface-card-selection-hover {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border: 1px solid var(--ds-color-yellow-12);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-yellow-3);
+    color: var(--ds-color-yellow-13);
+  }
+}
+
+@utility ds-surface-card-selection-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border: 1px solid var(--ds-color-yellow-13);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-yellow-4);
+    color: var(--ds-color-yellow-14);
   }
 }
 

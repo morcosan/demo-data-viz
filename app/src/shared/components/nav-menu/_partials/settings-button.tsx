@@ -4,18 +4,18 @@ import { t } from 'i18next'
 interface Props extends ReactProps {
   iconWidth: string
   collapsed?: boolean
-  highlight?: ButtonState
+  state?: ButtonState
   onClick?: () => void
 }
 
-export const SettingsButton = ({ iconWidth, collapsed, highlight, onClick, className }: Props) => {
+export const SettingsButton = ({ iconWidth, collapsed, state, onClick, className }: Props) => {
   return (
     <Button
       variant="menu-default"
       size="lg"
       className={cx('w-full', className)}
       data-testid="settings-button"
-      state={highlight}
+      state={state}
       onClick={onClick}
     >
       <SettingsSvg className="h-xs-9" style={{ minWidth: iconWidth }} />
