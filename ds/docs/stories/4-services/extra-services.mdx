@@ -52,9 +52,9 @@ This service automatically detects user input methods and adjusts the UI accordi
     <h3>Utilities</h3>
     <DocsCodeBlock
       code={`
-        import { isA11yModeDefault, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core'
+        import { isA11yModeDefault, isA11yModeKeyboard, isA11yModePointer, ATTR_KEY__A11Y_MODE } from '@ds/core'
         //
-        console.log(isA11yModeDefault(), isA11yModePointer(), ATTR_KEY__A11Y_MODE)
+        console.log(isA11yModeDefault(), isA11yModeKeyboard(), isA11yModePointer(), ATTR_KEY__A11Y_MODE)
       `}
     />
   </div>
@@ -71,7 +71,7 @@ This service automatically detects user input methods and adjusts the UI accordi
 - The service automatically switches to `'default'` mode when Tab key is pressed
 - Switches to `'pointer'` mode on mouse clicks (excluding NVDA keyboard triggers)
 - The mode is applied via `ATTR_KEY__A11Y_MODE` attribute on the document element
-- Use utility functions `isA11yModeDefault()` and `isA11yModePointer()` for mode checking outside React components
+- Use utility functions `isA11yModeDefault()`, `isA11yModeKeyboard()` or `isA11yModePointer()` for mode checking outside React components
 
 ## Viewport Service
 
