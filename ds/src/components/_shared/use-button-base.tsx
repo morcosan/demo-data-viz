@@ -29,7 +29,7 @@ interface BaseButtonProps extends HtmlDataProps {
 export const useButtonBase = (props: BaseButtonProps) => {
   const { ariaDescription, children, className, size, style, tooltip, state, variant, isIcon } = props
   const { tokens } = useThemeService()
-  const { bindings: clickableBindings, isNoop, isPressed, pressing } = useClickable(props)
+  const { bindings: baseBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
   const styles = useButtonStyles({ state, size, variant })
   const isSolid = variant === 'primary' || variant === 'danger'
@@ -62,13 +62,16 @@ export const useButtonBase = (props: BaseButtonProps) => {
 
   const surfaceCss: CSSObject = {
     ...(isPressed ? styles.surfacePress : styles.surfaceDefault),
+    ...(isPressed ? { transform: `scale(${styles.scalePressed})` } : {}),
     ...(isNoop ? noopProps : {}),
+    display: 'flex',
     transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     width: '100%',
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
-    ...(isPressed ? { transform: `scale(${styles.scalePressed})`, boxShadow: 'none' } : {}),
+    pointerEvents: 'none',
+    userSelect: 'none',
   }
   const surfaceHoverCss: CSSObject = {
     ...styles.surfaceHover,
@@ -97,10 +100,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    '& > span': {
-      pointerEvents: 'none',
-      userSelect: 'none',
-    },
     '&:hover, &:focus': isNoop
       ? {}
       : pressing
@@ -112,12 +111,12 @@ export const useButtonBase = (props: BaseButtonProps) => {
   }
 
   const bindings = {
-    ...clickableBindings,
+    ...baseBindings,
     title: tooltip,
     className: className,
     style: style,
-    'aria-description': ariaDescription,
     css: buttonCss,
+    'aria-description': ariaDescription,
     ...dataProps,
   }
 

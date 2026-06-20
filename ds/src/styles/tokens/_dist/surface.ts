@@ -72,29 +72,27 @@ export const TOKENS__SURFACE = {
   'card-hover': {
     type: 'composite',
     ref: {
-      backgroundColor: '{color.yellow-1}',
-      border: '2px solid {color.yellow-4}',
+      backgroundColor: '{color.bg-card}',
+      border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
-      boxShadow: ['0 0 7px 2px {color.yellow-2}', '{shadow.sm}'],
     },
     value: {
-      backgroundColor: 'oklch(0.9950 0.0150 103.19)',
-      border: '2px solid oklch(0.9680 0.0780 101.50)',
+      backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
+      border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
       borderRadius: '8px',
-      boxShadow: {
-        light: [
-          '0 0 7px 2px oklch(0.9880 0.0320 103.00)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-        ],
-        dark: [
-          '0 0 7px 2px oklch(0.9880 0.0320 103.00)',
-          '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-          '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-          '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-        ],
-      },
+    },
+  },
+  'card-press': {
+    type: 'composite',
+    ref: {
+      backgroundColor: '{color.bg-card}',
+      border: '1px solid {color.border-surface}',
+      borderRadius: '{radius.md}',
+    },
+    value: {
+      backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
+      border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
+      borderRadius: '8px',
     },
   },
   popup: {

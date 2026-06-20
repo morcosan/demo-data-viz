@@ -14,6 +14,7 @@ export * from '../src/assets/logos'
  * Components
  */
 export * from '../src/components/button/button'
+export * from '../src/components/card/card'
 export * from '../src/components/icon-button/icon-button'
 export * from '../src/components/modal/modal'
 export * from '../src/components/text-field/text-field'

@@ -51,12 +51,18 @@
 @utility ds-surface-card-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow:
-      0 0 7px 2px var(--ds-color-yellow-2),
-      var(--ds-shadow-sm);
-    border: 2px solid var(--ds-color-yellow-4);
+    border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-yellow-1);
+    background-color: var(--ds-color-bg-card);
+  }
+}
+
+@utility ds-surface-card-press {
+  :where(html) &,
+  [data-color-mode='light'] & {
+    border: 1px solid var(--ds-color-border-surface);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-bg-card);
   }
 }
 

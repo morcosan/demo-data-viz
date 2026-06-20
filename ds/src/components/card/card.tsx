@@ -1,0 +1,116 @@
+'use client'
+
+import { type CSSObject } from '@emotion/react'
+import { Loader } from '@mantine/core'
+import { useThemeService } from '../../services/theme-service'
+import { useDataProps } from '../../utilities/react-utils'
+import { useHoverEffect } from '../../utilities/use-hover-effect'
+import { type BaseButtonState } from '../_shared/types'
+import { useClickable } from '../_shared/use-clickable'
+import { type CardProps } from './_types'
+
+export type { LinkType } from '../_shared/types'
+export type { CardProps, CardState } from './_types'
+
+/** Flexible component for UI display, user actions, or navigation */
+export const Card = (props: CardProps) => {
+  const {
+    ariaDescription,
+    children,
+    className,
+    style,
+    tooltip,
+    linkHref,
+    linkType = 'internal',
+    state = 'static',
+  } = props
+  const { tokens } = useThemeService()
+  const buttonState: BaseButtonState = state === 'static' ? 'disabled' : state
+  const { bindings, isNoop, isPressed, pressing } = useClickable({ ...props, linkType, state: buttonState })
+  const dataProps = useDataProps(props)
+  const hoverEffect = useHoverEffect({ square: true })
+  const isStatic = state === 'static'
+
+  const spinnerCss: CSSObject = {
+    position: 'absolute',
+    inset: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    pointerEvents: 'none',
+    userSelect: 'none',
+  }
+  const spinnerIconCss: CSSObject = {
+    '--loader-size': `${tokens.spacing['sm-0']} !important`,
+    '--loader-color': `${tokens.color['text-subtle']} !important`,
+  }
+
+  const surfaceCss: CSSObject = {
+    ...(isPressed ? tokens.surface['card-press'] : tokens.surface['card']),
+    ...(isPressed ? { transform: 'scale(0.95)' } : {}),
+    transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
+  }
+  const childrenCss: CSSObject = {
+    display: 'flex',
+    minWidth: tokens.spacing['button-h-lg'],
+    minHeight: tokens.spacing['button-h-lg'],
+    opacity: state === 'loading' ? 0 : 1,
+    fill: 'currentColor',
+    stroke: 'currentColor',
+  }
+  const cardCss: CSSObject = {
+    position: 'relative',
+    display: 'flex',
+    borderRadius: surfaceCss.borderRadius,
+    outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
+    opacity: isStatic ? 'unset' : isNoop ? 0.4 : 1,
+    cursor: isStatic ? 'unset' : isNoop ? 'not-allowed' : 'pointer',
+    '& > span': { pointerEvents: 'none' },
+    '&:hover, &:focus': isNoop
+      ? {}
+      : pressing
+        ? { '& > span:nth-of-type(1)': hoverEffect.css }
+        : {
+            '& > span:nth-of-type(1)': hoverEffect.css,
+            '& > span:nth-of-type(2)': tokens.surface['card-hover'],
+          },
+  }
+
+  const cardBindings = {
+    ...bindings,
+    title: tooltip,
+    className: className,
+    style: style,
+    css: cardCss,
+    'aria-description': ariaDescription,
+    ...dataProps,
+  }
+
+  const content = (
+    <>
+      {hoverEffect.html}
+      <span css={surfaceCss}>
+        <span css={childrenCss}>{children}</span>
+        {state === 'loading' && (
+          <span css={spinnerCss}>
+            <Loader css={spinnerIconCss} />
+          </span>
+        )}
+      </span>
+    </>
+  )
+
+  return isStatic ? (
+    <div {...cardBindings} css={cardCss}>
+      {content}
+    </div>
+  ) : linkHref ? (
+    <a {...cardBindings} css={cardCss}>
+      {content}
+    </a>
+  ) : (
+    <button type="button" {...cardBindings} css={cardCss}>
+      {content}
+    </button>
+  )
+}
