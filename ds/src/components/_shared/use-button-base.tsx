@@ -65,11 +65,11 @@ export const useButtonBase = (props: BaseButtonProps) => {
     ...(isPressed ? { transform: `scale(${styles.scalePressed})` } : {}),
     ...(isNoop ? noopProps : {}),
     display: 'flex',
-    transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     width: '100%',
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
+    transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     pointerEvents: 'none',
     userSelect: 'none',
   }

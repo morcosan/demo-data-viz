@@ -48,24 +48,29 @@ export const Card = (props: CardProps) => {
   const surfaceCss: CSSObject = {
     ...(isPressed ? tokens.surface['card-press'] : tokens.surface['card']),
     ...(isPressed ? { transform: 'scale(0.95)' } : {}),
+    display: 'grid',
+    width: '100%',
+    height: '100%',
     transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
+    pointerEvents: 'none',
   }
   const childrenCss: CSSObject = {
     display: 'flex',
-    minWidth: tokens.spacing['button-h-lg'],
-    minHeight: tokens.spacing['button-h-lg'],
+    width: '100%',
+    height: '100%',
     opacity: state === 'loading' ? 0 : 1,
     fill: 'currentColor',
     stroke: 'currentColor',
   }
   const cardCss: CSSObject = {
     position: 'relative',
-    display: 'flex',
+    display: 'grid',
+    minWidth: tokens.spacing['button-h-lg'],
+    minHeight: tokens.spacing['button-h-lg'],
     borderRadius: surfaceCss.borderRadius,
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isStatic ? 'unset' : isNoop ? 0.4 : 1,
     cursor: isStatic ? 'unset' : isNoop ? 'not-allowed' : 'pointer',
-    '& > span': { pointerEvents: 'none' },
     '&:hover, &:focus': isNoop
       ? {}
       : pressing
@@ -75,7 +80,6 @@ export const Card = (props: CardProps) => {
             '& > span:nth-of-type(2)': tokens.surface['card-hover'],
           },
   }
-
   const cardBindings = {
     ...bindings,
     title: tooltip,

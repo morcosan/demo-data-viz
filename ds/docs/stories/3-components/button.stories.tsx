@@ -11,7 +11,7 @@ const meta: Meta = {
       ariaDescription: 'Example description',
     },
     props: {
-      state: 'default',
+      state: 'active',
       variant: 'default',
       size: 'md',
       linkHref: '',
