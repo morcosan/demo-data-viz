@@ -25,15 +25,8 @@
 @utility ds-surface-region {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-1);
-    border: 1px solid var(--ds-color-grey-4);
-    border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-bg-region);
-  }
-
-  [data-color-mode='dark'] & {
-    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
-    border: 1px solid var(--ds-color-grey-19);
+    box-shadow: var(--ds-shadow-inset-sm);
+    border: 1px solid var(--ds-color-border-inset);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-region);
   }
@@ -42,6 +35,7 @@
 @utility ds-surface-card {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card);
@@ -52,6 +46,8 @@
 @utility ds-surface-card-hover {
   :where(html) &,
   [data-color-mode='light'] & {
+    transform: translateY(-1px);
+    box-shadow: var(--ds-shadow-sm);
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card-hover);
@@ -62,15 +58,7 @@
 @utility ds-surface-card-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-1);
-    border: 1px solid var(--ds-color-border-surface);
-    border-radius: var(--ds-radius-md);
-    background-color: var(--ds-color-bg-card-press);
-    color: var(--ds-color-text-default);
-  }
-
-  [data-color-mode='dark'] & {
-    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
+    box-shadow: var(--ds-shadow-inset-xs);
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card-press);
@@ -111,6 +99,7 @@
 @utility ds-surface-popup {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-sm);
     background-color: var(--ds-color-bg-popup);
@@ -129,7 +118,8 @@
 @utility ds-surface-button-primary-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
+    transform: translateY(-1px);
+    box-shadow: var(--ds-shadow-sm);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-11);
     color: var(--ds-color-blue-1);
@@ -139,17 +129,10 @@
 @utility ds-surface-button-primary-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-12);
-    color: var(--ds-color-blue-2);
-  }
-
-  [data-color-mode='dark'] & {
-    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-12);
-    color: var(--ds-color-blue-2);
+    box-shadow: var(--ds-shadow-inset-sm);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-2) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-11);
+    color: var(--ds-color-blue-1);
   }
 }
 
@@ -166,8 +149,9 @@
 @utility ds-surface-button-secondary-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
-    border: 1px solid var(--ds-color-blue-11);
+    transform: translateY(-1px);
+    box-shadow: var(--ds-shadow-sm);
+    border: 1px solid var(--ds-color-blue-9);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-2);
     color: var(--ds-color-blue-12);
@@ -177,18 +161,10 @@
 @utility ds-surface-button-secondary-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
-    border: 1px solid var(--ds-color-blue-11);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-6) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-3);
-    color: var(--ds-color-blue-12);
-  }
-
-  [data-color-mode='dark'] & {
-    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
-    border: 1px solid var(--ds-color-blue-11);
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-6) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-blue-3);
+    box-shadow: var(--ds-shadow-inset-sm);
+    border: 1px solid var(--ds-color-blue-7);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-5) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-2);
     color: var(--ds-color-blue-12);
   }
 }
@@ -203,7 +179,8 @@
 @utility ds-surface-button-default-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
+    transform: translateY(-1px);
+    box-shadow: var(--ds-shadow-sm);
     background-color: var(--ds-color-black-alpha-1);
     color: var(--ds-color-text-default);
   }
@@ -212,14 +189,8 @@
 @utility ds-surface-button-default-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
-    background-color: var(--ds-color-black-alpha-2);
-    color: var(--ds-color-text-default);
-  }
-
-  [data-color-mode='dark'] & {
-    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
-    background-color: var(--ds-color-black-alpha-2);
+    box-shadow: var(--ds-shadow-inset-sm);
+    background-color: var(--ds-color-black-alpha-1);
     color: var(--ds-color-text-default);
   }
 }
@@ -234,7 +205,8 @@
 @utility ds-surface-button-optional-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-xs);
+    transform: translateY(-1px);
+    box-shadow: var(--ds-shadow-sm);
     background-color: var(--ds-color-black-alpha-1);
     color: var(--ds-color-text-default);
   }
@@ -243,14 +215,8 @@
 @utility ds-surface-button-optional-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
-    background-color: var(--ds-color-black-alpha-2);
-    color: var(--ds-color-text-default);
-  }
-
-  [data-color-mode='dark'] & {
-    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
-    background-color: var(--ds-color-black-alpha-2);
+    box-shadow: var(--ds-shadow-inset-sm);
+    background-color: var(--ds-color-black-alpha-1);
     color: var(--ds-color-text-default);
   }
 }
@@ -267,6 +233,8 @@
 @utility ds-surface-button-danger-hover {
   :where(html) &,
   [data-color-mode='light'] & {
+    transform: translateY(-1px);
+    box-shadow: var(--ds-shadow-sm);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-4) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-red-13);
     color: var(--ds-color-red-1);
@@ -276,9 +244,10 @@
 @utility ds-surface-button-danger-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-4) 0% 50%, transparent 50% 100%);
-    background-color: var(--ds-color-red-14);
-    color: var(--ds-color-red-2);
+    box-shadow: var(--ds-shadow-inset-sm);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-red-13);
+    color: var(--ds-color-red-1);
   }
 }
 
@@ -292,7 +261,9 @@
 @utility ds-surface-button-caution-hover {
   :where(html) &,
   [data-color-mode='light'] & {
-    background-color: var(--ds-color-red-alpha-2);
+    transform: translateY(-1px);
+    box-shadow: var(--ds-shadow-sm);
+    background-color: var(--ds-color-red-alpha-3);
     color: var(--ds-color-red-13);
   }
 }
@@ -300,6 +271,7 @@
 @utility ds-surface-button-caution-press {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-inset-sm);
     background-color: var(--ds-color-red-alpha-3);
     color: var(--ds-color-red-13);
   }

@@ -10,131 +10,57 @@ export const CSS_PREFIX__SHADOW = '--ds-shadow-'
 export const TOKENS__SHADOW = {
   xs: {
     ref: {
-      light: [
-        '0 -1px 0 -1px {color.black-alpha-1}',
-        '0 1px 3px 0 {color.black-alpha-5}',
-        '0 1px 2px -1px {color.black-alpha-5}',
-      ],
-      dark: [
-        '0 -1px 0 -1px {color.black-alpha-2}',
-        '0 1px 3px 0 {color.black-alpha-8}',
-        '0 1px 2px -1px {color.black-alpha-8}',
-      ],
+      light: ['0 0 4px -2px {color.black-alpha-2}', '0 2px 3px -1px {color.black-alpha-4}'],
+      dark: ['0 0 4px -2px {color.black-alpha-3}', '0 2px 3px -1px {color.black-alpha-7}'],
     },
     value: {
-      light: [
-        '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
-        '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
-        '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
-      ],
-      dark: [
-        '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
-        '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
-        '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
-      ],
+      light: ['0 0 4px -2px oklch(0.1068 0.0519 317 / 0.06)', '0 2px 3px -1px oklch(0.1068 0.0519 317 / 0.12)'],
+      dark: ['0 0 4px -2px oklch(0.1068 0.0519 317 / 0.09)', '0 2px 3px -1px oklch(0.1068 0.0519 317 / 0.32)'],
     },
   },
   sm: {
     ref: {
-      light: [
-        '0 -1px 0 0 {color.black-alpha-1}',
-        '0 2px 4px -1px {color.black-alpha-5}',
-        '0 2px 4px -2px {color.black-alpha-5}',
-      ],
-      dark: [
-        '0 -1px 0 0 {color.black-alpha-2}',
-        '0 2px 4px -1px {color.black-alpha-8}',
-        '0 2px 4px -2px {color.black-alpha-8}',
-      ],
+      light: ['0 0 4px -2px {color.black-alpha-2}', '0 3px 5px -1px {color.black-alpha-4}'],
+      dark: ['0 0 4px -2px {color.black-alpha-3}', '0 3px 5px -1px {color.black-alpha-7}'],
     },
     value: {
-      light: [
-        '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.03)',
-        '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.16)',
-        '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-      ],
-      dark: [
-        '0 -1px 0 0 oklch(0.1068 0.0519 317 / 0.06)',
-        '0 2px 4px -1px oklch(0.1068 0.0519 317 / 0.4)',
-        '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-      ],
+      light: ['0 0 4px -2px oklch(0.1068 0.0519 317 / 0.06)', '0 3px 5px -1px oklch(0.1068 0.0519 317 / 0.12)'],
+      dark: ['0 0 4px -2px oklch(0.1068 0.0519 317 / 0.09)', '0 3px 5px -1px oklch(0.1068 0.0519 317 / 0.32)'],
     },
   },
   md: {
     ref: {
-      light: [
-        '0 -1px 1px 0 {color.black-alpha-1}',
-        '0 4px 6px -1px {color.black-alpha-5}',
-        '0 2px 4px -2px {color.black-alpha-5}',
-      ],
-      dark: [
-        '0 -1px 1px 0 {color.black-alpha-2}',
-        '0 4px 6px -1px {color.black-alpha-8}',
-        '0 2px 4px -2px {color.black-alpha-8}',
-      ],
+      light: ['0 0 4px -2px {color.black-alpha-2}', '0 4px 6px -1px {color.black-alpha-4}'],
+      dark: ['0 0 4px -2px {color.black-alpha-3}', '0 4px 6px -1px {color.black-alpha-7}'],
     },
     value: {
-      light: [
-        '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.03)',
-        '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.16)',
-        '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.16)',
-      ],
-      dark: [
-        '0 -1px 1px 0 oklch(0.1068 0.0519 317 / 0.06)',
-        '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.4)',
-        '0 2px 4px -2px oklch(0.1068 0.0519 317 / 0.4)',
-      ],
+      light: ['0 0 4px -2px oklch(0.1068 0.0519 317 / 0.06)', '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.12)'],
+      dark: ['0 0 4px -2px oklch(0.1068 0.0519 317 / 0.09)', '0 4px 6px -1px oklch(0.1068 0.0519 317 / 0.32)'],
     },
   },
-  lg: {
+  'inset-xs': {
     ref: {
-      light: [
-        '0 -1px 4px 0 {color.black-alpha-1}',
-        '0 8px 13px -3px {color.black-alpha-5}',
-        '0 4px 6px -4px {color.black-alpha-5}',
-      ],
-      dark: [
-        '0 -1px 4px 0 {color.black-alpha-2}',
-        '0 8px 13px -3px {color.black-alpha-8}',
-        '0 4px 6px -4px {color.black-alpha-8}',
-      ],
+      light: ['inset 0 1px 1px 0 {color.black-alpha-1}', 'inset 0 0 2px 1px {color.black-alpha-1}'],
+      dark: ['inset 0 1px 1px 0 {color.black-alpha-2}', 'inset 0 0 2px 1px {color.black-alpha-2}'],
     },
     value: {
-      light: [
-        '0 -1px 4px 0 oklch(0.1068 0.0519 317 / 0.03)',
-        '0 8px 13px -3px oklch(0.1068 0.0519 317 / 0.16)',
-        '0 4px 6px -4px oklch(0.1068 0.0519 317 / 0.16)',
-      ],
-      dark: [
-        '0 -1px 4px 0 oklch(0.1068 0.0519 317 / 0.06)',
-        '0 8px 13px -3px oklch(0.1068 0.0519 317 / 0.4)',
-        '0 4px 6px -4px oklch(0.1068 0.0519 317 / 0.4)',
-      ],
+      light: ['inset 0 1px 1px 0 oklch(0.1068 0.0519 317 / 0.03)', 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.03)'],
+      dark: ['inset 0 1px 1px 0 oklch(0.1068 0.0519 317 / 0.06)', 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)'],
     },
   },
-  xl: {
+  'inset-sm': {
     ref: {
-      light: [
-        '0 -1px 4px 0 {color.black-alpha-1}',
-        '0 12px 16px -5px {color.black-alpha-5}',
-        '0 8px 10px -6px {color.black-alpha-5}',
-      ],
-      dark: [
-        '0 -1px 4px 0 {color.black-alpha-2}',
-        '0 12px 16px -5px {color.black-alpha-8}',
-        '0 8px 10px -6px {color.black-alpha-8}',
-      ],
+      light: ['inset 0 2px 3px 1px {color.black-alpha-2}', 'inset 0 0 2px 1px {color.black-alpha-1}'],
+      dark: ['inset 0 2px 3px 1px {color.black-alpha-3}', 'inset 0 0 2px 1px {color.black-alpha-2}'],
     },
     value: {
       light: [
-        '0 -1px 4px 0 oklch(0.1068 0.0519 317 / 0.03)',
-        '0 12px 16px -5px oklch(0.1068 0.0519 317 / 0.16)',
-        '0 8px 10px -6px oklch(0.1068 0.0519 317 / 0.16)',
+        'inset 0 2px 3px 1px oklch(0.1068 0.0519 317 / 0.06)',
+        'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.03)',
       ],
       dark: [
-        '0 -1px 4px 0 oklch(0.1068 0.0519 317 / 0.06)',
-        '0 12px 16px -5px oklch(0.1068 0.0519 317 / 0.4)',
-        '0 8px 10px -6px oklch(0.1068 0.0519 317 / 0.4)',
+        'inset 0 2px 3px 1px oklch(0.1068 0.0519 317 / 0.09)',
+        'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)',
       ],
     },
   },

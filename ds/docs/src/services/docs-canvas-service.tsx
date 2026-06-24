@@ -3,7 +3,7 @@ import { createContext, useContext, useMemo } from 'react'
 /**
  * Context
  */
-type DocsCanvasBg = 'tiles' | 'grid' | 'blank'
+type DocsCanvasBg = 'tiles' | 'grid' | 'blank' | 'none'
 type Store = {
   canvasBg: DocsCanvasBg
   canvasBgClass: string
@@ -26,6 +26,7 @@ const DocsCanvasService = ({ children, canvasBg }: Props) => {
     'docs-bg docs-bg-tiles': canvasBg === 'tiles',
     'docs-bg docs-bg-grid': canvasBg === 'grid',
     'docs-bg docs-bg-blank': canvasBg === 'blank',
+    'docs-bg docs-bg-none': canvasBg === 'none',
   })
   const store: Store = useMemo(() => ({ canvasBgClass, canvasBg }), [canvasBg, canvasBgClass])
 

@@ -59,7 +59,7 @@ export const MobileNav = (props: Props) => {
         aria-label={t('core.label.navigationMenu')}
         className={cx(
           'mr-button-h-md absolute right-0 bottom-0 left-0',
-          'border-color-border-shadow bg-color-bg-card border-t border-r shadow-lg',
+          'border-color-border-shadow bg-color-bg-card border-t border-r shadow-md',
           'transition-transform duration-300 ease-in-out',
           isMenuOpen ? 'translate-x-0' : '-translate-x-full',
           !isMenuVisible && 'invisible',

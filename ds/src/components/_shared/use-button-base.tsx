@@ -78,11 +78,11 @@ export const useButtonBase = (props: BaseButtonProps) => {
       border: `1px solid ${tokens.color['border-inset']}`,
       borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
       opacity: isPressed ? 1 : 0,
+      transition: 'all 0.2s ease',
     },
   }
   const surfaceHoverCss: CSSObject = {
     ...styles.surfaceHover,
-    transform: 'translateY(-1px)',
   }
   const childrenCss: CSSObject = {
     display: 'flex',

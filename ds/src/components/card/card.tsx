@@ -51,7 +51,6 @@ export const Card = (props: CardProps) => {
   const surfacePress = state === 'selected' ? tokens.surface['card-selection-press'] : tokens.surface['card-press']
   const surfaceCss: CSSObject = {
     ...(isPressed ? surfacePress : surfaceDefault),
-    ...(isPressed ? { opacity: 0.7 } : { opacity: 1 }),
     display: 'grid',
     width: '100%',
     height: '100%',

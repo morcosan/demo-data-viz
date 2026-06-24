@@ -123,10 +123,10 @@
   --ds-color-white-alpha-9: oklch(1 0 0 / 0.48);
   --ds-color-white-alpha-10: oklch(1 0 0 / 0.56);
   --ds-color-bg-page: var(--ds-color-grey-1);
-  --ds-color-bg-region: var(--ds-color-grey-2);
+  --ds-color-bg-region: var(--ds-color-black-alpha-1);
   --ds-color-bg-card: var(--ds-color-white);
   --ds-color-bg-card-hover: var(--ds-color-grey-1);
-  --ds-color-bg-card-press: var(--ds-color-grey-2);
+  --ds-color-bg-card-press: var(--ds-color-grey-1);
   --ds-color-bg-popup: var(--ds-color-white);
   --ds-color-bg-coding: var(--ds-color-black-alpha-2);
   --ds-color-bg-field: var(--ds-color-black-alpha-1);
@@ -137,7 +137,7 @@
   --ds-color-border-default: var(--ds-color-grey-7);
   --ds-color-border-subtle: var(--ds-color-black-alpha-3);
   --ds-color-border-shadow: var(--ds-color-grey-3);
-  --ds-color-border-surface: var(--ds-color-black-alpha-3);
+  --ds-color-border-surface: var(--ds-color-black-alpha-2);
   --ds-color-border-highlight: var(--ds-color-yellow-3);
   --ds-color-border-inset: var(--ds-color-white-alpha-10);
   --ds-color-text-default: var(--ds-color-black);
@@ -173,10 +173,10 @@
 
 [data-color-mode='dark'] {
   --ds-color-bg-page: var(--ds-color-grey-17);
-  --ds-color-bg-region: var(--ds-color-grey-18);
+  --ds-color-bg-region: var(--ds-color-black-alpha-3);
   --ds-color-bg-card: var(--ds-color-grey-16);
   --ds-color-bg-card-hover: var(--ds-color-grey-15);
-  --ds-color-bg-card-press: var(--ds-color-grey-14);
+  --ds-color-bg-card-press: var(--ds-color-grey-15);
   --ds-color-bg-popup: var(--ds-color-grey-16);
   --ds-color-bg-coding: var(--ds-color-grey-18);
   --ds-color-bg-field: var(--ds-color-black-alpha-4);
@@ -187,7 +187,7 @@
   --ds-color-border-default: var(--ds-color-grey-14);
   --ds-color-border-subtle: var(--ds-color-white-alpha-4);
   --ds-color-border-shadow: var(--ds-color-grey-20);
-  --ds-color-border-surface: var(--ds-color-black-alpha-8);
+  --ds-color-border-surface: var(--ds-color-black-alpha-6);
   --ds-color-border-highlight: var(--ds-color-yellow-4);
   --ds-color-border-inset: var(--ds-color-white-alpha-1);
   --ds-color-text-default: var(--ds-color-white);

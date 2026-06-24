@@ -57,6 +57,7 @@ const toolbarConfig = {
           { value: 'grid', title: 'Grid', icon: 'photo' as any },
           { value: 'tiles', title: 'Tiles', icon: 'photo' as any },
           { value: 'blank', title: 'Blank', icon: 'photo' as any },
+          { value: 'none', title: 'None', icon: 'photo' as any },
         ],
       },
     },

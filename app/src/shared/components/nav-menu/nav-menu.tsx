@@ -29,7 +29,7 @@ export const NavMenu = (props: NavMenuProps) => {
   const iconWidth = 'var(--ds-spacing-sm-1)'
   const settingsMenuClass = cx(
     isPopupOpened ? 'block' : 'hidden',
-    'z-popup absolute right-0 bottom-0 translate-x-full shadow-lg',
+    'z-popup absolute right-0 bottom-0 translate-x-full shadow-md',
     'w-lg-7 border-color-border-shadow bg-color-bg-popup rounded-md border',
   )
 
