@@ -192,6 +192,10 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.yellow-3}', dark: '{color.yellow-4}' },
     value: { light: 'oklch(0.9800 0.0520 102.50)', dark: 'oklch(0.9680 0.0780 101.50)' },
   },
+  'border-inset': {
+    ref: { light: '{color.white-alpha-10}', dark: '{color.white-alpha-1}' },
+    value: { light: 'oklch(1 0 0 / 0.56)', dark: 'oklch(1 0 0 / 0.03)' },
+  },
   'text-default': {
     ref: { light: '{color.black}', dark: '{color.white}' },
     value: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },

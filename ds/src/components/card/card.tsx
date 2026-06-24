@@ -46,9 +46,12 @@ export const Card = (props: CardProps) => {
     '--loader-color': `${tokens.color['text-subtle']} !important`,
   }
 
+  const surfaceDefault = state === 'selected' ? tokens.surface['card-selection'] : tokens.surface['card']
+  const surfaceHover = state === 'selected' ? tokens.surface['card-selection-hover'] : tokens.surface['card-hover']
+  const surfacePress = state === 'selected' ? tokens.surface['card-selection-press'] : tokens.surface['card-press']
   const surfaceCss: CSSObject = {
-    ...(isPressed ? tokens.surface['card-press'] : tokens.surface['card']),
-    ...(isPressed ? { transform: 'scale(0.98)' } : {}),
+    ...(isPressed ? surfacePress : surfaceDefault),
+    ...(isPressed ? { opacity: 0.7 } : { opacity: 1 }),
     display: 'grid',
     width: '100%',
     height: '100%',
@@ -59,7 +62,7 @@ export const Card = (props: CardProps) => {
       if (size === 'xl') return `${tokens.spacing['card-py-xl']} ${tokens.spacing['card-px-xl']}`
       return ''
     })(),
-    transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
+    transition: ['all 0.2s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     pointerEvents: 'none',
   }
   const childrenCss: CSSObject = {
@@ -86,7 +89,7 @@ export const Card = (props: CardProps) => {
         ? { '& > span:nth-of-type(1)': hoverEffect.css }
         : {
             '& > span:nth-of-type(1)': hoverEffect.css,
-            '& > span:nth-of-type(2)': tokens.surface['card-hover'],
+            '& > span:nth-of-type(2)': surfaceHover,
           },
   }
   const cardBindings = {

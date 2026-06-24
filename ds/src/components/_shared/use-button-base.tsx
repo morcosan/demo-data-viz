@@ -62,20 +62,27 @@ export const useButtonBase = (props: BaseButtonProps) => {
 
   const surfaceCss: CSSObject = {
     ...(isPressed ? styles.surfacePress : styles.surfaceDefault),
-    ...(isPressed ? { transform: `scale(${styles.scalePressed})` } : {}),
     ...(isNoop ? noopProps : {}),
     display: 'flex',
     width: '100%',
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
-    transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
+    transition: ['all 0.2s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     pointerEvents: 'none',
     userSelect: 'none',
+    '&::before': {
+      position: 'absolute',
+      inset: '-1px',
+      content: '""',
+      border: `1px solid ${tokens.color['border-inset']}`,
+      borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
+      opacity: isPressed ? 1 : 0,
+    },
   }
   const surfaceHoverCss: CSSObject = {
     ...styles.surfaceHover,
-    transform: 'scale(1)',
+    transform: 'translateY(-1px)',
   }
   const childrenCss: CSSObject = {
     display: 'flex',

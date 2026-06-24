@@ -27,13 +27,6 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     if (size === 'md') return `calc(${tokens.spacing['button-px-md']} - 1px)`
     if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
   })()
-  const scalePressed = (() => {
-    if (size === 'xs') return '0.91'
-    if (size === 'sm') return '0.93'
-    if (size === 'md') return '0.95'
-    if (size === 'lg') return '0.95'
-    return ''
-  })()
   const spinnerSize = (() => {
     if (size === 'xs') return tokens.spacing['xs-5']
     if (size === 'sm') return tokens.spacing['xs-7']
@@ -92,7 +85,6 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
     fontWeight,
     height,
     paddingX,
-    scalePressed,
     spinnerSize,
     surfaceDefault,
     surfaceHover,

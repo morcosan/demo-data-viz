@@ -139,6 +139,7 @@
   --ds-color-border-shadow: var(--ds-color-grey-3);
   --ds-color-border-surface: var(--ds-color-black-alpha-3);
   --ds-color-border-highlight: var(--ds-color-yellow-3);
+  --ds-color-border-inset: var(--ds-color-white-alpha-10);
   --ds-color-text-default: var(--ds-color-black);
   --ds-color-text-inverse: var(--ds-color-white);
   --ds-color-text-subtle: var(--ds-color-grey-13);
@@ -188,6 +189,7 @@
   --ds-color-border-shadow: var(--ds-color-grey-20);
   --ds-color-border-surface: var(--ds-color-black-alpha-8);
   --ds-color-border-highlight: var(--ds-color-yellow-4);
+  --ds-color-border-inset: var(--ds-color-white-alpha-1);
   --ds-color-text-default: var(--ds-color-white);
   --ds-color-text-inverse: var(--ds-color-black);
   --ds-color-text-subtle: var(--ds-color-grey-8);

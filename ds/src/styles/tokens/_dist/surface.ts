@@ -93,12 +93,17 @@ export const TOKENS__SURFACE = {
       backgroundColor: '{color.bg-card-press}',
       border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
+      boxShadow: { light: 'inset 0 0 3px 1px {color.black-alpha-1}', dark: 'inset 0 0 3px 1px {color.black-alpha-2}' },
     },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.461 0.0157 308)' },
       border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
       borderRadius: '8px',
+      boxShadow: {
+        light: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.03)',
+        dark: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.06)',
+      },
     },
   },
   'card-selection': {
@@ -178,11 +183,24 @@ export const TOKENS__SURFACE = {
       color: '{color.blue-1}',
       backgroundColor: '{color.blue-11}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-3} 0% 50%, transparent 50% 100%)',
+      boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(0.9500 0.0200 240)',
       backgroundColor: 'oklch(0.4500 0.1600 240)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.09) 0% 50%, transparent 50% 100%)',
+      boxShadow: {
+        light: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
+        ],
+        dark: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
+        ],
+      },
     },
   },
   'button-primary-press': {
@@ -191,11 +209,16 @@ export const TOKENS__SURFACE = {
       color: '{color.blue-2}',
       backgroundColor: '{color.blue-12}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-3} 0% 50%, transparent 50% 100%)',
+      boxShadow: { light: 'inset 0 0 2px 1px {color.black-alpha-2}', dark: 'inset 0 0 3px 1px {color.black-alpha-2}' },
     },
     value: {
       color: 'oklch(0.9215 0.0348 240)',
       backgroundColor: 'oklch(0.3900 0.1420 240)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.09) 0% 50%, transparent 50% 100%)',
+      boxShadow: {
+        light: 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)',
+        dark: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.06)',
+      },
     },
   },
   'button-secondary': {
@@ -220,12 +243,25 @@ export const TOKENS__SURFACE = {
       backgroundColor: '{color.blue-2}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-7} 0% 50%, transparent 50% 100%)',
       border: '1px solid {color.blue-11}',
+      boxShadow: '{shadow.xs}',
     },
     value: {
       color: 'oklch(0.3900 0.1420 240)',
       backgroundColor: 'oklch(0.9215 0.0348 240)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.32) 0% 50%, transparent 50% 100%)',
       border: '1px solid oklch(0.4500 0.1600 240)',
+      boxShadow: {
+        light: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
+        ],
+        dark: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
+        ],
+      },
     },
   },
   'button-secondary-press': {
@@ -235,12 +271,17 @@ export const TOKENS__SURFACE = {
       backgroundColor: '{color.blue-3}',
       backgroundImage: 'repeating-linear-gradient(150deg, {color.white-alpha-6} 0% 50%, transparent 50% 100%)',
       border: '1px solid {color.blue-11}',
+      boxShadow: { light: 'inset 0 0 2px 1px {color.black-alpha-2}', dark: 'inset 0 0 3px 1px {color.black-alpha-2}' },
     },
     value: {
       color: 'oklch(0.3900 0.1420 240)',
       backgroundColor: 'oklch(0.8825 0.0531 240)',
       backgroundImage: 'repeating-linear-gradient(150deg, oklch(1 0 0 / 0.24) 0% 50%, transparent 50% 100%)',
       border: '1px solid oklch(0.4500 0.1600 240)',
+      boxShadow: {
+        light: 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)',
+        dark: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.06)',
+      },
     },
   },
   'button-default': {
@@ -250,18 +291,38 @@ export const TOKENS__SURFACE = {
   },
   'button-default-hover': {
     type: 'composite',
-    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-1}' },
+    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-1}', boxShadow: '{shadow.xs}' },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: 'oklch(0.1068 0.0519 317 / 0.03)',
+      boxShadow: {
+        light: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
+        ],
+        dark: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
+        ],
+      },
     },
   },
   'button-default-press': {
     type: 'composite',
-    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-2}' },
+    ref: {
+      color: '{color.text-default}',
+      backgroundColor: '{color.black-alpha-2}',
+      boxShadow: { light: 'inset 0 0 2px 1px {color.black-alpha-2}', dark: 'inset 0 0 3px 1px {color.black-alpha-2}' },
+    },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: 'oklch(0.1068 0.0519 317 / 0.06)',
+      boxShadow: {
+        light: 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)',
+        dark: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.06)',
+      },
     },
   },
   'button-optional': {
@@ -271,18 +332,38 @@ export const TOKENS__SURFACE = {
   },
   'button-optional-hover': {
     type: 'composite',
-    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-1}' },
+    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-1}', boxShadow: '{shadow.xs}' },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: 'oklch(0.1068 0.0519 317 / 0.03)',
+      boxShadow: {
+        light: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.03)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.16)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.16)',
+        ],
+        dark: [
+          '0 -1px 0 -1px oklch(0.1068 0.0519 317 / 0.06)',
+          '0 1px 3px 0 oklch(0.1068 0.0519 317 / 0.4)',
+          '0 1px 2px -1px oklch(0.1068 0.0519 317 / 0.4)',
+        ],
+      },
     },
   },
   'button-optional-press': {
     type: 'composite',
-    ref: { color: '{color.text-default}', backgroundColor: '{color.black-alpha-2}' },
+    ref: {
+      color: '{color.text-default}',
+      backgroundColor: '{color.black-alpha-2}',
+      boxShadow: { light: 'inset 0 0 2px 1px {color.black-alpha-2}', dark: 'inset 0 0 3px 1px {color.black-alpha-2}' },
+    },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
       backgroundColor: 'oklch(0.1068 0.0519 317 / 0.06)',
+      boxShadow: {
+        light: 'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)',
+        dark: 'inset 0 0 3px 1px oklch(0.1068 0.0519 317 / 0.06)',
+      },
     },
   },
   'button-danger': {

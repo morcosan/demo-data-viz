@@ -62,6 +62,15 @@
 @utility ds-surface-card-press {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-1);
+    border: 1px solid var(--ds-color-border-surface);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-bg-card-press);
+    color: var(--ds-color-text-default);
+  }
+
+  [data-color-mode='dark'] & {
+    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card-press);
@@ -120,6 +129,7 @@
 @utility ds-surface-button-primary-hover {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-11);
     color: var(--ds-color-blue-1);
@@ -129,6 +139,14 @@
 @utility ds-surface-button-primary-press {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-12);
+    color: var(--ds-color-blue-2);
+  }
+
+  [data-color-mode='dark'] & {
+    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-3) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-12);
     color: var(--ds-color-blue-2);
@@ -148,6 +166,7 @@
 @utility ds-surface-button-secondary-hover {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
     border: 1px solid var(--ds-color-blue-11);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-7) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-2);
@@ -158,6 +177,15 @@
 @utility ds-surface-button-secondary-press {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
+    border: 1px solid var(--ds-color-blue-11);
+    background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-6) 0% 50%, transparent 50% 100%);
+    background-color: var(--ds-color-blue-3);
+    color: var(--ds-color-blue-12);
+  }
+
+  [data-color-mode='dark'] & {
+    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
     border: 1px solid var(--ds-color-blue-11);
     background-image: repeating-linear-gradient(150deg, var(--ds-color-white-alpha-6) 0% 50%, transparent 50% 100%);
     background-color: var(--ds-color-blue-3);
@@ -175,6 +203,7 @@
 @utility ds-surface-button-default-hover {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
     background-color: var(--ds-color-black-alpha-1);
     color: var(--ds-color-text-default);
   }
@@ -183,6 +212,13 @@
 @utility ds-surface-button-default-press {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
+    background-color: var(--ds-color-black-alpha-2);
+    color: var(--ds-color-text-default);
+  }
+
+  [data-color-mode='dark'] & {
+    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
     background-color: var(--ds-color-black-alpha-2);
     color: var(--ds-color-text-default);
   }
@@ -198,6 +234,7 @@
 @utility ds-surface-button-optional-hover {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: var(--ds-shadow-xs);
     background-color: var(--ds-color-black-alpha-1);
     color: var(--ds-color-text-default);
   }
@@ -206,6 +243,13 @@
 @utility ds-surface-button-optional-press {
   :where(html) &,
   [data-color-mode='light'] & {
+    box-shadow: inset 0 0 2px 1px var(--ds-color-black-alpha-2);
+    background-color: var(--ds-color-black-alpha-2);
+    color: var(--ds-color-text-default);
+  }
+
+  [data-color-mode='dark'] & {
+    box-shadow: inset 0 0 3px 1px var(--ds-color-black-alpha-2);
     background-color: var(--ds-color-black-alpha-2);
     color: var(--ds-color-text-default);
   }
