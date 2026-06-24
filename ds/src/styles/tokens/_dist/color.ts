@@ -136,6 +136,14 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },
     value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
   },
+  'bg-card-hover': {
+    ref: { light: '{color.grey-1}', dark: '{color.grey-15}' },
+    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.4047 0.0142 308)' },
+  },
+  'bg-card-press': {
+    ref: { light: '{color.grey-2}', dark: '{color.grey-14}' },
+    value: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.461 0.0157 308)' },
+  },
   'bg-popup': {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },
     value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },

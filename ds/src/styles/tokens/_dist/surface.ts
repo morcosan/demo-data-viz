@@ -75,13 +75,13 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       color: '{color.text-default}',
-      backgroundColor: '{color.bg-card}',
+      backgroundColor: '{color.bg-card-hover}',
       border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
     },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
-      backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
+      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.4047 0.0142 308)' },
       border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
       borderRadius: '8px',
     },
@@ -90,13 +90,13 @@ export const TOKENS__SURFACE = {
     type: 'composite',
     ref: {
       color: '{color.text-default}',
-      backgroundColor: '{color.bg-card}',
+      backgroundColor: '{color.bg-card-press}',
       border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
     },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
-      backgroundColor: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
+      backgroundColor: { light: 'oklch(0.9682 0.0017 308)', dark: 'oklch(0.461 0.0157 308)' },
       border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.09)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.4)' },
       borderRadius: '8px',
     },

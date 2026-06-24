@@ -2,6 +2,7 @@ import { type CSSProperties, type ReactNode } from 'react'
 import { type LinkType } from '../_shared/types'
 
 export type CardState = 'static' | 'active' | 'pressed' | 'selected' | 'loading' | 'disabled'
+export type CardSize = 'sm' | 'md' | 'lg' | 'xl'
 
 export interface CardProps extends HtmlDataProps {
   /**
@@ -19,6 +20,8 @@ export interface CardProps extends HtmlDataProps {
    */
   /** Property for changing the card state */
   state?: CardState
+  /** Property that determines padding */
+  size?: CardSize
   /** URL path for transforming the card into `<a>` link */
   linkHref?: string
   /**

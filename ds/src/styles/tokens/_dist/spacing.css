@@ -65,6 +65,14 @@
   --ds-spacing-xxl-7: 1360px;
   --ds-spacing-xxl-8: 1440px;
   --ds-spacing-xxl-9: 1520px;
+  --ds-spacing-card-px-sm: var(--ds-spacing-xs-4);
+  --ds-spacing-card-px-md: var(--ds-spacing-xs-6);
+  --ds-spacing-card-px-lg: var(--ds-spacing-xs-8);
+  --ds-spacing-card-px-xl: var(--ds-spacing-sm-0);
+  --ds-spacing-card-py-sm: var(--ds-spacing-xs-2);
+  --ds-spacing-card-py-md: var(--ds-spacing-xs-4);
+  --ds-spacing-card-py-lg: var(--ds-spacing-xs-6);
+  --ds-spacing-card-py-xl: var(--ds-spacing-xs-9);
   --ds-spacing-button-h-xs: var(--ds-spacing-sm-0);
   --ds-spacing-button-h-sm: var(--ds-spacing-sm-2);
   --ds-spacing-button-h-md: var(--ds-spacing-sm-4);

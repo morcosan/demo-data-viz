@@ -23,6 +23,7 @@ export const Card = (props: CardProps) => {
     linkHref,
     linkType = 'internal',
     state = 'static',
+    size = 'md',
   } = props
   const { tokens } = useThemeService()
   const buttonState: BaseButtonState = state === 'static' ? 'disabled' : state
@@ -47,10 +48,17 @@ export const Card = (props: CardProps) => {
 
   const surfaceCss: CSSObject = {
     ...(isPressed ? tokens.surface['card-press'] : tokens.surface['card']),
-    ...(isPressed ? { transform: 'scale(0.95)' } : {}),
+    ...(isPressed ? { transform: 'scale(0.98)' } : {}),
     display: 'grid',
     width: '100%',
     height: '100%',
+    padding: (() => {
+      if (size === 'sm') return `${tokens.spacing['card-py-sm']} ${tokens.spacing['card-px-sm']}`
+      if (size === 'md') return `${tokens.spacing['card-py-md']} ${tokens.spacing['card-px-md']}`
+      if (size === 'lg') return `${tokens.spacing['card-py-lg']} ${tokens.spacing['card-px-lg']}`
+      if (size === 'xl') return `${tokens.spacing['card-py-xl']} ${tokens.spacing['card-px-xl']}`
+      return ''
+    })(),
     transition: ['all 0.3s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     pointerEvents: 'none',
   }
@@ -61,6 +69,7 @@ export const Card = (props: CardProps) => {
     opacity: state === 'loading' ? 0 : 1,
     fill: 'currentColor',
     stroke: 'currentColor',
+    textAlign: 'left',
   }
   const cardCss: CSSObject = {
     position: 'relative',
