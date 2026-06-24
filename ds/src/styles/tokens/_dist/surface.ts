@@ -48,7 +48,7 @@ export const TOKENS__SURFACE = {
     },
     value: {
       backgroundColor: { light: 'oklch(0.1068 0.0519 317 / 0.03)', dark: 'oklch(0.1068 0.0519 317 / 0.09)' },
-      border: { light: '1px solid oklch(1 0 0 / 0.56)', dark: '1px solid oklch(1 0 0 / 0.03)' },
+      border: { light: '1px solid oklch(1 0 0 / 0.24)', dark: '1px solid oklch(1 0 0 / 0.03)' },
       borderRadius: '8px',
       boxShadow: {
         light: [
@@ -110,20 +110,20 @@ export const TOKENS__SURFACE = {
       backgroundColor: '{color.bg-card-press}',
       border: '1px solid {color.border-surface}',
       borderRadius: '{radius.md}',
-      boxShadow: '{shadow.inset-xs}',
+      boxShadow: '{shadow.inset-sm}',
     },
     value: {
       color: { light: 'oklch(0.2213 0.0065 314.68)', dark: 'oklch(1 0 0)' },
-      backgroundColor: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.4047 0.0142 308)' },
+      backgroundColor: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.461 0.0157 308)' },
       border: { light: '1px solid oklch(0.1068 0.0519 317 / 0.06)', dark: '1px solid oklch(0.1068 0.0519 317 / 0.24)' },
       borderRadius: '8px',
       boxShadow: {
         light: [
-          'inset 0 1px 1px 0 oklch(0.1068 0.0519 317 / 0.03)',
+          'inset 0 2px 3px 1px oklch(0.1068 0.0519 317 / 0.06)',
           'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.03)',
         ],
         dark: [
-          'inset 0 1px 1px 0 oklch(0.1068 0.0519 317 / 0.06)',
+          'inset 0 2px 3px 1px oklch(0.1068 0.0519 317 / 0.09)',
           'inset 0 0 2px 1px oklch(0.1068 0.0519 317 / 0.06)',
         ],
       },

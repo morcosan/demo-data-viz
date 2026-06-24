@@ -174,7 +174,7 @@ pre.docs code {
 .docs-bg.docs-bg-blank {
   background-color: var(--ds-color-bg-region);
 }
-.docs-bg.docs-bg-none {
+.docs-bg.docs-bg-page {
   background-color: transparent;
 }
 .docs-bg {

@@ -58,7 +58,7 @@
 @utility ds-surface-card-press {
   :where(html) &,
   [data-color-mode='light'] & {
-    box-shadow: var(--ds-shadow-inset-xs);
+    box-shadow: var(--ds-shadow-inset-sm);
     border: 1px solid var(--ds-color-border-surface);
     border-radius: var(--ds-radius-md);
     background-color: var(--ds-color-bg-card-press);

@@ -63,6 +63,15 @@ export const Card = (props: CardProps) => {
     })(),
     transition: ['all 0.2s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     pointerEvents: 'none',
+    '&::before': {
+      position: 'absolute',
+      inset: '-1px',
+      content: '""',
+      border: `1px solid ${tokens.color['border-inset']}`,
+      borderRadius: surfaceDefault.borderRadius,
+      opacity: isPressed ? 1 : 0,
+      transition: 'all 0.2s ease',
+    },
   }
   const childrenCss: CSSObject = {
     display: 'flex',

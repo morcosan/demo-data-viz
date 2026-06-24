@@ -141,8 +141,8 @@ export const TOKENS__COLOR = {
     value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.4047 0.0142 308)' },
   },
   'bg-card-press': {
-    ref: { light: '{color.grey-1}', dark: '{color.grey-15}' },
-    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.4047 0.0142 308)' },
+    ref: { light: '{color.grey-3}', dark: '{color.grey-14}' },
+    value: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.461 0.0157 308)' },
   },
   'bg-popup': {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },
@@ -193,8 +193,8 @@ export const TOKENS__COLOR = {
     value: { light: 'oklch(0.9800 0.0520 102.50)', dark: 'oklch(0.9680 0.0780 101.50)' },
   },
   'border-inset': {
-    ref: { light: '{color.white-alpha-10}', dark: '{color.white-alpha-1}' },
-    value: { light: 'oklch(1 0 0 / 0.56)', dark: 'oklch(1 0 0 / 0.03)' },
+    ref: { light: '{color.white-alpha-6}', dark: '{color.white-alpha-1}' },
+    value: { light: 'oklch(1 0 0 / 0.24)', dark: 'oklch(1 0 0 / 0.03)' },
   },
   'text-default': {
     ref: { light: '{color.black}', dark: '{color.white}' },
