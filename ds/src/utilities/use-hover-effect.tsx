@@ -4,15 +4,16 @@ import { useThemeService } from '../services/theme-service'
 
 export interface HoverEffectProps {
   small?: boolean
-  square?: boolean
+  rounded?: boolean
 }
 
-export const useHoverEffect = ({ small, square }: HoverEffectProps) => {
+export const useHoverEffect = ({ small, rounded }: HoverEffectProps) => {
   const { tokens } = useThemeService()
   const { a11yMode } = useA11yService()
 
-  const startPos = square ? '-16px' : '-14px'
-  const endPos = square ? (small ? '-5px' : '-6px') : '-4px'
+  const startPos = rounded ? '-15px' : '-17px'
+  const hoverPos = rounded ? '-5px' : small ? '-6px' : '-7px'
+  const pressPos = `calc(${hoverPos} + 2px)`
 
   const defaultCss: CSSObject = {
     position: 'absolute',
@@ -26,7 +27,7 @@ export const useHoverEffect = ({ small, square }: HoverEffectProps) => {
       width: small ? '7px' : '8px',
       height: small ? '7px' : '8px',
       border: '2px solid transparent',
-      transition: 'all 0.3s ease',
+      transition: `all ${tokens.motion['duration-sm']} ease`,
     },
     '& > span:nth-of-type(1)': { top: startPos, left: startPos, borderBottom: 'none', borderRight: 'none' },
     '& > span:nth-of-type(2)': { top: startPos, right: startPos, borderBottom: 'none', borderLeft: 'none' },
@@ -37,10 +38,19 @@ export const useHoverEffect = ({ small, square }: HoverEffectProps) => {
   const hoverCss: CSSObject = {
     opacity: 1,
     '& > span': { borderColor: tokens.color['button-hover-effect'] },
-    '& > span:nth-of-type(1)': { top: endPos, left: endPos },
-    '& > span:nth-of-type(2)': { top: endPos, right: endPos },
-    '& > span:nth-of-type(3)': { bottom: endPos, right: endPos },
-    '& > span:nth-of-type(4)': { bottom: endPos, left: endPos },
+    '& > span:nth-of-type(1)': { top: hoverPos, left: hoverPos },
+    '& > span:nth-of-type(2)': { top: hoverPos, right: hoverPos },
+    '& > span:nth-of-type(3)': { bottom: hoverPos, right: hoverPos },
+    '& > span:nth-of-type(4)': { bottom: hoverPos, left: hoverPos },
+  }
+
+  const pressCss: CSSObject = {
+    opacity: 1,
+    '& > span': { borderColor: tokens.color['button-hover-effect'] },
+    '& > span:nth-of-type(1)': { top: pressPos, left: pressPos },
+    '& > span:nth-of-type(2)': { top: pressPos, right: pressPos },
+    '& > span:nth-of-type(3)': { bottom: pressPos, right: pressPos },
+    '& > span:nth-of-type(4)': { bottom: pressPos, left: pressPos },
   }
 
   const hoverHtml = (
@@ -54,6 +64,7 @@ export const useHoverEffect = ({ small, square }: HoverEffectProps) => {
 
   return {
     html: hoverHtml,
-    css: a11yMode === 'keyboard' ? {} : hoverCss,
+    hoverCss: a11yMode === 'keyboard' ? {} : hoverCss,
+    pressCss: a11yMode === 'keyboard' ? {} : pressCss,
   }
 }

@@ -18,6 +18,7 @@ const TokensJsonSchema = z
     'font-size': z.record(z.string(), TokenSchema),
     'font-weight': z.record(z.string(), TokenSchema),
     'line-height': z.record(z.string(), TokenSchema),
+    motion: z.record(z.string(), TokenSchema),
     radius: z.record(z.string(), TokenSchema),
     shadow: z.record(z.string(), TokenSchema),
     spacing: z.record(z.string(), TokenSchema),

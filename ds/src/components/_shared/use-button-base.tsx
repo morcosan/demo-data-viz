@@ -36,7 +36,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
-  const hoverEffect = useHoverEffect({ small: size === 'xs', square: isMenuItem })
+  const hoverEffect = useHoverEffect({ small: size === 'xs', rounded: !isMenuItem })
 
   const noopProps = ((): CSSObject => {
     const noopColor = tokens.color['text-subtle']
@@ -68,7 +68,11 @@ export const useButtonBase = (props: BaseButtonProps) => {
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
-    transition: ['all 0.2s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
+    transition: [
+      `all ${tokens.motion['duration-sm']} ease`,
+      'background-size 0s step-start',
+      'background-position 0s step-start',
+    ].join(','),
     pointerEvents: 'none',
     userSelect: 'none',
     '&::before': {
@@ -78,7 +82,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
       border: `1px solid ${tokens.color['border-inset']}`,
       borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
       opacity: isPressed ? 1 : 0,
-      transition: 'all 0.2s ease',
+      transition: `all ${tokens.motion['duration-sm']} ease`,
     },
   }
   const surfaceHoverCss: CSSObject = {
@@ -110,9 +114,9 @@ export const useButtonBase = (props: BaseButtonProps) => {
     '&:hover, &:focus': isNoop
       ? {}
       : pressing
-        ? { '& > span:nth-of-type(1)': hoverEffect.css }
+        ? { '& > span:nth-of-type(1)': hoverEffect.pressCss }
         : {
-            '& > span:nth-of-type(1)': hoverEffect.css,
+            '& > span:nth-of-type(1)': hoverEffect.hoverCss,
             '& > span:nth-of-type(2)': surfaceHoverCss,
           },
   }

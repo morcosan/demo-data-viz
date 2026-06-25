@@ -17,6 +17,7 @@ interface ThemeTokens {
   fontSize: Record<keyof typeof TOKENS.FONT_SIZE, string>
   fontWeight: Record<keyof typeof TOKENS.FONT_WEIGHT, string>
   lineHeight: Record<keyof typeof TOKENS.LINE_HEIGHT, string>
+  motion: Record<keyof typeof TOKENS.MOTION, string>
   radius: Record<keyof typeof TOKENS.RADIUS, string>
   shadow: Record<keyof typeof TOKENS.SHADOW, string>
   spacing: Record<keyof typeof TOKENS.SPACING, string>
@@ -63,6 +64,7 @@ const createTokens = (mode: ColorMode): ThemeTokens => {
     fontSize: mapAtomicTokens(TOKENS.FONT_SIZE, CSS_PREFIX.FONT_SIZE, mode),
     fontWeight: mapAtomicTokens(TOKENS.FONT_WEIGHT, CSS_PREFIX.FONT_WEIGHT, mode),
     lineHeight: mapAtomicTokens(TOKENS.LINE_HEIGHT, CSS_PREFIX.LINE_HEIGHT, mode),
+    motion: mapAtomicTokens(TOKENS.MOTION, CSS_PREFIX.MOTION, mode),
     radius: mapAtomicTokens(TOKENS.RADIUS, CSS_PREFIX.RADIUS, mode),
     shadow: mapAtomicTokens(TOKENS.SHADOW, CSS_PREFIX.SHADOW, mode),
     spacing: mapAtomicTokens(TOKENS.SPACING, CSS_PREFIX.SPACING, mode),

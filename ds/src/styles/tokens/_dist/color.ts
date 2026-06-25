@@ -136,14 +136,6 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },
     value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
   },
-  'bg-card-hover': {
-    ref: { light: '{color.grey-1}', dark: '{color.grey-15}' },
-    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.4047 0.0142 308)' },
-  },
-  'bg-card-press': {
-    ref: { light: '{color.grey-3}', dark: '{color.grey-14}' },
-    value: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.461 0.0157 308)' },
-  },
   'bg-popup': {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },
     value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },
@@ -273,8 +265,8 @@ export const TOKENS__COLOR = {
     value: { light: 'oklch(0.7227 0.1920 140)', dark: 'oklch(0.9250 0.0806 140)' },
   },
   'button-hover-effect': {
-    ref: { light: '{color.blue-7}', dark: '{color.yellow-3}' },
-    value: { light: 'oklch(0.7100 0.1280 240)', dark: 'oklch(0.9800 0.0520 102.50)' },
+    ref: { light: '{color.blue-4}', dark: '{color.blue-3}' },
+    value: { light: 'oklch(0.8434 0.0715 240)', dark: 'oklch(0.8825 0.0531 240)' },
   },
   'modal-overlay-subtle': {
     ref: { light: '{color.black-alpha-7}', dark: '{color.black-alpha-6}' },

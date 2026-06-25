@@ -29,7 +29,7 @@ export const Card = (props: CardProps) => {
   const buttonState: BaseButtonState = state === 'static' ? 'disabled' : state
   const { bindings, isNoop, isPressed, pressing } = useClickable({ ...props, linkType, state: buttonState })
   const dataProps = useDataProps(props)
-  const hoverEffect = useHoverEffect({ square: true })
+  const hoverEffect = useHoverEffect({})
   const isStatic = state === 'static'
 
   const spinnerCss: CSSObject = {
@@ -70,7 +70,7 @@ export const Card = (props: CardProps) => {
       border: `1px solid ${tokens.color['border-inset']}`,
       borderRadius: surfaceDefault.borderRadius,
       opacity: isPressed ? 1 : 0,
-      transition: 'all 0.2s ease',
+      transition: `all ${tokens.motion['duration-sm']} ease`,
     },
   }
   const childrenCss: CSSObject = {
@@ -94,9 +94,9 @@ export const Card = (props: CardProps) => {
     '&:hover, &:focus': isNoop
       ? {}
       : pressing
-        ? { '& > span:nth-of-type(1)': hoverEffect.css }
+        ? { '& > span:nth-of-type(1)': hoverEffect.pressCss }
         : {
-            '& > span:nth-of-type(1)': hoverEffect.css,
+            '& > span:nth-of-type(1)': hoverEffect.hoverCss,
             '& > span:nth-of-type(2)': surfaceHover,
           },
   }
